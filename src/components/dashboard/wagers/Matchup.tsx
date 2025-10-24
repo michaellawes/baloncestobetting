@@ -16,26 +16,14 @@ export function Matchup(props: MatchupProps) {
         <div className="matchup">
             <div className="matchup-teams">
                 <div className="matchup-road-team">
-                    <Team
-                        icon={road.icon}
-                        name={road.name}
-                        record={road.record}
-                    />
+                    <Team {...road} />
                 </div>
                 <div className="matchup-favorite-team">
-                    <Team
-                        icon={favorite.icon}
-                        name={favorite.name}
-                        record={favorite.record}
-                    />
+                    <Team {...favorite} />
                 </div>
             </div>
             <div className="matchup-slate">
-                <PropSlate
-                    spread={slate.spread}
-                    points={slate.points}
-                    moneyline={slate.moneyline}
-                />
+                <PropSlate {...slate} />
             </div>
         </div>
     )

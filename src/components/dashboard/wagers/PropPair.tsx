@@ -11,16 +11,10 @@ export function PropPair(props: PropPairProps) {
     return (
         <div className="prop-pair">
             <div className="prop-line-road">
-                <PropLine
-                    text={road.text}
-                    odds={road.odds}
-                    />
+                <PropLine {...road} />
             </div>
             <div className="prop-line-favorite">
-                <PropLine
-                    text={favorite.text}
-                    odds={favorite.odds}
-                />
+                <PropLine {...favorite} />
             </div>
         </div>
     )

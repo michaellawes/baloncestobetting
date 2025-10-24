@@ -10,22 +10,13 @@ export function PropSlate(props: PropSlateProps) {
     return (
         <div className="prop-slate">
             <div className="prop-spread">
-                <PropPair
-                    favorite={spread.favorite}
-                    road={spread.road}
-                />
+                <PropPair {...spread} />
             </div>
             <div className="prop-points">
-                <PropPair
-                    favorite={points.favorite}
-                    road={points.road}
-                />
+                <PropPair {...points} />
             </div>
             <div className="prop-moneyline">
-                <PropPair
-                    favorite={moneyline.favorite}
-                    road={moneyline.road}
-                />
+                <PropPair {...moneyline} />
             </div>
         </div>
     )

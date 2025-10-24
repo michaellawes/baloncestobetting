@@ -1,25 +1,26 @@
-import { useState } from 'react'
+import { Dashboard } from "./components/dashboard/Dashboard";
 import './App.css'
+import { NavbarProps } from "./components/dashboard/nav/Navbar";
+import {WeeklySlateProps} from "./components/dashboard/wagers/WeeklySlate";
 
 export function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const navbar: NavbarProps = {
+        title: "CnB Baloncesto Betting",
+        isLoggedIn: true,
+        balance: 0
+    };
+
+    const weeklySlate: WeeklySlateProps = {
+        matchups: []
+    }
+
+    return (
+        <Dashboard
+            navbar={navbar}
+            weeklySlate={weeklySlate}
+        />
+    )
 }
 
 export default App
