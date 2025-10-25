@@ -2,11 +2,13 @@
 import { Team, TeamProps } from "./Team.tsx";
 // @ts-expect-error TS 5.0+ is broken
 import { PropSlate, PropSlateProps } from "./PropSlate.tsx";
+import { PropLineInterface } from "./PropLine";
 
 export interface MatchupProps {
     favorite: TeamProps,
     road: TeamProps,
-    slate: PropSlateProps
+    slate: PropSlateProps,
+    addLeg: (leg: PropLineInterface, isAdded: boolean) => void,
 }
 
 export function Matchup(props: MatchupProps) {

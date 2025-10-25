@@ -1,9 +1,11 @@
 import { PropPair, PropPairProps } from "./PropPair";
+import { PropLineInterface } from "./PropLine";
 
 export interface PropSlateProps {
     spread: PropPairProps,
     points: PropPairProps,
     moneyline: PropPairProps,
+    addLeg: (leg: PropLineInterface, isAdded: boolean) => void,
 }
 export function PropSlate(props: PropSlateProps) {
     const { spread, points, moneyline } = props;

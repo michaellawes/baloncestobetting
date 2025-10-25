@@ -3,7 +3,8 @@ import { PropLine, PropLineProps } from "./PropLine.tsx";
 
 export interface PropPairProps {
     favorite: PropLineProps,
-    road: PropLineProps
+    road: PropLineProps,
+    addLeg: (leg: PropLineProps, isAdded: boolean) => void,
 }
 
 export function PropPair(props: PropPairProps) {

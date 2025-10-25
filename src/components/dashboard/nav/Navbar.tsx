@@ -1,18 +1,30 @@
 import { Auth } from "./Auth";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { LiveParlayViewer } from "../parlays/LiveParlayViewer";
+import * as React from "react";
+import { PropLineInterface } from "../wagers/PropLine";
+import {Link, useNavigate} from "react-router-dom";
 
-export interface NavbarProps {
-    title: string,
+interface NavbarProps {
     isLoggedIn: boolean,
-    balance: number;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
+    balance: number,
+    setBalance: React.Dispatch<React.SetStateAction<number>>,
+    legs: PropLineInterface[],
+    setLegs: React.Dispatch<React.SetStateAction<PropLineInterface[]>>,
 }
 
 export function Navbar(props: NavbarProps) {
-    const { title, isLoggedIn, balance } = props;
+    const { isLoggedIn, setIsLoggedIn, balance, setBalance, legs, setLegs } = props;
+
+    const generateVC = () => {
+        setBalance(1000)
+    }
+
     return (
         <nav className="bg-sky-600 text-white">
             <div className="container mx-auto px-4 md:flex items-center gap-6">
-                <a href="#" className="py-5 px-2 text-white flex-1 font-bold">{title}</a>
+                <a href="#" className="py-5 px-2 text-white flex-1 font-bold">CnB Baloncesto Betting</a>
                 <span className="py-2 px-3 block">{balance}</span>
 
                 <Menu as="div" className="relative inline-block">
@@ -27,7 +39,8 @@ export function Navbar(props: NavbarProps) {
                         <div className="py-1">
                             {isLoggedIn && (
                                 <MenuItem>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden">
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                                onClick={() => generateVC()}>
                                 Beg for VC</a>
                             </MenuItem>
                             )}
@@ -37,7 +50,7 @@ export function Navbar(props: NavbarProps) {
                                         href="#"
                                         className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
                                     >
-                                        Parlays
+                                        <Link to={"/parlays"}>Parlays</Link>
                                     </a>
                                 </MenuItem>
                             )}
@@ -46,6 +59,7 @@ export function Navbar(props: NavbarProps) {
                                     <a
                                         href="#"
                                         className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                                        onClick={() => setIsLoggedIn(false)}
                                     >
                                         Log Out
                                     </a>
@@ -57,8 +71,9 @@ export function Navbar(props: NavbarProps) {
                                         <button
                                             type="submit"
                                             className="block w-full px-4 py-2 text-left text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                                            onClick={() => setIsLoggedIn(true)}
                                         >
-                                            Sign out
+                                            Sign in
                                         </button>
                                     </MenuItem>
                                 </form>
@@ -66,6 +81,9 @@ export function Navbar(props: NavbarProps) {
                         </div>
                     </MenuItems>
                 </Menu>
+            </div>
+            <div>
+                <LiveParlayViewer legs={legs} setLegs={setLegs}/>
             </div>
         </nav>
     )
