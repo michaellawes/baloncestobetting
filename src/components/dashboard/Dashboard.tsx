@@ -1,22 +1,20 @@
-import { WeeklySlateProps, WeeklySlate } from "./wagers/WeeklySlate";
-import { PropLineInterface } from "./wagers/PropLine";
-import { LiveParlayViewer } from "./parlays/LiveParlayViewer";
+import { WeeklySlate } from "./wagers/WeeklySlate";
 import * as React from "react";
+import { useContext } from "react";
+import { MatchupProps } from "./wagers/Matchup";
+import { ParlayTask } from "../../App";
+import { TasksContext } from "../reducer/TasksContext";
 
 export interface DashboardProps {
-    weeklySlate: WeeklySlateProps
-    legs: PropLineInterface[],
-    setLegs: React.Dispatch<React.SetStateAction<PropLineInterface[]>>
+  weeklySlate: MatchupProps[];
 }
 
 export function Dashboard(props: DashboardProps) {
-    const { weeklySlate, legs, setLegs } = props;
-    return (
-        <div className="w-full">
-            <WeeklySlate {...weeklySlate} />
-            <nav>
-                <LiveParlayViewer legs={legs} setLegs={setLegs} />
-            </nav>
-        </div>
-    )
+  const tasks: ParlayTask[] = useContext(TasksContext);
+  const { weeklySlate } = props;
+  return (
+    <div className={tasks.length > 0 ? "w-full mb-16" : "w-full"}>
+      <WeeklySlate matchups={weeklySlate} />
+    </div>
+  );
 }

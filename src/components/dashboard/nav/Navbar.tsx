@@ -1,90 +1,93 @@
 import { Auth } from "./Auth";
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { LiveParlayViewer } from "../parlays/LiveParlayViewer";
 import * as React from "react";
-import { PropLineInterface } from "../wagers/PropLine";
-import {Link, useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
-    isLoggedIn: boolean,
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
-    balance: number,
-    setBalance: React.Dispatch<React.SetStateAction<number>>,
-    legs: PropLineInterface[],
-    setLegs: React.Dispatch<React.SetStateAction<PropLineInterface[]>>,
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  balance: number;
+  setBalance: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export function Navbar(props: NavbarProps) {
-    const { isLoggedIn, setIsLoggedIn, balance, setBalance, legs, setLegs } = props;
+  const { isLoggedIn, setIsLoggedIn, balance, setBalance } = props;
 
-    const generateVC = () => {
-        setBalance(1000)
-    }
+  const generateVC = () => {
+    setBalance(1000);
+  };
 
-    return (
-        <nav className="bg-sky-600 text-white">
-            <div className="container mx-auto px-4 md:flex items-center gap-6">
-                <a href="#" className="py-5 px-2 text-white flex-1 font-bold">CnB Baloncesto Betting</a>
-                <span className="py-2 px-3 block">{balance}</span>
+  return (
+    <nav className="bg-sky-600 text-white">
+      <div className="container mx-auto px-4 md:flex items-center gap-6">
+        <a href="#" className="py-5 px-2 text-white flex-1 font-bold">
+          CnB Baloncesto Betting
+        </a>
+        <span className="py-2 px-3 block">{balance}</span>
 
-                <Menu as="div" className="relative inline-block">
-                    <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring-1 inset-ring-white/5 hover:bg-white/20">
-                        <Auth/>
-                    </MenuButton>
+        <Menu as="div" className="relative inline-block">
+          <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring-1 inset-ring-white/5 hover:bg-white/20">
+            <Auth />
+          </MenuButton>
 
-                    <MenuItems
-                        transition
-                        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-800 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+          <MenuItems
+            transition
+            className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-800 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+          >
+            <div className="py-1">
+              {isLoggedIn && (
+                <MenuItem>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                    onClick={() => generateVC()}
+                  >
+                    Beg for VC
+                  </a>
+                </MenuItem>
+              )}
+              {isLoggedIn && (
+                <MenuItem>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                  >
+                    <Link to={"/parlays"}>Parlays</Link>
+                  </a>
+                </MenuItem>
+              )}
+              {isLoggedIn && (
+                <MenuItem>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                    onClick={() => setIsLoggedIn(false)}
+                  >
+                    Log Out
+                  </a>
+                </MenuItem>
+              )}
+              {!isLoggedIn && (
+                <form action="#" method="POST">
+                  <MenuItem>
+                    <button
+                      type="submit"
+                      className="block w-full px-4 py-2 text-left text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                      onClick={() => setIsLoggedIn(true)}
                     >
-                        <div className="py-1">
-                            {isLoggedIn && (
-                                <MenuItem>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                                onClick={() => generateVC()}>
-                                Beg for VC</a>
-                            </MenuItem>
-                            )}
-                            {isLoggedIn && (
-                                <MenuItem>
-                                    <a
-                                        href="#"
-                                        className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                                    >
-                                        <Link to={"/parlays"}>Parlays</Link>
-                                    </a>
-                                </MenuItem>
-                            )}
-                            {isLoggedIn && (
-                                <MenuItem>
-                                    <a
-                                        href="#"
-                                        className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                                        onClick={() => setIsLoggedIn(false)}
-                                    >
-                                        Log Out
-                                    </a>
-                                </MenuItem>
-                            )}
-                            {!isLoggedIn && (
-                                <form action="#" method="POST">
-                                    <MenuItem>
-                                        <button
-                                            type="submit"
-                                            className="block w-full px-4 py-2 text-left text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                                            onClick={() => setIsLoggedIn(true)}
-                                        >
-                                            Sign in
-                                        </button>
-                                    </MenuItem>
-                                </form>
-                            )}
-                        </div>
-                    </MenuItems>
-                </Menu>
+                      Sign in
+                    </button>
+                  </MenuItem>
+                </form>
+              )}
             </div>
-            <div>
-                <LiveParlayViewer legs={legs} setLegs={setLegs}/>
-            </div>
-        </nav>
-    )
+          </MenuItems>
+        </Menu>
+      </div>
+      <div>
+        <LiveParlayViewer balance={balance} setBalance={setBalance} />
+      </div>
+    </nav>
+  );
 }
