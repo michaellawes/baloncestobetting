@@ -53,7 +53,7 @@ export function Navbar(props: NavbarProps) {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
                   >
-                    <Link to={"/parlays"}>Parlays</Link>
+                    <Link to={"/parlays"}>View Parlays</Link>
                   </a>
                 </MenuItem>
               )}

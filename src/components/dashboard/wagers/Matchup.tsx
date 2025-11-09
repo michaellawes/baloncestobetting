@@ -51,12 +51,22 @@ export function Matchup(props: MatchupProps) {
                     text={propLineProp.text}
                     odds={propLineProp.odds}
                     id={
-                      props.matchupSlate[index].teamProps.name +
-                      propField[secondIndex]
+                      (secondIndex === 1 ? totalPointsTeam : teamProps.name) +
+                      "-" +
+                      (secondIndex === 1
+                        ? propLineProp.text
+                        : propField[secondIndex])
                     }
                     oppId={
-                      props.matchupSlate[index ^ 1].teamProps.name +
-                      propField[secondIndex]
+                      (secondIndex === 1
+                        ? totalPointsTeam
+                        : props.matchupSlate[index ^ 1].teamProps.name) +
+                      "-" +
+                      (secondIndex === 1
+                        ? props.matchupSlate[index ^ 1].propLineProps[
+                            secondIndex
+                          ].text
+                        : propField[secondIndex])
                     }
                   />
                 </td>

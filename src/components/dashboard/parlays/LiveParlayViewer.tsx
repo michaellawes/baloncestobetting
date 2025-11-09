@@ -78,7 +78,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     if (showSlip) {
       if (tasks.length == 1) {
         return (
-          "bottom-16" +
+          "bottom-18" +
           " fixed pt-2 pb-5 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 rounded-sm"
         );
       } else {
@@ -171,6 +171,8 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               <input
                 type="number"
                 value={wager}
+                max={balance}
+                min={0}
                 onChange={(e) => handleWagerChange(e)}
                 className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none mb-5 bg-gray-800 dark:bg-gray-800 rounded-sm  border-1 dark:border-white border-white ml-3 pr-2 text-right"
               />

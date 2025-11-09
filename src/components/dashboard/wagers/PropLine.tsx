@@ -36,6 +36,7 @@ export function PropLine(props: PropLineProps) {
     if (!isAdded) {
       action["oppId"] = oppId;
     }
+    console.log(action);
     dispatch(action);
   };
 
