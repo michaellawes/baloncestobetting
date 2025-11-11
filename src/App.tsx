@@ -1,10 +1,10 @@
 import { Dashboard } from "./components/dashboard/Dashboard";
 import "./App.css";
-import { Navbar } from "./components/dashboard/nav/Navbar";
+import { Navbar } from "./components/nav/Navbar";
 import { Parlays } from "./components/dashboard/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import {
   TasksContext,
   TasksDispatchContext,
@@ -12,6 +12,8 @@ import {
 import { ParlaySlipProps } from "./components/dashboard/parlays/Parlay";
 import { generateId } from "./Util";
 import { MatchupProps } from "./components/dashboard/wagers/Matchup";
+import { GoogleOAuthProvider } from "@react-oauth/google"; //import axios from "axios";
+//import axios from "axios";
 
 export interface ParlayTask {
   id: string;
@@ -40,12 +42,38 @@ export interface ParlayInfo {
   wager: number;
 }
 
+export interface UserData {
+  id: string;
+  name: string;
+}
+
 export function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(true);
-  const [balance, setBalance] = React.useState<number>(100);
-  const [parlayLegs, setParlayLegs] = React.useState<ParlayTask[]>([]);
-  const [parlays, setParlays] = React.useState<ParlaySlipProps[]>([]);
-  const [currentParlay, setCurrentParlay] = React.useState<ParlayInfo>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<UserData>(null);
+  const [balance, setBalance] = useState<number>(0);
+  const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
+  const [parlays, setParlays] = useState<ParlaySlipProps[]>([]);
+  const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
+
+  /*
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.access_token}`,
+              Accept: "application/json",
+            },
+          },
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user]);*/
 
   const tasksReducer = (tasks: ParlayTask[], action: ParlayAction) => {
     switch (action.type) {
@@ -93,9 +121,9 @@ export function App() {
       legs: [
         {
           betType: "SPREAD BETTING",
-          id: "JASON's SQUADSPREAD BETTING",
+          id: "JASON's TEAMSPREAD BETTING",
           odds: -150,
-          team: "JASON's SQUAD",
+          team: "JASON's TEAM",
           text: "+100.5",
         },
       ],
@@ -112,9 +140,9 @@ export function App() {
       legs: [
         {
           betType: "SPREAD BETTING",
-          id: "SEB's SQUAD-SPREAD BETTING",
+          id: "SEB's TEAM-SPREAD BETTING",
           odds: -110,
-          team: "SEB's SQUAD",
+          team: "SEB's TEAM",
           text: "+70.5",
         },
       ],
@@ -131,30 +159,30 @@ export function App() {
       legs: [
         {
           betType: "TOTAL POINTS",
-          id: "SEB's SQUAD-TOTAL POINTS",
+          id: "SEB's TEAM-TOTAL POINTS",
           odds: -150,
-          team: "SEB's SQUAD v JEFE's SQUAD",
+          team: "SEB's TEAM v JEFE's TEAM",
           text: "O 3985.5",
         },
         {
           betType: "MONEYLINE",
-          id: "SEB's SQUAD-MONEYLINE",
+          id: "SEB's TEAM-MONEYLINE",
           odds: 200,
-          team: "SEB's SQUAD",
+          team: "SEB's TEAM",
           text: "",
         },
         {
           betType: "TOTAL POINTS",
-          id: "JASON's SQUAD-TOTAL POINTS",
+          id: "JASON's TEAM-TOTAL POINTS",
           odds: -120,
-          team: "JASON's SQUAD v MICHAEL's SQUAD",
+          team: "JASON's TEAM v MICHAEL's TEAM",
           text: "O 3785.5",
         },
         {
           betType: "MONEYLINE",
-          id: "MICHAEL's SQUAD-MONEYLINE",
+          id: "MICHAEL's TEAM-MONEYLINE",
           odds: -120,
-          team: "MICHAEL's SQUAD",
+          team: "MICHAEL's TEAM",
           text: "",
         },
       ],
@@ -171,37 +199,37 @@ export function App() {
       legs: [
         {
           betType: "SPREAD BETTING",
-          id: "JORDAN's SQUAD-SPREAD BETTING",
+          id: "JORDAN's TEAM-SPREAD BETTING",
           odds: -110,
-          team: "JORDAN's SQUAD",
+          team: "JORDAN's TEAM",
           text: "+35.5",
         },
         {
           betType: "TOTAL POINTS",
-          id: "JARON's SQUAD-TOTAL POINTS",
+          id: "JARON's TEAM-TOTAL POINTS",
           odds: 125,
-          team: "JORDAN's SQUAD v JARON's SQUAD",
+          team: "JORDAN's TEAM v JARON's TEAM",
           text: "U 3985.5",
         },
         {
           betType: "TOTAL POINTS",
-          id: "SEB's SQUAD-TOTAL POINTS",
+          id: "SEB's TEAM-TOTAL POINTS",
           odds: -150,
-          team: "SEB's SQUAD v JEFE's SQUAD",
+          team: "SEB's TEAM v JEFE's TEAM",
           text: "O 3985.5",
         },
         {
           betType: "SPREAD BETTING",
-          id: "MICHAEL's SQUAD-SPREAD BETTING",
+          id: "MICHAEL's TEAM-SPREAD BETTING",
           odds: -110,
-          team: "MICHAEL's SQUAD",
+          team: "MICHAEL's TEAM",
           text: "-100.5",
         },
         {
           betType: "SPREAD BETTING",
-          id: "SEB's SQUAD-SPREAD BETTING",
+          id: "SEB's TEAM-SPREAD BETTING",
           odds: -110,
-          team: "SEB's SQUAD",
+          team: "SEB's TEAM",
           text: "+70.5",
         },
       ],
@@ -218,7 +246,7 @@ export function App() {
         {
           teamProps: {
             icon: "IMAGE-2",
-            name: "SEB's SQUAD",
+            name: "SEB's TEAM",
             record: "2-0",
             color: "text-white",
           },
@@ -231,7 +259,7 @@ export function App() {
         {
           teamProps: {
             icon: "IMAGE",
-            name: "JEFE's SQUAD",
+            name: "JEFE's TEAM",
             record: "2-0",
             color: "text-black",
           },
@@ -248,7 +276,7 @@ export function App() {
         {
           teamProps: {
             icon: "IMAGE-2",
-            name: "JASON's SQUAD",
+            name: "JASON's TEAM",
             record: "0-2",
             color: "text-white",
           },
@@ -261,7 +289,7 @@ export function App() {
         {
           teamProps: {
             icon: "IMAGE",
-            name: "MICHAEL's SQUAD",
+            name: "MICHAEL's TEAM",
             record: "1-1",
             color: "text-black",
           },
@@ -278,7 +306,7 @@ export function App() {
         {
           teamProps: {
             icon: "IMAGE-2",
-            name: "JORDAN's SQUAD",
+            name: "JORDAN's TEAM",
             record: "0-2",
             color: "text-white",
           },
@@ -291,7 +319,7 @@ export function App() {
         {
           teamProps: {
             icon: "IMAGE",
-            name: "JARON's SQUAD",
+            name: "JARON's TEAM",
             record: "1-1",
             color: "text-black",
           },
@@ -320,34 +348,37 @@ export function App() {
         isWinner: false,
         isPayedOut: false,
       };
-      console.log(newParlay);
-      setParlays([...parlays, newParlay]);
       setParlayLegs([]);
+      setParlays([...parlays, newParlay]);
       setCurrentParlay(null);
     }
-  }, [parlayLegs, currentParlay]);
-
+  }, [parlayLegs, currentParlay, parlays]);
+  //
+  //
   return (
     <Router>
-      <TasksContext value={tasks}>
-        <TasksDispatchContext value={dispatch}>
-          <Navbar
-            isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-            balance={balance}
-            setBalance={setBalance}
-          />
-          <Routes>
-            <Route path="/" element={<Dashboard weeklySlate={demo} />} />
-            <Route
-              path="/parlays"
-              element={
-                <Parlays parlays={demoParlays} setBalance={setBalance} />
-              }
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
+        <TasksContext value={tasks}>
+          <TasksDispatchContext value={dispatch}>
+            <Navbar
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              balance={balance}
+              setBalance={setBalance}
+              setUser={setUser}
             />
-          </Routes>
-        </TasksDispatchContext>
-      </TasksContext>
+            <Routes>
+              <Route path="/" element={<Dashboard weeklySlate={demo} />} />
+              <Route
+                path="/parlays"
+                element={
+                  <Parlays parlays={demoParlays} setBalance={setBalance} />
+                }
+              />
+            </Routes>
+          </TasksDispatchContext>
+        </TasksContext>
+      </GoogleOAuthProvider>
     </Router>
   );
 }

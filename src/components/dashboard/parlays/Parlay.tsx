@@ -57,10 +57,10 @@ export function Parlay(props: ParlayProps) {
   };
 
   return (
-    <div className="w-1/2 float-left shadow-sm rounded-xs dark:bg-gray-800 dark:border-white border-1">
+    <div className="w-full float-left shadow-sm rounded-xs dark:bg-gray-800 dark:border-white border-1">
       <div className="p-4 flex w-full items-center justify-between border-b-1 border-b-gray-400">
         <span className="text-gray-500 text-xs float-left">
-          {id.substring(id.length - 12)}
+          {id.substring(id.length - 5)}
         </span>
         <span className="text-white float-left">
           {getReadableDate(timestamp)}
@@ -91,7 +91,7 @@ export function Parlay(props: ParlayProps) {
                 {leg.betType}
               </span>
             </div>
-            <div className="float-right w-1/8 text-right pr-2">
+            <div className="float-right w-1/8 text-right pr-5">
               <span className="text-gray-300">
                 {leg.odds > 0 && "+"}
                 {leg.odds}

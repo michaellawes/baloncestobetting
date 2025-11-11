@@ -20,8 +20,38 @@ export function Matchup(props: MatchupProps) {
     props.matchupSlate[0].teamProps.name +
     " v " +
     props.matchupSlate[1].teamProps.name;
+
+  const getOppId = (
+    props: MatchupProps,
+    index: number,
+    secondIndex: number,
+  ) => {
+    return (
+      (secondIndex === 1
+        ? totalPointsTeam
+        : props.matchupSlate[index ^ 1].teamProps.name) +
+      "-" +
+      (secondIndex === 1
+        ? props.matchupSlate[index ^ 1].propLineProps[1].text
+        : propField[secondIndex])
+    );
+  };
+
+  const getId = (
+    teamProps: TeamProps,
+    propLineProp: PropLineInterface,
+    secondIndex: number,
+  ) => {
+    return (
+      (secondIndex === 1 ? totalPointsTeam : teamProps.name) +
+      "-" +
+      (secondIndex === 1 ? propLineProp.text : propField[secondIndex])
+    );
+  };
+
+  // have table-auto only effect desktop
   return (
-    <table className="w-full min-w-max table-auto text-left rounded-xs bg-blue-800 border-2 ">
+    <table className="w-full min-w-max table-fixed md:table-auto text-left rounded-xs bg-blue-800 border-2 ">
       <thead>
         <tr>
           {TABLE_HEAD.map((head) => (
@@ -39,7 +69,7 @@ export function Matchup(props: MatchupProps) {
           const isLast = index === props.matchupSlate.length - 1;
           const classes = isLast ? "p-4" : "p-4 border-b border-gray-100";
           return (
-            <tr key={index}>
+            <tr key={index} className="w-full">
               <td className={classes}>
                 <Team {...teamProps}></Team>
               </td>
@@ -50,24 +80,8 @@ export function Matchup(props: MatchupProps) {
                     betType={propField[secondIndex]}
                     text={propLineProp.text}
                     odds={propLineProp.odds}
-                    id={
-                      (secondIndex === 1 ? totalPointsTeam : teamProps.name) +
-                      "-" +
-                      (secondIndex === 1
-                        ? propLineProp.text
-                        : propField[secondIndex])
-                    }
-                    oppId={
-                      (secondIndex === 1
-                        ? totalPointsTeam
-                        : props.matchupSlate[index ^ 1].teamProps.name) +
-                      "-" +
-                      (secondIndex === 1
-                        ? props.matchupSlate[index ^ 1].propLineProps[
-                            secondIndex
-                          ].text
-                        : propField[secondIndex])
-                    }
+                    id={getId(teamProps, propLineProp, secondIndex)}
+                    oppId={getOppId(props, index, secondIndex)}
                   />
                 </td>
               ))}

@@ -36,7 +36,6 @@ export function PropLine(props: PropLineProps) {
     if (!isAdded) {
       action["oppId"] = oppId;
     }
-    console.log(action);
     dispatch(action);
   };
 
@@ -46,17 +45,17 @@ export function PropLine(props: PropLineProps) {
   }, [tasks, id]);
 
   return (
-    <div className="prop-line">
+    <div className="prop-line w-fit overflow-hidden">
       <button
         onClick={() => selectParlay()}
         className={`switch ${
           isAdded
-            ? "py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-            : "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            ? "py-2.5 px-5 me-2 mb-2 text-sm font-light text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            : "font-light text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         }`}
       >
         {text.length > 0 ? (
-          <div className="text-center overflow-hidden">
+          <div className="text-center w-fit overflow-hidden">
             <span className="block relative text-white text-base">{text}</span>
             <span className="block relative text-gray-400 text-sm">
               {odds > 0 && "+"}
@@ -65,7 +64,7 @@ export function PropLine(props: PropLineProps) {
           </div>
         ) : (
           <div>
-            <span className="block relative text-white text-2xl">
+            <span className="block relative text-white text-base">
               {odds > 0 && "+"}
               {odds}
             </span>
