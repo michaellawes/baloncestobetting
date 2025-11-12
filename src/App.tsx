@@ -1,7 +1,7 @@
 import { Dashboard } from "./components/dashboard/Dashboard";
 import "./App.css";
 import { Navbar } from "./components/nav/Navbar";
-import { Parlays } from "./components/dashboard/parlays/Parlays";
+import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
@@ -9,10 +9,9 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { ParlaySlipProps } from "./components/dashboard/parlays/Parlay";
-import { generateId } from "./Util";
-import { MatchupProps } from "./components/dashboard/wagers/Matchup";
-import { GoogleOAuthProvider } from "@react-oauth/google"; //import axios from "axios";
+import { demo, generateId } from "./Util";
+import supabase from "./config/supabaseConfig";
+
 //import axios from "axios";
 
 export interface ParlayTask {
@@ -34,6 +33,9 @@ export interface ParlayAction {
   totalOdds?: number;
   payout?: number;
   wager?: number;
+  user_id?: string;
+  parlay_id?: string;
+  parlay_modification_type?: string;
 }
 
 export interface ParlayInfo {
@@ -47,33 +49,105 @@ export interface UserData {
   name: string;
 }
 
+export interface ParlayUpdatePayload {
+  user_id: string;
+  parlay_id: string;
+  parlay_modification_type: string;
+}
+
 export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<UserData>(null);
   const [balance, setBalance] = useState<number>(0);
   const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
-  const [parlays, setParlays] = useState<ParlaySlipProps[]>([]);
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [matchup, setMatchup] = useState<number>(0);
+  const [justAffectedBalance, setJustAffectedBalance] =
+    useState<boolean>(false);
+  const [parlayUpdatePayload, setParlayUpdatePayload] =
+    useState<ParlayUpdatePayload>(null);
 
-  /*
   useEffect(() => {
+    const authenticateUser = async () => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: import.meta.env.VITE_AUTH_EMAIL,
+        password: import.meta.env.VITE_AUTH_PASS,
+      });
+
+      if (error) {
+        setErrorMessage(error.message + " refresh page");
+      }
+
+      if (data) {
+        supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+
+        const getMatchup = async () => {
+          const { data, error } = await supabase
+            .from("matchup")
+            .select()
+            .order("id", { ascending: false })
+            .limit(1);
+
+          if (error) {
+            setErrorMessage(error.message);
+          }
+
+          if (data) {
+            setErrorMessage("");
+            setMatchup(data[0]["id"]);
+          }
+        };
+        getMatchup();
+      }
+    };
+
+    authenticateUser();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { data, error } = await supabase
+        .from("users")
+        .select()
+        .eq("id", user.id);
+
+      if (error) {
+        setErrorMessage(error.message);
+        console.log(error);
+      }
+
+      if (data) {
+        setErrorMessage("");
+        if (data.length == 0) {
+          const { data, error } = await supabase
+            .from("users")
+            .insert([{ id: user.id, name: user.name }])
+            .select();
+          if (error) {
+            setErrorMessage(error.message);
+            console.log(error);
+          }
+
+          if (data) {
+            setErrorMessage("");
+            const balance: number = data[0]["balance"];
+            setBalance(balance);
+          }
+        } else {
+          setErrorMessage("");
+          const balance: number = data[0]["balance"];
+          setBalance(balance);
+        }
+      }
+    };
     if (user) {
-      axios
-        .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.access_token}`,
-              Accept: "application/json",
-            },
-          },
-        )
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
+      fetchUserData();
     }
-  }, [user]);*/
+  }, [user]);
 
   const tasksReducer = (tasks: ParlayTask[], action: ParlayAction) => {
     switch (action.type) {
@@ -101,7 +175,17 @@ export function App() {
           payout: action.payout,
           wager: action.wager,
         });
+        setJustAffectedBalance(true);
         return [];
+      }
+      case "acceptPayout": {
+        setJustAffectedBalance(true);
+        setParlayUpdatePayload({
+          user_id: action.user_id,
+          parlay_id: action.parlay_id,
+          parlay_modification_type: action.parlay_modification_type,
+        });
+        return tasks;
       }
       case "clearSlip": {
         return [];
@@ -112,273 +196,122 @@ export function App() {
     }
   };
 
-  const demoParlays: ParlaySlipProps[] = [
-    {
-      id: "44d2e199-c29e-e300-984e-76e0c1435f67",
-      isActive: false,
-      isPayedOut: false,
-      isWinner: false,
-      legs: [
-        {
-          betType: "SPREAD BETTING",
-          id: "JASON's TEAMSPREAD BETTING",
-          odds: -150,
-          team: "JASON's TEAM",
-          text: "+100.5",
-        },
-      ],
-      payout: 16.67,
-      timestamp: 1762659052276,
-      totalOdds: -150,
-      wager: 10,
-    },
-    {
-      id: "7be5edb2-b80a-0e2c-b9df-913292fdfa90",
-      isActive: true,
-      isPayedOut: false,
-      isWinner: false,
-      legs: [
-        {
-          betType: "SPREAD BETTING",
-          id: "SEB's TEAM-SPREAD BETTING",
-          odds: -110,
-          team: "SEB's TEAM",
-          text: "+70.5",
-        },
-      ],
-      payout: 19.09,
-      timestamp: 1762659551675,
-      totalOdds: -110,
-      wager: 10,
-    },
-    {
-      id: "77e798be-7a4a-bad0-c010-9afece9af2a9",
-      isActive: false,
-      isPayedOut: false,
-      isWinner: false,
-      legs: [
-        {
-          betType: "TOTAL POINTS",
-          id: "SEB's TEAM-TOTAL POINTS",
-          odds: -150,
-          team: "SEB's TEAM v JEFE's TEAM",
-          text: "O 3985.5",
-        },
-        {
-          betType: "MONEYLINE",
-          id: "SEB's TEAM-MONEYLINE",
-          odds: 200,
-          team: "SEB's TEAM",
-          text: "",
-        },
-        {
-          betType: "TOTAL POINTS",
-          id: "JASON's TEAM-TOTAL POINTS",
-          odds: -120,
-          team: "JASON's TEAM v MICHAEL's TEAM",
-          text: "O 3785.5",
-        },
-        {
-          betType: "MONEYLINE",
-          id: "MICHAEL's TEAM-MONEYLINE",
-          odds: -120,
-          team: "MICHAEL's TEAM",
-          text: "",
-        },
-      ],
-      payout: 168.06,
-      timestamp: 1762659923491,
-      totalOdds: 1581,
-      wager: 10,
-    },
-    {
-      id: "73d8db1c-5fc6-e506-b5dd-c796678143bd",
-      isActive: false,
-      isPayedOut: false,
-      isWinner: true,
-      legs: [
-        {
-          betType: "SPREAD BETTING",
-          id: "JORDAN's TEAM-SPREAD BETTING",
-          odds: -110,
-          team: "JORDAN's TEAM",
-          text: "+35.5",
-        },
-        {
-          betType: "TOTAL POINTS",
-          id: "JARON's TEAM-TOTAL POINTS",
-          odds: 125,
-          team: "JORDAN's TEAM v JARON's TEAM",
-          text: "U 3985.5",
-        },
-        {
-          betType: "TOTAL POINTS",
-          id: "SEB's TEAM-TOTAL POINTS",
-          odds: -150,
-          team: "SEB's TEAM v JEFE's TEAM",
-          text: "O 3985.5",
-        },
-        {
-          betType: "SPREAD BETTING",
-          id: "MICHAEL's TEAM-SPREAD BETTING",
-          odds: -110,
-          team: "MICHAEL's TEAM",
-          text: "-100.5",
-        },
-        {
-          betType: "SPREAD BETTING",
-          id: "SEB's TEAM-SPREAD BETTING",
-          odds: -110,
-          team: "SEB's TEAM",
-          text: "+70.5",
-        },
-      ],
-      payout: 978.46,
-      timestamp: 1762660109548,
-      totalOdds: 9685,
-      wager: 10,
-    },
-  ];
-
-  const demo: MatchupProps[] = [
-    {
-      matchupSlate: [
-        {
-          teamProps: {
-            icon: "IMAGE-2",
-            name: "SEB's TEAM",
-            record: "2-0",
-            color: "text-white",
-          },
-          propLineProps: [
-            { text: "+70.5", odds: -110 },
-            { text: "O 3985.5", odds: -150 },
-            { text: "", odds: +200 },
-          ],
-        },
-        {
-          teamProps: {
-            icon: "IMAGE",
-            name: "JEFE's TEAM",
-            record: "2-0",
-            color: "text-black",
-          },
-          propLineProps: [
-            { text: "-70.5", odds: -110 },
-            { text: "U 3985.5", odds: +125 },
-            { text: "", odds: -120 },
-          ],
-        },
-      ],
-    },
-    {
-      matchupSlate: [
-        {
-          teamProps: {
-            icon: "IMAGE-2",
-            name: "JASON's TEAM",
-            record: "0-2",
-            color: "text-white",
-          },
-          propLineProps: [
-            { text: "+100.5", odds: -150 },
-            { text: "O 3785.5", odds: -120 },
-            { text: "", odds: +275 },
-          ],
-        },
-        {
-          teamProps: {
-            icon: "IMAGE",
-            name: "MICHAEL's TEAM",
-            record: "1-1",
-            color: "text-black",
-          },
-          propLineProps: [
-            { text: "-100.5", odds: -110 },
-            { text: "U 3785.5", odds: -130 },
-            { text: "", odds: -120 },
-          ],
-        },
-      ],
-    },
-    {
-      matchupSlate: [
-        {
-          teamProps: {
-            icon: "IMAGE-2",
-            name: "JORDAN's TEAM",
-            record: "0-2",
-            color: "text-white",
-          },
-          propLineProps: [
-            { text: "+35.5", odds: -110 },
-            { text: "O 4100.5", odds: -220 },
-            { text: "", odds: +200 },
-          ],
-        },
-        {
-          teamProps: {
-            icon: "IMAGE",
-            name: "JARON's TEAM",
-            record: "1-1",
-            color: "text-black",
-          },
-          propLineProps: [
-            { text: "-35.5", odds: -150 },
-            { text: "U 3985.5", odds: +125 },
-            { text: "", odds: -185 },
-          ],
-        },
-      ],
-    },
-  ];
-
   const [tasks, dispatch] = useReducer(tasksReducer, []);
 
   useEffect(() => {
     if (parlayLegs.length > 0 && currentParlay != null) {
-      const newParlay: ParlaySlipProps = {
-        id: generateId(),
-        timestamp: Date.now(),
-        legs: parlayLegs,
-        totalOdds: parseFloat(currentParlay.totalOdds.toFixed()),
-        payout: parseFloat(currentParlay.payout.toFixed(2)),
-        wager: parseFloat(currentParlay.wager.toFixed(2)),
-        isActive: false,
-        isWinner: false,
-        isPayedOut: false,
+      const now = new Date();
+      const expires = new Date();
+      expires.setUTCDate(
+        expires.getUTCDate() + ((7 - expires.getUTCDay()) % 7) + 1,
+      );
+
+      const uploadParlay = async () => {
+        const newParlay = {
+          user_id: user.id,
+          parlay_id: generateId(),
+          created_at: +now,
+          expires_at: +expires,
+          matchup_id: matchup,
+          total_odds: parseFloat(currentParlay.totalOdds.toFixed()),
+          payout: parseFloat(currentParlay.payout.toFixed(2)),
+          wager: parseFloat(currentParlay.wager.toFixed(2)),
+          is_winner: false,
+          is_payed_out: false,
+          legs: parlayLegs,
+        };
+
+        const { data, error } = await supabase
+          .from("parlays")
+          .insert([newParlay]);
+        if (error) {
+          setErrorMessage(error.message);
+          console.log(error);
+        }
+
+        if (data) {
+          setErrorMessage("");
+          setParlayLegs([]);
+          setCurrentParlay(null);
+        }
       };
-      setParlayLegs([]);
-      setParlays([...parlays, newParlay]);
-      setCurrentParlay(null);
+      uploadParlay();
     }
-  }, [parlayLegs, currentParlay, parlays]);
-  //
-  //
+  }, [parlayLegs, currentParlay, user, matchup]);
+
+  useEffect(() => {
+    if (user && justAffectedBalance) {
+      setJustAffectedBalance(false);
+      const updateBalance = async () => {
+        const { error } = await supabase
+          .from("users")
+          .update({ balance: balance })
+          .eq("id", user.id);
+
+        if (error) {
+          setErrorMessage(error.message);
+        } else {
+          setErrorMessage("");
+        }
+      };
+      updateBalance();
+    }
+  }, [balance, user, justAffectedBalance]);
+
+  useEffect(() => {
+    if (user && parlayUpdatePayload) {
+      const temp: ParlayUpdatePayload = {
+        user_id: parlayUpdatePayload.user_id,
+        parlay_id: parlayUpdatePayload.parlay_id,
+        parlay_modification_type: parlayUpdatePayload.parlay_modification_type,
+      };
+      setParlayUpdatePayload(null);
+      if (temp.parlay_modification_type === "acceptPayout") {
+        const updateParlay = async () => {
+          const { error } = await supabase
+            .from("parlays")
+            .update({ is_payed_out: true })
+            .eq("user_id", temp.user_id)
+            .eq("parlay_id", temp.parlay_id);
+
+          if (error) {
+            setErrorMessage(error.message);
+          } else {
+            setErrorMessage("");
+          }
+        };
+        updateParlay();
+      }
+    }
+  }, [user, parlayUpdatePayload]);
+
   return (
     <Router>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
-        <TasksContext value={tasks}>
-          <TasksDispatchContext value={dispatch}>
-            <Navbar
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-              balance={balance}
-              setBalance={setBalance}
-              setUser={setUser}
+      <TasksContext value={tasks}>
+        <TasksDispatchContext value={dispatch}>
+          <Navbar
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            balance={balance}
+            setBalance={setBalance}
+            setUser={setUser}
+            errorMessage={errorMessage}
+          />
+          <Routes>
+            <Route path="/" element={<Dashboard weeklySlate={demo} />} />
+            <Route
+              path="/parlays"
+              element={
+                <Parlays
+                  setBalance={setBalance}
+                  user={user}
+                  setErrorMessage={setErrorMessage}
+                />
+              }
             />
-            <Routes>
-              <Route path="/" element={<Dashboard weeklySlate={demo} />} />
-              <Route
-                path="/parlays"
-                element={
-                  <Parlays parlays={demoParlays} setBalance={setBalance} />
-                }
-              />
-            </Routes>
-          </TasksDispatchContext>
-        </TasksContext>
-      </GoogleOAuthProvider>
+          </Routes>
+        </TasksDispatchContext>
+      </TasksContext>
     </Router>
   );
 }

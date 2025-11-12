@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "es2022"
-    ],
+    "lib": ["dom", "es2022"],
     "outDir": "./lib/cjs/",
     "sourceMap": true,
     "declaration": true,
@@ -14,13 +11,6 @@
     "moduleResolution": "Node",
     "jsx": "react-jsx"
   },
-  "include": [
-    "src/**/*.ts*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "lib"
-  ]
+  "include": ["src/**/*.ts*"],
+  "exclude": ["node_modules", "dist", "lib"]
 }
-

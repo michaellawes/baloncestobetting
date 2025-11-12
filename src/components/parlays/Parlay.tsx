@@ -2,39 +2,48 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
-import { ParlayTask } from "../../../App";
+import { useContext } from "react";
+import { ParlayTask } from "../../App";
+import { TasksDispatchContext } from "../reducer/TasksContext";
 
 library.add(fas);
 
-export interface ParlaySlipProps {
-  id: string;
-  timestamp: number;
-  legs: ParlayTask[];
-  totalOdds: number;
+export interface SupabaseParlay {
+  user_id: string;
+  created_at: number;
+  expires_at: number;
+  parlay_id: string;
+  matchup_id: number;
+  total_odds: number;
   payout: number;
   wager: number;
-  isActive: boolean;
-  isWinner: boolean;
-  isPayedOut: boolean;
+  is_winner: boolean;
+  is_payed_out: boolean;
+  is_active: boolean;
+  legs: ParlayTask[];
 }
 
-export interface ParlayProps extends ParlaySlipProps {
+export interface ParlayProps extends SupabaseParlay {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export function Parlay(props: ParlayProps) {
   const {
-    id,
-    timestamp,
+    user_id,
+    parlay_id,
+    created_at,
+    is_active,
     legs,
-    totalOdds,
+    total_odds,
     payout,
     wager,
-    isActive,
-    isWinner,
+    is_winner,
+    is_payed_out,
     setBalance,
   } = props;
-  const [isPayedOut, setIsPayedOut] = React.useState(props.isPayedOut);
+  const [isPayedOut, setIsPayedOut] = React.useState(is_payed_out);
+
+  const dispatch = useContext(TasksDispatchContext);
 
   const getReadableDate = (timestamp: number) => {
     const d = new Date(timestamp);
@@ -54,27 +63,33 @@ export function Parlay(props: ParlayProps) {
   const handleAcceptPayout = () => {
     setIsPayedOut(true);
     setBalance((prev) => prev + payout);
+    dispatch({
+      type: "acceptPayout",
+      user_id: user_id,
+      parlay_id: parlay_id,
+      parlay_modification_type: "acceptPayout",
+    });
   };
 
   return (
     <div className="w-full float-left shadow-sm rounded-xs dark:bg-gray-800 dark:border-white border-1">
       <div className="p-4 flex w-full items-center justify-between border-b-1 border-b-gray-400">
         <span className="text-gray-500 text-xs float-left">
-          {id.substring(id.length - 5)}
+          {parlay_id.substring(parlay_id.length - 5)}
         </span>
         <span className="text-white float-left">
-          {getReadableDate(timestamp)}
+          {getReadableDate(created_at)}
         </span>
         <span className="text-white float-left">
-          {totalOdds > 0 && "+"}
-          {totalOdds}
+          {total_odds > 0 && "+"}
+          {total_odds}
         </span>
-        {!isActive && isWinner && (
+        {!is_active && is_winner && (
           <div className="text-green-700 z-40 text-base float-left">
             <FontAwesomeIcon icon="fa-solid fa-square-check" />
           </div>
         )}
-        {!isActive && !isWinner && (
+        {!is_active && !is_winner && (
           <div className="text-red-700 text-base float-left">
             <FontAwesomeIcon icon="fa-solid fa-square-xmark" />
           </div>
@@ -106,7 +121,7 @@ export function Parlay(props: ParlayProps) {
           <span className="text-green-500 text-sm">${payout.toFixed(2)}</span>
         </div>
         <div className="float-left w-1/2">
-          {isWinner && !isActive && !isPayedOut && (
+          {is_winner && !is_active && !isPayedOut && (
             <button
               onClick={() => {
                 handleAcceptPayout();
@@ -116,7 +131,7 @@ export function Parlay(props: ParlayProps) {
               Accept Earnings
             </button>
           )}
-          {isWinner && !isActive && isPayedOut && (
+          {is_winner && !is_active && isPayedOut && (
             <span className="text-green-500 text-base">CASHHHHHHHHHHH</span>
           )}
         </div>

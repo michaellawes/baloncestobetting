@@ -1,6 +1,6 @@
 import { Auth } from "./Auth";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { LiveParlayViewer } from "../dashboard/parlays/LiveParlayViewer";
+import { LiveParlayViewer } from "./LiveParlayViewer";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { UserData } from "../../App";
+import { getUuid } from "../../Util";
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -17,24 +18,26 @@ interface NavbarProps {
   balance: number;
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   setUser: React.Dispatch<React.SetStateAction<UserData>>;
+  errorMessage: string;
 }
 
 export function Navbar(props: NavbarProps) {
-  const { isLoggedIn, setIsLoggedIn, balance, setBalance, setUser } = props;
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    balance,
+    setBalance,
+    setUser,
+    errorMessage,
+  } = props;
   const [profileImg, setProfileImg] = React.useState("");
-
-  const generateVC = () => {
-    setBalance(1000);
-  };
 
   const extractUserData = (credentialReponse: CredentialResponse) => {
     const data: never = jwtDecode(credentialReponse.credential);
-    console.log("Data: ", data);
-    console.log(data["picture"]);
     setProfileImg(data["picture"]);
     setIsLoggedIn(true);
     setUser({
-      id: data["email"],
+      id: getUuid(data["email"]),
       name: data["name"],
     });
   };
@@ -43,6 +46,7 @@ export function Navbar(props: NavbarProps) {
     googleLogout();
     setIsLoggedIn(false);
     setUser(null);
+    setBalance(0);
   };
 
   return (
@@ -51,6 +55,11 @@ export function Navbar(props: NavbarProps) {
         <a href="#" className="py-5 px-2 text-white flex-1 font-bold">
           CnB Baloncesto Betting
         </a>
+        {errorMessage.length > 0 && (
+          <span className="text-red-600 bg-white rounded-xs pl-2 pr-2">
+            ERROR: {errorMessage}
+          </span>
+        )}
         <span className="py-2 px-3 block">{balance}</span>
 
         <Menu as="div" className="relative inline-block">
@@ -68,9 +77,8 @@ export function Navbar(props: NavbarProps) {
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                    onClick={() => generateVC()}
                   >
-                    Beg for VC
+                    <Link to={"/"}>Return to Dashboard</Link>
                   </a>
                 </MenuItem>
               )}

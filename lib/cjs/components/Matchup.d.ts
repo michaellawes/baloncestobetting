@@ -1,6 +1,8 @@
 export interface MatchupProps {
-    favorite: Team;
-    road: Team;
-    slate: PropSlate;
+  favorite: Team;
+  road: Team;
+  slate: PropSlate;
 }
-export declare function Matchup(props: MatchupProps): import("react").JSX.Element;
+export declare function Matchup(
+  props: MatchupProps,
+): import("react").JSX.Element;

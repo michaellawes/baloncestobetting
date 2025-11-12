@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { TasksContext, TasksDispatchContext } from "../../reducer/TasksContext";
-import { ParlayTask } from "../../../App";
-import { decimalToOdds, oddsToDecimal } from "../../../Util";
+import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
+import { ParlayTask } from "../../App";
+import { decimalToOdds, oddsToDecimal } from "../../Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -45,13 +45,13 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
 
   const submitParlay = () => {
     if (wager <= balance) {
+      setBalance(balance - wager);
       dispatch({
         type: "submitParlay",
         totalOdds: decimalToOdds(totalDecimalOdds),
         wager: wager,
         payout: payout,
       });
-      setBalance(balance - wager);
     }
   };
 
@@ -158,7 +158,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               ))}
             </div>
           )}
-          <div className="w-full flex pl-5 pt-1.5 mt-6 dark:bg-gray-700 dark:border-gray-600 border-t-2 text-base">
+          <div className="w-full flex row pl-5 pt-1.5 mt-6 dark:bg-gray-700 dark:border-gray-600 border-t-2 text-base">
             <div className="w-fit float-left">
               Wager{" "}
               <input
@@ -176,7 +176,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               )}
             </div>
             {isLoggedIn && (
-              <div className="w-fit float-right justify-end">
+              <div className="w-fit overflow-hidden">
                 <button
                   className="float-right hover:bg-gray-800 rounded-xl pl-2 pr-2"
                   onClick={submitParlay}
