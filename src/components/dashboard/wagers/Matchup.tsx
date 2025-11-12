@@ -1,6 +1,7 @@
 // @ts-expect-error TS 5.0+ is broken
 import { Team, TeamProps } from "./Team.tsx";
 import { PropLine, PropLineInterface } from "./PropLine";
+import { propField } from "../../../utils/Util";
 
 const TABLE_HEAD = ["Matchup", "Spread", "Points", "Moneyline"];
 
@@ -12,8 +13,6 @@ export interface TeamSlate {
   teamProps: TeamProps;
   propsLineProps: PropLineInterface[];
 }
-
-const propField = ["SPREAD BETTING", "TOTAL POINTS", "MONEYLINE"];
 
 export function Matchup(props: MatchupProps) {
   const totalPointsTeam =

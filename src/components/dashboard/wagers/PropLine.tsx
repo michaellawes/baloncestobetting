@@ -27,7 +27,7 @@ export function PropLine(props: PropLineProps) {
     const type = !isAdded ? "addLeg" : "removeLeg";
     const action: ParlayAction = {
       type: type,
-      id: id,
+      frontend_id: id,
       text: text,
       odds: odds,
       team: team,
@@ -40,7 +40,7 @@ export function PropLine(props: PropLineProps) {
   };
 
   useEffect(() => {
-    const index = tasks.findIndex((addedLegs) => addedLegs.id === id);
+    const index = tasks.findIndex((addedLegs) => addedLegs.frontend_id === id);
     setIsAdded(index !== -1);
   }, [tasks, id]);
 

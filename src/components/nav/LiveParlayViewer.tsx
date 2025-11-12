@@ -132,7 +132,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             <div className="float-left max-h-24 overflow-y-scroll scrollbar-hide w-full flex-col border-gray-200 dark:bg-gray-700 dark:border-gray-600 rounded-sm">
               {tasks.map((leg) => (
                 <div
-                  key={leg.id}
+                  key={leg.frontend_id}
                   className="pt-1 mb-1 h-12 w-full border-t-1 border-gray-300"
                 >
                   <div className="pl-5 float-left w-fit h-full md:w-5/8">
@@ -151,7 +151,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                   </div>
                   <div className="float-right w-fit md:w-1/8">
                     <button
-                      onClick={() => removeLeg(leg.id)}
+                      onClick={() => removeLeg(leg.frontend_id)}
                       className="float-right pr-5"
                     >
                       <FontAwesomeIcon icon="fa-solid fa-xmark" />
@@ -179,9 +179,9 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               )}
             </div>
             {isLoggedIn && (
-              <div className="w-fit overflow-hidden md:w-1/2">
+              <div className="w-fit overflow-hidden md:w-1/2 md:pr-3">
                 <button
-                  className="float-right hover:bg-gray-800 rounded-xl pl-2 pr-2 md:pr-5"
+                  className="float-right hover:bg-gray-800 rounded-xl pl-2 pr-2"
                   onClick={submitParlay}
                 >
                   LOCK IT IN
