@@ -170,7 +170,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                 max={balance}
                 min={0}
                 onChange={(e) => handleWagerChange(e)}
-                className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none mb-5 bg-gray-800 dark:bg-gray-800 rounded-sm  border-1 dark:border-white border-white ml-3 pr-2 text-right"
+                className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none mb-5 bg-gray-800 w-20 dark:bg-gray-800 rounded-sm  border-1 dark:border-white border-white ml-3 pr-2 text-right"
               />
               {displayWarning && (
                 <span className="text-red-500 pl-2">
