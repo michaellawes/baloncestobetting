@@ -13,7 +13,6 @@ export interface TeamProps {
 
 export function Team(props: TeamProps) {
   const { name, icon, record, color } = props;
-  console.log(`name=${name}, color=${color}`);
   return (
     <div className="color">
       {icon.length > 0 &&

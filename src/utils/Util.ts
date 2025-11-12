@@ -1,6 +1,7 @@
 import { v5 as uuidv5 } from "uuid";
 import { MatchupProps } from "../components/dashboard/wagers/Matchup";
 import { SupabaseParlay } from "../components/parlays/Parlay";
+import { ParlayTask } from "../App";
 
 export const generateId = () => {
   const S4 = () => {
@@ -198,16 +199,17 @@ export const demo: MatchupProps[] = [
 
 export const demoParlays: SupabaseParlay[] = [
   {
+    user_id: "c967b5a2-479d-5b20-9c58-27e164630d33",
     parlay_id: "44d2e199-c29e-e300-984e-76e0c1435f67",
-    is_active: false,
+    frontend_is_active: false,
     is_payed_out: false,
     is_winner: false,
     legs: [
       {
         betType: "SPREAD BETTING",
-        id: "JASON's TEAMSPREAD BETTING",
+        frontend_id: "JASON-SPREAD BETTING",
         odds: -150,
-        team: "JASON's TEAM",
+        team: "JASON",
         text: "+100.5",
       },
     ],
@@ -215,15 +217,64 @@ export const demoParlays: SupabaseParlay[] = [
     created_at: 1762659052276,
     total_odds: -150,
     wager: 10,
-    user_id: "",
     matchup_id: 4,
-    expires_at: Date.now(),
+    expires_at: 1762659052276,
+  },
+  {
+    user_id: "c967b5a2-479d-5b20-9c58-27e164630d33",
+    parlay_id: "42898341-32d3-9277-ccc0-58684ca67aeb",
+    matchup_id: 4,
+    total_odds: 596,
+    payout: 139.16,
+    wager: 20,
+    frontend_is_active: false,
+    is_winner: false,
+    is_payed_out: false,
+    legs: [
+      {
+        frontend_id: "Amen's Shampoo-SPREAD BETTING",
+        team: "Amen's Shampoo",
+        betType: "SPREAD BETTING",
+        text: "+141.5",
+        odds: -110,
+      },
+      {
+        frontend_id: "Amen's Shampoo v Ion Run It-U 2821.5",
+        team: "Amen's Shampoo v Ion Run It",
+        betType: "TOTAL POINTS",
+        text: "U 2821.5",
+        odds: -110,
+      },
+      {
+        frontend_id: "Kane Train 🚂-MONEYLINE",
+        team: "Kane Train 🚂",
+        betType: "MONEYLINE",
+        text: "",
+        odds: -110,
+      },
+    ],
+    created_at: 1762973845208,
+    expires_at: 1762973845208,
   },
 ];
 
-export interface prop {
-  matchup_id: number; // 4
-  team: string; // Michael-Jaron
-  bet_type: string; // [SPREAD BETTING, TOTAL POINTS, MONEYLINE]
-  prop_hit: boolean;
-}
+export const propField = ["SPREAD BETTING", "TOTAL POINTS", "MONEYLINE"];
+
+export const evaluateLeg = (leg: ParlayTask, event: number) => {
+  if (leg.betType == propField[0]) {
+    if (leg.text.startsWith("-")) {
+      return Number(leg.text) >= event;
+    } else {
+      return Number(leg.text) >= -1 * event;
+    }
+  } else if (leg.betType == propField[1]) {
+    const totalPointsProps = leg.text.split(" ");
+    if (totalPointsProps[0] === "O") {
+      return event > Number(totalPointsProps[1]);
+    } else {
+      return event < Number(totalPointsProps[1]);
+    }
+  } else {
+    return event;
+  }
+};

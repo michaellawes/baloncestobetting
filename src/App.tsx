@@ -12,9 +12,10 @@ import {
 import { generateId } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { MatchupProps } from "./components/dashboard/wagers/Matchup";
+import { SupabaseParlay } from "./components/parlays/Parlay";
 
 export interface ParlayTask {
-  id: string;
+  frontend_id: string;
   team: string;
   betType: string;
   text: string;
@@ -23,9 +24,9 @@ export interface ParlayTask {
 
 export interface ParlayAction {
   type: string;
-  id: string;
-  text: string;
-  odds: number;
+  frontend_id?: string;
+  text?: string;
+  odds?: number;
   betType?: string;
   team?: string;
   oppId?: string;
@@ -34,7 +35,10 @@ export interface ParlayAction {
   wager?: number;
   user_id?: string;
   parlay_id?: string;
+  is_payed_out?: boolean;
+  is_winner?: boolean;
   parlay_modification_type?: string;
+  slip?: Slip;
 }
 
 export interface ParlayInfo {
@@ -49,10 +53,19 @@ export interface UserData {
   profile: string;
 }
 
-export interface ParlayUpdatePayload {
+export interface ParlayFieldUpdate {
   user_id: string;
   parlay_id: string;
   parlay_modification_type: string;
+  parlay?: SupabaseParlay;
+}
+
+export interface Slip {
+  legs: ParlayTask[];
+  matchup_id: string;
+  parlay_id: string;
+  user_id: string;
+  payout: number;
 }
 
 export function App() {
@@ -66,8 +79,10 @@ export function App() {
   const [weeklySlate, setWeeklySlate] = useState<MatchupProps[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
-  const [parlayUpdatePayload, setParlayUpdatePayload] =
-    useState<ParlayUpdatePayload>(null);
+  const [parlayFieldUpdate, setParlayFieldUpdate] =
+    useState<ParlayFieldUpdate>(null);
+  const [justAffectedParlayFieldUpdate, setJustAffectedParlayFieldUpdate] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -154,11 +169,18 @@ export function App() {
   const tasksReducer = (tasks: ParlayTask[], action: ParlayAction) => {
     switch (action.type) {
       case "addLeg": {
-        tasks = tasks.filter((task) => task.id !== action.oppId);
+        tasks = tasks.filter((task) => task.frontend_id !== action.oppId);
+        console.log({
+          id: action.frontend_id,
+          team: action.team,
+          betType: action.betType,
+          text: action.text,
+          odds: action.odds,
+        });
         tasks = [
           ...tasks,
           {
-            id: action.id,
+            frontend_id: action.frontend_id,
             team: action.team,
             betType: action.betType,
             text: action.text,
@@ -168,7 +190,7 @@ export function App() {
         return tasks;
       }
       case "removeLeg": {
-        return tasks.filter((task) => task.id !== action.id);
+        return tasks.filter((task) => task.frontend_id !== action.frontend_id);
       }
       case "submitParlay": {
         setParlayLegs(tasks);
@@ -182,11 +204,10 @@ export function App() {
       }
       case "acceptPayout": {
         setJustAffectedBalance(true);
-        setParlayUpdatePayload({
-          user_id: action.user_id,
-          parlay_id: action.parlay_id,
-          parlay_modification_type: action.parlay_modification_type,
-        });
+        return tasks;
+      }
+      case "parlayFieldUpdate": {
+        setJustAffectedParlayFieldUpdate(true);
         return tasks;
       }
       case "clearSlip": {
@@ -200,6 +221,7 @@ export function App() {
 
   const [tasks, dispatch] = useReducer(tasksReducer, []);
 
+  // Submit Parlay
   useEffect(() => {
     if (parlayLegs.length > 0 && currentParlay != null) {
       const now = new Date();
@@ -241,6 +263,7 @@ export function App() {
     }
   }, [parlayLegs, currentParlay, user, matchup]);
 
+  // Update balance for either placing parlay or automatically colleting earnings
   useEffect(() => {
     if (user && justAffectedBalance) {
       setJustAffectedBalance(false);
@@ -260,19 +283,24 @@ export function App() {
     }
   }, [balance, user, justAffectedBalance]);
 
+  // For newly expired parlays, update that it was payed out and whether it won
   useEffect(() => {
-    if (user && parlayUpdatePayload) {
-      const temp: ParlayUpdatePayload = {
-        user_id: parlayUpdatePayload.user_id,
-        parlay_id: parlayUpdatePayload.parlay_id,
-        parlay_modification_type: parlayUpdatePayload.parlay_modification_type,
+    if (user && justAffectedParlayFieldUpdate) {
+      const temp: ParlayFieldUpdate = {
+        user_id: parlayFieldUpdate.user_id,
+        parlay_id: parlayFieldUpdate.parlay_id,
+        parlay: parlayFieldUpdate.parlay,
+        parlay_modification_type: parlayFieldUpdate.parlay_modification_type,
       };
-      setParlayUpdatePayload(null);
-      if (temp.parlay_modification_type === "acceptPayout") {
+      setJustAffectedParlayFieldUpdate(false);
+      if (temp.parlay_modification_type === "validateSlip") {
         const updateParlay = async () => {
           const { error } = await supabase
             .from("parlays")
-            .update({ is_payed_out: true })
+            .update({
+              is_winner: temp.parlay.is_winner,
+              is_payed_out: temp.parlay.is_payed_out,
+            })
             .eq("user_id", temp.user_id)
             .eq("parlay_id", temp.parlay_id);
 
@@ -285,7 +313,13 @@ export function App() {
         updateParlay();
       }
     }
-  }, [user, parlayUpdatePayload]);
+  }, [user, parlayFieldUpdate, justAffectedParlayFieldUpdate]);
+
+  useEffect(() => {
+    if (!justAffectedParlayFieldUpdate) {
+      setParlayFieldUpdate(null);
+    }
+  }, [justAffectedParlayFieldUpdate]);
 
   return (
     <Router>
@@ -307,6 +341,7 @@ export function App() {
                 <Parlays
                   setBalance={setBalance}
                   user={user}
+                  setParlayFieldUpdate={setParlayFieldUpdate}
                   setErrorMessage={setErrorMessage}
                 />
               }
