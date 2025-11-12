@@ -9,8 +9,9 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { demo, generateId } from "./Util";
+import { generateId } from "./Util";
 import supabase from "./config/supabaseConfig";
+import { MatchupProps } from "./components/dashboard/wagers/Matchup";
 
 export interface ParlayTask {
   id: string;
@@ -62,6 +63,7 @@ export function App() {
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [matchup, setMatchup] = useState<number>(0);
+  const [weeklySlate, setWeeklySlate] = useState<MatchupProps[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
   const [parlayUpdatePayload, setParlayUpdatePayload] =
@@ -98,6 +100,7 @@ export function App() {
           if (data) {
             setErrorMessage("");
             setMatchup(data[0]["id"]);
+            setWeeklySlate(data[0]["weekly_slate"]);
           }
         };
         getMatchup();
@@ -297,7 +300,7 @@ export function App() {
             errorMessage={errorMessage}
           />
           <Routes>
-            <Route path="/" element={<Dashboard weeklySlate={demo} />} />
+            <Route path="/" element={<Dashboard weeklySlate={weeklySlate} />} />
             <Route
               path="/parlays"
               element={

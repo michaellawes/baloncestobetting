@@ -10,7 +10,7 @@ export interface MatchupProps {
 
 export interface TeamSlate {
   teamProps: TeamProps;
-  propLineProps: PropLineInterface[];
+  propsLineProps: PropLineInterface[];
 }
 
 const propField = ["SPREAD BETTING", "TOTAL POINTS", "MONEYLINE"];
@@ -32,7 +32,7 @@ export function Matchup(props: MatchupProps) {
         : props.matchupSlate[index ^ 1].teamProps.name) +
       "-" +
       (secondIndex === 1
-        ? props.matchupSlate[index ^ 1].propLineProps[1].text
+        ? props.matchupSlate[index ^ 1].propsLineProps[1].text
         : propField[secondIndex])
     );
   };
@@ -65,7 +65,7 @@ export function Matchup(props: MatchupProps) {
         </tr>
       </thead>
       <tbody>
-        {props.matchupSlate.map(({ teamProps, propLineProps }, index) => {
+        {props.matchupSlate.map(({ teamProps, propsLineProps }, index) => {
           const isLast = index === props.matchupSlate.length - 1;
           const classes = isLast ? "p-4" : "p-4 border-b border-gray-100";
           return (
@@ -73,7 +73,7 @@ export function Matchup(props: MatchupProps) {
               <td className={classes}>
                 <Team {...teamProps}></Team>
               </td>
-              {propLineProps.map((propLineProp, secondIndex) => (
+              {propsLineProps.map((propLineProp, secondIndex) => (
                 <td className={classes} key={secondIndex}>
                   <PropLine
                     team={secondIndex === 1 ? totalPointsTeam : teamProps.name}

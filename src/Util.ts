@@ -47,7 +47,7 @@ export const demo: MatchupProps[] = [
     matchupSlate: [
       {
         teamProps: {
-          icon: "https://lh3.googleusercontent.com/a/ACg8ocI1fhQ-MCUI3Jo_F0DAuv3LmmtNbm3VuM0uYI7PyrYJxTKbWcc=s96-c",
+          icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
           name: "Michael",
           record: "1-2",
           color: "text-white",

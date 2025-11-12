@@ -13,16 +13,14 @@ export interface TeamProps {
 
 export function Team(props: TeamProps) {
   const { name, icon, record, color } = props;
+  console.log(`name=${name}, color=${color}`);
   return (
     <div className="color">
-      {icon.length > 0 ? (
+      {icon.length > 0 &&
+      !icon.startsWith("https://mystique") &&
+      !icon.startsWith("https://m.media-amazon") ? (
         <div className="flex justify-center">
-          <img
-            src={icon}
-            alt="Google Account Profile Picture"
-            referrerPolicy="no-referrer"
-            className="w-8 h-8"
-          />
+          <img src={icon} alt="Can't Get Your PFP Buddy" className="w-8 h-8" />
         </div>
       ) : (
         <div className={"text-center text-3xl " + { color }}>
