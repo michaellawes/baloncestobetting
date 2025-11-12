@@ -12,19 +12,28 @@ export interface TeamProps {
 }
 
 export function Team(props: TeamProps) {
-  const iconColor: string = props.color;
+  const { name, icon, record, color } = props;
   return (
     <div className="color">
-      <div className={"text-center text-3xl " + iconColor}>
-        <FontAwesomeIcon icon="fa-solid fa-basketball" />
-      </div>
+      {icon.length > 0 ? (
+        <div className="flex justify-center">
+          <img
+            src={icon}
+            alt="Google Account Profile Picture"
+            referrerPolicy="no-referrer"
+            className="w-8 h-8"
+          />
+        </div>
+      ) : (
+        <div className={"text-center text-3xl " + { color }}>
+          <FontAwesomeIcon icon="fa-solid fa-basketball" />
+        </div>
+      )}
       <div className="text-center overflow-hidden">
         <span className="block relative text-white text-base">
-          {props.name}
+          {name}'s team
         </span>
-        <span className="block relative text-gray-300 text-sm">
-          {props.record}
-        </span>
+        <span className="block relative text-gray-300 text-sm">{record}</span>
       </div>
     </div>
   );

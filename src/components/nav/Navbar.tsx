@@ -34,11 +34,13 @@ export function Navbar(props: NavbarProps) {
 
   const extractUserData = (credentialReponse: CredentialResponse) => {
     const data: never = jwtDecode(credentialReponse.credential);
+    console.log(data["picture"]);
     setProfileImg(data["picture"]);
     setIsLoggedIn(true);
     setUser({
       id: getUuid(data["email"]),
       name: data["name"],
+      profile: data["picture"],
     });
   };
 

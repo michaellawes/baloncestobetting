@@ -7,6 +7,7 @@ export interface WeeklySlateProps {
 
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups } = props;
+  console.log(matchups);
   return (
     <div>
       {matchups.length > 0 && (

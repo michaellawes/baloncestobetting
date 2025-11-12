@@ -12,8 +12,6 @@ import {
 import { demo, generateId } from "./Util";
 import supabase from "./config/supabaseConfig";
 
-//import axios from "axios";
-
 export interface ParlayTask {
   id: string;
   team: string;
@@ -47,6 +45,7 @@ export interface ParlayInfo {
 export interface UserData {
   id: string;
   name: string;
+  profile: string;
 }
 
 export interface ParlayUpdatePayload {
@@ -125,7 +124,7 @@ export function App() {
         if (data.length == 0) {
           const { data, error } = await supabase
             .from("users")
-            .insert([{ id: user.id, name: user.name }])
+            .insert([{ id: user.id, name: user.name, profile: user.profile }])
             .select();
           if (error) {
             setErrorMessage(error.message);

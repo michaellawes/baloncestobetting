@@ -97,8 +97,8 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     <div className="flex w-full flex-col-reverse">
       {tasks.length > 0 && (
         <div className={getStyling(showSlip)}>
-          <div className="pb-2 w-fit">
-            <div key={"view"} className="float-left w-fit pb-2">
+          <div className="pb-2 w-fit md:w-full">
+            <div key={"view"} className="float-left w-fit pb-2 md:w-1/3">
               <button
                 onClick={toggleSlip}
                 className="block w-full hover:bg-gray-800 rounded-xl pl-2 pr-2"
@@ -106,7 +106,10 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                 View Slip
               </button>
             </div>
-            <div key={"payout"} className="float-left text-center  pb-2 w-fit">
+            <div
+              key={"payout"}
+              className="float-left text-center pb-2 w-fit md:w-1/3"
+            >
               <span>${wager} to </span>
               <span className="text-green-500">${payout.toFixed(2)}</span>
               <span className="font-bold">
@@ -116,10 +119,10 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               </span>
               <span> {tasks.length} leg(s)</span>
             </div>
-            <div key={"clear"} className="float-right w-fit  pb-2 ">
+            <div key={"clear"} className="float-right w-fit pb-2 md:w-1/3">
               <button
                 onClick={removeAllLegs}
-                className="block w-fit hover:bg-gray-800 rounded-xl pl-2 pr-2"
+                className="block w-fit md:w-full hover:bg-gray-800 rounded-xl pl-2 pr-2"
               >
                 Clear Slip
               </button>
@@ -132,7 +135,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                   key={leg.id}
                   className="pt-1 mb-1 h-12 w-full border-t-1 border-gray-300"
                 >
-                  <div className="pl-5 float-left w-fit h-full ">
+                  <div className="pl-5 float-left w-fit h-full md:w-5/8">
                     <span className="block relative text-white text-base ">
                       {leg.team} {leg.text}
                     </span>
@@ -140,13 +143,13 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                       {leg.betType}
                     </span>
                   </div>
-                  <div className="float-left w-fit text-right">
+                  <div className="float-left w-fit text-right md:w-2/8">
                     <span className="text-gray-300 pl-2">
                       {leg.odds > 0 && "+"}
                       {leg.odds}
                     </span>
                   </div>
-                  <div className="float-right w-fit">
+                  <div className="float-right w-fit md:w-1/8">
                     <button
                       onClick={() => removeLeg(leg.id)}
                       className="float-right pr-5"
@@ -159,7 +162,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             </div>
           )}
           <div className="w-full flex row pl-5 pt-1.5 mt-6 dark:bg-gray-700 dark:border-gray-600 border-t-2 text-base">
-            <div className="w-fit float-left">
+            <div className="w-fit float-left md:w-1/2">
               Wager{" "}
               <input
                 type="number"
@@ -176,9 +179,9 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               )}
             </div>
             {isLoggedIn && (
-              <div className="w-fit overflow-hidden">
+              <div className="w-fit overflow-hidden md:w-1/2">
                 <button
-                  className="float-right hover:bg-gray-800 rounded-xl pl-2 pr-2"
+                  className="float-right hover:bg-gray-800 rounded-xl pl-2 pr-2 md:pr-5"
                   onClick={submitParlay}
                 >
                   LOCK IT IN
