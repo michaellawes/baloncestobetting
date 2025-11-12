@@ -2,7 +2,7 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { ParlayTask } from "../../App";
-import { decimalToOdds, oddsToDecimal } from "../../Util";
+import { decimalToOdds, oddsToDecimal } from "../../utils/Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 

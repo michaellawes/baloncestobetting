@@ -5,6 +5,9 @@ import * as React from "react";
 import { useContext } from "react";
 import { ParlayTask } from "../../App";
 import { TasksDispatchContext } from "../reducer/TasksContext";
+import html2canvas from "html2canvas-pro";
+import { downloadImage } from "../../utils/exportAsImage";
+import { saveAs } from "file-saver";
 
 library.add(fas);
 
@@ -71,8 +74,28 @@ export function Parlay(props: ParlayProps) {
     });
   };
 
+  const handleCaptureClick = async () => {
+    const parlayElement = document.getElementById(parlay_id);
+    if (!parlayElement) return;
+
+    const userAgent = navigator.userAgent;
+    const canvas = await html2canvas(parlayElement);
+    if (userAgent.search("Firefox") >= 0) {
+      const dataURL = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      saveAs(dataURL, `parlay-${parlay_id.substring(0, 6)}.png`);
+    } else {
+      const dataURL = canvas.toDataURL("image/png");
+      downloadImage(dataURL, `parlay-${parlay_id.substring(0, 6)}.png`);
+    }
+  };
+
   return (
-    <div className="w-full float-left shadow-sm rounded-xs dark:bg-gray-800 dark:border-white border-1">
+    <div
+      className="w-full float-left shadow-sm rounded-xs dark:bg-gray-800 dark:border-white border-1"
+      id={parlay_id}
+    >
       <div className="p-4 flex w-full items-center justify-between border-b-1 border-b-gray-400">
         <span className="text-gray-500 text-xs float-left">
           {parlay_id.substring(parlay_id.length - 5)}
@@ -134,6 +157,12 @@ export function Parlay(props: ParlayProps) {
           {is_winner && !is_active && isPayedOut && (
             <span className="text-green-500 text-base">CASHHHHHHHHHHH</span>
           )}
+          <button
+            className="pl-2 pr-2 block text-white text-base float-right hover:bg-gray-600"
+            onClick={() => handleCaptureClick()}
+          >
+            <FontAwesomeIcon icon="fa-solid fa-download" />
+          </button>
         </div>
       </div>
     </div>

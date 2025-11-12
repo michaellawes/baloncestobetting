@@ -10,7 +10,7 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { UserData } from "../../App";
-import { getUuid } from "../../Util";
+import { getUuid } from "../../utils/Util";
 
 interface NavbarProps {
   isLoggedIn: boolean;

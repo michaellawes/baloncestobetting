@@ -9,7 +9,7 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { generateId } from "./Util";
+import { generateId } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { MatchupProps } from "./components/dashboard/wagers/Matchup";
 

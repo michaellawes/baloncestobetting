@@ -1,5 +1,6 @@
 import { v5 as uuidv5 } from "uuid";
-import { MatchupProps } from "./components/dashboard/wagers/Matchup";
+import { MatchupProps } from "../components/dashboard/wagers/Matchup";
+import { SupabaseParlay } from "../components/parlays/Parlay";
 
 export const generateId = () => {
   const S4 = () => {
@@ -52,7 +53,7 @@ export const demo: MatchupProps[] = [
           record: "1-2",
           color: "text-white",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "+70.5", odds: -110 },
           { text: "O 3985.5", odds: -150 },
           { text: "", odds: 200 },
@@ -65,7 +66,7 @@ export const demo: MatchupProps[] = [
           record: "1-2",
           color: "text-black",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "-70.5", odds: -110 },
           { text: "U 3985.5", odds: 125 },
           { text: "", odds: -120 },
@@ -82,7 +83,7 @@ export const demo: MatchupProps[] = [
           record: "2-1",
           color: "text-white",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "+100.5", odds: -150 },
           { text: "O 3785.5", odds: -120 },
           { text: "", odds: 275 },
@@ -95,7 +96,7 @@ export const demo: MatchupProps[] = [
           record: "2-1",
           color: "text-black",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "-100.5", odds: -110 },
           { text: "U 3785.5", odds: -130 },
           { text: "", odds: -120 },
@@ -112,7 +113,7 @@ export const demo: MatchupProps[] = [
           record: "3-0",
           color: "text-white",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "+35.5", odds: -110 },
           { text: "O 3800.5", odds: -220 },
           { text: "", odds: 200 },
@@ -125,7 +126,7 @@ export const demo: MatchupProps[] = [
           record: "1-1",
           color: "text-black",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "-35.5", odds: -150 },
           { text: "U 3800.5", odds: 125 },
           { text: "", odds: -185 },
@@ -142,7 +143,7 @@ export const demo: MatchupProps[] = [
           record: "2-1",
           color: "text-white",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "+35.5", odds: -110 },
           { text: "O 3985.5", odds: -220 },
           { text: "", odds: 200 },
@@ -155,7 +156,7 @@ export const demo: MatchupProps[] = [
           record: "1-2",
           color: "text-black",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "-35.5", odds: -150 },
           { text: "U 3985.5", odds: 125 },
           { text: "", odds: -185 },
@@ -172,7 +173,7 @@ export const demo: MatchupProps[] = [
           record: "0-4",
           color: "text-white",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "+35.5", odds: -110 },
           { text: "O 4100.5", odds: -220 },
           { text: "", odds: 200 },
@@ -185,13 +186,38 @@ export const demo: MatchupProps[] = [
           record: "0-3",
           color: "text-black",
         },
-        propLineProps: [
+        propsLineProps: [
           { text: "-35.5", odds: -150 },
           { text: "U 4100.5", odds: 125 },
           { text: "", odds: -185 },
         ],
       },
     ],
+  },
+];
+
+export const demoParlays: SupabaseParlay[] = [
+  {
+    parlay_id: "44d2e199-c29e-e300-984e-76e0c1435f67",
+    is_active: false,
+    is_payed_out: false,
+    is_winner: false,
+    legs: [
+      {
+        betType: "SPREAD BETTING",
+        id: "JASON's TEAMSPREAD BETTING",
+        odds: -150,
+        team: "JASON's TEAM",
+        text: "+100.5",
+      },
+    ],
+    payout: 16.67,
+    created_at: 1762659052276,
+    total_odds: -150,
+    wager: 10,
+    user_id: "",
+    matchup_id: 4,
+    expires_at: Date.now(),
   },
 ];
 
