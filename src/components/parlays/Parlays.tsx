@@ -1,9 +1,8 @@
 import { Parlay, SupabaseParlay } from "./Parlay";
 import * as React from "react";
-//import { useEffect } from "react";
-//import supabase from "../../config/supabaseConfig";
+import { useEffect } from "react";
+import supabase from "../../config/supabaseConfig";
 import { UserData } from "../../App";
-import { demoParlays } from "../../utils/Util";
 
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -11,17 +10,17 @@ export interface ParlaysViewerProps {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 export function Parlays(props: ParlaysViewerProps) {
-  const { setBalance /*user, setErrorMessage*/ } = props;
-  const [parlays /*setParlays*/] =
-    React.useState<SupabaseParlay[]>(demoParlays);
+  const { setBalance, user, setErrorMessage } = props;
+  const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
 
-  /*const validateFinishedSlips = (data: SupabaseParlay[]) => {
+  const validateFinishedSlips = (data: SupabaseParlay[]) => {
     for (const parlay of data) {
       parlay.is_active = new Date(parlay.expires_at).getTime() > Date.now();
     }
     return data;
   };
 
+  /*
   const validateResultOfFinishedSlips = (data: SupabaseParlay[]) => {
     const finishedSlips = data.filter(
       (parlay) => !parlay.is_active && !parlay.is_payed_out,
@@ -29,7 +28,7 @@ export function Parlays(props: ParlaysViewerProps) {
     return finishedSlips;
   };*/
 
-  /*useEffect(() => {
+  useEffect(() => {
     const getParlays = async () => {
       const { data, error } = await supabase
         .from("parlays")
@@ -48,7 +47,7 @@ export function Parlays(props: ParlaysViewerProps) {
       }
     };
     getParlays();
-  }, []);*/
+  }, []);
 
   return (
     <div className="flex flex-col w-full h-full bg-gray-600">
