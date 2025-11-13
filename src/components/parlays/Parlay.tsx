@@ -67,10 +67,16 @@ export function Parlay(props: ParlayProps) {
       const dataURL = canvas
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
-      saveAs(dataURL, `parlay-${parlay_id.substring(0, 6)}.png`);
+      saveAs(
+        dataURL,
+        `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
+      );
     } else {
       const dataURL = canvas.toDataURL("image/png");
-      downloadImage(dataURL, `parlay-${parlay_id.substring(0, 6)}.png`);
+      downloadImage(
+        dataURL,
+        `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
+      );
     }
   };
 
