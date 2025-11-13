@@ -1,6 +1,9 @@
 import { v5 as uuidv5 } from "uuid";
+// @ts-ignore
 import { SupabaseParlay } from "../components/parlays/Parlay";
+// @ts-ignore
 import { ParlayTask } from "../App";
+// @ts-ignore
 import { PropLineInterface } from "../components/dashboard/wagers/PropLine";
 
 export const generateId = () => {

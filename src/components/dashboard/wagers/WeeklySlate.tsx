@@ -101,7 +101,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                     <img
                                       src={matchup.road.icon}
                                       alt="Can't Get Your PFP Buddy"
-                                      className="w-10 h-10 border-transparent border rounded-4xl"
+                                      className="w-10 h-10 border-transparent border rounded-4xl ml-2"
                                     />
                                   </div>
                                 ) : (
@@ -129,7 +129,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                           </div>
                         </div>
                       </div>
-                      <div className="pl-2 text-lg overflow-visible h-0.25 justify-center items-center z-40 flex-row flex box-border relative">
+                      <div className="pl-3 text-lg overflow-visible h-0.25 justify-center items-center z-40 flex-row flex box-border relative">
                         <FontAwesomeIcon
                           className="shrink-0 w-[15px] h-[15px] text-gray-300"
                           icon={faAt as IconProp}
@@ -152,7 +152,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                     <img
                                       src={matchup.home.icon}
                                       alt="Can't Get Your PFP Buddy"
-                                      className="w-10 h-10 border-transparent border rounded-4xl"
+                                      className="w-10 h-10 border-transparent border rounded-4xl ml-2"
                                     />
                                   </div>
                                 ) : (

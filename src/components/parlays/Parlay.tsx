@@ -46,6 +46,22 @@ export function Parlay(props: ParlayProps) {
     is_winner,
   } = props;
 
+  const getStandardTime = (hours: number, minutes: number) => {
+    let timeValue;
+
+    if (hours > 0 && hours <= 12) {
+      timeValue = "" + hours;
+    } else if (hours > 12) {
+      timeValue = "" + (hours - 12);
+    } else if (hours == 0) {
+      timeValue = "12";
+    }
+    timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes;
+    timeValue += hours >= 12 ? "PM ET" : "AM ET";
+
+    return timeValue;
+  };
+
   const getReadableDate = (timestamp: number) => {
     const d = new Date(timestamp);
     return (
@@ -56,9 +72,7 @@ export function Parlay(props: ParlayProps) {
       "/" +
       d.getFullYear() +
       " " +
-      d.getHours() +
-      ":" +
-      d.getMinutes()
+      getStandardTime(d.getHours(), d.getMinutes())
     );
   };
 

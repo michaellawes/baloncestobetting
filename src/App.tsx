@@ -73,7 +73,6 @@ export function App() {
   const [balance, setBalance] = useState<number>(0);
   const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const [matchup, setMatchup] = useState<number>(0);
   const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
@@ -91,7 +90,7 @@ export function App() {
       });
 
       if (error) {
-        setErrorMessage(error.message + " refresh page");
+        console.log(error);
       }
 
       if (data) {
@@ -108,11 +107,10 @@ export function App() {
             .limit(1);
 
           if (error) {
-            setErrorMessage(error.message);
+            console.log(error);
           }
 
           if (data) {
-            setErrorMessage("");
             setMatchup(data[0]["id"]);
             setWeeklySlate(data[0]["weekly_slate"]);
           }
@@ -132,29 +130,26 @@ export function App() {
         .eq("id", user.id);
 
       if (error) {
-        setErrorMessage(error.message);
+        console.log(error);
         console.log(error);
       }
 
       if (data) {
-        setErrorMessage("");
         if (data.length == 0) {
           const { data, error } = await supabase
             .from("users")
             .insert([{ id: user.id, name: user.name, profile: user.profile }])
             .select();
           if (error) {
-            setErrorMessage(error.message);
+            console.log(error);
             console.log(error);
           }
 
           if (data) {
-            setErrorMessage("");
             const balance: number = data[0]["balance"];
             setBalance(balance);
           }
         } else {
-          setErrorMessage("");
           const balance: number = data[0]["balance"];
           setBalance(balance);
         }
@@ -241,12 +236,11 @@ export function App() {
           .from("parlays")
           .insert([newParlay]);
         if (error) {
-          setErrorMessage(error.message);
+          console.log(error);
           console.log(error);
         }
 
         if (data) {
-          setErrorMessage("");
           setParlayLegs([]);
           setCurrentParlay(null);
         }
@@ -266,9 +260,7 @@ export function App() {
           .eq("id", user.id);
 
         if (error) {
-          setErrorMessage(error.message);
-        } else {
-          setErrorMessage("");
+          console.log(error);
         }
       };
       updateBalance();
@@ -297,9 +289,7 @@ export function App() {
             .eq("parlay_id", temp.parlay_id);
 
           if (error) {
-            setErrorMessage(error.message);
-          } else {
-            setErrorMessage("");
+            console.log(error);
           }
         };
         updateParlay();
@@ -323,7 +313,6 @@ export function App() {
             balance={balance}
             setBalance={setBalance}
             setUser={setUser}
-            errorMessage={errorMessage}
           />
           <Routes>
             <Route path="/" element={<Dashboard weeklySlate={weeklySlate} />} />
@@ -334,7 +323,6 @@ export function App() {
                   setBalance={setBalance}
                   user={user}
                   setParlayFieldUpdate={setParlayFieldUpdate}
-                  setErrorMessage={setErrorMessage}
                 />
               }
             />
