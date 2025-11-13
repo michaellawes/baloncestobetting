@@ -5,11 +5,8 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import {
-  TasksContext,
-  TasksDispatchContext,
-} from "./components/reducer/TasksContext";
-import { generateId, MatchupSchema } from "./utils/Util";
+import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
+import { generateId, MatchupSchema, refactoredDemo } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 
@@ -73,8 +70,11 @@ export function App() {
   const [balance, setBalance] = useState<number>(0);
   const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
+  const [supabaseAuthenticated, setSupabaseAuthenticated] =
+    useState<boolean>(false);
   const [matchup, setMatchup] = useState<number>(0);
-  const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
+  const [weeklySlate, setWeeklySlate] =
+    useState<MatchupSchema[]>(refactoredDemo);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
   const [parlayFieldUpdate, setParlayFieldUpdate] =
@@ -91,6 +91,7 @@ export function App() {
 
       if (error) {
         console.log(error);
+        setSupabaseAuthenticated(false);
       }
 
       if (data) {
@@ -98,29 +99,34 @@ export function App() {
           access_token: data.session.access_token,
           refresh_token: data.session.refresh_token,
         });
-
-        const getMatchup = async () => {
-          const { data, error } = await supabase
-            .from("matchup")
-            .select()
-            .order("id", { ascending: false })
-            .limit(1);
-
-          if (error) {
-            console.log(error);
-          }
-
-          if (data) {
-            setMatchup(data[0]["id"]);
-            setWeeklySlate(data[0]["weekly_slate"]);
-          }
-        };
-        getMatchup();
+        setSupabaseAuthenticated(true);
       }
     };
 
     authenticateUser();
   }, []);
+
+  useEffect(() => {
+    if (supabaseAuthenticated) {
+      const getMatchup = async () => {
+        const { data, error } = await supabase
+          .from("matchup")
+          .select()
+          .order("id", { ascending: false })
+          .limit(1);
+
+        if (error) {
+          console.log(error);
+        }
+
+        if (data) {
+          setMatchup(data[0]["id"]);
+          setWeeklySlate(data[0]["weekly_slate"]);
+        }
+      };
+      getMatchup();
+    }
+  }, [supabaseAuthenticated]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -131,7 +137,6 @@ export function App() {
 
       if (error) {
         console.log(error);
-        console.log(error);
       }
 
       if (data) {
@@ -141,7 +146,6 @@ export function App() {
             .insert([{ id: user.id, name: user.name, profile: user.profile }])
             .select();
           if (error) {
-            console.log(error);
             console.log(error);
           }
 
@@ -236,7 +240,6 @@ export function App() {
           .from("parlays")
           .insert([newParlay]);
         if (error) {
-          console.log(error);
           console.log(error);
         }
 

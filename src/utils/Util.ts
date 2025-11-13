@@ -1,9 +1,6 @@
 import { v5 as uuidv5 } from "uuid";
-// @ts-ignore
 import { SupabaseParlay } from "../components/parlays/Parlay";
-// @ts-ignore
 import { ParlayTask } from "../App";
-// @ts-ignore
 import { PropLineInterface } from "../components/dashboard/wagers/PropLine";
 
 export const generateId = () => {
@@ -74,7 +71,7 @@ export const refactoredDemo: MatchupSchema[] = [
       moneyline: { text: "", odds: 200 },
     },
     home: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Jaron",
       record: "1-2",
       color: "text-black",
@@ -85,7 +82,7 @@ export const refactoredDemo: MatchupSchema[] = [
   },
   {
     road: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Alex",
       record: "2-1",
       color: "text-white",
@@ -94,7 +91,7 @@ export const refactoredDemo: MatchupSchema[] = [
       moneyline: { text: "", odds: 275 },
     },
     home: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Jovawn",
       record: "2-1",
       color: "text-black",
@@ -105,7 +102,7 @@ export const refactoredDemo: MatchupSchema[] = [
   },
   {
     road: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Seb",
       record: "3-0",
       color: "text-white",
@@ -114,7 +111,7 @@ export const refactoredDemo: MatchupSchema[] = [
       moneyline: { text: "", odds: 200 },
     },
     home: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Jaden",
       record: "1-1",
       color: "text-black",
@@ -125,7 +122,7 @@ export const refactoredDemo: MatchupSchema[] = [
   },
   {
     road: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Justin",
       record: "2-1",
       color: "text-white",
@@ -134,7 +131,7 @@ export const refactoredDemo: MatchupSchema[] = [
       moneyline: { text: "", odds: 200 },
     },
     home: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Jordan",
       record: "1-2",
       color: "text-black",
@@ -145,7 +142,7 @@ export const refactoredDemo: MatchupSchema[] = [
   },
   {
     road: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Iyin",
       record: "0-4",
       color: "text-white",
@@ -154,7 +151,7 @@ export const refactoredDemo: MatchupSchema[] = [
       moneyline: { text: "", odds: 200 },
     },
     home: {
-      icon: "",
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Jason",
       record: "0-3",
       color: "text-black",
