@@ -8,10 +8,12 @@
     "sourceMap": true,
     "declaration": true,
     "noImplicitAny": true,
-    "module": "es2022",
+    "module": "ESNext",
     "target": "es5",
     "allowJs": true,
-    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "bundler",
     "jsx": "react-jsx"
   },
   "include": [

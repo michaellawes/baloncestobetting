@@ -6,7 +6,6 @@ interface NavbarProps {
     balance: number;
     setBalance: React.Dispatch<React.SetStateAction<number>>;
     setUser: React.Dispatch<React.SetStateAction<UserData>>;
-    errorMessage: string;
 }
 export declare function Navbar(props: NavbarProps): import("react/jsx-runtime").JSX.Element;
 export {};
