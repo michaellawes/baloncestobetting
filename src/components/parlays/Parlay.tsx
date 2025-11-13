@@ -10,7 +10,6 @@ import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
-import { saveAs } from "file-saver";
 
 library.add(fas);
 
@@ -86,7 +85,7 @@ export function Parlay(props: ParlayProps) {
       const dataURL = canvas
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
-      saveAs(
+      downloadImage(
         dataURL,
         `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
       );

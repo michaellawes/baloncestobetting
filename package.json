@@ -11,8 +11,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fastify/postgres": "^6.0.2",
-    "@fastify/vite": "^8.2.1",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-regular-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
@@ -25,8 +23,6 @@
     "@supabase/supabase-js": "^2.81.1",
     "@tailwindcss/vite": "^4.1.16",
     "@tailwindplus/elements": "^1.0.18",
-    "axios": "^1.13.2",
-    "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "html2canvas-pro": "^1.5.13",
     "jwt-decode": "^4.0.0",
