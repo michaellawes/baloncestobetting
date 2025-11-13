@@ -13,6 +13,7 @@ export interface WeeklySlateProps {
 
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups } = props;
+  console.log("Props: ", props);
 
   const getOppId = (
     oppName: string,
