@@ -60,7 +60,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
   };
 
   const removeLeg = (id: string) => {
-    dispatch({ type: "removeLeg", id: id });
+    dispatch({ type: "removeLeg", frontend_id: id });
   };
 
   const handleWagerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
