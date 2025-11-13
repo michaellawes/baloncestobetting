@@ -1,9 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-// @ts-expect-error TS 5.0+ is broken
-import App from "./App.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>

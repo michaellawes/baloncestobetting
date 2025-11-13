@@ -5,11 +5,8 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import {
-  TasksContext,
-  TasksDispatchContext,
-} from "./components/reducer/TasksContext";
-import { generateId, MatchupSchema, refactoredDemo } from "./utils/Util";
+import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
+import { generateId, MatchupSchema } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 
@@ -76,8 +73,7 @@ export function App() {
   const [supabaseAuthenticated, setSupabaseAuthenticated] =
     useState<boolean>(false);
   const [matchup, setMatchup] = useState<number>(0);
-  const [weeklySlate, setWeeklySlate] =
-    useState<MatchupSchema[]>(refactoredDemo);
+  const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
   const [parlayFieldUpdate, setParlayFieldUpdate] =
@@ -123,9 +119,6 @@ export function App() {
         }
 
         if (data) {
-          console.log(data);
-          console.log(data[0]["id"]);
-          console.log(data[0]["weekly_slate"]);
           setMatchup(data[0]["id"]);
           setWeeklySlate(data[0]["weekly_slate"]);
         }
