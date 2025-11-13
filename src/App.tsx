@@ -9,9 +9,8 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { generateId } from "./utils/Util";
+import { generateId, MatchupSchema } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
-import { MatchupProps } from "./components/dashboard/wagers/Matchup";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 
 export interface ParlayTask {
@@ -76,7 +75,7 @@ export function App() {
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [matchup, setMatchup] = useState<number>(0);
-  const [weeklySlate, setWeeklySlate] = useState<MatchupProps[]>([]);
+  const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
   const [parlayFieldUpdate, setParlayFieldUpdate] =
@@ -170,13 +169,6 @@ export function App() {
     switch (action.type) {
       case "addLeg": {
         tasks = tasks.filter((task) => task.frontend_id !== action.oppId);
-        console.log({
-          id: action.frontend_id,
-          team: action.team,
-          betType: action.betType,
-          text: action.text,
-          odds: action.odds,
-        });
         tasks = [
           ...tasks,
           {

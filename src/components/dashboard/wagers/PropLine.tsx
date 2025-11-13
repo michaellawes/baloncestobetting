@@ -8,7 +8,7 @@ export interface PropLineProps {
   team: string;
   betType: string;
   odds: number;
-  id: string;
+  frontend_id: string;
   oppId: string;
 }
 
@@ -18,7 +18,7 @@ export interface PropLineInterface {
 }
 
 export function PropLine(props: PropLineProps) {
-  const { text, odds, id, oppId, team, betType } = props;
+  const { text, odds, frontend_id, oppId, team, betType } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
   const [isAdded, setIsAdded] = React.useState(false);
@@ -27,31 +27,92 @@ export function PropLine(props: PropLineProps) {
     const type = !isAdded ? "addLeg" : "removeLeg";
     const action: ParlayAction = {
       type: type,
-      frontend_id: id,
+      frontend_id: frontend_id,
       text: text,
       odds: odds,
       team: team,
       betType: betType,
+      oppId: oppId,
     };
-    if (!isAdded) {
-      action["oppId"] = oppId;
-    }
     dispatch(action);
   };
 
   useEffect(() => {
-    const index = tasks.findIndex((addedLegs) => addedLegs.frontend_id === id);
+    const index = tasks.findIndex(
+      (addedLegs) => addedLegs.frontend_id === frontend_id,
+    );
     setIsAdded(index !== -1);
-  }, [tasks, id]);
+  }, [tasks, frontend_id]);
 
   return (
+    <div
+      className={`switch ${
+        isAdded
+          ? "h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-blue-500 rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+          : "hover:bg-gray-600 h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+      }`}
+    >
+      {text.length > 0 ? (
+        <button
+          onClick={() => selectParlay()}
+          className={`switch ${
+            isAdded
+              ? "h-full w-full basis-0 grow bg-blue-500 justify-center items-center rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+              : "hover:bg-gray-800 h-full w-full basis-0 grow justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+          }`}
+        >
+          <span
+            className={`switch ${
+              isAdded
+                ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
+                : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300"
+            }`}
+          >
+            {text}
+          </span>
+          <span
+            className={`switch ${
+              isAdded
+                ? "leading-none tracking-[.5px] opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
+                : "leading-none tracking-[.5px] opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-blue-500"
+            }`}
+          >
+            {odds > 0 && "+"}
+            {odds}
+          </span>
+        </button>
+      ) : (
+        <button
+          onClick={() => selectParlay()}
+          className={`switch ${
+            isAdded
+              ? 'cursor-pointer h-full w-full mr-1 ml-1 bg-blue-500 basis-0 grow justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"'
+              : "hover:bg-gray-800 cursor-pointer h-full w-full mr-1 ml-1 bg-transparent basis-0 grow border border-solid justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"
+          }`}
+        >
+          <span
+            className={`switch ${
+              isAdded
+                ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-xs font-[ProximaNova-Bold, serif] font-bold"
+                : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-xs font-[ProximaNova-Bold, serif]"
+            }`}
+          >
+            {odds > 0 && "+"}
+            {odds}
+          </span>
+        </button>
+      )}
+    </div>
+  );
+
+  /*return (
     <div className="prop-line w-fit overflow-hidden">
       <button
         onClick={() => selectParlay()}
         className={`switch ${
           isAdded
-            ? "py-2.5 px-5 me-2 mb-2 text-sm font-light text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-            : "font-light text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            ? 'cursor-pointer border-blue-400 h-full w-full mr-1 ml-1 bg-blue-500 basis-0 grow border border-solid justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"'
+            : "hover:bg-gray-600 cursor-pointer border-blue-500 h-full w-full mr-1 ml-1 bg-transparent basis-0 grow border border-solid justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"
         }`}
       >
         {text.length > 0 ? (
@@ -72,5 +133,5 @@ export function PropLine(props: PropLineProps) {
         )}
       </button>
     </div>
-  );
+  );*/
 }
