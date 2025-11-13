@@ -10,7 +10,6 @@ import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
-import { saveAs } from "file-saver";
 
 library.add(fas);
 
@@ -46,6 +45,22 @@ export function Parlay(props: ParlayProps) {
     is_winner,
   } = props;
 
+  const getStandardTime = (hours: number, minutes: number) => {
+    let timeValue;
+
+    if (hours > 0 && hours <= 12) {
+      timeValue = "" + hours;
+    } else if (hours > 12) {
+      timeValue = "" + (hours - 12);
+    } else if (hours == 0) {
+      timeValue = "12";
+    }
+    timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes;
+    timeValue += hours >= 12 ? "PM ET" : "AM ET";
+
+    return timeValue;
+  };
+
   const getReadableDate = (timestamp: number) => {
     const d = new Date(timestamp);
     return (
@@ -56,9 +71,7 @@ export function Parlay(props: ParlayProps) {
       "/" +
       d.getFullYear() +
       " " +
-      d.getHours() +
-      ":" +
-      d.getMinutes()
+      getStandardTime(d.getHours(), d.getMinutes())
     );
   };
 
@@ -72,7 +85,7 @@ export function Parlay(props: ParlayProps) {
       const dataURL = canvas
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
-      saveAs(
+      downloadImage(
         dataURL,
         `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
       );

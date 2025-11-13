@@ -10,10 +10,9 @@ export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   user: UserData;
   setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 export function Parlays(props: ParlaysViewerProps) {
-  const { setBalance, setErrorMessage, setParlayFieldUpdate, user } = props;
+  const { setBalance, setParlayFieldUpdate, user } = props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
 
   const validateFinishedSlips = async (data: SupabaseParlay[]) => {
@@ -57,7 +56,7 @@ export function Parlays(props: ParlaysViewerProps) {
       .in("id", query_ids);
 
     if (error) {
-      setErrorMessage(error.message);
+      console.log(error);
     }
 
     if (data) {
@@ -102,11 +101,10 @@ export function Parlays(props: ParlaysViewerProps) {
         .order("created_at", { ascending: false });
 
       if (error) {
-        setErrorMessage(error.message);
+        console.log(error);
       }
 
       if (data) {
-        setErrorMessage("");
         const validatedSlips = await validateFinishedSlips(data);
         setParlays(validatedSlips);
       }

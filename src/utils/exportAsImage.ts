@@ -4,6 +4,7 @@ const exportAsImage = async (
   element: HTMLDivElement,
   imageFileName: string,
 ) => {
+  // @ts-ignore
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
   downloadImage(image, imageFileName);
