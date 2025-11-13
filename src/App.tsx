@@ -124,6 +124,8 @@ export function App() {
 
         if (data) {
           console.log(data);
+          console.log(data[0]["id"]);
+          console.log(data[0]["weekly_slate"]);
           setMatchup(data[0]["id"]);
           setWeeklySlate(data[0]["weekly_slate"]);
         }
