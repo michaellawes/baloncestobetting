@@ -80,16 +80,16 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
       if (tasks.length == 1) {
         return (
           "bottom-18" +
-          " fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 rounded-sm border-b-3 border-gray-700"
+          " fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 border-b-3 border-gray-700 rounded-sm"
         );
       } else {
         return (
           "bottom-29" +
-          " fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 rounded-sm border-b-3 border-gray-700"
+          " fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 border-b-3 border-gray-700 rounded-sm"
         );
       }
     } else {
-      return "fixed pt-2 pb-5 bottom-5 z-50 w-full h-16 border-t bg-gray-800 rounded-sm border-b-3 border-gray-700";
+      return "bottom-5 fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 border-b-3 border-gray-700 rounded-sm";
     }
   };
 
@@ -121,21 +121,21 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             <div key={"clear"} className="float-right w-1/4 pb-2 md:w-1/3 pr-2">
               <button
                 onClick={removeAllLegs}
-                className="cursor-pointer block w-full hover:bg-gray-700 rounded-xl mr-2 pr-4 pl-4"
+                className="cursor-pointer block w-full hover:bg-gray-700 rounded-xl mr-2 pr-2 pl-2"
               >
                 Clear Slip
               </button>
             </div>
           </div>
           {showSlip && (
-            <div className="float-left max-h-24 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-800 rounded-sm">
+            <div className="float-left max-h-24 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-800">
               {tasks.map((leg) => (
                 <div
                   key={leg.frontend_id}
                   className="pt-1 mb-1 h-12 w-full border-t-1 border-gray-300"
                 >
                   <div className="pl-5 float-left h-full w-5/8">
-                    <span className="block relative text-white text-base ">
+                    <span className="block relative text-white text-sm ">
                       {leg.team} {leg.text}
                     </span>
                     <span className="block relative text-gray-400 text-xs ">

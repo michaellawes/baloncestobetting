@@ -83,7 +83,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
             </li>
             {matchups.map((matchup: MatchupSchema) => (
               <li key={matchup.road.name + "-" + matchup.home.name}>
-                <div className="h-[8.688] box-border overflow-hidden relative pl-4">
+                <div className="h-[8.688rem] box-border overflow-hidden relative pl-4">
                   <div className="border-b-gray-700 border-b basis-0 grow pt-2 border-solid items-stretch justify-start flex-row flex box-border relative">
                     <div className="width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">
                       <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative cursor-pointer">
