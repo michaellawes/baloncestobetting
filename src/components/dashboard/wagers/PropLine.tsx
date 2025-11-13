@@ -104,34 +104,4 @@ export function PropLine(props: PropLineProps) {
       )}
     </div>
   );
-
-  /*return (
-    <div className="prop-line w-fit overflow-hidden">
-      <button
-        onClick={() => selectParlay()}
-        className={`switch ${
-          isAdded
-            ? 'cursor-pointer border-blue-400 h-full w-full mr-1 ml-1 bg-blue-500 basis-0 grow border border-solid justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"'
-            : "hover:bg-gray-600 cursor-pointer border-blue-500 h-full w-full mr-1 ml-1 bg-transparent basis-0 grow border border-solid justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"
-        }`}
-      >
-        {text.length > 0 ? (
-          <div className="text-center w-fit overflow-hidden">
-            <span className="block relative text-white text-base">{text}</span>
-            <span className="block relative text-gray-400 text-sm">
-              {odds > 0 && "+"}
-              {odds}
-            </span>
-          </div>
-        ) : (
-          <div>
-            <span className="block relative text-white text-base">
-              {odds > 0 && "+"}
-              {odds}
-            </span>
-          </div>
-        )}
-      </button>
-    </div>
-  );*/
 }

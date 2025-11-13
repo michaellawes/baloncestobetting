@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fas, faUser } from "@fortawesome/free-solid-svg-icons";
 
 library.add(fas);
 
@@ -22,7 +22,7 @@ export function Auth(props: AuthProps) {
           className="w-8 h-8"
         />
       ) : (
-        <FontAwesomeIcon icon="fa-solid fa-user" />
+        <FontAwesomeIcon icon={faUser as IconProp} />
       )}
     </div>
   );

@@ -1,16 +1,26 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es2022"],
+    "lib": [
+      "dom",
+      "es2022"
+    ],
     "outDir": "./lib/cjs/",
     "sourceMap": true,
     "declaration": true,
     "noImplicitAny": true,
     "module": "es2022",
+    "esModuleInterop": true,
     "target": "es5",
     "allowJs": true,
-    "moduleResolution": "Node",
-    "jsx": "react-jsx",
+    "moduleResolution": "nodenext",
+    "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts*"],
-  "exclude": ["node_modules", "dist", "lib"]
+  "include": [
+    "src/**/*.ts*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib"
+  ]
 }

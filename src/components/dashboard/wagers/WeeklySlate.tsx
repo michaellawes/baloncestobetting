@@ -1,8 +1,8 @@
 import * as React from "react";
 import { MatchupSchema, propField } from "../../../utils/Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
+import { faAt, faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
 import { PropLine } from "./PropLine";
 
 library.add(fas);
@@ -111,7 +111,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                       matchup.road.color
                                     }
                                   >
-                                    <FontAwesomeIcon icon="fa-solid fa-basketball" />
+                                    <FontAwesomeIcon
+                                      icon={faBasketball as IconProp}
+                                    />
                                   </div>
                                 )}
                               </div>
@@ -130,7 +132,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                       <div className="pl-2 text-lg overflow-visible h-0.25 justify-center items-center z-40 flex-row flex box-border relative">
                         <FontAwesomeIcon
                           className="shrink-0 w-[15px] h-[15px] text-gray-300"
-                          icon="fa-solid fa-at"
+                          icon={faAt as IconProp}
                         />
                         <div className="h-[1px] bg-gray-700 basis-0 grow flex-row items-stretch justify-start box-border relative"></div>
                       </div>
@@ -159,7 +161,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                       "text-center text-4xl text-blue-400"
                                     }
                                   >
-                                    <FontAwesomeIcon icon="fa-solid fa-basketball" />
+                                    <FontAwesomeIcon
+                                      icon={faBasketball as IconProp}
+                                    />
                                   </div>
                                 )}
                               </div>
