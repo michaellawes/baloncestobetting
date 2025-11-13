@@ -5,7 +5,10 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
+import {
+  TasksContext,
+  TasksDispatchContext,
+} from "./components/reducer/TasksContext";
 import { generateId, MatchupSchema, refactoredDemo } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
@@ -120,6 +123,7 @@ export function App() {
         }
 
         if (data) {
+          console.log(data);
           setMatchup(data[0]["id"]);
           setWeeklySlate(data[0]["weekly_slate"]);
         }
