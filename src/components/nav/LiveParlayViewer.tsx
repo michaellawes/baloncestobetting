@@ -3,10 +3,10 @@ import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { ParlayTask } from "../../App";
 import { decimalToOdds, oddsToDecimal } from "../../utils/Util";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(fas);
 
@@ -92,7 +92,6 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
       return "fixed pt-2 pb-5 bottom-5 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 rounded-sm";
     }
   };
-
   return (
     <div className="flex w-full flex-col-reverse">
       {tasks.length > 0 && (

@@ -1,7 +1,7 @@
 import { v5 as uuidv5 } from "uuid";
-import { MatchupProps } from "../components/dashboard/wagers/Matchup";
 import { SupabaseParlay } from "../components/parlays/Parlay";
 import { ParlayTask } from "../App";
+import { PropLineInterface } from "../components/dashboard/wagers/PropLine";
 
 export const generateId = () => {
   const S4 = () => {
@@ -44,156 +44,121 @@ export const getUuid = (id: string) => {
   return uuidv5(id, MY_NAMESPACE);
 };
 
-export const demo: MatchupProps[] = [
+export interface Team {
+  icon: string;
+  name: string;
+  record: string;
+  color: string;
+  spread: PropLineInterface;
+  points: PropLineInterface;
+  moneyline: PropLineInterface;
+}
+
+export interface MatchupSchema {
+  road: Team;
+  home: Team;
+}
+
+export const refactoredDemo: MatchupSchema[] = [
   {
-    matchupSlate: [
-      {
-        teamProps: {
-          icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
-          name: "Michael",
-          record: "1-2",
-          color: "text-white",
-        },
-        propsLineProps: [
-          { text: "+70.5", odds: -110 },
-          { text: "O 3985.5", odds: -150 },
-          { text: "", odds: 200 },
-        ],
-      },
-      {
-        teamProps: {
-          icon: "",
-          name: "Jaron",
-          record: "1-2",
-          color: "text-black",
-        },
-        propsLineProps: [
-          { text: "-70.5", odds: -110 },
-          { text: "U 3985.5", odds: 125 },
-          { text: "", odds: -120 },
-        ],
-      },
-    ],
+    road: {
+      icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
+      name: "Michael",
+      record: "1-2",
+      color: "text-white",
+      spread: { text: "+70.5", odds: -110 },
+      points: { text: "O 3985.5", odds: -150 },
+      moneyline: { text: "", odds: 200 },
+    },
+    home: {
+      icon: "",
+      name: "Jaron",
+      record: "1-2",
+      color: "text-black",
+      spread: { text: "-70.5", odds: -110 },
+      points: { text: "U 3985.5", odds: 125 },
+      moneyline: { text: "", odds: -120 },
+    },
   },
   {
-    matchupSlate: [
-      {
-        teamProps: {
-          icon: "",
-          name: "Alex",
-          record: "2-1",
-          color: "text-white",
-        },
-        propsLineProps: [
-          { text: "+100.5", odds: -150 },
-          { text: "O 3785.5", odds: -120 },
-          { text: "", odds: 275 },
-        ],
-      },
-      {
-        teamProps: {
-          icon: "",
-          name: "Jovawn",
-          record: "2-1",
-          color: "text-black",
-        },
-        propsLineProps: [
-          { text: "-100.5", odds: -110 },
-          { text: "U 3785.5", odds: -130 },
-          { text: "", odds: -120 },
-        ],
-      },
-    ],
+    road: {
+      icon: "",
+      name: "Alex",
+      record: "2-1",
+      color: "text-white",
+      spread: { text: "+100.5", odds: -150 },
+      points: { text: "O 3785.5", odds: -120 },
+      moneyline: { text: "", odds: 275 },
+    },
+    home: {
+      icon: "",
+      name: "Jovawn",
+      record: "2-1",
+      color: "text-black",
+      spread: { text: "-100.5", odds: -110 },
+      points: { text: "U 3785.5", odds: -130 },
+      moneyline: { text: "", odds: -120 },
+    },
   },
   {
-    matchupSlate: [
-      {
-        teamProps: {
-          icon: "",
-          name: "Seb",
-          record: "3-0",
-          color: "text-white",
-        },
-        propsLineProps: [
-          { text: "+35.5", odds: -110 },
-          { text: "O 3800.5", odds: -220 },
-          { text: "", odds: 200 },
-        ],
-      },
-      {
-        teamProps: {
-          icon: "",
-          name: "Jaden",
-          record: "1-1",
-          color: "text-black",
-        },
-        propsLineProps: [
-          { text: "-35.5", odds: -150 },
-          { text: "U 3800.5", odds: 125 },
-          { text: "", odds: -185 },
-        ],
-      },
-    ],
+    road: {
+      icon: "",
+      name: "Seb",
+      record: "3-0",
+      color: "text-white",
+      spread: { text: "+35.5", odds: -110 },
+      points: { text: "O 3800.5", odds: -220 },
+      moneyline: { text: "", odds: 200 },
+    },
+    home: {
+      icon: "",
+      name: "Jaden",
+      record: "1-1",
+      color: "text-black",
+      spread: { text: "-35.5", odds: -150 },
+      points: { text: "U 3800.5", odds: 125 },
+      moneyline: { text: "", odds: -185 },
+    },
   },
   {
-    matchupSlate: [
-      {
-        teamProps: {
-          icon: "",
-          name: "Justin",
-          record: "2-1",
-          color: "text-white",
-        },
-        propsLineProps: [
-          { text: "+35.5", odds: -110 },
-          { text: "O 3985.5", odds: -220 },
-          { text: "", odds: 200 },
-        ],
-      },
-      {
-        teamProps: {
-          icon: "",
-          name: "Jordan",
-          record: "1-2",
-          color: "text-black",
-        },
-        propsLineProps: [
-          { text: "-35.5", odds: -150 },
-          { text: "U 3985.5", odds: 125 },
-          { text: "", odds: -185 },
-        ],
-      },
-    ],
+    road: {
+      icon: "",
+      name: "Justin",
+      record: "2-1",
+      color: "text-white",
+      spread: { text: "+35.5", odds: -110 },
+      points: { text: "O 3985.5", odds: -220 },
+      moneyline: { text: "", odds: 200 },
+    },
+    home: {
+      icon: "",
+      name: "Jordan",
+      record: "1-2",
+      color: "text-black",
+      spread: { text: "-35.5", odds: -150 },
+      points: { text: "U 3985.5", odds: 125 },
+      moneyline: { text: "", odds: -185 },
+    },
   },
   {
-    matchupSlate: [
-      {
-        teamProps: {
-          icon: "",
-          name: "Iyin",
-          record: "0-4",
-          color: "text-white",
-        },
-        propsLineProps: [
-          { text: "+35.5", odds: -110 },
-          { text: "O 4100.5", odds: -220 },
-          { text: "", odds: 200 },
-        ],
-      },
-      {
-        teamProps: {
-          icon: "",
-          name: "Jason",
-          record: "0-3",
-          color: "text-black",
-        },
-        propsLineProps: [
-          { text: "-35.5", odds: -150 },
-          { text: "U 4100.5", odds: 125 },
-          { text: "", odds: -185 },
-        ],
-      },
-    ],
+    road: {
+      icon: "",
+      name: "Iyin",
+      record: "0-4",
+      color: "text-white",
+      spread: { text: "+35.5", odds: -110 },
+      points: { text: "O 4100.5", odds: -220 },
+      moneyline: { text: "", odds: 200 },
+    },
+    home: {
+      icon: "",
+      name: "Jason",
+      record: "0-3",
+      color: "text-black",
+      spread: { text: "-35.5", odds: -150 },
+      points: { text: "U 4100.5", odds: 125 },
+      moneyline: { text: "", odds: -185 },
+    },
   },
 ];
 
