@@ -5,8 +5,11 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
-import { generateId, MatchupSchema } from "./utils/Util";
+import {
+  TasksContext,
+  TasksDispatchContext,
+} from "./components/reducer/TasksContext";
+import { generateId, MatchupSchema, refactoredDemo } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 
@@ -73,7 +76,8 @@ export function App() {
   const [supabaseAuthenticated, setSupabaseAuthenticated] =
     useState<boolean>(false);
   const [matchup, setMatchup] = useState<number>(0);
-  const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
+  const [weeklySlate, setWeeklySlate] =
+    useState<MatchupSchema[]>(refactoredDemo);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
   const [parlayFieldUpdate, setParlayFieldUpdate] =
