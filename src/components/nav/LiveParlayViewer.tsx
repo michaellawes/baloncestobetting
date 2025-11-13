@@ -3,9 +3,9 @@ import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { ParlayTask } from "../../App";
 import { decimalToOdds, oddsToDecimal } from "../../utils/Util";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fas, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(fas);
@@ -153,7 +153,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                       onClick={() => removeLeg(leg.frontend_id)}
                       className="float-right pr-5"
                     >
-                      <FontAwesomeIcon icon="fa-solid fa-xmark" />
+                      <FontAwesomeIcon icon={faXmark as IconProp} />
                     </button>
                   </div>
                 </div>

@@ -1,6 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faDownload,
+  fas,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
@@ -98,12 +103,12 @@ export function Parlay(props: ParlayProps) {
         </span>
         {!frontend_is_active && is_winner && (
           <div className="text-green-700 z-40 text-base float-left">
-            <FontAwesomeIcon icon="fa-solid fa-square-check" />
+            <FontAwesomeIcon icon={faSquareCheck as IconProp} />
           </div>
         )}
         {!frontend_is_active && !is_winner && (
           <div className="text-red-700 text-base float-left">
-            <FontAwesomeIcon icon="fa-solid fa-square-xmark" />
+            <FontAwesomeIcon icon={faSquareXmark as IconProp} />
           </div>
         )}
       </div>
@@ -137,7 +142,7 @@ export function Parlay(props: ParlayProps) {
             className="pl-2 pr-2 block text-white text-base float-right hover:bg-gray-600"
             onClick={() => handleCaptureClick()}
           >
-            <FontAwesomeIcon icon="fa-solid fa-download" />
+            <FontAwesomeIcon icon={faDownload as IconProp} />
           </button>
         </div>
       </div>
