@@ -10,7 +10,7 @@ import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
-import { numberWithCommas } from "../../utils/Util";
+import { getParlayType, numberWithCommas } from "../../utils/Util";
 
 library.add(fas);
 
@@ -45,10 +45,6 @@ export function Parlay(props: ParlayProps) {
     wager,
     is_winner,
   } = props;
-
-  const getParlayType = (numberOfLegs: number) => {
-    return numberOfLegs === 1 ? "Same Game Parlay" : "Same Game Parlay+";
-  };
 
   const getStandardTime = (hours: number, minutes: number) => {
     let timeValue;

@@ -63,6 +63,14 @@ export const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const getParlayType = (numberOfLegs: number) => {
+  return numberOfLegs === 1 ? "Same Game Parlay" : "Same Game Parlay+";
+};
+
+export const getParlayTypeAbbreviated = (numberOfLegs: number) => {
+  return numberOfLegs === 1 ? "SGP" : "SGP+";
+};
+
 export const refactoredDemo: MatchupSchema[] = [
   {
     road: {

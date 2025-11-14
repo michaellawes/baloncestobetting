@@ -56,12 +56,12 @@ export function Navbar(props: NavbarProps) {
           </span>
         </div>
         <Menu as="div" className="flex relative w-1/8">
-          <MenuButton className="cursor-pointer inline-flex w-full justify-center rounded-md text-sm ">
+          <MenuButton className="cursor-pointer inline-flex w-full justify-center rounded-md hover:bg-gray-800 focus:outline-none text-base px-2 py-2 focus-visible:ring-2 focus-visible:ring-gray-800">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
           </MenuButton>
           <MenuItems
             transition
-            className="absolute right-0 mr-6 z-60 mt-12 w-40 origin-top-right rounded-md bg-gray-900 outline-1 outline-gray-400 -outline-offset-1  transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            className="absolute right-0 mr-2 z-60 mt-12 w-46 origin-top-right rounded-md bg-gray-900 outline-1 outline-gray-400 -outline-offset-1  transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
           >
             <div className="">
               {isLoggedIn && (
@@ -96,7 +96,10 @@ export function Navbar(props: NavbarProps) {
               {!isLoggedIn && (
                 <form action="#" method="POST">
                   <MenuItem>
-                    <button type="submit" className="block w-full mr-4">
+                    <button
+                      type="submit"
+                      className="block w-full mr-4 bg-transparent"
+                    >
                       <GoogleLogin
                         onSuccess={(credentialResponse) => {
                           extractUserData(credentialResponse);
