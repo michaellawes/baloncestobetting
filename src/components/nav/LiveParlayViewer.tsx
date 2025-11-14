@@ -80,64 +80,67 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
   };
 
   return (
-    <div className="flex w-full flex-col-reverse z-50">
+    <div className="flex w-full flex-col z-50">
       {tasks.length > 0 && (
         <div
           className={
             !showSlip
-              ? "bottom-5 fixed pt-2 pb-5 mb-1 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
+              ? "bottom-1 fixed pt-2 mb-3 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
               : tasks.length == 1
-                ? "bottom-18 fixed pt-2 pb-5 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
-                : "bottom-29 fixed pt-2 pb-5 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
+                ? "bottom-16 fixed pt-2 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
+                : "bottom-28 fixed pt-2 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
           }
         >
-          <div className="pb-2 w-full">
-            <div key={"view"} className="float-left w-1/4 pb-2 md:w-1/3 pl-2">
+          <div className="flex flex-row mb-2">
+            <div key={"view"} className="flex flex-row w-1/4 md:w-1/3 pl-2">
               <button
                 onClick={toggleSlip}
-                className="cursor-pointer block w-full hover:bg-gray-700 rounded-xl pl-2 pr-2"
+                className="cursor-pointer justify-center flex grow hover:bg-gray-700 rounded-xl mr-2"
               >
                 View Slip
               </button>
             </div>
             <div
               key={"payout"}
-              className="float-left text-center pb-2 w-1/2 md:w-1/3"
+              className="flex flex-row w-1/2 md:w-1/3 text-center justify-center"
             >
               <span className="font-[Proxima Nova, serif]">
                 ${wager}
-                {tasks.length > 1 ? " SGP+" : " SGP"} wins{" "}
+                {tasks.length > 1 ? " SGP+ wins $ " : " SGP wins $ "}
               </span>
               <span className="mr-3 font-[Proxima Nova, serif]">
-                ${numberWithCommas(parseFloat(payout.toFixed(2)))}
+                {numberWithCommas(parseFloat(payout.toFixed(2)))}
               </span>
               <span className="font-bold hidden md:inline-block">
                 {decimalToOdds(totalDecimalOdds) > 0 && "+"}
                 {decimalToOdds(totalDecimalOdds).toFixed()}
               </span>
             </div>
-            <div key={"clear"} className="float-right w-1/4 pb-2 md:w-1/3 pr-2">
+            <div
+              key={"clear"}
+              className="flex justify-center flex-row w-1/4 md:w-1/3 "
+            >
               <button
                 onClick={removeAllLegs}
-                className="cursor-pointer block w-full hover:bg-gray-700 rounded-xl mr-2 pr-2 pl-2"
+                className="cursor-pointer justify-center flex grow hover:bg-gray-700 rounded-xl pl-2 pr-2 mr-2"
               >
                 Clear Slip
               </button>
             </div>
           </div>
           {showSlip && (
-            <div className="float-left max-h-24 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-800">
+            <div className="max-h-24 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-800">
               {tasks.map((leg) => (
                 <div
                   key={leg.frontend_id}
                   className="h-12 w-full flex flex-row border-t-1 border-gray-300"
                 >
-                  <div className="flex w-1/16 pl-4 cursor-pointer mt-2 items-center mb-2">
+                  <div className="flex w-1/16 pl-2 justify-center cursor-pointer mt-2 items-center mb-2">
                     <button
                       onClick={() => removeLeg(leg.frontend_id)}
-                      className="text-red-500 text-xs w-[20px] h-[20px] cursor-pointer hover:bg-gray-700 rounded-3xl border border-red-500"
+                      className="text-red-500 text-xs w-[18px] h-[18px] cursor-pointer hover:bg-gray-700 rounded-3xl border border-red-500"
                     >
-                      <div className="block h-[1px] border-t border-t-red-500 w-[10px] ml-1"></div>
+                      <div className="flex h-[1px] border-t border-t-red-500 w-[8px] ml-1 mr-1 pr-1"></div>
                     </button>
                   </div>
                   <div className="flex justify-start mt-1 ml-2 flex-col h-full w-13/16">
@@ -161,8 +164,8 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               ))}
             </div>
           )}
-          <div className="w-full flex row pl-5 pt-1.5 mt-6 bg-gray-800  border-t-1 text-base pb-2">
-            <div className="float-left w-3/4 md:w-1/2 mt-0.5">
+          <div className="w-full flex row pl-5 bg-gray-800  border-t-1 text-base">
+            <div className="float-left w-3/4 md:w-1/2 mb-3 mt-1">
               Wager{" "}
               <input
                 type="number"
@@ -170,7 +173,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                 max={balance}
                 min={0}
                 onChange={(e) => handleWagerChange(e)}
-                className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none mb-3 bg-gray-800 w-20 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
+                className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none bg-gray-800 w-20 mt-1 h-5 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
               />
               {displayWarning && (
                 <span className="text-red-500 pl-2 text-sm">

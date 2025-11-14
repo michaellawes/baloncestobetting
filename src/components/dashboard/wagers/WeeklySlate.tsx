@@ -49,7 +49,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
         <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative">
           <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0">
             <li key={"header"}>
-              <div className="h-9.5 box-border overflow-hidden relative">
+              <div className="h-9.5 box-border overflow-hidden relative mb-2.5 ">
                 <div className="shadow-none overflow-hidden rounded-xs list-none">
                   <div className="h-9.5 border-b-gray-600 bg-gray-700 border-solid border-b pr-4 pl-4 flex-row items-stretch flex justify-start box-border relative">
                     <div className="w-1/2 h-9.5 basis-0 grow items-center justify-between flex box-border relative">
@@ -82,13 +82,13 @@ export function WeeklySlate(props: WeeklySlateProps) {
             </li>
             {matchups.map((matchup: MatchupSchema) => (
               <li key={matchup.road.name + "-" + matchup.home.name}>
-                <div className="h-[8.688rem] box-border overflow-hidden relative pl-4">
-                  <div className="border-b-gray-700 border-b basis-0 grow pt-2 border-solid items-stretch justify-start flex-row flex box-border relative">
-                    <div className="width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">
+                <div className="h-[8.688rem] box-border overflow-hidden relative mr-2">
+                  <div className="border-b-gray-700 pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative">
+                    <div className="pl-2 width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">
                       <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative cursor-pointer">
                         <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
                           <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
-                            <div className="pr-[10px] items-center flex-row flex justify-start box-border relative">
+                            <div className="pr-[10px] items-center flex-row flex justify-start box-border relative ">
                               <div className="bg-no-repeat bg-center bg-contain h-10 w-10">
                                 {matchup.road.icon.length > 0 &&
                                 !matchup.road.icon.startsWith(

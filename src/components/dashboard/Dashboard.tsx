@@ -1,14 +1,24 @@
 import { WeeklySlate } from "./wagers/WeeklySlate";
 import * as React from "react";
+import { useContext } from "react";
 import { MatchupSchema } from "../../utils/Util";
+import { ParlayTask } from "../../App";
+import { TasksContext } from "../reducer/TasksContext";
 
 export interface DashboardProps {
   weeklySlate: MatchupSchema[];
 }
 
 export function Dashboard(props: DashboardProps) {
+  const tasks: ParlayTask[] = useContext(TasksContext);
   return (
-    <div className={"w-full mb-20"}>
+    <div
+      className={
+        tasks.length > 0
+          ? "w-full h-full mb-20 overflow-y-scroll scrollbar-hide"
+          : "h-full w-full overflow-y-scroll scrollbar-hide"
+      }
+    >
       <WeeklySlate matchups={props.weeklySlate} />
     </div>
   );
