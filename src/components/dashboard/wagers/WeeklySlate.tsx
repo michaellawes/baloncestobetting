@@ -45,41 +45,10 @@ export function WeeklySlate(props: WeeklySlateProps) {
 
   return (
     <div className="z-10 items-stretch justify-start flex-col flex box-border relative">
-      <div className="box-border relative">
+      <div className="box-border relative mt-28">
         <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative">
           <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0">
-            <li key={"header"}>
-              <div className="h-9.5 box-border overflow-hidden relative mb-2.5 ">
-                <div className="shadow-none overflow-hidden rounded-xs list-none">
-                  <div className="h-9.5 border-b-gray-600 bg-gray-700 border-solid border-b pr-4 pl-4 flex-row items-stretch flex justify-start box-border relative">
-                    <div className="w-1/2 h-9.5 basis-0 grow items-center justify-between flex box-border relative">
-                      <h3 className="text-ellipsis text-xs text-gray-300 box-border overflow-hidden relative m-0 p-0 font-inherit">
-                        FANTASY BASKETBALL
-                      </h3>
-                    </div>
-                    <div className="w-1/2 items-stretch justify-start flex-col flex box-border relative list-none">
-                      <div className="grow items-center justify-between flex-row flex box-border relative list-none ml-4">
-                        <div className="basis-0 grow justify-center items-center flex-row flex box-border relative">
-                          <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative">
-                            spread
-                          </span>
-                        </div>
-                        <div className="basis-0 grow justify-center items-center flex-row flex box-border relative ml-4">
-                          <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative">
-                            total
-                          </span>
-                        </div>
-                        <div className="basis-0 grow justify-center items-center flex-row flex box-border relative">
-                          <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative ml-4">
-                            money
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
+            <li key={"header"} className="w-full fixed z-60"></li>
             {matchups.map((matchup: MatchupSchema) => (
               <li key={matchup.road.name + "-" + matchup.home.name}>
                 <div className="h-[8.688rem] box-border overflow-hidden relative mr-2">
@@ -129,12 +98,11 @@ export function WeeklySlate(props: WeeklySlateProps) {
                           </div>
                         </div>
                       </div>
-                      <div className="pl-3 text-lg overflow-visible h-0.25 justify-center items-center z-40 flex-row flex box-border relative">
+                      <div className="pl-3 text-lg overflow-visible h-0.25 justify-start items-center z-40 flex-row flex box-border relative">
                         <FontAwesomeIcon
                           className="shrink-0 w-[15px] h-[15px] text-gray-300"
                           icon={faAt as IconProp}
                         />
-                        <div className="h-[1px] bg-gray-700 basis-0 grow flex-row items-stretch justify-start box-border relative"></div>
                       </div>
                       <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
                         <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">

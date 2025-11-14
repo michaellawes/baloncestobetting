@@ -84,6 +84,7 @@ export function App() {
     useState<ParlayFieldUpdate>(null);
   const [justAffectedParlayFieldUpdate, setJustAffectedParlayFieldUpdate] =
     useState<boolean>(false);
+  const [isViewingDashboard, setIsViewingDashboard] = useState<boolean>(true);
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -334,9 +335,18 @@ export function App() {
             balance={balance}
             setBalance={setBalance}
             setUser={setUser}
+            isViewingDashboard={isViewingDashboard}
           />
           <Routes>
-            <Route path="/" element={<Dashboard weeklySlate={weeklySlate} />} />
+            <Route
+              path="/"
+              element={
+                <Dashboard
+                  weeklySlate={weeklySlate}
+                  setIsViewingDashboard={setIsViewingDashboard}
+                />
+              }
+            />
             <Route
               path="/parlays"
               element={
@@ -344,6 +354,7 @@ export function App() {
                   setBalance={setBalance}
                   user={user}
                   setParlayFieldUpdate={setParlayFieldUpdate}
+                  setIsViewingDashboard={setIsViewingDashboard}
                 />
               }
             />

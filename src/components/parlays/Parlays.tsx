@@ -10,10 +10,16 @@ export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   user: UserData;
   setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
+  setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function Parlays(props: ParlaysViewerProps) {
-  const { setBalance, setParlayFieldUpdate, user } = props;
+  const { setBalance, setParlayFieldUpdate, user, setIsViewingDashboard } =
+    props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
+
+  useEffect(() => {
+    setIsViewingDashboard(false);
+  }, []);
 
   const validateFinishedSlips = async (data: SupabaseParlay[]) => {
     const newlyExpiredParlays: SupabaseParlay[] = [];
@@ -113,8 +119,8 @@ export function Parlays(props: ParlaysViewerProps) {
   }, []);
 
   return (
-    <div className="w-full h-full bg-gray-600 overflow-hidden scrollbar-hide">
-      <ul className="w-full h-full bg-gray-900 border-gray-100 border-t-1 scrollbar-hide">
+    <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide">
+      <ul className="w-full h-full bg-gray-900 border-gray-100 border-t-1 scrollbar-hide mt-16">
         {parlays.map((parlay, i) => (
           <li key={i} className="scrollbar-hide">
             <Parlay {...parlay} setBalance={setBalance} />
