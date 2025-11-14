@@ -114,19 +114,19 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
         className="bottom-1 fixed pt-2 mb-3 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm translate-y-full duration-200 ease-in transition-all"
       >
         <div className="flex flex-row mb-2">
-          <div key={"view"} className="flex flex-row ml-5 w-3/6">
+          <div key={"view"} className="flex flex-row ml-5 w-4/6">
             <div className="text-base flex flex-row w-full font-bold">
-              <div className="flex flex-row justify-start text-start items-center w-4/8">
+              <div className="flex flex-row justify-start text-start items-center w-3/8">
                 <span className="flex">
                   {tasks.length} leg {getParlayTypeAbbreviated(tasks.length)}
                 </span>
               </div>
-              <div className="flex flex-row justify-center text-center items-center w-4/8">
+              <div className="flex flex-row justify-center text-center items-center w-5/8">
                 <div
                   className={
                     shouldDisplay
-                      ? "flex w-full text-center justify-end items-center box-border transition-opacity ease-linear delay-150"
-                      : "flex w-full text-center justify-end items-center box-border transition-opacity opacity-0 invisible"
+                      ? "flex w-full text-center justify-center items-center box-border transition-opacity ease-linear delay-150"
+                      : "flex w-full text-center justify-center items-center box-border transition-opacity opacity-0 invisible"
                   }
                 >
                   <span className="font-[Proxima Nova, serif] w-fit tracking-[1px] font-light text-gray-300 text-xs relative">
@@ -140,8 +140,8 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             key={"payout"}
             className={
               shouldDisplay
-                ? "flex flex-row w-2/6 text-center justify-end transition-opacity ease-linear delay-150"
-                : "flex flex-row w-2/6 text-center justify-end transition-opacity opacity-0 invisible"
+                ? "flex flex-row w-1/6 text-center justify-end transition-opacity ease-linear delay-150"
+                : "flex flex-row w-1/6 text-center justify-end transition-opacity opacity-0 invisible"
             }
           >
             {totalOdds > 0 && (
