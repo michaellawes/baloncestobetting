@@ -43,12 +43,12 @@ export function Navbar(props: NavbarProps) {
   };
 
   return (
-    <nav className="bg-gray-900 text-white w-full z-60">
-      <div className="container flex flex-row mx-auto px-4 md:flex items-center gap-6">
+    <nav className="bg-gray-900 text-white w-full z-60 scrollbar-hide">
+      <div className="container flex flex-row mx-auto px-4 items-center gap-6">
         <div className="flex flex-row w-5/8">
-          <a href="#" className="py-5 px-2 text-white flex-1 font-bold">
-            <Link to={"/"}>CnB Baloncesto Betting</Link>
-          </a>
+          <Link className="py-5 px-2 text-white flex-1 font-bold" to={"/"}>
+            CnB Baloncesto Betting
+          </Link>
         </div>
         <div className="flex justify-end w-2/8">
           <span className="py-2 px-3 flex font-[ProximaNova-Bold, serif]">
@@ -56,53 +56,47 @@ export function Navbar(props: NavbarProps) {
           </span>
         </div>
         <Menu as="div" className="flex relative w-1/8">
-          <MenuButton className="cursor-pointer inline-flex w-full justify-center gap-x-1.5 rounded-md text-sm font-semibold text-white">
+          <MenuButton className="cursor-pointer inline-flex w-full justify-center rounded-md text-sm ">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
           </MenuButton>
-
           <MenuItems
             transition
-            className="absolute right-0 z-60 mt-2 w-56 origin-top-right rounded-md bg-gray-900 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            className="absolute right-0 mr-6 z-60 mt-12 w-40 origin-top-right rounded-md bg-gray-900 outline-1 outline-gray-400 -outline-offset-1  transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
           >
-            <div className="py-1">
+            <div className="">
               {isLoggedIn && (
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                  >
-                    <Link to={"/"}>Return to Dashboard</Link>
-                  </a>
-                </MenuItem>
-              )}
-              {isLoggedIn && (
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                  >
-                    <Link to={"/parlays"}>View Parlays</Link>
-                  </a>
-                </MenuItem>
-              )}
-              {isLoggedIn && (
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                    onClick={handleLogout}
-                  >
-                    Log Out
-                  </a>
-                </MenuItem>
+                <div>
+                  <MenuItem>
+                    <Link
+                      className="block px-4 py-2 text-sm text-end text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                      to={"/"}
+                    >
+                      Return to Dashboard
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      className="block px-4 py-2 text-sm text-end text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                      to={"/parlays"}
+                    >
+                      View Parlays
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-end text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+                      onClick={handleLogout}
+                    >
+                      Log Out
+                    </a>
+                  </MenuItem>
+                </div>
               )}
               {!isLoggedIn && (
                 <form action="#" method="POST">
                   <MenuItem>
-                    <button
-                      type="submit"
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
-                    >
+                    <button type="submit" className="block w-full mr-4">
                       <GoogleLogin
                         onSuccess={(credentialResponse) => {
                           extractUserData(credentialResponse);

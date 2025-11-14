@@ -12,13 +12,7 @@ export interface DashboardProps {
 export function Dashboard(props: DashboardProps) {
   const tasks: ParlayTask[] = useContext(TasksContext);
   return (
-    <div
-      className={
-        tasks.length > 0
-          ? "w-full h-full mb-20 overflow-y-scroll scrollbar-hide"
-          : "h-full w-full overflow-y-scroll scrollbar-hide"
-      }
-    >
+    <div className={tasks.length > 0 ? "w-full h-full mb-20" : "h-full w-full"}>
       <WeeklySlate matchups={props.weeklySlate} />
     </div>
   );

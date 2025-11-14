@@ -85,7 +85,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                 <div className="h-[8.688rem] box-border overflow-hidden relative mr-2">
                   <div className="border-b-gray-700 pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative">
                     <div className="pl-2 width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">
-                      <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative cursor-pointer">
+                      <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
                         <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
                           <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
                             <div className="pr-[10px] items-center flex-row flex justify-start box-border relative ">
@@ -136,7 +136,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                         />
                         <div className="h-[1px] bg-gray-700 basis-0 grow flex-row items-stretch justify-start box-border relative"></div>
                       </div>
-                      <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative cursor-pointer">
+                      <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
                         <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
                           <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
                             <div className="pr-[10px] items-center flex-row flex justify-start box-border relative">
