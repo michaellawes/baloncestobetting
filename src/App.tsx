@@ -9,7 +9,7 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { generateId, MatchupSchema } from "./utils/Util";
+import { generateId, MatchupSchema, propField } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 
@@ -32,6 +32,7 @@ export interface ParlayAction {
   totalOdds?: number;
   payout?: number;
   wager?: number;
+  isHome?: boolean;
   user_id?: string;
   parlay_id?: string;
   is_payed_out?: boolean;
@@ -170,6 +171,21 @@ export function App() {
     switch (action.type) {
       case "addLeg": {
         tasks = tasks.filter((task) => task.frontend_id !== action.oppId);
+        // Remove road team moneyline if betting home team cover
+        if (action.betType == propField[0] && action.text.startsWith("-")) {
+          tasks = tasks.filter(
+            (task) =>
+              task.frontend_id !==
+              action.oppId.split("-")[0] + "-" + propField[2],
+          );
+        }
+        if (action.betType == propField[2] && !action.isHome) {
+          tasks = tasks.filter(
+            (task) =>
+              task.frontend_id !==
+              action.oppId.split("-")[0] + "-" + propField[0],
+          );
+        }
         tasks = [
           ...tasks,
           {

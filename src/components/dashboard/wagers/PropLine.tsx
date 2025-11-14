@@ -10,6 +10,7 @@ export interface PropLineProps {
   odds: number;
   frontend_id: string;
   oppId: string;
+  isHome: boolean;
 }
 
 export interface PropLineInterface {
@@ -18,7 +19,7 @@ export interface PropLineInterface {
 }
 
 export function PropLine(props: PropLineProps) {
-  const { text, odds, frontend_id, oppId, team, betType } = props;
+  const { text, odds, frontend_id, oppId, team, betType, isHome } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
   const [isAdded, setIsAdded] = React.useState(false);
@@ -33,7 +34,9 @@ export function PropLine(props: PropLineProps) {
       team: team,
       betType: betType,
       oppId: oppId,
+      isHome: isHome,
     };
+    console.log(action);
     dispatch(action);
   };
 

@@ -10,6 +10,7 @@ import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
+import { numberWithCommas } from "../../utils/Util";
 
 library.add(fas);
 
@@ -130,7 +131,10 @@ export function Parlay(props: ParlayProps) {
           <div key={leg.frontend_id} className="pt-1 h-12">
             <div className="pl-5 float-left w-7/8 h-full">
               <span className="block relative text-white text-sm">
-                {leg.team} {leg.text}
+                {leg.betType == "TOTAL POINTS"
+                  ? leg.frontend_id.split("-")[0]
+                  : leg.team}{" "}
+                {leg.text}
               </span>
               <span className="block relative text-gray-400 text-xs">
                 {leg.betType}
@@ -148,7 +152,9 @@ export function Parlay(props: ParlayProps) {
       <div className="p-4 border-t-2 flex w-full items-center justify-between border-b-1 rounded-xs dark:bg-gray-800 dark:border-gray-700">
         <div className="float-left text-left pl-2">
           <span className="text-gray-200 text-sm">${wager} to </span>
-          <span className="text-green-500 text-sm">${payout.toFixed(2)}</span>
+          <span className="text-green-500 text-sm">
+            ${numberWithCommas(parseFloat(payout.toFixed(2)))}
+          </span>
         </div>
         <div className="float-left w-1/2">
           <button

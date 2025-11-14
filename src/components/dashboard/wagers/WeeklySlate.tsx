@@ -201,6 +201,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.road.name,
                             matchup.home.name,
                           )}
+                          isHome={false}
                         />
                         <PropLine
                           team={matchup.road.name}
@@ -221,6 +222,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.road.name,
                             matchup.home.name,
                           )}
+                          isHome={false}
                         />
                         <PropLine
                           team={matchup.road.name}
@@ -241,6 +243,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.road.name,
                             matchup.home.name,
                           )}
+                          isHome={false}
                         />
                       </div>
                       <div className="h-[56px] items-center flex-row flex justify-start box-border relative">
@@ -263,6 +266,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.road.name,
                             matchup.home.name,
                           )}
+                          isHome={true}
                         />
                         <PropLine
                           team={matchup.home.name}
@@ -283,6 +287,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.road.name,
                             matchup.home.name,
                           )}
+                          isHome={true}
                         />
                         <PropLine
                           team={matchup.home.name}
@@ -303,6 +308,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.road.name,
                             matchup.home.name,
                           )}
+                          isHome={true}
                         />
                       </div>
                     </div>

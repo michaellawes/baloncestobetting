@@ -10,7 +10,7 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { UserData } from "../../App";
-import { getUuid } from "../../utils/Util";
+import { getUuid, numberWithCommas } from "../../utils/Util";
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -49,7 +49,7 @@ export function Navbar(props: NavbarProps) {
           <Link to={"/"}>CnB Baloncesto Betting</Link>
         </a>
         <span className="py-2 px-3 w-2/8 block font-[ProximaNova-Bold, serif]">
-          ${balance}
+          ${numberWithCommas(balance)}
         </span>
 
         <Menu as="div" className="relative inline-block w-1/8">

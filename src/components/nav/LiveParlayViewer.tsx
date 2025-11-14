@@ -2,7 +2,11 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { ParlayTask } from "../../App";
-import { decimalToOdds, oddsToDecimal } from "../../utils/Util";
+import {
+  decimalToOdds,
+  numberWithCommas,
+  oddsToDecimal,
+} from "../../utils/Util";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 
 import { fas, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -111,7 +115,9 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               className="float-left text-center pb-2 w-1/2 md:w-1/3"
             >
               <span>${wager} to </span>
-              <span className="text-green-500 mr-3">${payout.toFixed(2)}</span>
+              <span className="text-green-500 mr-3">
+                ${numberWithCommas(parseFloat(payout.toFixed(2)))}
+              </span>
               <span className="font-bold hidden md:inline-block">
                 {decimalToOdds(totalDecimalOdds) > 0 && "+"}
                 {decimalToOdds(totalDecimalOdds).toFixed()}
@@ -136,7 +142,10 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                 >
                   <div className="pl-5 float-left h-full w-5/8">
                     <span className="block relative text-white text-sm ">
-                      {leg.team} {leg.text}
+                      {leg.betType == "TOTAL POINTS"
+                        ? leg.frontend_id.split("-")[0]
+                        : leg.team}{" "}
+                      {leg.text}
                     </span>
                     <span className="block relative text-gray-400 text-xs ">
                       {leg.betType}
