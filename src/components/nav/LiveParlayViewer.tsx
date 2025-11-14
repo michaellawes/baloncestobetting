@@ -7,10 +7,10 @@ import {
   numberWithCommas,
   oddsToDecimal,
 } from "../../utils/Util";
-import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-import { fas, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons"; //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(fas);
 
@@ -79,28 +79,18 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     }
   };
 
-  const getStyling = (showSlip: boolean) => {
-    if (showSlip) {
-      if (tasks.length == 1) {
-        return (
-          "bottom-18" +
-          " fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 border-b-3 border-gray-700 rounded-sm"
-        );
-      } else {
-        return (
-          "bottom-29" +
-          " fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 border-b-3 border-gray-700 rounded-sm"
-        );
-      }
-    } else {
-      return "bottom-5 fixed pt-2 pb-5 z-50 w-full h-16 border-t bg-gray-800 border-b-3 border-gray-700 rounded-sm";
-    }
-  };
-
   return (
-    <div className="flex w-full flex-col-reverse">
+    <div className="flex w-full flex-col-reverse z-50">
       {tasks.length > 0 && (
-        <div className={getStyling(showSlip)}>
+        <div
+          className={
+            !showSlip
+              ? "bottom-5 fixed pt-2 pb-5 mb-1 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
+              : tasks.length == 1
+                ? "bottom-18 fixed pt-2 pb-5 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
+                : "bottom-29 fixed pt-2 pb-5 w-full h-16 bg-gray-800 border-b border-t-2 border-blue-500 rounded-sm"
+          }
+        >
           <div className="pb-2 w-full">
             <div key={"view"} className="float-left w-1/4 pb-2 md:w-1/3 pl-2">
               <button
@@ -140,32 +130,32 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               {tasks.map((leg) => (
                 <div
                   key={leg.frontend_id}
-                  className="pt-1 mb-1 h-12 w-full border-t-1 border-gray-300"
+                  className="h-12 w-full flex flex-row border-t-1 border-gray-300"
                 >
-                  <div className="pl-5 float-left h-full w-5/8">
-                    <span className="block relative text-white text-sm ">
+                  <div className="flex w-1/16 pl-4 cursor-pointer mt-2 items-center mb-2">
+                    <button
+                      onClick={() => removeLeg(leg.frontend_id)}
+                      className="text-red-500 text-xs w-[20px] h-[20px] cursor-pointer hover:bg-gray-700 rounded-3xl border border-red-500"
+                    >
+                      <div className="block h-[1px] border-t border-t-red-500 w-[10px] ml-1"></div>
+                    </button>
+                  </div>
+                  <div className="flex justify-start mt-1 ml-2 flex-col h-full w-13/16">
+                    <span className="flex relative text-white text-sm">
                       {leg.betType == "TOTAL POINTS"
                         ? leg.frontend_id.split("-")[0]
                         : leg.team}{" "}
                       {leg.text}
                     </span>
-                    <span className="block relative text-gray-400 text-xs ">
+                    <span className="flex relative text-gray-400 text-xs">
                       {leg.betType}
                     </span>
                   </div>
-                  <div className="float-left text-right w-2/8">
+                  <div className="flex justify-end items-center text-right w-1/16">
                     <span className="text-gray-300 pl-2">
                       {leg.odds > 0 && "+"}
                       {leg.odds}
                     </span>
-                  </div>
-                  <div className="float-right w-1/8 cursor-pointer pr-5">
-                    <button
-                      onClick={() => removeLeg(leg.frontend_id)}
-                      className="float-right cursor-pointer hover:bg-gray-700 rounded-2xl pl-1 pr-1"
-                    >
-                      <FontAwesomeIcon icon={faXmark as IconProp} />
-                    </button>
                   </div>
                 </div>
               ))}

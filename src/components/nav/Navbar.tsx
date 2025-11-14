@@ -45,14 +45,17 @@ export function Navbar(props: NavbarProps) {
   return (
     <nav className="bg-gray-900 text-white w-full z-60">
       <div className="container flex flex-row mx-auto px-4 md:flex items-center gap-6">
-        <a href="#" className="py-5 w-5/8 px-2 text-white flex-1 font-bold">
-          <Link to={"/"}>CnB Baloncesto Betting</Link>
-        </a>
-        <span className="py-2 px-3 w-2/8 block font-[ProximaNova-Bold, serif]">
-          ${numberWithCommas(balance)}
-        </span>
-
-        <Menu as="div" className="relative inline-block w-1/8">
+        <div className="flex flex-row w-5/8">
+          <a href="#" className="py-5 px-2 text-white flex-1 font-bold">
+            <Link to={"/"}>CnB Baloncesto Betting</Link>
+          </a>
+        </div>
+        <div className="flex justify-end w-2/8">
+          <span className="py-2 px-3 flex font-[ProximaNova-Bold, serif]">
+            ${numberWithCommas(balance)}
+          </span>
+        </div>
+        <Menu as="div" className="flex relative w-1/8">
           <MenuButton className="cursor-pointer inline-flex w-full justify-center gap-x-1.5 rounded-md text-sm font-semibold text-white">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
           </MenuButton>
@@ -115,7 +118,7 @@ export function Navbar(props: NavbarProps) {
           </MenuItems>
         </Menu>
       </div>
-      <div>
+      <div className="flex">
         <LiveParlayViewer
           balance={balance}
           setBalance={setBalance}

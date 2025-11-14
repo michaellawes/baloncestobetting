@@ -103,8 +103,6 @@ export function Parlay(props: ParlayProps) {
     }
   };
 
-  const on = true;
-
   return (
     <div
       className="w-full float-left shadow-sm rounded-xs bg-gray-900 border-gray-500 border-t-1"
@@ -168,7 +166,7 @@ export function Parlay(props: ParlayProps) {
                 total wager
               </span>
             </div>
-            <div className="flex flex-row justify-center items-center box-border relative mt-1">
+            <div className="flex flex-row justify-end items-center box-border relative mt-1">
               <span
                 className={
                   is_winner
@@ -182,9 +180,9 @@ export function Parlay(props: ParlayProps) {
               </span>
             </div>
           </div>
-          <div className="flex flex-row w-1/16 m-1 mt-2">
+          <div className="flex flex-row w-1/16 m-1 mt-2 justify-end">
             <button
-              className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl"
+              className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl justify-end"
               onClick={() => handleCaptureClick()}
             >
               <FontAwesomeIcon icon={faDownload as IconProp} />
