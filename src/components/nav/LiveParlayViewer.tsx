@@ -7,12 +7,6 @@ import {
   numberWithCommas,
   oddsToDecimal,
 } from "../../utils/Util";
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-import { fas } from "@fortawesome/free-solid-svg-icons"; //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-library.add(fas);
 
 export interface LiveParlayViewerProps {
   balance: number;
@@ -28,14 +22,23 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
   const [payout, setPayout] = React.useState<number>(0);
   const [wager, setWager] = React.useState<number>(10);
   const [showSlip, setShowSlip] = React.useState(false);
-  const [displayWarning, setDisplayWarning] = React.useState(false);
+  const [displayWarning, setDisplayWarning] = React.useState("");
+  const [shouldDisplay, setShouldDisplay] = React.useState(true);
+
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      setShouldDisplay(true);
+    }, 200);
+    return () => clearInterval(timeout);
+  }, [wager, payout, shouldDisplay]);
 
   useEffect(() => {
     setPayout(wager * totalDecimalOdds);
-  }, [totalDecimalOdds, wager]);
+  }, [totalDecimalOdds, wager, shouldDisplay]);
 
   useEffect(() => {
     if (tasks.length > 0) {
+      setShouldDisplay(false);
       const totalDecimalOdds = tasks.reduce((total, task) => {
         return (total *= oddsToDecimal(task.odds));
       }, 1);
@@ -71,11 +74,15 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     const value = Number(event.target.value);
     if (value > balance) {
       event.target.style.borderColor = "red";
-      setDisplayWarning(true);
+      setDisplayWarning("Insufficient balance");
+    } else if (value < 0.01) {
+      event.target.style.borderColor = "red";
+      setDisplayWarning("Min wager $0.01");
     } else {
+      setShouldDisplay(false);
       event.target.style.borderColor = "";
       setWager(value);
-      setDisplayWarning(false);
+      setDisplayWarning("");
     }
   };
 
@@ -102,7 +109,11 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             </div>
             <div
               key={"payout"}
-              className="flex flex-row w-1/2 md:w-1/3 text-center justify-center"
+              className={
+                shouldDisplay
+                  ? "flex flex-row w-1/2 md:w-1/3 text-center justify-center transition-opacity ease-linear delay-150"
+                  : "flex flex-row w-1/2 md:w-1/3 text-center justify-center transition-opacity opacity-0 invisible"
+              }
             >
               <span className="font-[Proxima Nova, serif]">
                 ${wager}
@@ -165,20 +176,22 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             </div>
           )}
           <div className="w-full flex row pl-5 bg-gray-800  border-t-1 text-base">
-            <div className="float-left w-3/4 md:w-1/2 mb-3 mt-1">
+            <div className="flex w-3/4 md:w-1/2 mb-3 mt-1">
               Wager{" "}
               <input
                 type="number"
                 value={wager}
                 max={balance}
-                min={0}
+                min={0.01}
                 onChange={(e) => handleWagerChange(e)}
                 className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none bg-gray-800 w-20 mt-1 h-5 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
               />
-              {displayWarning && (
-                <span className="text-red-500 pl-2 text-sm">
-                  Not Enough Funds To Place Wager
-                </span>
+              {displayWarning.length > 0 && (
+                <div className="ml-2 flex justify-center  border border-transparent items-center textwhite mt-1">
+                  <span className="bg-red-500 font-bold rounded-2xl pl-2 pr-2 text-sm">
+                    {displayWarning}
+                  </span>
+                </div>
               )}
             </div>
             {isLoggedIn && (

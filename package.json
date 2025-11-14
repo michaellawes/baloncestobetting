@@ -21,6 +21,7 @@
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.81.1",
+    "@tailwindcss/cli": "^4.1.17",
     "@tailwindcss/vite": "^4.1.16",
     "@tailwindplus/elements": "^1.0.18",
     "font-awesome": "^4.7.0",
