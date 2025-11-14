@@ -46,6 +46,10 @@ export function Parlay(props: ParlayProps) {
     is_winner,
   } = props;
 
+  const getParlayType = (numberOfLegs: number) => {
+    return numberOfLegs === 1 ? "Same Game Parlay" : "Same Game Parlay+";
+  };
+
   const getStandardTime = (hours: number, minutes: number) => {
     let timeValue;
 
@@ -99,36 +103,40 @@ export function Parlay(props: ParlayProps) {
     }
   };
 
+  const on = true;
+
   return (
     <div
-      className="w-full float-left shadow-sm rounded-xs dark:bg-gray-800 dark:border-white border-1"
+      className="w-full float-left shadow-sm rounded-xs bg-gray-900 border-gray-500 border-t-1"
       id={parlay_id}
     >
-      <div className="p-4 flex w-full items-center justify-between border-b-1 border-b-gray-400">
-        <span className="text-gray-500 text-xs float-left">
-          {parlay_id.substring(parlay_id.length - 5)}
+      <div className="p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-gray-500">
+        <span className="text-blue-500 text-base flex w-5/8 font-bold">
+          {legs.length} leg {getParlayType(legs.length)}
         </span>
-        <span className="text-white float-left">
-          {getReadableDate(created_at)}
-        </span>
-        <span className="text-white float-left">
+        <span className="text-white text-sm w-2/8 justify-end flex font-bold">
           {total_odds > 0 && "+"}
           {total_odds}
         </span>
         {!frontend_is_active && is_winner && (
-          <div className="text-green-700 z-40 text-base float-left">
+          <div className="text-green-600 z-40 w-1/8 justify-end flex">
             <FontAwesomeIcon icon={faSquareCheck as IconProp} />
           </div>
         )}
-        {!frontend_is_active && !is_winner && (
-          <div className="text-red-700 text-base float-left">
+        {!frontend_is_active && is_winner && (
+          <div className="text-red-600 text-base w-1/8 justify-end flex">
             <FontAwesomeIcon icon={faSquareXmark as IconProp} />
           </div>
         )}
       </div>
-      <div className="float-left max-h-48 overflow-y-scroll scrollbar-hide w-full flex-col dark:bg-gray-800">
-        {legs.map((leg) => (
-          <div key={leg.frontend_id} className="pt-1 h-12">
+      <div className="float-left max-h-48 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
+        {legs.map((leg, index) => (
+          <div
+            key={leg.frontend_id}
+            className={
+              index > 0 ? "pt-1 h-12 border-t border-t-gray-600" : "pt-1 h-12"
+            }
+          >
             <div className="pl-5 float-left w-7/8 h-full">
               <span className="block relative text-white text-sm">
                 {leg.betType == "TOTAL POINTS"
@@ -149,20 +157,54 @@ export function Parlay(props: ParlayProps) {
           </div>
         ))}
       </div>
-      <div className="p-4 border-t-2 flex w-full items-center justify-between border-b-1 rounded-xs dark:bg-gray-800 dark:border-gray-700">
-        <div className="float-left text-left pl-2">
-          <span className="text-gray-200 text-sm">${wager} to </span>
-          <span className="text-green-500 text-sm">
-            ${numberWithCommas(parseFloat(payout.toFixed(2)))}
-          </span>
+      <div className="border-t-1 flex flex-col w-full items-center justify-between border-b-1 rounded-xs bg-gray-800 border-gray-700">
+        <div className="flex flex-row text-left pl-2 border-b-1 border-b-gray-700 w-full pb-1">
+          <div className="flex flex-row w-15/16">
+            <div className="flex flex-col basis-0 grow justify-center items-stretch box-border relative pl-2">
+              <span className="font-[Proxima Nova, serif] tracking-[1px] uppercase text-gray-300 text-base text-left relative">
+                ${wager}
+              </span>
+              <span className="font-mono flex flex-row tracking-[1px] uppercase text-gray-300 text-xs text-[7px] relative">
+                total wager
+              </span>
+            </div>
+            <div className="flex flex-row justify-center items-center box-border relative mt-1">
+              <span
+                className={
+                  is_winner
+                    ? "text-green-500 text-sm font-bold font-[Proxima Nova, serif]"
+                    : frontend_is_active
+                      ? "text-gray-300 text-sm font-bold font-[Proxima Nova, serif]"
+                      : "text-gray-500 text-sm font-bold font-[Proxima Nova, serif]"
+                }
+              >
+                ${numberWithCommas(parseFloat(payout.toFixed(2)))}
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-row w-1/16 m-1 mt-2">
+            <button
+              className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl"
+              onClick={() => handleCaptureClick()}
+            >
+              <FontAwesomeIcon icon={faDownload as IconProp} />
+            </button>
+          </div>
         </div>
-        <div className="float-left w-1/2">
-          <button
-            className="pl-2 pr-2 block text-white text-base float-right hover:bg-gray-600"
-            onClick={() => handleCaptureClick()}
-          >
-            <FontAwesomeIcon icon={faDownload as IconProp} />
-          </button>
+        <div className="w-full flex row shadow-sm rounded-xs bg-gray-800 ">
+          <div className="pl-2 flex w-1/2 items-center justify-start box-border relative font-mono">
+            <span className="text-gray-400 text-[8px]">
+              <span className="uppercase text-gray-400 text-[8px]">
+                bet id:{" "}
+              </span>
+              {parlay_id.substring(parlay_id.length - 5)}
+            </span>
+          </div>
+          <div className="pr-2 flex w-1/2 flex-row items-center justify-end box-border relative">
+            <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
+              placed: {getReadableDate(created_at)}
+            </span>
+          </div>
         </div>
       </div>
     </div>

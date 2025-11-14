@@ -114,15 +114,17 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               key={"payout"}
               className="float-left text-center pb-2 w-1/2 md:w-1/3"
             >
-              <span>${wager} to </span>
-              <span className="text-green-500 mr-3">
+              <span className="font-[Proxima Nova, serif]">
+                ${wager}
+                {tasks.length > 1 ? " SGP+" : " SGP"} wins{" "}
+              </span>
+              <span className="mr-3 font-[Proxima Nova, serif]">
                 ${numberWithCommas(parseFloat(payout.toFixed(2)))}
               </span>
               <span className="font-bold hidden md:inline-block">
                 {decimalToOdds(totalDecimalOdds) > 0 && "+"}
                 {decimalToOdds(totalDecimalOdds).toFixed()}
               </span>
-              <span> {tasks.length} leg(s)</span>
             </div>
             <div key={"clear"} className="float-right w-1/4 pb-2 md:w-1/3 pr-2">
               <button
@@ -170,7 +172,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             </div>
           )}
           <div className="w-full flex row pl-5 pt-1.5 mt-6 bg-gray-800  border-t-1 text-base pb-2">
-            <div className="float-left w-3/4 md:w-1/2">
+            <div className="float-left w-3/4 md:w-1/2 mt-0.5">
               Wager{" "}
               <input
                 type="number"
@@ -178,7 +180,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                 max={balance}
                 min={0}
                 onChange={(e) => handleWagerChange(e)}
-                className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none mb-5 bg-gray-800 w-20 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
+                className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none mb-3 bg-gray-800 w-20 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
               />
               {displayWarning && (
                 <span className="text-red-500 pl-2 text-sm">
@@ -189,7 +191,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             {isLoggedIn && (
               <div className="overflow-hidden w-1/4 md:w-1/2 pr-2 ml-2 mr-2">
                 <button
-                  className="cursor-pointer float-right hover:bg-gray-700 rounded-xl pl-4 pr-4"
+                  className="cursor-pointer float-right hover:bg-gray-700 rounded-xl pl-4 pr-4 mt-1"
                   onClick={submitParlay}
                 >
                   Submit
