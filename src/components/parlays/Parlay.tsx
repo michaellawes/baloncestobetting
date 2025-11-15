@@ -101,7 +101,7 @@ export function Parlay(props: ParlayProps) {
 
   return (
     <div
-      className="w-full float-left shadow-sm rounded-xs bg-gray-900 border-gray-500 border-t-1"
+      className="w-full mb-2 border-l-3 border-l-gray-400  float-left rounded-sm bg-gray-900 border-gray-500 border-t-1"
       id={parlay_id}
     >
       <div className="p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-gray-500">
@@ -128,17 +128,19 @@ export function Parlay(props: ParlayProps) {
           <div
             key={leg.frontend_id}
             className={
-              index > 0 ? "pt-1 h-12 border-t border-t-gray-600" : "pt-1 h-12"
+              index > 0
+                ? "pt-1 h-auto my-2 border-t border-t-gray-600 flex flex-row"
+                : "pt-1 h-auto mb-2 flex flex-row"
             }
           >
-            <div className="pl-5 float-left w-7/8 h-full">
-              <span className="block relative text-white text-sm">
+            <div className="flex flex-col grow items-stretch pl-5 float-left w-7/8 h-full">
+              <span className="flex relative text-white text-sm">
                 {leg.betType == "TOTAL POINTS"
                   ? leg.frontend_id.split("-")[0]
                   : leg.team}{" "}
                 {leg.text}
               </span>
-              <span className="block relative text-gray-400 text-xs">
+              <span className="flex relative text-gray-400 text-xs">
                 {leg.betType}
               </span>
             </div>
