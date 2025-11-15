@@ -3,7 +3,11 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { LiveParlayViewer } from "./LiveParlayViewer";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
+import {
+  CredentialResponse,
+  GoogleLogin,
+  googleLogout,
+} from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { UserData } from "../../App";
 import { getUuid, numberWithCommas } from "../../utils/Util";
@@ -48,19 +52,22 @@ export function Navbar(props: NavbarProps) {
 
   return (
     <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
-      <div className="container w-full flex flex-row pl-2 items-center mr-2">
-        <div className="flex flex-row w-5/8">
-          <Link className="py-5 px-2 text-white flex-1 font-bold" to={"/"}>
+      <div className="flex-row py-4 items-center flex justify-start box-border relative">
+        <div className="flex flex-row grow justify-start w-5/8 md:w-18/20">
+          <Link className="px-4 text-white flex-1 font-bold" to={"/"}>
             CnB Baloncesto Betting
           </Link>
         </div>
-        <div className="flex justify-end w-2/8">
-          <span className="py-2 px-3 flex font-[ProximaNova-Bold, serif]">
+        <div className="flex flex-row grow justify-end w-2/8 md:w-1/20">
+          <span className="px-3 flex font-[ProximaNova-Bold, serif]">
             ${numberWithCommas(balance)}
           </span>
         </div>
-        <Menu as="div" className="flex relative w-1/8">
-          <MenuButton className="cursor-pointer inline-flex justify-center rounded-md hover:bg-gray-800 focus:outline-none text-base py-2 px-2 focus-visible:ring-1 focus-visible:ring-gray-800">
+        <Menu
+          as="div"
+          className="flex justify-center grow px-2 md:justify-end relative w-1/8"
+        >
+          <MenuButton className="cursor-pointer inline-flex rounded-md hover:bg-gray-800 focus:outline-none text-base py-2 px-2 focus-visible:ring-1 focus-visible:ring-gray-800">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
           </MenuButton>
           <MenuItems

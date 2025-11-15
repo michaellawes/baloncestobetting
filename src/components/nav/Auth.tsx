@@ -13,7 +13,7 @@ export interface AuthProps {
 export function Auth(props: AuthProps) {
   const { isLoggedIn, profileImg } = props;
   return (
-    <div className="">
+    <div className="flex justify-end">
       {isLoggedIn ? (
         <img
           src={profileImg}
