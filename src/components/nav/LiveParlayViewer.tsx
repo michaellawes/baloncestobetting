@@ -179,7 +179,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               </div>
             )}
           </div>
-          {isLoggedIn && (
+          {isLoggedIn && balance > 0 && (
             <div className="overflow-hidden w-1/4 md:w-1/2 pr-2 ml-2 mr-2">
               <button
                 className="cursor-pointer float-right hover:bg-gray-700 rounded-xl pl-4 pr-4 mt-1"
