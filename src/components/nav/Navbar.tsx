@@ -3,11 +3,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { LiveParlayViewer } from "./LiveParlayViewer";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import {
-  CredentialResponse,
-  GoogleLogin,
-  googleLogout,
-} from "@react-oauth/google";
+import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { UserData } from "../../App";
 import { getUuid, numberWithCommas } from "../../utils/Util";
@@ -52,7 +48,7 @@ export function Navbar(props: NavbarProps) {
 
   return (
     <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
-      <div className="container w-full flex flex-row pl-2 items-center mr-2 ">
+      <div className="container w-full flex flex-row pl-2 items-center mr-2">
         <div className="flex flex-row w-5/8">
           <Link className="py-5 px-2 text-white flex-1 font-bold" to={"/"}>
             CnB Baloncesto Betting
@@ -64,7 +60,7 @@ export function Navbar(props: NavbarProps) {
           </span>
         </div>
         <Menu as="div" className="flex relative w-1/8">
-          <MenuButton className="cursor-pointer inline-flex w-full justify-center rounded-md hover:bg-gray-800 focus:outline-none text-base px-2 py-2 focus-visible:ring-2 focus-visible:ring-gray-800">
+          <MenuButton className="cursor-pointer inline-flex justify-center rounded-md hover:bg-gray-800 focus:outline-none text-base py-2 px-2 focus-visible:ring-1 focus-visible:ring-gray-800">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
           </MenuButton>
           <MenuItems
