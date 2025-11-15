@@ -101,7 +101,7 @@ export function Parlay(props: ParlayProps) {
 
   return (
     <div
-      className="w-full mb-2 border-l-3 border-l-gray-400  float-left rounded-sm bg-gray-900 border-gray-500 border-t-1"
+      className="w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-sm bg-gray-900 border-t-1 border-r-1"
       id={parlay_id}
     >
       <div className="p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-gray-500">
@@ -129,7 +129,7 @@ export function Parlay(props: ParlayProps) {
             key={leg.frontend_id}
             className={
               index > 0
-                ? "pt-1 h-auto my-2 border-t border-t-gray-600 flex flex-row"
+                ? "pt-1 h-auto my-2 border-t border-t-gray-700 flex flex-row"
                 : "pt-1 h-auto mb-2 flex flex-row"
             }
           >
@@ -153,7 +153,7 @@ export function Parlay(props: ParlayProps) {
           </div>
         ))}
       </div>
-      <div className="border-t-1 flex flex-col w-full items-center justify-between border-b-1 rounded-xs bg-gray-800 border-gray-700">
+      <div className="border-t-1 flex flex-col w-full items-center justify-between border-b-1 rounded-b-sm bg-gray-800 border-gray-700">
         <div className="flex flex-row text-left pl-2 border-b-1 border-b-gray-700 w-full pb-1">
           <div className="flex flex-row w-15/16">
             <div className="flex flex-col basis-0 grow justify-center items-stretch box-border relative pl-2">
