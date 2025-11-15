@@ -2,7 +2,7 @@ import * as React from "react";
 import { MatchupSchema, propField } from "../../../utils/Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faAt, faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
 import { PropLine } from "./PropLine";
 
 library.add(fas);
@@ -98,11 +98,10 @@ export function WeeklySlate(props: WeeklySlateProps) {
                           </div>
                         </div>
                       </div>
-                      <div className="pl-3 text-lg overflow-visible h-0.25 justify-start items-center z-40 flex-row flex box-border relative">
-                        <FontAwesomeIcon
-                          className="shrink-0 w-[15px] h-[15px] text-gray-300"
-                          icon={faAt as IconProp}
-                        />
+                      <div className="pl-3.5 mb-1 overflow-visible h-0.25 justify-start items-center z-40 flex-row flex box-border relative">
+                        <span className="text-white font-light text-[20px]">
+                          @
+                        </span>
                       </div>
                       <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
                         <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
