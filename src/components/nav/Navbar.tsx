@@ -130,7 +130,7 @@ export function Navbar(props: NavbarProps) {
             : "h-9.5 box-border w-full overflow-hidden z-60 mb-2.5 fixed hidden"
         }
       >
-        <div className="shadow-none overflow-hidden rounded-xs list-none">
+        <div className="shadow-none overflow-hidden rounded-b-xs list-none">
           <div className="h-9.5 border-b-gray-600 bg-gray-700 border-solid border-b pr-4 pl-4 flex-row items-stretch flex justify-start box-border relative">
             <div className="w-1/2 h-9.5 basis-0 grow items-center justify-between flex box-border relative">
               <h3 className="text-ellipsis text-xs text-gray-300 box-border overflow-hidden relative m-0 p-0 font-inherit">
