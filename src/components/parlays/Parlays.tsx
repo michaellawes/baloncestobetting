@@ -120,9 +120,9 @@ export function Parlays(props: ParlaysViewerProps) {
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
-      <ul className="w-full h-full scrollbar-hide mt-16 ml-2 mr-10 border-r-4 border-r-gray-200">
+      <ul className="w-full h-full scrollbar-hide mt-16 ml-2">
         {parlays.map((parlay, i) => (
-          <li key={i} className="scrollbar-hide mr-3">
+          <li key={i} className="scrollbar-hide mr-3 pr-1">
             <Parlay {...parlay} setBalance={setBalance} />
           </li>
         ))}

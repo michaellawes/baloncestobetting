@@ -51,8 +51,8 @@ export function Navbar(props: NavbarProps) {
   };
 
   return (
-    <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide">
-      <div className="container w-full flex flex-row pl-2 items-center border-b-gray-300 border-b-1">
+    <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
+      <div className="container w-full flex flex-row pl-2 items-center mr-2 ">
         <div className="flex flex-row w-5/8">
           <Link className="py-5 px-2 text-white flex-1 font-bold" to={"/"}>
             CnB Baloncesto Betting
