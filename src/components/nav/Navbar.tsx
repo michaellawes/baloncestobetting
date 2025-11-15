@@ -131,26 +131,26 @@ export function Navbar(props: NavbarProps) {
         }
       >
         <div className="shadow-none overflow-hidden rounded-b-xs list-none">
-          <div className="h-9.5 border-b-gray-600 bg-gray-700 border-solid border-b pr-4 pl-4 flex-row items-stretch flex justify-start box-border relative">
-            <div className="w-1/2 h-9.5 basis-0 grow items-center justify-between flex box-border relative">
+          <div className="h-9.5 border-b-gray-600 bg-gray-700 border-solid border-b flex-row items-stretch flex justify-start box-border relative">
+            <div className="w-1/2 h-9.5 basis-0 grow items-center justify-between flex box-border relative pl-4">
               <h3 className="text-ellipsis text-xs text-gray-300 box-border overflow-hidden relative m-0 p-0 font-inherit">
                 FANTASY BASKETBALL
               </h3>
             </div>
             <div className="w-1/2 items-stretch justify-start flex-col flex box-border relative list-none">
-              <div className="grow items-center justify-between flex-row flex box-border relative list-none ml-4">
-                <div className="basis-0 grow justify-center items-center flex-row flex box-border relative">
+              <div className="grow items-center justify-start flex-row flex box-border relative list-none">
+                <div className="w-1/3 basis-0 grow justify-center items-center flex-row flex box-border relative">
                   <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative">
                     spread
                   </span>
                 </div>
-                <div className="basis-0 grow justify-center items-center flex-row flex box-border relative ml-4">
+                <div className="w-1/3 basis-0 grow justify-center items-center flex-row flex box-border relative">
                   <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative">
-                    total
+                    totals
                   </span>
                 </div>
-                <div className="basis-0 grow justify-center items-center flex-row flex box-border relative">
-                  <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative ml-4">
+                <div className="w-1/3 basis-0 grow justify-center items-center flex-row flex box-border relative">
+                  <span className="font-[Proxima Nova Condensed, serif] tracking-[1px] uppercase text-gray-300 text-xs text-center box-border relative">
                     money
                   </span>
                 </div>
