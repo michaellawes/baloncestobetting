@@ -139,7 +139,7 @@ export function Parlays(props: ParlaysViewerProps) {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-gray-900 overflow-hidden scrollbar-hide ">
+    <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
       <ul className="w-full h-full scrollbar-hide mt-18 ml-1">
         {parlays.map((parlay, i) => (
           <li key={i} className="scrollbar-hide mr-1 pr-1">
