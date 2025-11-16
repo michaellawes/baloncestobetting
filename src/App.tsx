@@ -355,6 +355,7 @@ export function App() {
                   user={user}
                   setParlayFieldUpdate={setParlayFieldUpdate}
                   setIsViewingDashboard={setIsViewingDashboard}
+                  matchups={weeklySlate}
                 />
               }
             />

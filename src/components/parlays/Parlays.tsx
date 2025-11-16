@@ -3,7 +3,7 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
 import { ParlayFieldUpdate, UserData } from "../../App";
-import { evaluateLeg } from "../../utils/Util";
+import { evaluateLeg, MatchupSchema } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
 
 export interface ParlaysViewerProps {
@@ -11,14 +11,34 @@ export interface ParlaysViewerProps {
   user: UserData;
   setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
+  matchups: MatchupSchema[];
 }
 export function Parlays(props: ParlaysViewerProps) {
-  const { setBalance, setParlayFieldUpdate, user, setIsViewingDashboard } =
-    props;
+  const {
+    setBalance,
+    setParlayFieldUpdate,
+    user,
+    setIsViewingDashboard,
+    matchups,
+  } = props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
+  const [liveTeamData, setLiveTeamData] = React.useState<Map<string, number>>(
+    new Map<string, number>(),
+  );
+
+  const getTeamData = (live_matchups: MatchupSchema[]) => {
+    const teamData = new Map<string, number>();
+    for (const matchup of live_matchups) {
+      teamData.set(matchup.road.name, matchup.road.live_score);
+      teamData.set(matchup.home.name, matchup.home.live_score);
+    }
+    return teamData;
+  };
 
   useEffect(() => {
     setIsViewingDashboard(false);
+    const processedTeamData = getTeamData(matchups);
+    setLiveTeamData(processedTeamData);
   }, []);
 
   const validateFinishedSlips = async (data: SupabaseParlay[]) => {
@@ -119,11 +139,15 @@ export function Parlays(props: ParlaysViewerProps) {
   }, []);
 
   return (
-    <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
+    <div className="w-full h-screen bg-gray-900 overflow-hidden scrollbar-hide ">
       <ul className="w-full h-full scrollbar-hide mt-18 ml-1">
         {parlays.map((parlay, i) => (
           <li key={i} className="scrollbar-hide mr-1 pr-1">
-            <Parlay {...parlay} setBalance={setBalance} />
+            <Parlay
+              {...parlay}
+              setBalance={setBalance}
+              liveTeamData={liveTeamData}
+            />
           </li>
         ))}
       </ul>

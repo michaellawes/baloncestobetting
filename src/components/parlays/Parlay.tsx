@@ -10,7 +10,13 @@ import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
-import { getParlayType, numberWithCommas } from "../../utils/Util";
+import {
+  getParlayType,
+  numberWithCommas,
+  progressBarWidth,
+  propField,
+  round5,
+} from "../../utils/Util";
 
 library.add(fas);
 
@@ -32,6 +38,7 @@ export interface SupabaseParlay {
 
 export interface ParlayProps extends SupabaseParlay {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
+  liveTeamData: Map<string, number>;
 }
 
 export function Parlay(props: ParlayProps) {
@@ -44,7 +51,36 @@ export function Parlay(props: ParlayProps) {
     payout,
     wager,
     is_winner,
+    liveTeamData,
   } = props;
+
+  const getProgressBarWidth = (leg: ParlayTask) => {
+    if (leg.betType === propField[1]) {
+      const teams = leg.frontend_id.split("-")[0].split(" v ");
+      const roadTeamName = teams[0];
+      const homeTeamName = teams[1];
+      const liveTotalPointsScored = parseFloat(
+        (
+          liveTeamData.get(roadTeamName) + liveTeamData.get(homeTeamName)
+        ).toFixed(2),
+      );
+      const propTotalPointsScored = parseFloat(leg.text.substring(2));
+      let propTotalPointsScoredFull = parseFloat(
+        (propTotalPointsScored * 1.2).toFixed(2),
+      );
+      if (liveTotalPointsScored >= propTotalPointsScored) {
+        propTotalPointsScoredFull = liveTotalPointsScored;
+      }
+      const percentFull = parseFloat(
+        ((liveTotalPointsScored / propTotalPointsScoredFull) * 100).toFixed(),
+      );
+      if (percentFull <= 80) {
+        const styling = round5(percentFull).toString();
+        return progressBarWidth.get(styling);
+      }
+    }
+    return "h-[4px] z-50 bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-full";
+  };
 
   const getStandardTime = (hours: number, minutes: number) => {
     let timeValue;
@@ -57,7 +93,7 @@ export function Parlay(props: ParlayProps) {
       timeValue = "12";
     }
     timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes;
-    timeValue += hours >= 12 ? "PM ET" : "AM ET";
+    timeValue += hours >= 12 ? "PM" : "AM";
 
     return timeValue;
   };
@@ -99,6 +135,32 @@ export function Parlay(props: ParlayProps) {
     }
   };
 
+  const getLiveValue = (leg: ParlayTask) => {
+    if (leg.betType === propField[1]) {
+      const teams = leg.frontend_id.split("-")[0].split(" v ");
+      const roadTeamName = teams[0];
+      const homeTeamName = teams[1];
+      return parseFloat(
+        (
+          liveTeamData.get(roadTeamName) + liveTeamData.get(homeTeamName)
+        ).toFixed(),
+      );
+    } else {
+      return liveTeamData.get(leg.team);
+    }
+  };
+
+  const getPropValue = (text: string) => {
+    return text.substring(2);
+  };
+
+  const getOverUnderStyling = (text: string) => {
+    if (text.startsWith("O")) {
+      return "h-[4px] bg-green-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
+    }
+    return "h-[4px] bg-red-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
+  };
+
   return (
     <div
       className="w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-sm bg-gray-900 border-t-1 border-r-1"
@@ -123,33 +185,65 @@ export function Parlay(props: ParlayProps) {
           </div>
         )}
       </div>
-      <div className="float-left max-h-48 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
+      <div className="flex mb-2 max-h-54 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
         {legs.map((leg, index) => (
-          <div
-            key={leg.frontend_id}
-            className={
-              index > 0
-                ? "pt-1 h-auto my-2 border-t border-t-gray-700 flex flex-row"
-                : "pt-1 h-auto mb-2 flex flex-row"
-            }
-          >
-            <div className="flex flex-col grow items-stretch pl-5 float-left w-7/8 h-full">
-              <span className="flex relative text-white text-sm">
-                {leg.betType == "TOTAL POINTS"
-                  ? leg.frontend_id.split("-")[0]
-                  : leg.team}{" "}
-                {leg.text}
-              </span>
-              <span className="flex relative text-gray-400 text-xs">
-                {leg.betType}
-              </span>
+          <div className="flex flex-col grow items-stretch w-full">
+            <div className="flex flew-row grow items-stretch w-full">
+              <div
+                key={leg.frontend_id}
+                className={
+                  index > 0
+                    ? "pt-1 h-auto mt-2 mb-1 border-t border-t-gray-700 flex flex-row w-full"
+                    : "pt-1 h-auto mb-1 flex flex-row w-full"
+                }
+              >
+                <div className="flex flex-col grow items-stretch pl-5 justify-start w-7/8">
+                  <span className="flex relative text-white text-sm">
+                    {leg.betType == "TOTAL POINTS"
+                      ? leg.frontend_id.split("-")[0]
+                      : leg.team}{" "}
+                    {leg.text}
+                  </span>
+                  <span className="flex relative text-gray-400 text-xs">
+                    {leg.betType}
+                  </span>
+                </div>
+                <div className="flex flex-row justify-end w-1/8 text-right pr-5">
+                  <span className="text-gray-300">
+                    {leg.odds > 0 && "+"}
+                    {leg.odds}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="float-right w-1/8 text-right pr-5">
-              <span className="text-gray-300">
-                {leg.odds > 0 && "+"}
-                {leg.odds}
-              </span>
-            </div>
+            {frontend_is_active && leg.betType === propField[1] && (
+              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
+                {leg.betType === propField[1] && (
+                  <>
+                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full">
+                      <div className={getOverUnderStyling(leg.text)}>
+                        <div
+                          id={leg.frontend_id}
+                          className={getProgressBarWidth(leg)}
+                        >
+                          <div className="h-[4px] flex justify-end items-center ">
+                            <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
+                              {getLiveValue(leg)}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-4/5"></div>
+                        <div className="w-4/5 flex justify-end ml-4 mt-1">
+                          <span className="flex text-white text-end h-[4px] font-light text-xs">
+                            {getPropValue(leg.text)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

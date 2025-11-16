@@ -36,7 +36,6 @@ export function PropLine(props: PropLineProps) {
       oppId: oppId,
       isHome: isHome,
     };
-    console.log(action);
     dispatch(action);
   };
 

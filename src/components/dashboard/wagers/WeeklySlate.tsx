@@ -45,7 +45,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
 
   return (
     <div className="z-10 items-stretch justify-start flex-col flex box-border relative">
-      <div className="box-border relative mt-28">
+      <div className="box-border relative mt-30">
         <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative">
           <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0">
             <li key={"header"} className="w-full fixed z-60"></li>

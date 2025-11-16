@@ -22,8 +22,8 @@ export function Dashboard(props: DashboardProps) {
     <div
       className={
         tasks.length > 0
-          ? "w-full h-full mb-20 bg-gray-900"
-          : "h-full w-full bg-gray-900"
+          ? "w-full h-screen mb-20 bg-gray-900"
+          : "w-full h-screen bg-gray-900"
       }
     >
       <WeeklySlate matchups={weeklySlate} />
