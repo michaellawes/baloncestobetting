@@ -5,10 +5,7 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import {
-  TasksContext,
-  TasksDispatchContext,
-} from "./components/reducer/TasksContext";
+import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
 import { generateId, MatchupSchema, propField } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
@@ -171,6 +168,24 @@ export function App() {
     }
   }, [user]);
 
+  const isInvalidOpposingSpreadForMoneyLineAddition = (
+    team: string,
+    isHome: boolean,
+  ) => {
+    let relevantMatchup: MatchupSchema;
+    if (isHome) {
+      relevantMatchup = weeklySlate.filter(
+        (slate) => slate.road.name === team,
+      )[0];
+      return relevantMatchup.road.spread.text.startsWith("-");
+    } else {
+      relevantMatchup = weeklySlate.filter(
+        (slate) => slate.home.name === team,
+      )[0];
+      return relevantMatchup.home.spread.text.startsWith("-");
+    }
+  };
+
   const tasksReducer = (tasks: ParlayTask[], action: ParlayAction) => {
     switch (action.type) {
       case "addLeg": {
@@ -183,12 +198,20 @@ export function App() {
               action.oppId.split("-")[0] + "-" + propField[2],
           );
         }
-        if (action.betType == propField[2] && !action.isHome) {
-          tasks = tasks.filter(
-            (task) =>
-              task.frontend_id !==
-              action.oppId.split("-")[0] + "-" + propField[0],
-          );
+        if (action.betType == propField[2]) {
+          const opposingTeam = action.oppId.split("-")[0];
+          if (
+            isInvalidOpposingSpreadForMoneyLineAddition(
+              opposingTeam,
+              action.isHome,
+            )
+          ) {
+            tasks = tasks.filter(
+              (task) =>
+                task.frontend_id !==
+                action.oppId.split("-")[0] + "-" + propField[0],
+            );
+          }
         }
         tasks = [
           ...tasks,
