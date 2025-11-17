@@ -19,6 +19,7 @@ interface NavbarProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   setUser: React.Dispatch<React.SetStateAction<UserData>>;
   isViewingDashboard: boolean;
+  matchup: number;
 }
 
 export function Navbar(props: NavbarProps) {
@@ -29,6 +30,7 @@ export function Navbar(props: NavbarProps) {
     setBalance,
     setUser,
     isViewingDashboard,
+    matchup,
   } = props;
   const [profileImg, setProfileImg] = React.useState("");
 
@@ -54,13 +56,14 @@ export function Navbar(props: NavbarProps) {
     <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
       <div className="flex-row py-4 items-center flex justify-start box-border relative">
         <div className="flex flex-row grow justify-start w-5/8 md:w-18/20">
-          <Link className="px-4 text-white flex-1 font-bold" to={"/"}>
-            CnB Baloncesto Betting
+          <Link className="px-4 text-white flex-1 flex-row font-bold" to={"/"}>
+            <span>CnB Baloncesto Betting</span>
+            <span className="text-sm text-gray-400 pl-3">Week {matchup}</span>
           </Link>
         </div>
         <div className="flex flex-row grow justify-end w-2/8 md:w-1/20">
           <span className="px-3 flex font-[ProximaNova-Bold, serif]">
-            ${numberWithCommas(balance)}
+            ${numberWithCommas(parseFloat(balance.toFixed(2)))}
           </span>
         </div>
         <Menu

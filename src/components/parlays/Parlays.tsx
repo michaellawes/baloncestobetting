@@ -22,15 +22,31 @@ export function Parlays(props: ParlaysViewerProps) {
     matchups,
   } = props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
-  const [liveTeamData, setLiveTeamData] = React.useState<Map<string, number>>(
-    new Map<string, number>(),
-  );
+  const [liveTeamData, setLiveTeamData] = React.useState<
+    Map<string, Map<string, string>>
+  >(new Map<string, Map<string, string>>());
 
   const getTeamData = (live_matchups: MatchupSchema[]) => {
-    const teamData = new Map<string, number>();
+    const teamData = new Map<string, Map<string, string>>();
     for (const matchup of live_matchups) {
-      teamData.set(matchup.road.name, matchup.road.live_score);
-      teamData.set(matchup.home.name, matchup.home.live_score);
+      teamData.set(
+        matchup.road.name,
+        new Map<string, string>([
+          ["live_score", matchup.road.live_score.toString()],
+          ["live_spread", matchup.road.spread.live_value],
+          ["live_points", matchup.road.points.live_value],
+          ["live_moneyline", matchup.road.moneyline.live_value],
+        ]),
+      );
+      teamData.set(
+        matchup.home.name,
+        new Map<string, string>([
+          ["live_score", matchup.home.live_score.toString()],
+          ["live_spread", matchup.home.spread.live_value],
+          ["live_points", matchup.home.points.live_value],
+          ["live_moneyline", matchup.home.moneyline.live_value],
+        ]),
+      );
     }
     return teamData;
   };
@@ -46,8 +62,10 @@ export function Parlays(props: ParlaysViewerProps) {
     const expiredParlays: SupabaseParlay[] = [];
 
     for (const parlay of data) {
+      const startOfExpirationDate = new Date(parlay.expires_at);
+      startOfExpirationDate.setHours(0, 0, 0, 0);
       parlay.frontend_is_active =
-        new Date(parlay.expires_at).getTime() > Date.now();
+        Date.now() < Date.parse(startOfExpirationDate.toISOString());
       if (!parlay.frontend_is_active && !parlay.is_payed_out) {
         newlyExpiredParlays.push(parlay);
       } else {
@@ -97,17 +115,12 @@ export function Parlays(props: ParlaysViewerProps) {
       const updateSlip = async () => {
         parlay["is_payed_out"] = true;
         parlay["is_winner"] = slipHit;
-        if (slipHit) {
-          setBalance((prev) => prev + parseFloat(parlay.payout.toFixed(2)));
-          dispatch({
-            type: "acceptPayout",
-          });
-        }
         setParlayFieldUpdate({
           user_id: parlay.user_id,
           parlay_id: parlay.parlay_id,
           parlay_modification_type: "validateSlip",
           parlay: parlay,
+          payout: parlay.payout,
         });
         dispatch({
           type: "parlayFieldUpdate",

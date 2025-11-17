@@ -58,6 +58,7 @@ export interface ParlayFieldUpdate {
   parlay_id: string;
   parlay_modification_type: string;
   parlay?: SupabaseParlay;
+  payout?: number;
 }
 
 export interface Slip {
@@ -85,6 +86,7 @@ export function App() {
   const [justAffectedParlayFieldUpdate, setJustAffectedParlayFieldUpdate] =
     useState<boolean>(false);
   const [isViewingDashboard, setIsViewingDashboard] = useState<boolean>(true);
+  const [lockout, setLockout] = useState<boolean>(false);
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -125,6 +127,7 @@ export function App() {
 
         if (data) {
           setMatchup(data[0]["id"]);
+          setLockout(data[0]["is_done"]);
           setWeeklySlate(data[0]["weekly_slate"]);
         }
       };
@@ -155,11 +158,11 @@ export function App() {
 
           if (data) {
             const balance: number = data[0]["balance"];
-            setBalance(balance);
+            setBalance(parseFloat(balance.toFixed(2)));
           }
         } else {
           const balance: number = data[0]["balance"];
-          setBalance(balance);
+          setBalance(parseFloat(balance.toFixed(2)));
         }
       }
     };
@@ -278,7 +281,7 @@ export function App() {
       const updateBalance = async () => {
         const { error } = await supabase
           .from("users")
-          .update({ balance: balance })
+          .update({ balance: parseFloat(balance.toFixed(2)) })
           .eq("id", user.id);
 
         if (error) {
@@ -297,7 +300,11 @@ export function App() {
         parlay_id: parlayFieldUpdate.parlay_id,
         parlay: parlayFieldUpdate.parlay,
         parlay_modification_type: parlayFieldUpdate.parlay_modification_type,
+        payout: parlayFieldUpdate.payout,
       };
+      /*
+      Add data to backend column to have final result from previous matchup saved so you can display how close user was
+      * */
       setJustAffectedParlayFieldUpdate(false);
       if (temp.parlay_modification_type === "validateSlip") {
         const updateParlay = async () => {
@@ -315,6 +322,10 @@ export function App() {
           }
         };
         updateParlay();
+        if (temp.parlay.is_winner) {
+          setBalance((prev) => prev + parseFloat(temp.payout.toFixed(2)));
+          setJustAffectedBalance(true);
+        }
       }
     }
   }, [user, parlayFieldUpdate, justAffectedParlayFieldUpdate]);
@@ -336,6 +347,7 @@ export function App() {
             setBalance={setBalance}
             setUser={setUser}
             isViewingDashboard={isViewingDashboard}
+            matchup={matchup}
           />
           <Routes>
             <Route
@@ -344,6 +356,7 @@ export function App() {
                 <Dashboard
                   weeklySlate={weeklySlate}
                   setIsViewingDashboard={setIsViewingDashboard}
+                  lockout={lockout}
                 />
               }
             />

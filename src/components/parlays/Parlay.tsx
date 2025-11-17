@@ -38,7 +38,7 @@ export interface SupabaseParlay {
 
 export interface ParlayProps extends SupabaseParlay {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
-  liveTeamData: Map<string, number>;
+  liveTeamData: Map<string, Map<string, string>>;
 }
 
 export function Parlay(props: ParlayProps) {
@@ -58,11 +58,8 @@ export function Parlay(props: ParlayProps) {
     if (leg.betType === propField[1]) {
       const teams = leg.frontend_id.split("-")[0].split(" v ");
       const roadTeamName = teams[0];
-      const homeTeamName = teams[1];
       const liveTotalPointsScored = parseFloat(
-        (
-          liveTeamData.get(roadTeamName) + liveTeamData.get(homeTeamName)
-        ).toFixed(2),
+        parseFloat(liveTeamData.get(roadTeamName).get("live_points")).toFixed(),
       );
       const propTotalPointsScored = parseFloat(leg.text.substring(2));
       let propTotalPointsScoredFull = parseFloat(
@@ -139,14 +136,13 @@ export function Parlay(props: ParlayProps) {
     if (leg.betType === propField[1]) {
       const teams = leg.frontend_id.split("-")[0].split(" v ");
       const roadTeamName = teams[0];
-      const homeTeamName = teams[1];
       return parseFloat(
-        (
-          liveTeamData.get(roadTeamName) + liveTeamData.get(homeTeamName)
-        ).toFixed(),
-      );
+        liveTeamData.get(roadTeamName).get("live_points"),
+      ).toFixed();
     } else {
-      return liveTeamData.get(leg.team);
+      return parseFloat(
+        liveTeamData.get(leg.team).get("live_points"),
+      ).toFixed();
     }
   };
 
@@ -167,10 +163,10 @@ export function Parlay(props: ParlayProps) {
       id={parlay_id}
     >
       <div className="p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-gray-500">
-        <span className="text-blue-500 text-base flex w-5/8 font-bold">
+        <span className="text-blue-500 text-base flex w-6/8 font-bold">
           {legs.length} leg {getParlayType(legs.length)}
         </span>
-        <span className="text-white text-sm w-2/8 justify-end flex font-bold">
+        <span className="text-white text-sm w-1/8 justify-end flex font-bold">
           {total_odds > 0 && "+"}
           {total_odds}
         </span>
@@ -179,7 +175,7 @@ export function Parlay(props: ParlayProps) {
             <FontAwesomeIcon icon={faSquareCheck as IconProp} />
           </div>
         )}
-        {!frontend_is_active && is_winner && (
+        {!frontend_is_active && !is_winner && (
           <div className="text-red-600 text-base w-1/8 justify-end flex">
             <FontAwesomeIcon icon={faSquareXmark as IconProp} />
           </div>
@@ -232,8 +228,8 @@ export function Parlay(props: ParlayProps) {
                             </span>
                           </div>
                         </div>
-                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-4/5"></div>
-                        <div className="w-4/5 flex justify-end ml-4 mt-1">
+                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
+                        <div className="w-75/100 flex justify-end ml-4 mt-1">
                           <span className="flex text-white text-end h-[4px] font-light text-xs">
                             {getPropValue(leg.text)}
                           </span>

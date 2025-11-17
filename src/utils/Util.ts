@@ -54,14 +54,18 @@ export interface Player {
   position: string;
 }
 
+export interface PropLineMetadata extends PropLineInterface {
+  live_value: string;
+}
+
 export interface Team {
   icon: string;
   name: string;
   record: string;
   color: string;
-  spread: PropLineInterface;
-  points: PropLineInterface;
-  moneyline: PropLineInterface;
+  spread: PropLineMetadata;
+  points: PropLineMetadata;
+  moneyline: PropLineMetadata;
   live_score: number;
   top_5: Player[];
 }
@@ -90,9 +94,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Professor Coach's Pupils",
       record: "1-2",
       color: "text-white",
-      spread: { text: "+70.5", odds: -110 },
-      points: { text: "O 3985.5", odds: -150 },
-      moneyline: { text: "", odds: 200 },
+      spread: { live_value: "200.5", text: "+70.5", odds: -110 },
+      points: { live_value: "3000", text: "O 3985.5", odds: -150 },
+      moneyline: { live_value: "2300-2200", text: "", odds: 200 },
       live_score: 1352.8,
       top_5: [
         {
@@ -147,9 +151,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Sacred timeline TVA",
       record: "1-2",
       color: "text-black",
-      spread: { text: "-70.5", odds: -110 },
-      points: { text: "U 3985.5", odds: 125 },
-      moneyline: { text: "", odds: -120 },
+      spread: { live_value: "200.5", text: "-70.5", odds: -110 },
+      points: { live_value: "3000", text: "U 3985.5", odds: 125 },
+      moneyline: { live_value: "2300-2200", text: "", odds: -120 },
       live_score: 1449.85,
       top_5: [
         {
@@ -206,9 +210,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Mr. Send That Vid",
       record: "2-1",
       color: "text-white",
-      spread: { text: "+100.5", odds: -150 },
-      points: { text: "O 3785.5", odds: -120 },
-      moneyline: { text: "", odds: 275 },
+      spread: { live_value: "200.5", text: "+100.5", odds: -150 },
+      points: { live_value: "3000", text: "O 3785.5", odds: -120 },
+      moneyline: { live_value: "2300-2200", text: "", odds: 275 },
       live_score: 1223.15,
       top_5: [
         {
@@ -263,9 +267,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Ion Run It",
       record: "2-1",
       color: "text-black",
-      spread: { text: "-100.5", odds: -110 },
-      points: { text: "U 3785.5", odds: -130 },
-      moneyline: { text: "", odds: -120 },
+      spread: { live_value: "200.5", text: "-100.5", odds: -110 },
+      points: { live_value: "3000", text: "U 3785.5", odds: -130 },
+      moneyline: { live_value: "2300-2200", text: "", odds: -120 },
       live_score: 1422.05,
       top_5: [
         {
@@ -322,9 +326,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Zeke's spinal fluid",
       record: "3-0",
       color: "text-white",
-      spread: { text: "+35.5", odds: -110 },
-      points: { text: "O 3800.5", odds: -220 },
-      moneyline: { text: "", odds: 200 },
+      spread: { live_value: "200.5", text: "+35.5", odds: -110 },
+      points: { live_value: "3000", text: "O 3800.5", odds: -220 },
+      moneyline: { live_value: "2300-2200", text: "", odds: 200 },
       live_score: 1617.0,
       top_5: [
         {
@@ -379,9 +383,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Amen's Shampoo",
       record: "1-1",
       color: "text-black",
-      spread: { text: "-35.5", odds: -150 },
-      points: { text: "U 3800.5", odds: 125 },
-      moneyline: { text: "", odds: -185 },
+      spread: { live_value: "200.5", text: "-35.5", odds: -150 },
+      points: { live_value: "3000", text: "U 3800.5", odds: 125 },
+      moneyline: { live_value: "2300-2200", text: "", odds: -185 },
       live_score: 1419.9,
       top_5: [
         {
@@ -438,9 +442,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Haruko Warriors",
       record: "2-1",
       color: "text-white",
-      spread: { text: "+35.5", odds: -110 },
-      points: { text: "O 3985.5", odds: -220 },
-      moneyline: { text: "", odds: 200 },
+      spread: { live_value: "200.5", text: "+35.5", odds: -110 },
+      points: { live_value: "3000", text: "O 3985.5", odds: -220 },
+      moneyline: { live_value: "2300-2200", text: "", odds: 200 },
       live_score: 1375.1,
       top_5: [
         {
@@ -495,9 +499,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Kane Train \ud83d\ude82",
       record: "1-2",
       color: "text-black",
-      spread: { text: "-35.5", odds: -150 },
-      points: { text: "U 3985.5", odds: 125 },
-      moneyline: { text: "", odds: -185 },
+      spread: { live_value: "200.5", text: "-35.5", odds: -150 },
+      points: { live_value: "3000", text: "U 3985.5", odds: 125 },
+      moneyline: { live_value: "2300-2200", text: "", odds: -185 },
       live_score: 1699.95,
       top_5: [
         {
@@ -554,9 +558,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "TUGBOBO MEDICAL CENTER",
       record: "0-4",
       color: "text-white",
-      spread: { text: "+35.5", odds: -110 },
-      points: { text: "O 4100.5", odds: -220 },
-      moneyline: { text: "", odds: 200 },
+      spread: { live_value: "200.5", text: "+35.5", odds: -110 },
+      points: { live_value: "3000", text: "O 4100.5", odds: -220 },
+      moneyline: { live_value: "2300-2200", text: "", odds: 200 },
       live_score: 1388.45,
       top_5: [
         {
@@ -611,9 +615,9 @@ export const refactoredDemo: MatchupSchema[] = [
       name: "Mad Wrld",
       record: "0-3",
       color: "text-black",
-      spread: { text: "-35.5", odds: -150 },
-      points: { text: "U 4100.5", odds: 125 },
-      moneyline: { text: "", odds: -185 },
+      spread: { live_value: "200.5", text: "-35.5", odds: -150 },
+      points: { live_value: "3000", text: "U 4100.5", odds: 125 },
+      moneyline: { live_value: "2300-2200", text: "", odds: -185 },
       live_score: 1234.8,
       top_5: [
         {
@@ -755,7 +759,7 @@ export const round5 = (x: number) => {
 export const progressBarWidth: Map<string, string> = new Map([
   [
     "0",
-    "h-[4px] z-50 bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-0",
+    "h-[4px] z-50 bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-2/100",
   ],
   [
     "5",
@@ -823,6 +827,18 @@ export const progressBarWidth: Map<string, string> = new Map([
   ],
   [
     "85",
-    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-85/100 z-50",
+    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-100/100 z-50",
+  ],
+  [
+    "90",
+    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-100/100 z-50",
+  ],
+  [
+    "95",
+    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-100/100 z-50",
+  ],
+  [
+    "100",
+    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-100/100 z-50",
   ],
 ]);
