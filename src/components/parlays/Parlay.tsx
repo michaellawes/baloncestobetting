@@ -1,11 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faDownload, fas, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  fas,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
-import { evaluateLeg, getParlayType, numberWithCommas, progressBarWidth, propField, round5 } from "../../utils/Util";
+import {
+  evaluateLeg,
+  getParlayType,
+  numberWithCommas,
+  progressBarWidth,
+  propField,
+  round5,
+} from "../../utils/Util";
 
 library.add(fas);
 

@@ -744,7 +744,7 @@ export const evaluateLeg = (leg: ParlayTask, event: number) => {
       return event < Number(totalPointsProps[1]);
     }
   } else {
-    return event;
+    return event === 1;
   }
 };
 
