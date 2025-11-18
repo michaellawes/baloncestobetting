@@ -228,10 +228,12 @@ export function Parlay(props: ParlayProps) {
       </div>
       <div className="flex mb-2 max-h-54 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
         {legs.map((leg, index) => (
-          <div className="flex flex-col grow items-stretch w-full">
+          <div
+            key={leg.frontend_id}
+            className="flex flex-col grow items-stretch w-full"
+          >
             <div className="flex flew-row grow items-stretch w-full">
               <div
-                key={leg.frontend_id}
                 className={
                   index > 0
                     ? "pt-1 h-auto mt-2 mb-1 border-t border-t-gray-700 flex flex-row w-full"

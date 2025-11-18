@@ -673,7 +673,7 @@ export const refactoredDemo: MatchupSchema[] = [
 export const demoParlays: SupabaseParlay[] = [
   {
     user_id: "c967b5a2-479d-5b20-9c58-27e164630d33",
-    parlay_id: "44d2e199-c29e-e300-984e-76e0c1435f67",
+    parlay_id: "67",
     frontend_is_active: false,
     is_payed_out: false,
     is_winner: false,
@@ -695,7 +695,7 @@ export const demoParlays: SupabaseParlay[] = [
   },
   {
     user_id: "c967b5a2-479d-5b20-9c58-27e164630d33",
-    parlay_id: "42898341-32d3-9277-ccc0-58684ca67aeb",
+    parlay_id: "5555",
     matchup_id: 4,
     total_odds: 596,
     payout: 139.16,
@@ -715,7 +715,7 @@ export const demoParlays: SupabaseParlay[] = [
         frontend_id: "Amen's Shampoo v Ion Run It-U 2821.5",
         team: "Amen's Shampoo v Ion Run It",
         betType: "TOTAL POINTS",
-        text: "U 2821.5",
+        text: "O 2821.5",
         odds: -110,
       },
       {
@@ -727,7 +727,7 @@ export const demoParlays: SupabaseParlay[] = [
       },
     ],
     created_at: 1762973845208,
-    expires_at: 1762973845208,
+    expires_at: 1763417915502,
   },
 ];
 
