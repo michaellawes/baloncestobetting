@@ -5,10 +5,14 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
+import {
+  TasksContext,
+  TasksDispatchContext,
+} from "./components/reducer/TasksContext";
 import { generateId, MatchupSchema, propField } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
+import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 
 export interface ParlayTask {
   frontend_id: string;
@@ -396,6 +400,13 @@ export function App() {
               }
             />
           </Routes>
+          <div className="relative text-white">
+            <LiveParlayViewer
+              balance={balance}
+              setBalance={setBalance}
+              isLoggedIn={isLoggedIn}
+            />
+          </div>
         </TasksDispatchContext>
       </TasksContext>
     </Router>

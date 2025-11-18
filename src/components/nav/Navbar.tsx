@@ -1,6 +1,5 @@
 import { Auth } from "./Auth";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { LiveParlayViewer } from "./LiveParlayViewer";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -56,9 +55,14 @@ export function Navbar(props: NavbarProps) {
     <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
       <div className="flex-row py-4 items-center flex justify-start box-border relative">
         <div className="flex flex-row grow justify-start w-5/8 md:w-18/20">
-          <Link className="px-4 text-white flex-1 flex-row font-bold" to={"/"}>
-            <span>CnB Baloncesto Betting</span>
-            <span className="text-sm text-gray-400 pl-3">Week {matchup}</span>
+          <Link
+            className="px-4 justify-start text-start text-white flex-1 flex-row font-bold"
+            to={"/"}
+          >
+            <span className="">CnB Baloncesto Betting</span>
+            <span className="text-xs md:text-sm text-gray-400 pl-1">
+              Week {matchup}
+            </span>
           </Link>
         </div>
         <div className="flex flex-row grow justify-end w-2/8 md:w-1/20">
@@ -174,13 +178,6 @@ export function Navbar(props: NavbarProps) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex">
-        <LiveParlayViewer
-          balance={balance}
-          setBalance={setBalance}
-          isLoggedIn={isLoggedIn}
-        />
       </div>
     </nav>
   );
