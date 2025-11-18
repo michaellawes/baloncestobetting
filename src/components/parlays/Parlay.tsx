@@ -13,6 +13,7 @@ import { downloadImage } from "../../utils/exportAsImage";
 import {
   evaluateLeg,
   getParlayType,
+  getPropTextWithRespectToScreenSize,
   numberWithCommas,
   progressBarWidth,
   propField,
@@ -249,11 +250,8 @@ export function Parlay(props: ParlayProps) {
                 }
               >
                 <div className="flex flex-col grow items-stretch pl-5 justify-start w-7/8">
-                  <span className="flex relative text-white text-sm">
-                    {leg.betType == "TOTAL POINTS"
-                      ? leg.frontend_id.split("-")[0]
-                      : leg.team}{" "}
-                    {leg.text}
+                  <span className="block relative text-white text-sm">
+                    {getPropTextWithRespectToScreenSize(leg, window.innerWidth)}
                   </span>
                   <span className="flex relative text-gray-400 text-xs">
                     {leg.betType}

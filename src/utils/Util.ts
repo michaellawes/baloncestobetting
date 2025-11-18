@@ -748,6 +748,23 @@ export const evaluateLeg = (leg: ParlayTask, event: number) => {
   }
 };
 
+export const getPropTextWithRespectToScreenSize = (
+  leg: ParlayTask,
+  screenWidth: number,
+) => {
+  if (leg.betType !== propField[1]) {
+    return `${leg.team} ${leg.text}`;
+  } else {
+    let teamMatchupString: string = leg.frontend_id.split("-")[0];
+    if (screenWidth < 500) {
+      teamMatchupString =
+        leg.frontend_id.split("-")[0].substring(0, 40) + "...";
+    }
+
+    return `${teamMatchupString} ${leg.text}`;
+  }
+};
+
 export const round5 = (x: number) => {
   return Math.ceil(x / 5) * 5;
 };

@@ -5,6 +5,7 @@ import { ParlayTask } from "../../App";
 import {
   decimalToOdds,
   getParlayTypeAbbreviated,
+  getPropTextWithRespectToScreenSize,
   numberWithCommas,
   oddsToDecimal,
 } from "../../utils/Util";
@@ -233,10 +234,10 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                   </div>
                   <div className="flex justify-start mt-1 ml-2 flex-col h-full w-13/16">
                     <span className="flex relative text-white text-sm">
-                      {leg.betType == "TOTAL POINTS"
-                        ? leg.frontend_id.split("-")[0]
-                        : leg.team}{" "}
-                      {leg.text}
+                      {getPropTextWithRespectToScreenSize(
+                        leg,
+                        window.innerWidth,
+                      )}
                     </span>
                     <span className="flex relative text-gray-400 text-xs">
                       {leg.betType}
