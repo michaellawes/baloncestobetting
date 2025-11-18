@@ -19,10 +19,10 @@ export function Auth(props: AuthProps) {
           src={profileImg}
           alt="Google Account Profile Picture"
           referrerPolicy="no-referrer"
-          className="md:w-8 md:h-8 h-6 w-6 border-transparent border rounded-4xl"
+          className="md:w-8 md:h-8 h-4 w-4 border-transparent border rounded-4xl"
         />
       ) : (
-        <div className="md:w-8 md:h-8 h-6 w-6">
+        <div className="md:w-8 md:h-8 h-4 w-4">
           <FontAwesomeIcon icon={faUser as IconProp} />
         </div>
       )}

@@ -36,12 +36,12 @@ export function Notification(props: NotificationProps) {
     >
       <div
         role="alert"
-        className="h-[16px] flex-row p-5 font-bold mt-16 fixed flex w-1/2 justify-center items-center text-center text-base z-100 text-white bg-gray-900 border border-green-500 rounded-sm"
+        className="h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-green-500 rounded-sm"
       >
-        <div className="flex w-4/5 flex-row items-center justify-start">
+        <div className="flex w-4/5 flex-row text-sm md:text-base font-bold items-center justify-start">
           <span>{notification.legs} leg parlay saved</span>
         </div>
-        <div className="flex text-base w-1/5 justify-end">
+        <div className="flex text-sm md:text-base w-1/5 justify-end">
           <FontAwesomeIcon
             icon={faCheck as IconProp}
             className="text-green-500 "
