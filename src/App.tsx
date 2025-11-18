@@ -13,6 +13,7 @@ import { generateId, MatchupSchema, propField } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
+import { Notification } from "./components/notification/Notification";
 
 export interface ParlayTask {
   frontend_id: string;
@@ -70,6 +71,11 @@ export interface Slip {
   payout: number;
 }
 
+export interface NotificationMetadata {
+  show: boolean;
+  legs: number;
+}
+
 export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<UserData>(null);
@@ -88,6 +94,8 @@ export function App() {
     useState<boolean>(false);
   const [isViewingDashboard, setIsViewingDashboard] = useState<boolean>(true);
   const [lockout, setLockout] = useState<boolean>(false);
+  const [notificationMetadata, setNotificationMetadata] =
+    useState<NotificationMetadata>({ show: false, legs: 0 });
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -240,6 +248,7 @@ export function App() {
           wager: action.wager,
         });
         setJustAffectedBalance(true);
+        setNotificationMetadata({ show: true, legs: tasks.length });
         return [];
       }
       case "acceptPayout": {
@@ -375,6 +384,10 @@ export function App() {
             setUser={setUser}
             isViewingDashboard={isViewingDashboard}
             matchup={matchup}
+          />
+          <Notification
+            notification={notificationMetadata}
+            setNotification={setNotificationMetadata}
           />
           <Routes>
             <Route

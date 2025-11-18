@@ -18,6 +18,7 @@ export interface ParlayAction {
     totalOdds?: number;
     payout?: number;
     wager?: number;
+    isHome?: boolean;
     user_id?: string;
     parlay_id?: string;
     is_payed_out?: boolean;
@@ -40,6 +41,7 @@ export interface ParlayFieldUpdate {
     parlay_id: string;
     parlay_modification_type: string;
     parlay?: SupabaseParlay;
+    payout?: number;
 }
 export interface Slip {
     legs: ParlayTask[];

@@ -22,7 +22,9 @@ export function Auth(props: AuthProps) {
           className="md:w-8 md:h-8 h-6 w-6 border-transparent border rounded-4xl"
         />
       ) : (
-        <FontAwesomeIcon icon={faUser as IconProp} />
+        <div className="md:w-8 md:h-8 h-6 w-6">
+          <FontAwesomeIcon icon={faUser as IconProp} />
+        </div>
       )}
     </div>
   );

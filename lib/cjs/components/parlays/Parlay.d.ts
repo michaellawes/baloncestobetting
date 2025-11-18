@@ -17,5 +17,6 @@ export interface SupabaseParlay {
 }
 export interface ParlayProps extends SupabaseParlay {
     setBalance: React.Dispatch<React.SetStateAction<number>>;
+    liveTeamData: Map<string, Map<string, string>>;
 }
 export declare function Parlay(props: ParlayProps): import("react/jsx-runtime").JSX.Element;
