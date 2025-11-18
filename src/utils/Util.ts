@@ -735,11 +735,7 @@ export const propField = ["SPREAD BETTING", "TOTAL POINTS", "MONEYLINE"];
 
 export const evaluateLeg = (leg: ParlayTask, event: number) => {
   if (leg.betType == propField[0]) {
-    if (leg.text.startsWith("-")) {
-      return Number(leg.text) >= event;
-    } else {
-      return Number(leg.text) >= -1 * event;
-    }
+    return event <= Number(leg.text);
   } else if (leg.betType == propField[1]) {
     const totalPointsProps = leg.text.split(" ");
     if (totalPointsProps[0] === "O") {

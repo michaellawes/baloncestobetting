@@ -1,22 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
-import {
-  getParlayType,
-  numberWithCommas,
-  progressBarWidth,
-  propField,
-  round5,
-} from "../../utils/Util";
+import { evaluateLeg, getParlayType, numberWithCommas, progressBarWidth, propField, round5 } from "../../utils/Util";
 
 library.add(fas);
 
@@ -157,6 +146,50 @@ export function Parlay(props: ParlayProps) {
     return "h-[4px] bg-red-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
   };
 
+  const getLiveSpreadUpdateStyle = (leg: ParlayTask) => {
+    const live_spread_text: string = liveTeamData
+      .get(leg.team)
+      .get("live_spread");
+    if (live_spread_text === "0.0") {
+      return "text-sm text-yellow-400 font-light";
+    }
+    const live_spread = parseFloat(live_spread_text);
+    if (evaluateLeg(leg, live_spread)) {
+      return "text-sm text-green-500 font-light";
+    } else {
+      return "text-sm text-red-500 font-light";
+    }
+  };
+
+  const getLiveSpreadUpdate = (leg: ParlayTask) => {
+    const live_spread: string = liveTeamData.get(leg.team).get("live_spread");
+    if (live_spread === "0.0") {
+      return "TIE";
+    }
+    if (parseFloat(live_spread) > 0) {
+      return `${leg.team} +${live_spread}`;
+    }
+    return `${leg.team} ${live_spread}`;
+  };
+
+  const getLiveMoneylineUpdateStyle = (leg: ParlayTask) => {
+    const live_moneyline: string = liveTeamData
+      .get(leg.team)
+      .get("live_moneyline");
+    if (live_moneyline === "TIE") {
+      return "text-sm text-yellow-400 font-light";
+    }
+    if (leg.team === live_moneyline) {
+      return "text-sm text-green-500 font-light";
+    } else {
+      return "text-sm text-red-500 font-light";
+    }
+  };
+
+  const getLiveMoneylineUpdate = (leg: ParlayTask) => {
+    return liveTeamData.get(leg.team).get("live_moneyline");
+  };
+
   return (
     <div
       className="w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-sm bg-gray-900 border-t-1 border-r-1"
@@ -212,6 +245,13 @@ export function Parlay(props: ParlayProps) {
                 </div>
               </div>
             </div>
+            {frontend_is_active && leg.betType === propField[0] && (
+              <div className="flex flex-row w-full grow items-center justify-start h-auto m1-2 px-5">
+                <span className={getLiveSpreadUpdateStyle(leg)}>
+                  {getLiveSpreadUpdate(leg)}
+                </span>
+              </div>
+            )}
             {frontend_is_active && leg.betType === propField[1] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
                 {leg.betType === propField[1] && (
@@ -238,6 +278,13 @@ export function Parlay(props: ParlayProps) {
                     </div>
                   </>
                 )}
+              </div>
+            )}
+            {frontend_is_active && leg.betType === propField[2] && (
+              <div className="flex flex-row w-full grow items-center justify-start h-auto m1-2 px-5">
+                <span className={getLiveMoneylineUpdateStyle(leg)}>
+                  {getLiveMoneylineUpdate(leg)}
+                </span>
               </div>
             )}
           </div>
