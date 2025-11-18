@@ -273,7 +273,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             </div>
           )}
         </div>
-        <div className="w-full flex row pl-5 bg-gray-800  border-t-1 text-base">
+        <div className="w-full flex row pl-5 bg-gray-800 pt-[2px] border-t-1 text-base">
           <div className="flex w-3/4 md:w-1/2 mb-3 mt-1">
             Wager{" "}
             <input

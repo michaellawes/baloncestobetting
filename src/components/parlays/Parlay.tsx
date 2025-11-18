@@ -202,6 +202,14 @@ export function Parlay(props: ParlayProps) {
     return liveTeamData.get(leg.team).get("live_moneyline");
   };
 
+  const getParlayLegStyling = (frontend_is_active: boolean) => {
+    if (frontend_is_active) {
+      return "flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
+    } else {
+      return "flex mb-2 max-h-64 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
+    }
+  };
+
   return (
     <div
       className="w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-sm bg-gray-900 border-t-1 border-r-1"
@@ -226,7 +234,7 @@ export function Parlay(props: ParlayProps) {
           </div>
         )}
       </div>
-      <div className="flex mb-2 max-h-54 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
+      <div className={getParlayLegStyling(frontend_is_active)}>
         {legs.map((leg, index) => (
           <div
             key={leg.frontend_id}
@@ -270,7 +278,7 @@ export function Parlay(props: ParlayProps) {
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
                 {leg.betType === propField[1] && (
                   <>
-                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full">
+                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
                       <div className={getOverUnderStyling(leg.text)}>
                         <div
                           id={leg.frontend_id}
