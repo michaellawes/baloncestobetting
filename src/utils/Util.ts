@@ -46,11 +46,11 @@ export const getUuid = (id: string) => {
 
 export interface Player {
   name: string;
-  pos_rank: number;
   team: string;
   status: string;
   average: number;
   games_left: number;
+  live_total: number;
   position: string;
 }
 
@@ -74,6 +74,18 @@ export interface MatchupSchema {
   road: Team;
   home: Team;
 }
+
+export const getSuffix = (rank: number) => {
+  if (rank % 10 == 1) {
+    return "st";
+  } else if (rank % 10 == 2) {
+    return "nd";
+  } else if (rank % 10 == 3) {
+    return "rd";
+  } else {
+    return "th";
+  }
+};
 
 export const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -101,7 +113,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Scottie Barnes",
-          pos_rank: 1,
+          live_total: 140,
           team: "TOR",
           status: "ACTIVE",
           average: 58.8,
@@ -110,7 +122,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Alex Sarr",
-          pos_rank: 5,
+          live_total: 5,
           team: "WAS",
           status: "ACTIVE",
           average: 53.59,
@@ -119,7 +131,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Pascal Siakam",
-          pos_rank: 7,
+          live_total: 7,
           team: "IND",
           status: "ACTIVE",
           average: 52.63,
@@ -128,7 +140,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Evan Mobley",
-          pos_rank: 5,
+          live_total: 5,
           team: "CLE",
           status: "ACTIVE",
           average: 52.38,
@@ -137,7 +149,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Keyonte George",
-          pos_rank: 11,
+          live_total: 11,
           team: "UTA",
           status: "ACTIVE",
           average: 47.78,
@@ -158,7 +170,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Shai Gilgeous-Alexander",
-          pos_rank: 1,
+          live_total: 140,
           team: "OKC",
           status: "ACTIVE",
           average: 73.23,
@@ -167,7 +179,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Donovan Mitchell",
-          pos_rank: 1,
+          live_total: 140,
           team: "CLE",
           status: "ACTIVE",
           average: 65.2,
@@ -176,7 +188,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jalen Duren",
-          pos_rank: 6,
+          live_total: 6,
           team: "DET",
           status: "DAY_TO_DAY",
           average: 53.12,
@@ -185,7 +197,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Miles Bridges",
-          pos_rank: 6,
+          live_total: 6,
           team: "CHA",
           status: "ACTIVE",
           average: 51.91,
@@ -194,7 +206,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jrue Holiday",
-          pos_rank: 9,
+          live_total: 9,
           team: "POR",
           status: "ACTIVE",
           average: 50.83,
@@ -217,7 +229,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Tyrese Maxey",
-          pos_rank: 2,
+          live_total: 2,
           team: "PHL",
           status: "ACTIVE",
           average: 73.05,
@@ -226,7 +238,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Josh Giddey",
-          pos_rank: 5,
+          live_total: 5,
           team: "CHI",
           status: "DAY_TO_DAY",
           average: 64.27,
@@ -235,7 +247,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Anthony Edwards",
-          pos_rank: 16,
+          live_total: 16,
           team: "MIN",
           status: "ACTIVE",
           average: 55.78,
@@ -244,7 +256,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Ivica Zubac",
-          pos_rank: 8,
+          live_total: 8,
           team: "LAC",
           status: "ACTIVE",
           average: 45.48,
@@ -253,7 +265,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Kon Knueppel",
-          pos_rank: 9,
+          live_total: 9,
           team: "CHA",
           status: "ACTIVE",
           average: 41.12,
@@ -274,7 +286,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Austin Reaves",
-          pos_rank: 2,
+          live_total: 2,
           team: "LAL",
           status: "ACTIVE",
           average: 65.01,
@@ -283,7 +295,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Julius Randle",
-          pos_rank: 2,
+          live_total: 2,
           team: "MIN",
           status: "ACTIVE",
           average: 62.76,
@@ -292,7 +304,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jalen Johnson",
-          pos_rank: 4,
+          live_total: 4,
           team: "ATL",
           status: "ACTIVE",
           average: 61.08,
@@ -301,7 +313,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Karl-Anthony Towns",
-          pos_rank: 3,
+          live_total: 3,
           team: "NYK",
           status: "ACTIVE",
           average: 59.27,
@@ -310,7 +322,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Norman Powell",
-          pos_rank: 7,
+          live_total: 7,
           team: "MIA",
           status: "ACTIVE",
           average: 51.25,
@@ -333,7 +345,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Nikola Jokic",
-          pos_rank: 1,
+          live_total: 140,
           team: "DEN",
           status: "DAY_TO_DAY",
           average: 95.28,
@@ -342,7 +354,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Stephen Curry",
-          pos_rank: 7,
+          live_total: 7,
           team: "GSW",
           status: "ACTIVE",
           average: 59.48,
@@ -351,7 +363,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jaylen Brown",
-          pos_rank: 2,
+          live_total: 2,
           team: "BOS",
           status: "ACTIVE",
           average: 51.63,
@@ -360,7 +372,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Stephon Castle",
-          pos_rank: 10,
+          live_total: 10,
           team: "SAS",
           status: "ACTIVE",
           average: 50.22,
@@ -369,7 +381,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Mikal Bridges",
-          pos_rank: 8,
+          live_total: 8,
           team: "NYK",
           status: "ACTIVE",
           average: 47.99,
@@ -390,7 +402,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Alperen Sengun",
-          pos_rank: 4,
+          live_total: 4,
           team: "HOU",
           status: "ACTIVE",
           average: 64.31,
@@ -399,7 +411,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Deni Avdija",
-          pos_rank: 3,
+          live_total: 3,
           team: "POR",
           status: "ACTIVE",
           average: 54.95,
@@ -408,7 +420,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Franz Wagner",
-          pos_rank: 4,
+          live_total: 4,
           team: "ORL",
           status: "ACTIVE",
           average: 50.03,
@@ -417,7 +429,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Trey Murphy III",
-          pos_rank: 9,
+          live_total: 9,
           team: "NOP",
           status: "ACTIVE",
           average: 47.88,
@@ -426,7 +438,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Nikola Vucevic",
-          pos_rank: 10,
+          live_total: 10,
           team: "CHI",
           status: "ACTIVE",
           average: 46.63,
@@ -449,7 +461,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Victor Wembanyama",
-          pos_rank: 2,
+          live_total: 2,
           team: "SAS",
           status: "ACTIVE",
           average: 74.0,
@@ -458,7 +470,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Lauri Markkanen",
-          pos_rank: 3,
+          live_total: 3,
           team: "UTA",
           status: "ACTIVE",
           average: 59.18,
@@ -467,7 +479,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jalen Brunson",
-          pos_rank: 8,
+          live_total: 8,
           team: "NYK",
           status: "DAY_TO_DAY",
           average: 57.47,
@@ -476,7 +488,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Derrick White",
-          pos_rank: 6,
+          live_total: 6,
           team: "BOS",
           status: "ACTIVE",
           average: 43.34,
@@ -485,7 +497,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Aaron Gordon",
-          pos_rank: 13,
+          live_total: 13,
           team: "DEN",
           status: "ACTIVE",
           average: 41.94,
@@ -506,7 +518,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Cade Cunningham",
-          pos_rank: 4,
+          live_total: 4,
           team: "DET",
           status: "DAY_TO_DAY",
           average: 67.5,
@@ -515,7 +527,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jamal Murray",
-          pos_rank: 14,
+          live_total: 14,
           team: "DEN",
           status: "ACTIVE",
           average: 53.06,
@@ -524,7 +536,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Kevin Durant",
-          pos_rank: 8,
+          live_total: 8,
           team: "HOU",
           status: "ACTIVE",
           average: 49.95,
@@ -533,7 +545,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Domantas Sabonis",
-          pos_rank: 13,
+          live_total: 13,
           team: "SAC",
           status: "ACTIVE",
           average: 48.93,
@@ -542,7 +554,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Ryan Rollins",
-          pos_rank: 3,
+          live_total: 3,
           team: "MIL",
           status: "ACTIVE",
           average: 46.15,
@@ -565,7 +577,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Luka Doncic",
-          pos_rank: 5,
+          live_total: 5,
           team: "LAL",
           status: "ACTIVE",
           average: 81.87,
@@ -574,7 +586,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "James Harden",
-          pos_rank: 6,
+          live_total: 6,
           team: "LAC",
           status: "ACTIVE",
           average: 65.95,
@@ -583,7 +595,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Michael Porter Jr.",
-          pos_rank: 10,
+          live_total: 10,
           team: "BKN",
           status: "ACTIVE",
           average: 50.4,
@@ -592,7 +604,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jarrett Allen",
-          pos_rank: 17,
+          live_total: 17,
           team: "CLE",
           status: "ACTIVE",
           average: 41.6,
@@ -601,7 +613,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jaden McDaniels",
-          pos_rank: 18,
+          live_total: 18,
           team: "MIN",
           status: "ACTIVE",
           average: 41.28,
@@ -622,7 +634,7 @@ export const refactoredDemo: MatchupSchema[] = [
       top_5: [
         {
           name: "Giannis Antetokounmpo",
-          pos_rank: 1,
+          live_total: 140,
           team: "MIL",
           status: "DAY_TO_DAY",
           average: 81.25,
@@ -631,7 +643,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Devin Booker",
-          pos_rank: 3,
+          live_total: 3,
           team: "PHO",
           status: "ACTIVE",
           average: 59.3,
@@ -640,7 +652,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Jimmy Butler III",
-          pos_rank: 5,
+          live_total: 5,
           team: "GSW",
           status: "ACTIVE",
           average: 48.79,
@@ -649,7 +661,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Kyshawn George",
-          pos_rank: 13,
+          live_total: 13,
           team: "WAS",
           status: "ACTIVE",
           average: 41.43,
@@ -658,7 +670,7 @@ export const refactoredDemo: MatchupSchema[] = [
         },
         {
           name: "Onyeka Okongwu",
-          pos_rank: 9,
+          live_total: 9,
           team: "ATL",
           status: "ACTIVE",
           average: 41.29,

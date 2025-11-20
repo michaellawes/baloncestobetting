@@ -13,7 +13,7 @@ export interface AuthProps {
 export function Auth(props: AuthProps) {
   const { isLoggedIn, profileImg } = props;
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end flex-col">
       {isLoggedIn ? (
         <img
           src={profileImg}
@@ -22,7 +22,7 @@ export function Auth(props: AuthProps) {
           className="md:w-8 md:h-8 h-6 w-6 border-transparent border rounded-4xl"
         />
       ) : (
-        <div className="md:w-8 md:h-8 h-6 w-6">
+        <div className="md:w-8 md:h-8 h-6 w-6 flex flex-col justify-center items-center">
           <FontAwesomeIcon icon={faUser as IconProp} />
         </div>
       )}

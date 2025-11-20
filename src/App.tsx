@@ -14,6 +14,7 @@ import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
+import { Matchup } from "./components/matchup/Matchup";
 
 export interface ParlayTask {
   frontend_id: string;
@@ -96,6 +97,7 @@ export function App() {
   const [lockout, setLockout] = useState<boolean>(false);
   const [notificationMetadata, setNotificationMetadata] =
     useState<NotificationMetadata>({ show: false, legs: 0 });
+  const [currentMatchup, setCurrentMatchup] = useState<MatchupSchema>(null);
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -138,6 +140,7 @@ export function App() {
           setMatchup(data[0]["id"]);
           setLockout(data[0]["is_done"]);
           setWeeklySlate(data[0]["weekly_slate"]);
+          console.log(data[0]["weekly_slate"]);
         }
       };
       getMatchup();
@@ -397,6 +400,7 @@ export function App() {
                   weeklySlate={weeklySlate}
                   setIsViewingDashboard={setIsViewingDashboard}
                   lockout={lockout}
+                  setCurrentMatchup={setCurrentMatchup}
                 />
               }
             />
@@ -412,6 +416,16 @@ export function App() {
                 />
               }
             />
+            <Route
+              path={"/matchup"}
+              element={
+                <Matchup
+                  matchup={currentMatchup}
+                  setIsViewingDashboard={setIsViewingDashboard}
+                  fantasyWeek={matchup}
+                />
+              }
+            ></Route>
           </Routes>
           <div className="relative text-white">
             <LiveParlayViewer

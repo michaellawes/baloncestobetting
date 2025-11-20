@@ -10,10 +10,12 @@ export interface DashboardProps {
   weeklySlate: MatchupSchema[];
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
   lockout: boolean;
+  setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
 }
 
 export function Dashboard(props: DashboardProps) {
-  const { weeklySlate, setIsViewingDashboard, lockout } = props;
+  const { weeklySlate, setIsViewingDashboard, lockout, setCurrentMatchup } =
+    props;
   const tasks: ParlayTask[] = useContext(TasksContext);
 
   useEffect(() => {
@@ -28,7 +30,14 @@ export function Dashboard(props: DashboardProps) {
           : "w-full h-screen bg-gray-900"
       }
     >
-      {lockout ? <Lockout /> : <WeeklySlate matchups={weeklySlate} />}
+      {lockout ? (
+        <Lockout />
+      ) : (
+        <WeeklySlate
+          matchups={weeklySlate}
+          setCurrentMatchup={setCurrentMatchup}
+        />
+      )}
     </div>
   );
 }

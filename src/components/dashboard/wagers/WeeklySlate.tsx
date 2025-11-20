@@ -4,15 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
 import { PropLine } from "./PropLine";
+import { Link } from "react-router-dom";
 
 library.add(fas);
 
 export interface WeeklySlateProps {
   matchups: MatchupSchema[];
+  setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
 }
 
 export function WeeklySlate(props: WeeklySlateProps) {
-  const { matchups } = props;
+  const { matchups, setCurrentMatchup } = props;
 
   const getOppId = (
     oppName: string,
@@ -51,101 +53,106 @@ export function WeeklySlate(props: WeeklySlateProps) {
             <li key={"header"} className="w-full fixed z-60"></li>
             {matchups.map((matchup: MatchupSchema) => (
               <li key={matchup.road.name + "-" + matchup.home.name}>
-                <div className="h-[8.688rem] box-border overflow-hidden relative mr-2">
+                <div className="h-[8.688rem] box-border overflow-hidden relative mr-2 cursor-pointer">
                   <div className="border-b-gray-700 pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative">
                     <div className="pl-2 width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">
-                      <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
-                        <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
-                          <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
-                            <div className="pr-[10px] items-center flex-row flex justify-start box-border relative ">
-                              <div className="bg-no-repeat bg-center bg-contain h-10 w-10">
-                                {matchup.road.icon.length > 0 &&
-                                !matchup.road.icon.startsWith(
-                                  "https://mystique",
-                                ) &&
-                                !matchup.road.icon.startsWith(
-                                  "https://m.media-amazon",
-                                ) ? (
-                                  <div className="flex justify-center">
-                                    <img
-                                      src={matchup.road.icon}
-                                      alt="Can't Get Your PFP Buddy"
-                                      className="w-10 h-10 border-transparent border rounded-4xl ml-2"
-                                    />
-                                  </div>
-                                ) : (
-                                  <div
-                                    className={
-                                      "text-center text-4xl " +
-                                      matchup.road.color
-                                    }
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faBasketball as IconProp}
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                              <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
-                                <span className="font-[ProximaNova-Bold, serif] text-gray-200 wrap-break-word hyphens-none text-ellipsis text-sm md:text-lg box-border overflow-hidden relative">
-                                  {matchup.road.name}
-                                </span>
-                                <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
-                                  {matchup.road.record}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="pl-3.5 mb-1 overflow-visible h-0.25 justify-start items-center z-40 flex-row flex box-border relative">
-                        <span className="text-white font-light text-[20px]">
-                          @
-                        </span>
-                      </div>
-                      <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
-                        <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
-                          <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
-                            <div className="pr-[10px] items-center flex-row flex justify-start box-border relative">
-                              <div className="bg-no-repeat bg-center bg-contain h-10 w-10">
-                                {matchup.home.icon.length > 0 &&
-                                !matchup.home.icon.startsWith(
-                                  "https://mystique",
-                                ) &&
-                                !matchup.home.icon.startsWith(
-                                  "https://m.media-amazon",
-                                ) ? (
-                                  <div className="flex justify-center">
-                                    <img
-                                      src={matchup.home.icon}
-                                      alt="Can't Get Your PFP Buddy"
-                                      className="w-10 h-10 border-transparent border rounded-4xl ml-2"
-                                    />
-                                  </div>
-                                ) : (
-                                  <div
-                                    className={
-                                      "text-center text-4xl text-blue-400"
-                                    }
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faBasketball as IconProp}
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                              <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
-                                <span className="font-[ProximaNova-Bold, serif] text-blue-400 text-sm md:text-lg wrap-break-word hyphens-none text-ellipsis box-border overflow-hidden relative">
-                                  {matchup.home.name}
-                                </span>
-                                <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
-                                  {matchup.home.record}
-                                </span>
+                      <Link
+                        to={"/matchup"}
+                        onClick={() => setCurrentMatchup(matchup)}
+                      >
+                        <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
+                          <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
+                            <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
+                              <div className="pr-[10px] items-center flex-row flex justify-start box-border relative ">
+                                <div className="bg-no-repeat bg-center bg-contain h-10 w-10">
+                                  {matchup.road.icon.length > 0 &&
+                                  !matchup.road.icon.startsWith(
+                                    "https://mystique",
+                                  ) &&
+                                  !matchup.road.icon.startsWith(
+                                    "https://m.media-amazon",
+                                  ) ? (
+                                    <div className="flex justify-center">
+                                      <img
+                                        src={matchup.road.icon}
+                                        alt="Can't Get Your PFP Buddy"
+                                        className="w-10 h-10 border-transparent border rounded-4xl ml-2"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className={
+                                        "text-center text-4xl " +
+                                        matchup.road.color
+                                      }
+                                    >
+                                      <FontAwesomeIcon
+                                        icon={faBasketball as IconProp}
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
+                                  <span className="font-[ProximaNova-Bold, serif] text-gray-200 wrap-break-word hyphens-none text-ellipsis text-sm md:text-lg box-border overflow-hidden relative">
+                                    {matchup.road.name}
+                                  </span>
+                                  <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
+                                    {matchup.road.record}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                        <div className="pl-3.5 mb-1 overflow-visible h-0.25 justify-start items-center z-40 flex-row flex box-border relative">
+                          <span className="text-white font-light text-[20px]">
+                            @
+                          </span>
+                        </div>
+                        <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
+                          <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
+                            <div className="min-w-[64px] min-h-[56px] basis-0 grow justify-center items-stretch flex-col flex box-border relative">
+                              <div className="pr-[10px] items-center flex-row flex justify-start box-border relative">
+                                <div className="bg-no-repeat bg-center bg-contain h-10 w-10">
+                                  {matchup.home.icon.length > 0 &&
+                                  !matchup.home.icon.startsWith(
+                                    "https://mystique",
+                                  ) &&
+                                  !matchup.home.icon.startsWith(
+                                    "https://m.media-amazon",
+                                  ) ? (
+                                    <div className="flex justify-center">
+                                      <img
+                                        src={matchup.home.icon}
+                                        alt="Can't Get Your PFP Buddy"
+                                        className="w-10 h-10 border-transparent border rounded-4xl ml-2"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className={
+                                        "text-center text-4xl text-blue-400"
+                                      }
+                                    >
+                                      <FontAwesomeIcon
+                                        icon={faBasketball as IconProp}
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
+                                  <span className="font-[ProximaNova-Bold, serif] text-blue-400 text-sm md:text-lg wrap-break-word hyphens-none text-ellipsis box-border overflow-hidden relative">
+                                    {matchup.home.name}
+                                  </span>
+                                  <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
+                                    {matchup.home.record}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
                     </div>
                     <div className="w-1/2 items-stretch justify-start flex-col flex box-border relative">
                       <div className="flex-row flex h-[56px] mb-2 items-center justify-start box-border relative">
