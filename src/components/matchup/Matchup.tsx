@@ -20,7 +20,11 @@ export interface MatchupsProps {
 }
 
 const getPlayerNameIsTooLong = (playerName: string) => {
-  return playerName.length > 19 && window.innerWidth < 501;
+  return playerName.length > 16 && window.innerWidth < 501;
+};
+
+const getTeamNameIsTooLong = (teamName: string) => {
+  return teamName.length > 16 && window.innerWidth < 469;
 };
 
 export function Matchup(props: MatchupsProps) {
@@ -75,7 +79,9 @@ export function Matchup(props: MatchupsProps) {
                       </div>
                       <div className=" items-stretch justify-center text-center w-full flex-col flex box-border relative">
                         <span className="font-[ProximaNova-Bold, serif] text-gray-200 text-lg wrap-break-word box-border overflow-hidden relative justify-center">
-                          {matchup.road.name}
+                          {getTeamNameIsTooLong(matchup.road.name)
+                            ? matchup.road.name.substring(0, 16) + "..."
+                            : matchup.road.name}
                         </span>
                         <span className="font-[ProximaNova, serif] font-light text-gray-300 text-xs flex box-border overflow-hidden relative w-full justify-center">
                           {matchup.road.record}
@@ -139,7 +145,9 @@ export function Matchup(props: MatchupsProps) {
                     </div>
                     <div className=" items-stretch justify-center text-center w-full flex-col flex box-border relative">
                       <span className="font-[ProximaNova-Bold, serif] text-blue-400 text-lg wrap-break-word box-border overflow-hidden relative justify-center">
-                        {matchup.home.name}
+                        {getTeamNameIsTooLong(matchup.home.name)
+                          ? matchup.home.name.substring(0, 16) + "..."
+                          : matchup.home.name}
                       </span>
                       <span className="font-[ProximaNova, serif] font-light text-gray-300 text-xs flex box-border overflow-hidden relative w-full justify-center">
                         {matchup.home.record}
@@ -221,7 +229,9 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex w-6/8 justify-start flex-col">
                               <div className="flex flex-row justify-start items-center text-left">
                                 <span className="text-base md:text-xl flex flex-col justify-start items-start">
-                                  {player.name}
+                                  {getPlayerNameIsTooLong(player.name)
+                                    ? player.name.substring(0, 16) + "..."
+                                    : player.name}
                                 </span>
                               </div>
                               <div className="flex flex-col justify-end w-full">
