@@ -5,6 +5,7 @@ import supabase from "../../config/supabaseConfig";
 import { ParlayFieldUpdate, UserData } from "../../App";
 import { evaluateLeg, MatchupSchema } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
+import { ErrorLander } from "../dashboard/ErrorLander";
 
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -25,6 +26,7 @@ export function Parlays(props: ParlaysViewerProps) {
   const [liveTeamData, setLiveTeamData] = React.useState<
     Map<string, Map<string, string>>
   >(new Map<string, Map<string, string>>());
+  const [dataLoaded, setDataLoaded] = React.useState(true);
 
   const getTeamData = (live_matchups: MatchupSchema[]) => {
     const teamData = new Map<string, Map<string, string>>();
@@ -133,23 +135,31 @@ export function Parlays(props: ParlaysViewerProps) {
 
   useEffect(() => {
     const getParlays = async () => {
+      let userId = "";
+      if (user) {
+        userId = user.id;
+      }
       const { data, error } = await supabase
         .from("parlays")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("user_id", userId)
         .order("created_at", { ascending: false });
 
-      if (error) {
+      if (error || userId === "") {
         console.log(error);
+        setDataLoaded(false);
       }
 
       if (data) {
         const validatedSlips = await validateFinishedSlips(data);
         setParlays(validatedSlips);
+        setDataLoaded(false);
       }
     };
     getParlays();
   }, []);
+
+  if (!dataLoaded) return <ErrorLander />;
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">

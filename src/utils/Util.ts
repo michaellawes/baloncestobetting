@@ -58,15 +58,21 @@ export interface PropLineMetadata extends PropLineInterface {
   live_value: string;
 }
 
+export interface IndividualLineMetadata {
+  text: string;
+  over_odds: number;
+  under_odds: number;
+}
+
 export interface Team {
   icon: string;
   name: string;
   record: string;
-  color: string;
   spread: PropLineMetadata;
   points: PropLineMetadata;
   moneyline: PropLineMetadata;
   live_score: number;
+  team_total: IndividualLineMetadata;
   top_5: Player[];
 }
 
@@ -105,7 +111,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Professor Coach's Pupils",
       record: "1-2",
-      color: "text-white",
+      team_total: { text: "2000.5", over_odds: -110, under_odds: -110 },
       spread: { live_value: "200.5", text: "+70.5", odds: -110 },
       points: { live_value: "3000", text: "O 3985.5", odds: -150 },
       moneyline: { live_value: "2300-2200", text: "", odds: 200 },
@@ -162,7 +168,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.pinimg.com/236x/06/11/27/061127dd8493543cf15f06950bfd0c17.jpg",
       name: "Sacred timeline TVA",
       record: "1-2",
-      color: "text-black",
+      team_total: { text: "1900", over_odds: -220, under_odds: -220 },
       spread: { live_value: "200.5", text: "-70.5", odds: -110 },
       points: { live_value: "3000", text: "U 3985.5", odds: 125 },
       moneyline: { live_value: "2300-2200", text: "", odds: -120 },
@@ -221,7 +227,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Mr. Send That Vid",
       record: "2-1",
-      color: "text-white",
+      team_total: { text: "2000.5", over_odds: -110, under_odds: -110 },
       spread: { live_value: "200.5", text: "+100.5", odds: -150 },
       points: { live_value: "3000", text: "O 3785.5", odds: -120 },
       moneyline: { live_value: "2300-2200", text: "", odds: 275 },
@@ -278,7 +284,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Ion Run It",
       record: "2-1",
-      color: "text-black",
+      team_total: { text: "1900", over_odds: -220, under_odds: -220 },
       spread: { live_value: "200.5", text: "-100.5", odds: -110 },
       points: { live_value: "3000", text: "U 3785.5", odds: -130 },
       moneyline: { live_value: "2300-2200", text: "", odds: -120 },
@@ -337,7 +343,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Zeke's spinal fluid",
       record: "3-0",
-      color: "text-white",
+      team_total: { text: "2000.5", over_odds: -110, under_odds: -110 },
       spread: { live_value: "200.5", text: "+35.5", odds: -110 },
       points: { live_value: "3000", text: "O 3800.5", odds: -220 },
       moneyline: { live_value: "2300-2200", text: "", odds: 200 },
@@ -394,7 +400,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Amen's Shampoo",
       record: "1-1",
-      color: "text-black",
+      team_total: { text: "1900", over_odds: -220, under_odds: -220 },
       spread: { live_value: "200.5", text: "-35.5", odds: -150 },
       points: { live_value: "3000", text: "U 3800.5", odds: 125 },
       moneyline: { live_value: "2300-2200", text: "", odds: -185 },
@@ -453,7 +459,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Haruko Warriors",
       record: "2-1",
-      color: "text-white",
+      team_total: { text: "2000.5", over_odds: -110, under_odds: -110 },
       spread: { live_value: "200.5", text: "+35.5", odds: -110 },
       points: { live_value: "3000", text: "O 3985.5", odds: -220 },
       moneyline: { live_value: "2300-2200", text: "", odds: 200 },
@@ -510,7 +516,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Kane Train \ud83d\ude82",
       record: "1-2",
-      color: "text-black",
+      team_total: { text: "1900", over_odds: -220, under_odds: -220 },
       spread: { live_value: "200.5", text: "-35.5", odds: -150 },
       points: { live_value: "3000", text: "U 3985.5", odds: 125 },
       moneyline: { live_value: "2300-2200", text: "", odds: -185 },
@@ -569,7 +575,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "TUGBOBO MEDICAL CENTER",
       record: "0-4",
-      color: "text-white",
+      team_total: { text: "2000.5", over_odds: -110, under_odds: -110 },
       spread: { live_value: "200.5", text: "+35.5", odds: -110 },
       points: { live_value: "3000", text: "O 4100.5", odds: -220 },
       moneyline: { live_value: "2300-2200", text: "", odds: 200 },
@@ -626,7 +632,7 @@ export const refactoredDemo: MatchupSchema[] = [
       icon: "https://i.postimg.cc/P535NpGk/IMG-8105.jpg",
       name: "Mad Wrld",
       record: "0-3",
-      color: "text-black",
+      team_total: { text: "1900", over_odds: -220, under_odds: -220 },
       spread: { live_value: "200.5", text: "-35.5", odds: -150 },
       points: { live_value: "3000", text: "U 4100.5", odds: 125 },
       moneyline: { live_value: "2300-2200", text: "", odds: -185 },
@@ -743,7 +749,12 @@ export const demoParlays: SupabaseParlay[] = [
   },
 ];
 
-export const propField = ["SPREAD BETTING", "TOTAL POINTS", "MONEYLINE"];
+export const propField = [
+  "SPREAD BETTING",
+  "TOTAL POINTS",
+  "MONEYLINE",
+  "TEAM SCORE",
+];
 
 export const evaluateLeg = (leg: ParlayTask, event: number) => {
   if (leg.betType == propField[0]) {
@@ -755,8 +766,15 @@ export const evaluateLeg = (leg: ParlayTask, event: number) => {
     } else {
       return event < Number(totalPointsProps[1]);
     }
-  } else {
+  } else if (leg.betType == propField[2]) {
     return event === 1;
+  } else if (leg.betType == propField[3]) {
+    const totalTeamScoreProps = leg.text.split(" ");
+    if (totalTeamScoreProps[0] === "O") {
+      return event > Number(totalTeamScoreProps[1]);
+    } else {
+      return event < Number(totalTeamScoreProps[1]);
+    }
   }
 };
 

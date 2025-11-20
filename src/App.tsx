@@ -140,7 +140,7 @@ export function App() {
           setMatchup(data[0]["id"]);
           setLockout(data[0]["is_done"]);
           setWeeklySlate(data[0]["weekly_slate"]);
-          console.log(data[0]["weekly_slate"]);
+          //setWeeklySlate(refactoredDemo);
         }
       };
       getMatchup();
@@ -422,7 +422,6 @@ export function App() {
                 <Matchup
                   matchup={currentMatchup}
                   setIsViewingDashboard={setIsViewingDashboard}
-                  fantasyWeek={matchup}
                 />
               }
             ></Route>

@@ -10,7 +10,7 @@ export interface PropLineProps {
   odds: number;
   frontend_id: string;
   oppId: string;
-  isHome: boolean;
+  isHome?: boolean;
 }
 
 export interface PropLineInterface {
@@ -50,8 +50,8 @@ export function PropLine(props: PropLineProps) {
     <div
       className={`switch ${
         isAdded
-          ? "h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-blue-500 rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
-          : "hover:bg-gray-600 h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+          ? "h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-blue-500 rounded-xs flex-col flex box-border overflow-hidden relative"
+          : "hover:bg-gray-600 h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative"
       }`}
     >
       {text.length > 0 ? (
