@@ -5,7 +5,6 @@ import supabase from "../../config/supabaseConfig";
 import { ParlayFieldUpdate, UserData } from "../../App";
 import { evaluateLeg, MatchupSchema } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
-import { ErrorLander } from "../dashboard/ErrorLander";
 
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -159,7 +158,7 @@ export function Parlays(props: ParlaysViewerProps) {
     getParlays();
   }, []);
 
-  if (!dataLoaded) return <ErrorLander />;
+  //if (!dataLoaded) return <ErrorLander />;
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">

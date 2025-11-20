@@ -1,11 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import { ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
@@ -17,7 +12,7 @@ import {
   numberWithCommas,
   progressBarWidth,
   propField,
-  round5,
+  round5
 } from "../../utils/Util";
 
 library.add(fas);
@@ -72,6 +67,23 @@ export function Parlay(props: ParlayProps) {
       }
       const percentFull = parseFloat(
         ((liveTotalPointsScored / propTotalPointsScoredFull) * 100).toFixed(),
+      );
+      if (percentFull <= 80) {
+        const styling = round5(percentFull).toString();
+        return progressBarWidth.get(styling);
+      }
+    } else if (leg.betType === propField[3]) {
+      const team = leg.team;
+      const liveTeamScore = parseFloat(
+        parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
+      );
+      const propTeamScore = parseFloat(leg.text.substring(2));
+      let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
+      if (liveTeamScore >= propTeamScore) {
+        propTeamScoreFull = liveTeamScore;
+      }
+      const percentFull = parseFloat(
+        ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
       if (percentFull <= 80) {
         const styling = round5(percentFull).toString();
@@ -141,10 +153,12 @@ export function Parlay(props: ParlayProps) {
       return parseFloat(
         liveTeamData.get(roadTeamName).get("live_points"),
       ).toFixed();
-    } else {
+    } else if (leg.betType === propField[0]) {
       return parseFloat(
         liveTeamData.get(leg.team).get("live_points"),
       ).toFixed();
+    } else if (leg.betType === propField[3]) {
+      return parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
     }
   };
 
@@ -305,6 +319,34 @@ export function Parlay(props: ParlayProps) {
                 <span className={getLiveMoneylineUpdateStyle(leg)}>
                   {getLiveMoneylineUpdate(leg)}
                 </span>
+              </div>
+            )}
+            {frontend_is_active && leg.betType === propField[3] && (
+              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
+                {leg.betType === propField[3] && (
+                  <>
+                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
+                      <div className={getOverUnderStyling(leg.text)}>
+                        <div
+                          id={leg.frontend_id}
+                          className={getProgressBarWidth(leg)}
+                        >
+                          <div className="h-[4px] flex justify-end items-center ">
+                            <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
+                              {getLiveValue(leg)}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
+                        <div className="w-75/100 flex justify-end ml-4 mt-1">
+                          <span className="flex text-white text-end h-[4px] font-light text-xs">
+                            {getPropValue(leg.text)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
