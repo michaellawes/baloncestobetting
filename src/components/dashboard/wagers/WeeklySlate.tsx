@@ -82,8 +82,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                   ) : (
                                     <div
                                       className={
-                                        "text-center text-4xl " +
-                                        matchup.road.color
+                                        "text-center text-4xl text-gray-200"
                                       }
                                     >
                                       <FontAwesomeIcon

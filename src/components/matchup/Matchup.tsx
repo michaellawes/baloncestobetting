@@ -36,9 +36,9 @@ export function Matchup(props: MatchupsProps) {
     >
       <div className="z-10 items-stretch justify-start bg-gray-800 flex-col flex box-border relative">
         <div className="box-border flex relative  w-full flex-col justify-center text-white items-stretch">
-          <div className="flex flex-row w-full h-full mt-20">
-            <div className="flex flex-col w-1/2 h-full border-r-gray-500 border-r-[0.5px]">
-              <div className="items-center w-full flex-col flex justify-start box-border relative rounded-r-none pb-2 border-b-3 border-b-blue-500">
+          <div className="flex flex-row w-full h-full pt-20 border-t-2">
+            <div className="flex flex-col w-1/2 h-full">
+              <div className="items-center w-full flex-col flex justify-start box-border relative rounded-r-none pb-2">
                 <div className="items-center w-full flex-col flex justify-start box-border relative ">
                   <div className="items-center w-full flex-col flex justify-start box-border relative">
                     <div className="bg-gray-800 items-center w-full flex-col flex justify-start box-border relative">
@@ -58,7 +58,7 @@ export function Matchup(props: MatchupsProps) {
                         ) : (
                           <div
                             className={
-                              "text-center text-[50px] pt-1 text-blue-400"
+                              "text-center text-[40px] pt-1 text-gray-200"
                             }
                           >
                             <FontAwesomeIcon icon={faBasketball as IconProp} />
@@ -85,8 +85,8 @@ export function Matchup(props: MatchupsProps) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col w-1/2 h-full border-l-gray-500 border-l-[0.5px]">
-              <div className="items-center w-full flex-col flex justify-start box-border relative rounded-r-none pb-2 border-b-3 border-b-blue-500">
+            <div className="flex flex-col w-1/2 h-full">
+              <div className="items-center w-full flex-col flex justify-start box-border relative rounded-r-none pb-2">
                 <div className="items-center w-full flex-col flex justify-start box-border relative">
                   <div className="bg-gray-800 items-center w-full flex-col flex justify-start box-border relative">
                     <div className="bg-no-repeat bg-center bg-contain w-full justify-center flex ">
@@ -105,7 +105,7 @@ export function Matchup(props: MatchupsProps) {
                       ) : (
                         <div
                           className={
-                            "text-center text-[50px] pt-1 text-blue-400"
+                            "text-center text-[40px] pt-1 text-blue-400"
                           }
                         >
                           <FontAwesomeIcon icon={faBasketball as IconProp} />
@@ -132,7 +132,7 @@ export function Matchup(props: MatchupsProps) {
               </div>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center w-full pb-2 border-b-gray-400 border-b-2">
+          <div className="flex flex-row items-center justify-center w-full pb-2 border-b-gray-400 border-b-2 border-t-3 border-t-blue-500">
             <div className="flex flex-col w-full justify-center items-center text-center">
               <span className="font-[ProximaNova, serif] text-white font-bold pt-2">
                 Roster Info
