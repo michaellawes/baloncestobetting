@@ -26,7 +26,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
     const totalPointsTeam = roadName + " v " + homeName;
     return (
       (secondIndex === 1 ? totalPointsTeam : oppName) +
-      "-" +
+      "/" +
       (secondIndex === 1 ? oppPropText : propField[secondIndex])
     );
   };
@@ -40,7 +40,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
   ) => {
     return (
       (secondIndex === 1 ? roadName + " v " + homeName : teamName) +
-      "-" +
+      "/" +
       (secondIndex === 1 ? text : propField[secondIndex])
     );
   };
@@ -52,7 +52,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
           <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0">
             <li key={"header"} className="w-full fixed z-60"></li>
             {matchups.map((matchup: MatchupSchema) => (
-              <li key={matchup.road.name + "-" + matchup.home.name}>
+              <li key={matchup.road.name + "/" + matchup.home.name}>
                 <div className="h-[8.688rem] box-border overflow-hidden relative mr-2 cursor-pointer">
                   <div className="border-b-gray-700 pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative">
                     <div className="pl-2 width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">

@@ -102,16 +102,16 @@ export function Matchup(props: MatchupsProps) {
                     team={matchup.road.name}
                     betType={propField[3]}
                     odds={matchup.road.team_total.over_odds}
-                    frontend_id={matchup.road.name + "-O-" + propField[4]}
-                    oppId={matchup.road.name + "-U-" + propField[4]}
+                    frontend_id={matchup.road.name + "/O/" + propField[3]}
+                    oppId={matchup.road.name + "/U/" + propField[3]}
                   />
                   <PropLine
                     text={"U " + matchup.road.team_total.text}
                     team={matchup.road.name}
                     betType={propField[3]}
                     odds={matchup.road.team_total.under_odds}
-                    frontend_id={matchup.road.name + "-U-" + propField[4]}
-                    oppId={matchup.road.name + "-O-" + propField[4]}
+                    frontend_id={matchup.road.name + "/U/" + propField[3]}
+                    oppId={matchup.road.name + "/O/" + propField[3]}
                   />
                 </div>
               </div>
@@ -167,16 +167,16 @@ export function Matchup(props: MatchupsProps) {
                     team={matchup.home.name}
                     betType={propField[3]}
                     odds={matchup.home.team_total.over_odds}
-                    frontend_id={matchup.home.name + "-O-" + propField[4]}
-                    oppId={matchup.home.name + "-U-" + propField[4]}
+                    frontend_id={matchup.home.name + "/O/" + propField[3]}
+                    oppId={matchup.home.name + "/U/" + propField[3]}
                   />
                   <PropLine
                     text={"U " + matchup.home.team_total.text}
                     team={matchup.home.name}
                     betType={propField[3]}
                     odds={matchup.home.team_total.under_odds}
-                    frontend_id={matchup.home.name + "-U-" + propField[4]}
-                    oppId={matchup.home.name + "-O-" + propField[4]}
+                    frontend_id={matchup.home.name + "/U/" + propField[3]}
+                    oppId={matchup.home.name + "/O/" + propField[3]}
                   />
                 </div>
               </div>
@@ -197,7 +197,7 @@ export function Matchup(props: MatchupsProps) {
                     <div className="flex flex-col w-full justify-start">
                       {matchup.road.top_5.map((player, index) => (
                         <div
-                          className="flex flex-col w-full border-b-2 border-b-gray-600"
+                          className="flex flex-col w-full border-b-2 border-b-gray-400"
                           key={player.name}
                         >
                           <div className="flex flex-row w-full justify-start ml-1 mt-1 font-bold items-start">
@@ -263,6 +263,24 @@ export function Matchup(props: MatchupsProps) {
                                 {player.live_total}
                               </div>
                             </div>
+                          </div>
+                          <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
+                            <PropLine
+                              text={"O " + player.prop_line.text}
+                              team={matchup.road.name}
+                              betType={propField[4]}
+                              odds={player.prop_line.over_odds}
+                              frontend_id={player.name + "/O/" + propField[4]}
+                              oppId={player.name + "/U/" + propField[4]}
+                            />
+                            <PropLine
+                              text={"U " + player.prop_line.text}
+                              team={matchup.road.name}
+                              betType={propField[4]}
+                              odds={player.prop_line.under_odds}
+                              frontend_id={player.name + "/U/" + propField[4]}
+                              oppId={player.name + "/O/" + propField[4]}
+                            />
                           </div>
                         </div>
                       ))}
@@ -278,7 +296,7 @@ export function Matchup(props: MatchupsProps) {
                     <div className="flex flex-col w-full justify-start">
                       {matchup.home.top_5.map((player, index) => (
                         <div
-                          className="flex flex-col w-full border-b-2 border-b-gray-600"
+                          className="flex flex-col w-full border-b-2 border-b-gray-400"
                           key={player.name}
                         >
                           <div className="flex flex-row w-full justify-start ml-1 mt-1 font-bold items-start">
@@ -344,6 +362,24 @@ export function Matchup(props: MatchupsProps) {
                                 {player.live_total}
                               </div>
                             </div>
+                          </div>
+                          <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
+                            <PropLine
+                              text={"O " + player.prop_line.text}
+                              team={matchup.home.name}
+                              betType={propField[4]}
+                              odds={player.prop_line.over_odds}
+                              frontend_id={player.name + "/O/" + propField[4]}
+                              oppId={player.name + "/U/" + propField[4]}
+                            />
+                            <PropLine
+                              text={"U " + player.prop_line.text}
+                              team={matchup.home.name}
+                              betType={propField[4]}
+                              odds={player.prop_line.under_odds}
+                              frontend_id={player.name + "/U/" + propField[4]}
+                              oppId={player.name + "/O/" + propField[4]}
+                            />
                           </div>
                         </div>
                       ))}

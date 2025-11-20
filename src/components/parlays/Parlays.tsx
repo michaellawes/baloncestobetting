@@ -3,7 +3,7 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
 import { ParlayFieldUpdate, UserData } from "../../App";
-import { evaluateLeg, MatchupSchema } from "../../utils/Util";
+import { evaluateLeg, MatchupSchema, propField } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
 
 export interface ParlaysViewerProps {
@@ -37,6 +37,26 @@ export function Parlays(props: ParlaysViewerProps) {
           ["live_spread", matchup.road.spread.live_value],
           ["live_points", matchup.road.points.live_value],
           ["live_moneyline", matchup.road.moneyline.live_value],
+          [
+            `${matchup.road.top_5[0].name}_score`,
+            matchup.road.top_5[0].live_total.toString(),
+          ],
+          [
+            `${matchup.road.top_5[1].name}_score`,
+            matchup.road.top_5[1].live_total.toString(),
+          ],
+          [
+            `${matchup.road.top_5[2].name}_score`,
+            matchup.road.top_5[2].live_total.toString(),
+          ],
+          [
+            `${matchup.road.top_5[3].name}_score`,
+            matchup.road.top_5[3].live_total.toString(),
+          ],
+          [
+            `${matchup.road.top_5[4].name}_score`,
+            matchup.road.top_5[4].live_total.toString(),
+          ],
         ]),
       );
       teamData.set(
@@ -46,6 +66,26 @@ export function Parlays(props: ParlaysViewerProps) {
           ["live_spread", matchup.home.spread.live_value],
           ["live_points", matchup.home.points.live_value],
           ["live_moneyline", matchup.home.moneyline.live_value],
+          [
+            `${matchup.home.top_5[0].name}_score`,
+            matchup.home.top_5[0].live_total.toString(),
+          ],
+          [
+            `${matchup.home.top_5[1].name}_score`,
+            matchup.home.top_5[1].live_total.toString(),
+          ],
+          [
+            `${matchup.home.top_5[2].name}_score`,
+            matchup.home.top_5[2].live_total.toString(),
+          ],
+          [
+            `${matchup.home.top_5[3].name}_score`,
+            matchup.home.top_5[3].live_total.toString(),
+          ],
+          [
+            `${matchup.home.top_5[4].name}_score`,
+            matchup.home.top_5[4].live_total.toString(),
+          ],
         ]),
       );
     }
@@ -91,7 +131,11 @@ export function Parlays(props: ParlaysViewerProps) {
   const validateResultOfFinishedSlips = async (parlay: SupabaseParlay) => {
     const matchup_id = Number(parlay.matchup_id);
     const query_ids = parlay.legs.map((leg) => {
-      return leg.team + "-" + leg.betType;
+      if (leg.betType !== propField[4]) {
+        return leg.team + "/" + leg.betType;
+      } else {
+        return leg.frontend_id.split("/")[0] + "/" + leg.betType;
+      }
     });
 
     const { data, error } = await supabase
@@ -110,7 +154,7 @@ export function Parlays(props: ParlaysViewerProps) {
         ...data.map((x) => ({ [x.id]: x.point_value })),
       );
       const slipHit = parlay.legs.every((leg) =>
-        evaluateLeg(leg, legDictionary[leg.team + "-" + leg.betType]),
+        evaluateLeg(leg, legDictionary[leg.team + "/" + leg.betType]),
       );
 
       const updateSlip = async () => {

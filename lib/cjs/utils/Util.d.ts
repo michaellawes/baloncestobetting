@@ -13,6 +13,7 @@ export interface Player {
     games_left: number;
     live_total: number;
     position: string;
+    prop_line: IndividualLineMetadata;
 }
 export interface PropLineMetadata extends PropLineInterface {
     live_value: string;

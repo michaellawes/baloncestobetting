@@ -52,6 +52,7 @@ export interface Player {
   games_left: number;
   live_total: number;
   position: string;
+  prop_line: IndividualLineMetadata;
 }
 
 export interface PropLineMetadata extends PropLineInterface {
@@ -125,6 +126,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 58.8,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Alex Sarr",
@@ -134,6 +136,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 53.59,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Pascal Siakam",
@@ -143,6 +146,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 52.63,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Evan Mobley",
@@ -152,6 +156,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 52.38,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Keyonte George",
@@ -161,6 +166,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 47.78,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
       ],
     },
@@ -182,6 +188,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 73.23,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Donovan Mitchell",
@@ -191,6 +198,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 65.2,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
         {
           name: "Jalen Duren",
@@ -200,6 +208,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 53.12,
           games_left: 0,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Miles Bridges",
@@ -209,6 +218,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 51.91,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Jrue Holiday",
@@ -218,6 +228,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 50.83,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
       ],
     },
@@ -241,6 +252,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 73.05,
           games_left: 0,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Josh Giddey",
@@ -250,6 +262,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 64.27,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
         {
           name: "Anthony Edwards",
@@ -259,6 +272,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 55.78,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
         {
           name: "Ivica Zubac",
@@ -268,6 +282,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 45.48,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Kon Knueppel",
@@ -277,6 +292,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 41.12,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
       ],
     },
@@ -298,6 +314,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 65.01,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
         {
           name: "Julius Randle",
@@ -307,6 +324,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 62.76,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Jalen Johnson",
@@ -316,6 +334,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 61.08,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Karl-Anthony Towns",
@@ -325,6 +344,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 59.27,
           games_left: 0,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Norman Powell",
@@ -334,6 +354,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 51.25,
           games_left: 0,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
       ],
     },
@@ -357,6 +378,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 95.28,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Stephen Curry",
@@ -366,6 +388,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 59.48,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Jaylen Brown",
@@ -375,6 +398,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 51.63,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Stephon Castle",
@@ -384,6 +408,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 50.22,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Mikal Bridges",
@@ -393,6 +418,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 47.99,
           games_left: 0,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
       ],
     },
@@ -414,6 +440,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 64.31,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Deni Avdija",
@@ -423,6 +450,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 54.95,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Franz Wagner",
@@ -432,6 +460,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 50.03,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Trey Murphy III",
@@ -441,6 +470,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 47.88,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Nikola Vucevic",
@@ -450,6 +480,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 46.63,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
       ],
     },
@@ -473,6 +504,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 74.0,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Lauri Markkanen",
@@ -482,6 +514,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 59.18,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Jalen Brunson",
@@ -491,6 +524,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 57.47,
           games_left: 0,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Derrick White",
@@ -500,6 +534,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 43.34,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
         {
           name: "Aaron Gordon",
@@ -509,6 +544,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 41.94,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
       ],
     },
@@ -530,6 +566,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 67.5,
           games_left: 0,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Jamal Murray",
@@ -539,6 +576,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 53.06,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Kevin Durant",
@@ -548,6 +586,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 49.95,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Domantas Sabonis",
@@ -557,6 +596,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 48.93,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Ryan Rollins",
@@ -566,6 +606,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 46.15,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
       ],
     },
@@ -589,6 +630,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 81.87,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "James Harden",
@@ -598,6 +640,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 65.95,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Michael Porter Jr.",
@@ -607,6 +650,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 50.4,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Jarrett Allen",
@@ -616,6 +660,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 41.6,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
         {
           name: "Jaden McDaniels",
@@ -625,6 +670,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 41.28,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
       ],
     },
@@ -646,6 +692,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 81.25,
           games_left: 1,
           position: "PF",
+          prop_line: { text: "45.5", over_odds: 250, under_odds: -170 },
         },
         {
           name: "Devin Booker",
@@ -655,6 +702,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 59.3,
           games_left: 1,
           position: "PG",
+          prop_line: { text: "150.5", over_odds: 300, under_odds: 125 },
         },
         {
           name: "Jimmy Butler III",
@@ -664,6 +712,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 48.79,
           games_left: 1,
           position: "SF",
+          prop_line: { text: "100.5", over_odds: -110, under_odds: -110 },
         },
         {
           name: "Kyshawn George",
@@ -673,6 +722,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 41.43,
           games_left: 1,
           position: "SG",
+          prop_line: { text: "130.5", over_odds: 125, under_odds: -250 },
         },
         {
           name: "Onyeka Okongwu",
@@ -682,6 +732,7 @@ export const refactoredDemo: MatchupSchema[] = [
           average: 41.29,
           games_left: 1,
           position: "C",
+          prop_line: { text: "140.5", over_odds: -110, under_odds: -104 },
         },
       ],
     },
@@ -754,6 +805,7 @@ export const propField = [
   "TOTAL POINTS",
   "MONEYLINE",
   "TEAM SCORE",
+  "PLAYER SCORE",
 ];
 
 export const evaluateLeg = (leg: ParlayTask, event: number) => {
@@ -782,13 +834,13 @@ export const getPropTextWithRespectToScreenSize = (
   leg: ParlayTask,
   screenWidth: number,
 ) => {
-  if (leg.betType !== propField[1]) {
+  if (leg.betType !== propField[1] && leg.betType !== propField[4]) {
     return `${leg.team} ${leg.text}`;
   } else {
-    let teamMatchupString: string = leg.frontend_id.split("-")[0];
+    let teamMatchupString: string = leg.frontend_id.split("/")[0];
     if (screenWidth < 500) {
       teamMatchupString =
-        leg.frontend_id.split("-")[0].substring(0, 40) + "...";
+        leg.frontend_id.split("/")[0].substring(0, 40) + "...";
     }
 
     return `${teamMatchupString} ${leg.text}`;

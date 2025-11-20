@@ -210,11 +210,11 @@ export function App() {
           tasks = tasks.filter(
             (task) =>
               task.frontend_id !==
-              action.oppId.split("-")[0] + "-" + propField[2],
+              action.oppId.split("/")[0] + "/" + propField[2],
           );
         }
         if (action.betType == propField[2]) {
-          const opposingTeam = action.oppId.split("-")[0];
+          const opposingTeam = action.oppId.split("/")[0];
           if (
             isInvalidOpposingSpreadForMoneyLineAddition(
               opposingTeam,
@@ -224,7 +224,7 @@ export function App() {
             tasks = tasks.filter(
               (task) =>
                 task.frontend_id !==
-                action.oppId.split("-")[0] + "-" + propField[0],
+                action.oppId.split("/")[0] + "/" + propField[0],
             );
           }
         }
