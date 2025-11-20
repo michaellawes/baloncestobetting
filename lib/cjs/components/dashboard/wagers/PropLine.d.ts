@@ -5,7 +5,7 @@ export interface PropLineProps {
     odds: number;
     frontend_id: string;
     oppId: string;
-    isHome: boolean;
+    isHome?: boolean;
 }
 export interface PropLineInterface {
     text: string;

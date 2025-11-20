@@ -7,31 +7,37 @@ export declare const decimalToOdds: (decimal: number) => number;
 export declare const getUuid: (id: string) => string;
 export interface Player {
     name: string;
-    pos_rank: number;
     team: string;
     status: string;
     average: number;
     games_left: number;
+    live_total: number;
     position: string;
 }
 export interface PropLineMetadata extends PropLineInterface {
     live_value: string;
 }
+export interface IndividualLineMetadata {
+    text: string;
+    over_odds: number;
+    under_odds: number;
+}
 export interface Team {
     icon: string;
     name: string;
     record: string;
-    color: string;
     spread: PropLineMetadata;
     points: PropLineMetadata;
     moneyline: PropLineMetadata;
     live_score: number;
+    team_total: IndividualLineMetadata;
     top_5: Player[];
 }
 export interface MatchupSchema {
     road: Team;
     home: Team;
 }
+export declare const getSuffix: (rank: number) => "th" | "st" | "nd" | "rd";
 export declare const numberWithCommas: (x: number) => string;
 export declare const getParlayType: (numberOfLegs: number) => "Same Game Parlay" | "Same Game Parlay+";
 export declare const getParlayTypeAbbreviated: (numberOfLegs: number) => "SGP" | "SGP+";
