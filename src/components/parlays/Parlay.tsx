@@ -315,7 +315,7 @@ export function Parlay(props: ParlayProps) {
               </div>
             )}
             {frontend_is_active && leg.betType === propField[1] && (
-              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
+              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 {leg.betType === propField[1] && (
                   <>
                     <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
@@ -350,7 +350,7 @@ export function Parlay(props: ParlayProps) {
               </div>
             )}
             {frontend_is_active && leg.betType === propField[3] && (
-              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
+              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 {leg.betType === propField[3] && (
                   <>
                     <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
@@ -378,7 +378,7 @@ export function Parlay(props: ParlayProps) {
               </div>
             )}
             {frontend_is_active && leg.betType === propField[4] && (
-              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-5 my-2">
+              <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 {leg.betType === propField[4] && (
                   <>
                     <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
@@ -393,7 +393,7 @@ export function Parlay(props: ParlayProps) {
                             </span>
                           </div>
                         </div>
-                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
+                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow rounded-l-md justify-end text-end flex-rowbox-border relative w-75/100"></div>
                         <div className="w-75/100 flex justify-end ml-4 mt-1">
                           <span className="flex text-white text-end h-[4px] font-light text-xs">
                             {getPropValue(leg.text)}

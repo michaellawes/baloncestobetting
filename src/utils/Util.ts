@@ -834,7 +834,10 @@ export const getPropTextWithRespectToScreenSize = (
   leg: ParlayTask,
   screenWidth: number,
 ) => {
-  if (leg.betType !== propField[1] && leg.betType !== propField[4]) {
+  if (leg.betType !== propField[1]) {
+    if (leg.betType === propField[4]) {
+      return `${leg.frontend_id.split("/")[0]} ${leg.text}`;
+    }
     return `${leg.team} ${leg.text}`;
   } else {
     let teamMatchupString: string = leg.frontend_id.split("/")[0];
