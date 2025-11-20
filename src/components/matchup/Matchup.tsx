@@ -4,12 +4,7 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBasketball,
-  faFaceDizzy,
-  faFaceGrimace,
-  faFaceGrin,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, faFaceDizzy, faFaceGrimace, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../dashboard/wagers/PropLine";
 import { ErrorLander } from "../dashboard/ErrorLander";
@@ -60,7 +55,7 @@ export function Matchup(props: MatchupsProps) {
                             <img
                               src={matchup.road.icon}
                               alt="Can't Get Your PFP Buddy"
-                              className="md:w-20 md:h-20 h-16 w-16 border-transparent border rounded-[40px]"
+                              className="h-16 w-16 border-transparent border rounded-[40px]"
                             />
                           </div>
                         ) : (
@@ -124,7 +119,7 @@ export function Matchup(props: MatchupsProps) {
                           <img
                             src={matchup.home.icon}
                             alt="Can't Get Your PFP Buddy"
-                            className="md:w-20 md:h-20 w-16 h-16 border-transparent border rounded-[40px]"
+                            className="w-16 h-16 border-transparent border rounded-[40px]"
                           />
                         </div>
                       ) : (
