@@ -60,7 +60,7 @@ export function Dashboard(props: DashboardProps) {
         const getSharedSlip = async () => {
           const { data, error } = await supabase
             .from("parlays")
-            .select("*")
+            .select("legs, expires_at")
             .eq("parlay_id", parlayId);
 
           if (error) {
@@ -69,6 +69,7 @@ export function Dashboard(props: DashboardProps) {
 
           if (data) {
             const parlay = data[0];
+            console.log(parlay);
             dispatch({
               type: "loadSharedSlip",
               expires_at: parlay["expires_at"],

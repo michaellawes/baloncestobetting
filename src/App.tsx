@@ -70,7 +70,6 @@ export function App() {
         );
         if (relevantPlayerFilter.length > 0) {
           const relevantPlayer = relevantPlayerFilter[0];
-          console.log(relevantPlayer);
           updatedArray.push({
             frontend_id: leg.frontend_id,
             team: leg.team,
