@@ -86,7 +86,7 @@ export function App() {
           frontend_id: leg.frontend_id,
           team: leg.team,
           betType: leg.betType,
-          text: relevantTeam.team_total.text,
+          text: leg.text.substring(0, 2) + relevantTeam.team_total.text,
           odds: leg.text.startsWith("U")
             ? relevantTeam.team_total.under_odds
             : relevantTeam.team_total.over_odds,
