@@ -1,10 +1,11 @@
 import * as React from "react";
-import { MatchupSchema, propField } from "../../../utils/Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
 import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
+import { MatchupSchema } from "../../../utils/Interfaces";
+import { propField } from "../../../utils/Constants";
 
 library.add(fas);
 
@@ -15,6 +16,20 @@ export interface WeeklySlateProps {
 
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups, setCurrentMatchup } = props;
+
+  const getId = (
+    teamName: string,
+    text: string,
+    secondIndex: number,
+    roadName: string,
+    homeName: string,
+  ) => {
+    return (
+      (secondIndex === 1 ? roadName + " v " + homeName : teamName) +
+      "/" +
+      (secondIndex === 1 ? text : propField[secondIndex])
+    );
+  };
 
   const getOppId = (
     oppName: string,
@@ -28,20 +43,6 @@ export function WeeklySlate(props: WeeklySlateProps) {
       (secondIndex === 1 ? totalPointsTeam : oppName) +
       "/" +
       (secondIndex === 1 ? oppPropText : propField[secondIndex])
-    );
-  };
-
-  const getId = (
-    teamName: string,
-    text: string,
-    secondIndex: number,
-    roadName: string,
-    homeName: string,
-  ) => {
-    return (
-      (secondIndex === 1 ? roadName + " v " + homeName : teamName) +
-      "/" +
-      (secondIndex === 1 ? text : propField[secondIndex])
     );
   };
 

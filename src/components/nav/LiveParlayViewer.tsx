@@ -1,12 +1,11 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
-import { ParlayTask } from "../../App";
 import {
   decimalToOdds,
   getParlayTypeAbbreviated,
+  getPayoutWithRespectToScreenWidth,
   getPropTextWithRespectToScreenSize,
-  numberWithCommas,
   oddsToDecimal,
 } from "../../utils/Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,19 +16,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { LiveParlayViewerProps, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
 
-export interface LiveParlayViewerProps {
-  balance: number;
-  setBalance: React.Dispatch<React.SetStateAction<number>>;
-  isLoggedIn: boolean;
-}
-
 export function LiveParlayViewer(props: LiveParlayViewerProps) {
   const { balance, setBalance, isLoggedIn } = props;
-  const tasks: ParlayTask[] = useContext(TasksContext);
-  const dispatch = useContext(TasksDispatchContext);
   const [totalOdds, setTotalOdds] = React.useState<number>(0);
   const [payout, setPayout] = React.useState<number>(0);
   const [wager, setWager] = React.useState<number>(10);
@@ -38,99 +30,8 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
   const [shouldDisplay, setShouldDisplay] = React.useState(true);
   const [hasOpenedOnce, setHasOpenedOnce] = React.useState(false);
 
-  useEffect(() => {
-    const timeout = setInterval(() => {
-      setShouldDisplay(true);
-    }, 200);
-    return () => clearInterval(timeout);
-  }, [wager, payout, shouldDisplay]);
-
-  useEffect(() => {
-    setPayout(wager * totalOdds);
-  }, [totalOdds, wager, shouldDisplay]);
-
-  const toggleSlideOver = () => {
-    document
-      .getElementById("slideover-container")
-      .classList.toggle("invisible");
-    document.getElementById("slideover").classList.toggle("translate-y-full");
-  };
-
-  useEffect(() => {
-    if (tasks.length > 0) {
-      if (totalOdds === 0) {
-        toggleSlideOver();
-      }
-      setShouldDisplay(false);
-      const totalDecimalOdds = tasks.reduce((total, task) => {
-        return (total *= oddsToDecimal(task.odds));
-      }, 1);
-      setTotalOdds(totalDecimalOdds);
-    } else {
-      if (totalOdds > 0) {
-        toggleSlideOver();
-        setTotalOdds(0);
-        setShowSlip(false);
-        setHasOpenedOnce(false);
-      }
-    }
-  }, [totalOdds, tasks]);
-
-  const removeAllLegs = () => {
-    dispatch({ type: "clearSlip" });
-  };
-
-  const submitParlay = () => {
-    if (wager <= balance) {
-      setBalance(balance - wager);
-      dispatch({
-        type: "submitParlay",
-        totalOdds: decimalToOdds(totalOdds),
-        wager: wager,
-        payout: payout,
-      });
-    }
-  };
-
-  const toggleSlip = () => {
-    setHasOpenedOnce(true);
-    setShowSlip(!showSlip);
-  };
-
-  const removeLeg = (id: string) => {
-    dispatch({ type: "removeLeg", frontend_id: id });
-  };
-
-  const handleWagerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(event.target.value);
-    if (value > balance) {
-      event.target.style.borderColor = "red";
-      setDisplayWarning("Insufficient balance");
-    } else if (value < 0.01) {
-      event.target.style.borderColor = "red";
-      setDisplayWarning("Min wager $0.01");
-    } else {
-      setShouldDisplay(false);
-      event.target.style.borderColor = "";
-      setWager(value);
-      setDisplayWarning("");
-    }
-  };
-
-  const getPayoutWithRespectToScreenWidth = (payout: number) => {
-    if (window.innerWidth < 501) {
-      const fullText = `wins $${numberWithCommas(parseFloat(payout.toFixed(2)))}`;
-      if (fullText.length > 20) {
-        return "";
-      } else if (fullText.length > 15) {
-        return fullText.substring(0, 15) + "...";
-      } else {
-        return fullText;
-      }
-    } else {
-      return `wins $${numberWithCommas(parseFloat(payout.toFixed(2)))}`;
-    }
-  };
+  const tasks: ParlayTask[] = useContext(TasksContext);
+  const dispatch = useContext(TasksDispatchContext);
 
   const getStyling = (showSlip: boolean) => {
     if (showSlip) {
@@ -173,6 +74,85 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
       }
     }
   };
+
+  const handleWagerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
+    if (value > balance) {
+      event.target.style.borderColor = "red";
+      setDisplayWarning("Insufficient balance");
+    } else if (value < 0.01) {
+      event.target.style.borderColor = "red";
+      setDisplayWarning("Min wager $0.01");
+    } else {
+      setShouldDisplay(false);
+      event.target.style.borderColor = "";
+      setWager(value);
+      setDisplayWarning("");
+    }
+  };
+
+  const removeAllLegs = () => {
+    dispatch({ type: "clearSlip" });
+  };
+
+  const removeLeg = (id: string) => {
+    dispatch({ type: "removeLeg", frontend_id: id });
+  };
+
+  const submitParlay = () => {
+    if (wager <= balance) {
+      setBalance(balance - wager);
+      dispatch({
+        type: "submitParlay",
+        totalOdds: decimalToOdds(totalOdds),
+        wager: wager,
+        payout: payout,
+      });
+    }
+  };
+
+  const toggleSlideOver = () => {
+    document
+      .getElementById("slideover-container")
+      .classList.toggle("invisible");
+    document.getElementById("slideover").classList.toggle("translate-y-full");
+  };
+
+  const toggleSlip = () => {
+    setHasOpenedOnce(true);
+    setShowSlip(!showSlip);
+  };
+
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      setShouldDisplay(true);
+    }, 200);
+    return () => clearInterval(timeout);
+  }, [wager, payout, shouldDisplay]);
+
+  useEffect(() => {
+    setPayout(wager * totalOdds);
+  }, [totalOdds, wager, shouldDisplay]);
+
+  useEffect(() => {
+    if (tasks.length > 0) {
+      if (totalOdds === 0) {
+        toggleSlideOver();
+      }
+      setShouldDisplay(false);
+      const totalDecimalOdds = tasks.reduce((total, task) => {
+        return (total *= oddsToDecimal(task.odds));
+      }, 1);
+      setTotalOdds(totalDecimalOdds);
+    } else {
+      if (totalOdds > 0) {
+        toggleSlideOver();
+        setTotalOdds(0);
+        setShowSlip(false);
+        setHasOpenedOnce(false);
+      }
+    }
+  }, [totalOdds, tasks]);
 
   return (
     <div

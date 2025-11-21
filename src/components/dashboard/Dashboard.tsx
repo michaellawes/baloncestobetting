@@ -1,12 +1,11 @@
 import { WeeklySlate } from "./wagers/WeeklySlate";
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { MatchupSchema } from "../../utils/Util";
-import { ParlayTask } from "../../App";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { Lockout } from "./Lockout";
 import { useParams } from "react-router-dom";
 import supabase from "../../config/supabaseConfig";
+import { MatchupSchema, ParlayTask } from "../../utils/Interfaces";
 
 export interface DashboardProps {
   weeklySlate: MatchupSchema[];
@@ -30,8 +29,9 @@ export function Dashboard(props: DashboardProps) {
     setWeeklySlate,
     setLockout,
   } = props;
-  const tasks: ParlayTask[] = useContext(TasksContext);
+
   const dispatch = useContext(TasksDispatchContext);
+  const tasks: ParlayTask[] = useContext(TasksContext);
 
   const { parlayId } = useParams();
 
@@ -81,8 +81,6 @@ export function Dashboard(props: DashboardProps) {
     };
     getMatchup();
   }, []);
-
-  useEffect(() => {}, []);
 
   return (
     <div

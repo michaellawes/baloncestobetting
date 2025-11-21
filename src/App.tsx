@@ -9,76 +9,24 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import {
-  generateId,
-  MatchupSchema,
-  Player,
-  propField,
-  Team,
-} from "./utils/Util";
+import { generateId } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
-import { SupabaseParlay } from "./components/parlays/Parlay";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
 import { Matchup } from "./components/matchup/Matchup";
 import { ErrorLander } from "./components/dashboard/ErrorLander";
-
-export interface ParlayTask {
-  frontend_id: string;
-  team: string;
-  betType: string;
-  text: string;
-  odds: number;
-  didHit?: boolean;
-}
-
-export interface ParlayAction {
-  type: string;
-  frontend_id?: string;
-  text?: string;
-  odds?: number;
-  betType?: string;
-  team?: string;
-  oppId?: string;
-  totalOdds?: number;
-  payout?: number;
-  wager?: number;
-  isHome?: boolean;
-  user_id?: string;
-  parlay_id?: string;
-  is_payed_out?: boolean;
-  is_winner?: boolean;
-  parlay_modification_type?: string;
-  expires_at?: number;
-  legs?: ParlayTask[];
-}
-
-export interface ParlayInfo {
-  totalOdds: number;
-  payout: number;
-  wager: number;
-}
-
-export interface UserData {
-  id: string;
-  name: string;
-  profile: string;
-}
-
-export interface ParlayFieldUpdate {
-  user_id: string;
-  parlay_id: string;
-  parlay_modification_type: string;
-  parlay?: SupabaseParlay;
-  payout?: number;
-}
-
-export interface NotificationMetadata {
-  show: boolean;
-  legs: number;
-  message: string;
-  type: string;
-}
+import {
+  MatchupSchema,
+  NotificationMetadata,
+  ParlayAction,
+  ParlayFieldUpdate,
+  ParlayInfo,
+  ParlayTask,
+  Player,
+  Team,
+  UserData,
+} from "./utils/Interfaces";
+import { propField } from "./utils/Constants";
 
 export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -105,28 +53,6 @@ export function App() {
       type: "INITIAL",
     });
   const [currentMatchup, setCurrentMatchup] = useState<MatchupSchema>(null);
-
-  useEffect(() => {
-    const authenticateUser = async () => {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: import.meta.env.VITE_AUTH_EMAIL,
-        password: import.meta.env.VITE_AUTH_PASS,
-      });
-
-      if (error) {
-        console.log(error);
-      }
-
-      if (data) {
-        supabase.auth.setSession({
-          access_token: data.session.access_token,
-          refresh_token: data.session.refresh_token,
-        });
-      }
-    };
-
-    authenticateUser();
-  }, []);
 
   const getUpdatedParlayValues = (legs: ParlayTask[]) => {
     const updatedArray: ParlayTask[] = [];
@@ -193,6 +119,46 @@ export function App() {
     return updatedArray;
   };
 
+  const isInvalidOpposingSpreadForMoneyLineAddition = (
+    team: string,
+    isHome: boolean,
+  ) => {
+    let relevantMatchup: MatchupSchema;
+    if (isHome) {
+      relevantMatchup = weeklySlate.filter(
+        (slate) => slate.road.name === team,
+      )[0];
+      return relevantMatchup.road.spread.text.startsWith("-");
+    } else {
+      relevantMatchup = weeklySlate.filter(
+        (slate) => slate.home.name === team,
+      )[0];
+      return relevantMatchup.home.spread.text.startsWith("-");
+    }
+  };
+
+  useEffect(() => {
+    const authenticateUser = async () => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: import.meta.env.VITE_AUTH_EMAIL,
+        password: import.meta.env.VITE_AUTH_PASS,
+      });
+
+      if (error) {
+        console.log(error);
+      }
+
+      if (data) {
+        supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+      }
+    };
+
+    authenticateUser();
+  }, []);
+
   useEffect(() => {
     const fetchUserData = async () => {
       const { data, error } = await supabase
@@ -229,23 +195,101 @@ export function App() {
     }
   }, [user]);
 
-  const isInvalidOpposingSpreadForMoneyLineAddition = (
-    team: string,
-    isHome: boolean,
-  ) => {
-    let relevantMatchup: MatchupSchema;
-    if (isHome) {
-      relevantMatchup = weeklySlate.filter(
-        (slate) => slate.road.name === team,
-      )[0];
-      return relevantMatchup.road.spread.text.startsWith("-");
-    } else {
-      relevantMatchup = weeklySlate.filter(
-        (slate) => slate.home.name === team,
-      )[0];
-      return relevantMatchup.home.spread.text.startsWith("-");
+  useEffect(() => {
+    if (parlayLegs.length > 0 && currentParlay != null) {
+      const now = new Date();
+      const expires = new Date();
+      expires.setUTCDate(
+        expires.getUTCDate() + ((7 - expires.getUTCDay()) % 7) + 1,
+      );
+
+      const uploadParlay = async () => {
+        const newParlay = {
+          user_id: user.id,
+          parlay_id: generateId(),
+          created_at: +now,
+          expires_at: +expires,
+          matchup_id: matchup,
+          total_odds: parseFloat(currentParlay.totalOdds.toFixed()),
+          payout: parseFloat(currentParlay.payout.toFixed(2)),
+          wager: parseFloat(currentParlay.wager.toFixed(2)),
+          is_winner: false,
+          is_payed_out: false,
+          legs: parlayLegs,
+        };
+
+        const { data, error } = await supabase
+          .from("parlays")
+          .insert([newParlay]);
+        if (error) {
+          console.log(error);
+        }
+
+        if (data) {
+          setParlayLegs([]);
+          setCurrentParlay(null);
+        }
+      };
+      uploadParlay();
     }
-  };
+  }, [parlayLegs, currentParlay, user, matchup]);
+
+  useEffect(() => {
+    if (user && justAffectedBalance) {
+      setJustAffectedBalance(false);
+      const updateBalance = async () => {
+        const { error } = await supabase
+          .from("users")
+          .update({ balance: parseFloat(balance.toFixed(2)) })
+          .eq("id", user.id);
+
+        if (error) {
+          console.log(error);
+        }
+      };
+      updateBalance();
+    }
+  }, [balance, user, justAffectedBalance]);
+
+  useEffect(() => {
+    if (user && justAffectedParlayFieldUpdate) {
+      const temp: ParlayFieldUpdate = {
+        user_id: parlayFieldUpdate.user_id,
+        parlay_id: parlayFieldUpdate.parlay_id,
+        parlay: parlayFieldUpdate.parlay,
+        parlay_modification_type: parlayFieldUpdate.parlay_modification_type,
+        payout: parlayFieldUpdate.payout,
+      };
+      setJustAffectedParlayFieldUpdate(false);
+      if (temp.parlay_modification_type === "validateSlip") {
+        const updateParlay = async () => {
+          const { error } = await supabase
+            .from("parlays")
+            .update({
+              is_winner: temp.parlay.is_winner,
+              is_payed_out: temp.parlay.is_payed_out,
+            })
+            .eq("user_id", temp.user_id)
+            .eq("parlay_id", temp.parlay_id);
+
+          if (error) {
+            console.log(error);
+          }
+        };
+        updateParlay();
+        if (temp.parlay.is_winner) {
+          setBalance((prev) => prev + parseFloat(temp.payout.toFixed(2)));
+          setJustAffectedBalance(true);
+        }
+      }
+    }
+  }, [user, parlayFieldUpdate, justAffectedParlayFieldUpdate]);
+
+  useEffect(() => {
+    if (!justAffectedParlayFieldUpdate) {
+      setParlayFieldUpdate(null);
+    }
+  }, [justAffectedParlayFieldUpdate]);
 
   const tasksReducer = (tasks: ParlayTask[], action: ParlayAction) => {
     switch (action.type) {
@@ -341,108 +385,6 @@ export function App() {
   };
 
   const [tasks, dispatch] = useReducer(tasksReducer, []);
-
-  // Submit Parlay
-  useEffect(() => {
-    if (parlayLegs.length > 0 && currentParlay != null) {
-      const now = new Date();
-      const expires = new Date();
-      expires.setUTCDate(
-        expires.getUTCDate() + ((7 - expires.getUTCDay()) % 7) + 1,
-      );
-
-      const uploadParlay = async () => {
-        const newParlay = {
-          user_id: user.id,
-          parlay_id: generateId(),
-          created_at: +now,
-          expires_at: +expires,
-          matchup_id: matchup,
-          total_odds: parseFloat(currentParlay.totalOdds.toFixed()),
-          payout: parseFloat(currentParlay.payout.toFixed(2)),
-          wager: parseFloat(currentParlay.wager.toFixed(2)),
-          is_winner: false,
-          is_payed_out: false,
-          legs: parlayLegs,
-        };
-
-        const { data, error } = await supabase
-          .from("parlays")
-          .insert([newParlay]);
-        if (error) {
-          console.log(error);
-        }
-
-        if (data) {
-          setParlayLegs([]);
-          setCurrentParlay(null);
-        }
-      };
-      uploadParlay();
-    }
-  }, [parlayLegs, currentParlay, user, matchup]);
-
-  // Update balance for either placing parlay or automatically colleting earnings
-  useEffect(() => {
-    if (user && justAffectedBalance) {
-      setJustAffectedBalance(false);
-      const updateBalance = async () => {
-        const { error } = await supabase
-          .from("users")
-          .update({ balance: parseFloat(balance.toFixed(2)) })
-          .eq("id", user.id);
-
-        if (error) {
-          console.log(error);
-        }
-      };
-      updateBalance();
-    }
-  }, [balance, user, justAffectedBalance]);
-
-  // For newly expired parlays, update that it was payed out and whether it won
-  useEffect(() => {
-    if (user && justAffectedParlayFieldUpdate) {
-      const temp: ParlayFieldUpdate = {
-        user_id: parlayFieldUpdate.user_id,
-        parlay_id: parlayFieldUpdate.parlay_id,
-        parlay: parlayFieldUpdate.parlay,
-        parlay_modification_type: parlayFieldUpdate.parlay_modification_type,
-        payout: parlayFieldUpdate.payout,
-      };
-      /*
-      Add data to backend column to have final result from previous matchup saved so you can display how close user was
-      * */
-      setJustAffectedParlayFieldUpdate(false);
-      if (temp.parlay_modification_type === "validateSlip") {
-        const updateParlay = async () => {
-          const { error } = await supabase
-            .from("parlays")
-            .update({
-              is_winner: temp.parlay.is_winner,
-              is_payed_out: temp.parlay.is_payed_out,
-            })
-            .eq("user_id", temp.user_id)
-            .eq("parlay_id", temp.parlay_id);
-
-          if (error) {
-            console.log(error);
-          }
-        };
-        updateParlay();
-        if (temp.parlay.is_winner) {
-          setBalance((prev) => prev + parseFloat(temp.payout.toFixed(2)));
-          setJustAffectedBalance(true);
-        }
-      }
-    }
-  }, [user, parlayFieldUpdate, justAffectedParlayFieldUpdate]);
-
-  useEffect(() => {
-    if (!justAffectedParlayFieldUpdate) {
-      setParlayFieldUpdate(null);
-    }
-  }, [justAffectedParlayFieldUpdate]);
 
   return (
     <Router>

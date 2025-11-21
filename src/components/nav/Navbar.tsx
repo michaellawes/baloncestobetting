@@ -8,18 +8,8 @@ import {
   googleLogout,
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { UserData } from "../../App";
 import { getUuid, numberWithCommas } from "../../utils/Util";
-
-interface NavbarProps {
-  isLoggedIn: boolean;
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  balance: number;
-  setBalance: React.Dispatch<React.SetStateAction<number>>;
-  setUser: React.Dispatch<React.SetStateAction<UserData>>;
-  isViewingDashboard: boolean;
-  matchup: number;
-}
+import { NavbarProps } from "../../utils/Interfaces";
 
 export function Navbar(props: NavbarProps) {
   const {

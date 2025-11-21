@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MatchupSchema } from "../../../utils/Util";
+import { MatchupSchema } from "../../../utils/Interfaces";
 export interface WeeklySlateProps {
     matchups: MatchupSchema[];
     setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;

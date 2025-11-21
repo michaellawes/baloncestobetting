@@ -1,22 +1,11 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../../reducer/TasksContext";
-import { ParlayAction, ParlayTask } from "../../../App";
-
-export interface PropLineProps {
-  text: string;
-  team: string;
-  betType: string;
-  odds: number;
-  frontend_id: string;
-  oppId: string;
-  isHome?: boolean;
-}
-
-export interface PropLineInterface {
-  text: string;
-  odds: number;
-}
+import {
+  ParlayAction,
+  ParlayTask,
+  PropLineProps,
+} from "../../../utils/Interfaces";
 
 export function PropLine(props: PropLineProps) {
   const { text, odds, frontend_id, oppId, team, betType, isHome } = props;

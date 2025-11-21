@@ -1,7 +1,6 @@
-import { MatchupSchema, propField } from "../../utils/Util";
-import { ParlayTask } from "../../App";
 import * as React from "react";
 import { useContext, useEffect } from "react";
+import { getPlayerNameIsTooLong, getTeamNameIsTooLong } from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,20 +12,8 @@ import {
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../dashboard/wagers/PropLine";
 import { ErrorLander } from "../dashboard/ErrorLander";
-
-export interface MatchupsProps {
-  matchup: MatchupSchema;
-  setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const getPlayerNameIsTooLong = (playerName: string) => {
-  return playerName.length > 16 && window.innerWidth < 501;
-};
-
-const getTeamNameIsTooLong = (teamName: string) => {
-  return teamName.length > 16 && window.innerWidth < 469;
-};
+import { propField } from "../../utils/Constants";
+import { MatchupsProps, ParlayTask } from "../../utils/Interfaces";
 
 export function Matchup(props: MatchupsProps) {
   const { matchup, setIsViewingDashboard, setIsViewingMatchup } = props;

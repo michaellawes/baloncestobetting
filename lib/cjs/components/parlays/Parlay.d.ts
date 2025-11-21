@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ParlayTask } from "../../App";
+import { NotificationMetadata, ParlayTask } from "../../utils/Interfaces";
 export interface SupabaseParlay {
     frontend_id?: string;
     user_id: string;
@@ -18,5 +18,6 @@ export interface SupabaseParlay {
 export interface ParlayProps extends SupabaseParlay {
     setBalance: React.Dispatch<React.SetStateAction<number>>;
     liveTeamData: Map<string, Map<string, string>>;
+    setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
 }
 export declare function Parlay(props: ParlayProps): import("react/jsx-runtime").JSX.Element;

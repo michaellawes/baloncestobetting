@@ -1,51 +1,25 @@
+import { MatchupSchema, ParlayTask } from "./Interfaces";
 import { SupabaseParlay } from "../components/parlays/Parlay";
-import { ParlayTask } from "../App";
-import { PropLineInterface } from "../components/dashboard/wagers/PropLine";
-export declare const generateId: () => string;
-export declare const oddsToDecimal: (value: number) => number;
 export declare const decimalToOdds: (decimal: number) => number;
-export declare const getUuid: (id: string) => string;
-export interface Player {
-    name: string;
-    team: string;
-    status: string;
-    average: number;
-    games_left: number;
-    live_total: number;
-    position: string;
-    prop_line: IndividualLineMetadata;
-}
-export interface PropLineMetadata extends PropLineInterface {
-    live_value: string;
-}
-export interface IndividualLineMetadata {
-    text: string;
-    over_odds: number;
-    under_odds: number;
-}
-export interface Team {
-    icon: string;
-    name: string;
-    record: string;
-    spread: PropLineMetadata;
-    points: PropLineMetadata;
-    moneyline: PropLineMetadata;
-    live_score: number;
-    team_total: IndividualLineMetadata;
-    top_5: Player[];
-}
-export interface MatchupSchema {
-    road: Team;
-    home: Team;
-}
-export declare const getSuffix: (rank: number) => "th" | "st" | "nd" | "rd";
-export declare const numberWithCommas: (x: number) => string;
+export declare const evaluateLeg: (leg: ParlayTask, event: number) => boolean;
+export declare const exportAsImage: (element: HTMLElement, imageFileName: string) => Promise<void>;
+export declare const generateId: () => string;
+export declare const getIndividualLegResultForParlays: (parlay: SupabaseParlay) => Promise<SupabaseParlay>;
+export declare const getNotificationStyling: (type: string) => "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-green-500 rounded-sm" | "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-red-500 rounded-sm" | "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-blue-500 rounded-sm" | "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-gray-500 rounded-sm";
+export declare const getOverUnderStyling: (prop: string) => "h-[4px] bg-green-400 basis-0 grow flex-rowbox-border rounded-md relative w-full" | "h-[4px] bg-red-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
+export declare const getParlayLegStyling: (frontend_is_active: boolean) => "flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900" | "flex mb-2 max-h-64 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
 export declare const getParlayType: (numberOfLegs: number) => "Same Game Parlay" | "Same Game Parlay+";
 export declare const getParlayTypeAbbreviated: (numberOfLegs: number) => "SGP" | "SGP+";
-export declare const refactoredDemo: MatchupSchema[];
-export declare const demoParlays: SupabaseParlay[];
-export declare const propField: string[];
-export declare const evaluateLeg: (leg: ParlayTask, event: number) => boolean;
+export declare const getPayoutWithRespectToScreenWidth: (payout: number) => string;
+export declare const getPlayerNameIsTooLong: (playerName: string) => boolean;
 export declare const getPropTextWithRespectToScreenSize: (leg: ParlayTask, screenWidth: number) => string;
+export declare const getReadableDate: (timestamp: number) => string;
+export declare const getStandardTime: (hours: number, minutes: number) => string;
+export declare const getTeamData: (live_matchups: MatchupSchema[]) => Map<string, Map<string, string>>;
+export declare const getTeamNameIsTooLong: (teamName: string) => boolean;
+export declare const getUuid: (id: string) => string;
+export declare const numberWithCommas: (x: number) => string;
+export declare const oddsToDecimal: (value: number) => number;
+export declare const getPropValue: (text: string) => string;
 export declare const round5: (x: number) => number;
-export declare const progressBarWidth: Map<string, string>;
+export declare const roundToInteger: (value: string) => number;

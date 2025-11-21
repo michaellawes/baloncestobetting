@@ -1,19 +1,27 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  fas,
+  faShare,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
-import { NotificationMetadata, ParlayTask } from "../../App";
-import html2canvas from "html2canvas-pro";
-import { downloadImage } from "../../utils/exportAsImage";
 import {
   evaluateLeg,
+  exportAsImage,
+  getOverUnderStyling,
+  getParlayLegStyling,
   getParlayType,
   getPropTextWithRespectToScreenSize,
+  getPropValue,
+  getReadableDate,
   numberWithCommas,
-  progressBarWidth,
-  propField,
-  round5
+  round5,
 } from "../../utils/Util";
+import { progressBarWidth, propField } from "../../utils/Constants";
+import { NotificationMetadata, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
 
@@ -53,13 +61,84 @@ export function Parlay(props: ParlayProps) {
     setNotification,
   } = props;
 
+  const getLiveValue = (leg: ParlayTask) => {
+    if (leg.betType === propField[1]) {
+      const teams = leg.frontend_id.split("/")[0].split(" v ");
+      const roadTeamName = teams[0];
+      return leg.lastValue
+        ? leg.lastValue
+        : parseFloat(
+            liveTeamData.get(roadTeamName).get("live_points"),
+          ).toFixed();
+    } else if (leg.betType === propField[0]) {
+      return parseFloat(
+        liveTeamData.get(leg.team).get("live_points"),
+      ).toFixed();
+    } else if (leg.betType === propField[3]) {
+      return parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
+    } else if (leg.betType === propField[4]) {
+      const playerName = leg.frontend_id.split("/")[0];
+      return parseFloat(
+        liveTeamData.get(leg.team).get(`${playerName}_score`),
+      ).toFixed();
+    }
+  };
+
+  const getLiveSpreadUpdateStyle = (leg: ParlayTask) => {
+    const live_spread_text: string = liveTeamData
+      .get(leg.team)
+      .get("live_spread");
+    if (live_spread_text === "0.0") {
+      return "text-sm text-yellow-400 font-light";
+    }
+    const live_spread = parseFloat(live_spread_text);
+    if (evaluateLeg(leg, live_spread)) {
+      return "text-sm text-green-500 font-light";
+    } else {
+      return "text-sm text-red-500 font-light";
+    }
+  };
+
+  const getLiveSpreadUpdate = (leg: ParlayTask) => {
+    const live_spread: string = liveTeamData.get(leg.team).get("live_spread");
+    if (live_spread === "0.0") {
+      return "TIE";
+    }
+    if (parseFloat(live_spread) > 0) {
+      return `${leg.team} +${live_spread}`;
+    }
+    return `${leg.team} ${live_spread}`;
+  };
+
+  const getLiveMoneylineUpdateStyle = (leg: ParlayTask) => {
+    const live_moneyline: string = liveTeamData
+      .get(leg.team)
+      .get("live_moneyline");
+    if (live_moneyline === "TIE") {
+      return "text-sm text-yellow-400 font-light";
+    }
+    if (leg.team === live_moneyline) {
+      return "text-sm text-green-500 font-light";
+    } else {
+      return "text-sm text-red-500 font-light";
+    }
+  };
+
+  const getLiveMoneylineUpdate = (leg: ParlayTask) => {
+    return liveTeamData.get(leg.team).get("live_moneyline");
+  };
+
   const getProgressBarWidth = (leg: ParlayTask) => {
     if (leg.betType === propField[1]) {
       const teams = leg.frontend_id.split("/")[0].split(" v ");
       const roadTeamName = teams[0];
-      const liveTotalPointsScored = parseFloat(
-        parseFloat(liveTeamData.get(roadTeamName).get("live_points")).toFixed(),
-      );
+      const liveTotalPointsScored = leg.lastValue
+        ? leg.lastValue
+        : parseFloat(
+            parseFloat(
+              liveTeamData.get(roadTeamName).get("live_points"),
+            ).toFixed(),
+          );
       const propTotalPointsScored = parseFloat(getPropValue(leg.text));
       let propTotalPointsScoredFull = parseFloat(
         (propTotalPointsScored * 1.2).toFixed(2),
@@ -113,33 +192,13 @@ export function Parlay(props: ParlayProps) {
     return "h-[4px] z-50 bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-full";
   };
 
-  const getStandardTime = (hours: number, minutes: number) => {
-    let timeValue;
+  const handleCaptureClick = async () => {
+    const parlayElement = document.getElementById(parlay_id);
+    if (!parlayElement) return;
 
-    if (hours > 0 && hours <= 12) {
-      timeValue = "" + hours;
-    } else if (hours > 12) {
-      timeValue = "" + (hours - 12);
-    } else if (hours == 0) {
-      timeValue = "12";
-    }
-    timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes;
-    timeValue += hours >= 12 ? "PM" : "AM";
-
-    return timeValue;
-  };
-
-  const getReadableDate = (timestamp: number) => {
-    const d = new Date(timestamp);
-    return (
-      d.getMonth() +
-      1 +
-      "/" +
-      d.getDate() +
-      "/" +
-      d.getFullYear() +
-      " " +
-      getStandardTime(d.getHours(), d.getMinutes())
+    exportAsImage(
+      parlayElement,
+      `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
     );
   };
 
@@ -152,113 +211,6 @@ export function Parlay(props: ParlayProps) {
       message: "Copied parlay link!",
       type: "CLIPBOARD",
     });
-  };
-
-  const handleCaptureClick = async () => {
-    const parlayElement = document.getElementById(parlay_id);
-    if (!parlayElement) return;
-
-    const userAgent = navigator.userAgent;
-    const canvas = await html2canvas(parlayElement);
-    if (userAgent.search("Firefox") >= 0) {
-      const dataURL = canvas
-        .toDataURL("image/png")
-        .replace("image/png", "image/octet-stream");
-      downloadImage(
-        dataURL,
-        `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
-      );
-    } else {
-      const dataURL = canvas.toDataURL("image/png");
-      downloadImage(
-        dataURL,
-        `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
-      );
-    }
-  };
-
-  const getLiveValue = (leg: ParlayTask) => {
-    if (leg.betType === propField[1]) {
-      const teams = leg.frontend_id.split("/")[0].split(" v ");
-      const roadTeamName = teams[0];
-      return parseFloat(
-        liveTeamData.get(roadTeamName).get("live_points"),
-      ).toFixed();
-    } else if (leg.betType === propField[0]) {
-      return parseFloat(
-        liveTeamData.get(leg.team).get("live_points"),
-      ).toFixed();
-    } else if (leg.betType === propField[3]) {
-      return parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
-    } else if (leg.betType === propField[4]) {
-      const playerName = leg.frontend_id.split("/")[0];
-      return parseFloat(
-        liveTeamData.get(leg.team).get(`${playerName}_score`),
-      ).toFixed();
-    }
-  };
-
-  const getPropValue = (text: string) => {
-    return text.substring(2);
-  };
-
-  const getOverUnderStyling = (text: string) => {
-    if (text.startsWith("O")) {
-      return "h-[4px] bg-green-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
-    }
-    return "h-[4px] bg-red-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
-  };
-
-  const getLiveSpreadUpdateStyle = (leg: ParlayTask) => {
-    const live_spread_text: string = liveTeamData
-      .get(leg.team)
-      .get("live_spread");
-    if (live_spread_text === "0.0") {
-      return "text-sm text-yellow-400 font-light";
-    }
-    const live_spread = parseFloat(live_spread_text);
-    if (evaluateLeg(leg, live_spread)) {
-      return "text-sm text-green-500 font-light";
-    } else {
-      return "text-sm text-red-500 font-light";
-    }
-  };
-
-  const getLiveSpreadUpdate = (leg: ParlayTask) => {
-    const live_spread: string = liveTeamData.get(leg.team).get("live_spread");
-    if (live_spread === "0.0") {
-      return "TIE";
-    }
-    if (parseFloat(live_spread) > 0) {
-      return `${leg.team} +${live_spread}`;
-    }
-    return `${leg.team} ${live_spread}`;
-  };
-
-  const getLiveMoneylineUpdateStyle = (leg: ParlayTask) => {
-    const live_moneyline: string = liveTeamData
-      .get(leg.team)
-      .get("live_moneyline");
-    if (live_moneyline === "TIE") {
-      return "text-sm text-yellow-400 font-light";
-    }
-    if (leg.team === live_moneyline) {
-      return "text-sm text-green-500 font-light";
-    } else {
-      return "text-sm text-red-500 font-light";
-    }
-  };
-
-  const getLiveMoneylineUpdate = (leg: ParlayTask) => {
-    return liveTeamData.get(leg.team).get("live_moneyline");
-  };
-
-  const getParlayLegStyling = (frontend_is_active: boolean) => {
-    if (frontend_is_active) {
-      return "flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
-    } else {
-      return "flex mb-2 max-h-64 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
-    }
   };
 
   return (
@@ -330,7 +282,7 @@ export function Parlay(props: ParlayProps) {
                 </span>
               </div>
             )}
-            {frontend_is_active && leg.betType === propField[1] && (
+            {leg.betType === propField[1] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 {leg.betType === propField[1] && (
                   <>
@@ -365,7 +317,7 @@ export function Parlay(props: ParlayProps) {
                 </span>
               </div>
             )}
-            {frontend_is_active && leg.betType === propField[3] && (
+            {leg.betType === propField[3] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 {leg.betType === propField[3] && (
                   <>
@@ -393,7 +345,7 @@ export function Parlay(props: ParlayProps) {
                 )}
               </div>
             )}
-            {frontend_is_active && leg.betType === propField[4] && (
+            {leg.betType === propField[4] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 {leg.betType === propField[4] && (
                   <>
