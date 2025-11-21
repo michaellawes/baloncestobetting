@@ -15,6 +15,7 @@ import { SupabaseParlay } from "./components/parlays/Parlay";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
 import { Matchup } from "./components/matchup/Matchup";
+import { ErrorLander } from "./components/dashboard/ErrorLander";
 
 export interface ParlayTask {
   frontend_id: string;
@@ -41,7 +42,8 @@ export interface ParlayAction {
   is_payed_out?: boolean;
   is_winner?: boolean;
   parlay_modification_type?: string;
-  slip?: Slip;
+  expires_at?: number;
+  legs?: ParlayTask[];
 }
 
 export interface ParlayInfo {
@@ -64,17 +66,10 @@ export interface ParlayFieldUpdate {
   payout?: number;
 }
 
-export interface Slip {
-  legs: ParlayTask[];
-  matchup_id: string;
-  parlay_id: string;
-  user_id: string;
-  payout: number;
-}
-
 export interface NotificationMetadata {
   show: boolean;
   legs: number;
+  message: string;
 }
 
 export function App() {
@@ -97,7 +92,7 @@ export function App() {
   const [isViewingMatchup, setIsViewingMatchup] = useState<boolean>(false);
   const [lockout, setLockout] = useState<boolean>(false);
   const [notificationMetadata, setNotificationMetadata] =
-    useState<NotificationMetadata>({ show: false, legs: 0 });
+    useState<NotificationMetadata>({ show: false, legs: 0, message: "" });
   const [currentMatchup, setCurrentMatchup] = useState<MatchupSchema>(null);
 
   useEffect(() => {
@@ -252,7 +247,11 @@ export function App() {
           wager: action.wager,
         });
         setJustAffectedBalance(true);
-        setNotificationMetadata({ show: true, legs: tasks.length });
+        setNotificationMetadata({
+          show: true,
+          legs: tasks.length,
+          message: " leg parlay saved!",
+        });
         return [];
       }
       case "acceptPayout": {
@@ -265,6 +264,14 @@ export function App() {
       }
       case "clearSlip": {
         return [];
+      }
+      case "loadSharedSlip": {
+        const startOfExpirationDate = new Date(action.expires_at);
+        startOfExpirationDate.setHours(0, 0, 0, 0);
+        if (Date.now() < Date.parse(startOfExpirationDate.toISOString())) {
+          return action.legs;
+        }
+        return tasks;
       }
       default: {
         throw Error("Unknown action: " + action.type);
@@ -395,7 +402,7 @@ export function App() {
           />
           <Routes>
             <Route
-              path="/"
+              path="/:parlayId?"
               element={
                 <Dashboard
                   weeklySlate={weeklySlate}
@@ -416,6 +423,7 @@ export function App() {
                   setIsViewingDashboard={setIsViewingDashboard}
                   setIsViewingMatchup={setIsViewingMatchup}
                   matchups={weeklySlate}
+                  setNotification={setNotificationMetadata}
                 />
               }
             />
@@ -428,7 +436,8 @@ export function App() {
                   setIsViewingMatchup={setIsViewingMatchup}
                 />
               }
-            ></Route>
+            />
+            <Route path={"*"} element={<ErrorLander />} />
           </Routes>
           <div className="relative text-white">
             <LiveParlayViewer

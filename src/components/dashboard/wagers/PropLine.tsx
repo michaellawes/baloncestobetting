@@ -25,7 +25,6 @@ export function PropLine(props: PropLineProps) {
   const [isAdded, setIsAdded] = React.useState(false);
 
   const selectParlay = () => {
-    console.log(props);
     const type = !isAdded ? "addLeg" : "removeLeg";
     const action: ParlayAction = {
       type: type,

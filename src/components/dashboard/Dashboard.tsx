@@ -3,8 +3,10 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import { MatchupSchema } from "../../utils/Util";
 import { ParlayTask } from "../../App";
-import { TasksContext } from "../reducer/TasksContext";
+import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { Lockout } from "./Lockout";
+import { useParams } from "react-router-dom";
+import supabase from "../../config/supabaseConfig";
 
 export interface DashboardProps {
   weeklySlate: MatchupSchema[];
@@ -23,10 +25,37 @@ export function Dashboard(props: DashboardProps) {
     setIsViewingMatchup,
   } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
+  const dispatch = useContext(TasksDispatchContext);
+
+  const { parlayId } = useParams();
 
   useEffect(() => {
     setIsViewingDashboard(true);
     setIsViewingMatchup(false);
+    if (parlayId != undefined) {
+      const getSharedSlip = async () => {
+        const { data, error } = await supabase
+          .from("parlays")
+          .select("*")
+          .eq("parlay_id", parlayId);
+
+        if (error) {
+          console.log(error);
+        }
+
+        if (data) {
+          const parlay = data[0];
+          dispatch({
+            type: "loadSharedSlip",
+            expires_at: parlay["expires_at"],
+            legs: parlay["legs"],
+          });
+        }
+      };
+      getSharedSlip();
+    } else {
+      console.log("Standard /parlays");
+    }
   }, []);
 
   return (

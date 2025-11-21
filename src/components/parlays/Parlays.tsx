@@ -2,7 +2,7 @@ import { Parlay, SupabaseParlay } from "./Parlay";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
-import { ParlayFieldUpdate, UserData } from "../../App";
+import { NotificationMetadata, ParlayFieldUpdate, UserData } from "../../App";
 import { evaluateLeg, MatchupSchema, propField } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
 import { ErrorLander } from "../dashboard/ErrorLander";
@@ -14,6 +14,7 @@ export interface ParlaysViewerProps {
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
   setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
   matchups: MatchupSchema[];
+  setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
 }
 export function Parlays(props: ParlaysViewerProps) {
   const {
@@ -23,6 +24,7 @@ export function Parlays(props: ParlaysViewerProps) {
     setIsViewingDashboard,
     matchups,
     setIsViewingMatchup,
+    setNotification,
   } = props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
   const [liveTeamData, setLiveTeamData] = React.useState<
@@ -211,6 +213,7 @@ export function Parlays(props: ParlaysViewerProps) {
               {...parlay}
               setBalance={setBalance}
               liveTeamData={liveTeamData}
+              setNotification={setNotification}
             />
           </li>
         ))}

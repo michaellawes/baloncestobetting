@@ -15,7 +15,7 @@ export function Notification(props: NotificationProps) {
     if (notification.show) {
       const timeId = setTimeout(() => {
         // After 3 seconds set the show value to false
-        setNotification({ show: false, legs: 0 });
+        setNotification({ show: false, legs: 0, message: "" });
       }, 1500);
 
       return () => {
@@ -38,8 +38,16 @@ export function Notification(props: NotificationProps) {
         role="alert"
         className="h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-green-500 rounded-sm"
       >
-        <div className="flex w-4/5 flex-row text-sm md:text-base font-bold items-center justify-start">
-          <span>{notification.legs} leg parlay saved</span>
+        <div className="flex w-4/5 flex-row font-bold items-center text-start justify-start">
+          {notification.legs > 0 ? (
+            <span className="text-sm md:text-base ">
+              {notification.legs} leg parlay saved
+            </span>
+          ) : (
+            <span className="text-sm md:text-base ">
+              {notification.message}
+            </span>
+          )}
         </div>
         <div className="flex text-sm md:text-base w-1/5 justify-end">
           <FontAwesomeIcon

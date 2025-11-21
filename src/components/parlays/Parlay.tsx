@@ -8,7 +8,7 @@ import {
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
-import { ParlayTask } from "../../App";
+import { NotificationMetadata, ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
 import { downloadImage } from "../../utils/exportAsImage";
 import {
@@ -42,6 +42,7 @@ export interface SupabaseParlay {
 export interface ParlayProps extends SupabaseParlay {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   liveTeamData: Map<string, Map<string, string>>;
+  setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
 }
 
 export function Parlay(props: ParlayProps) {
@@ -49,13 +50,13 @@ export function Parlay(props: ParlayProps) {
     parlay_id,
     created_at,
     frontend_is_active,
-    matchup_id,
     legs,
     total_odds,
     payout,
     wager,
     is_winner,
     liveTeamData,
+    setNotification,
   } = props;
 
   const getProgressBarWidth = (leg: ParlayTask) => {
@@ -148,9 +149,14 @@ export function Parlay(props: ParlayProps) {
     );
   };
 
-  const handleShareSlip = (legs: ParlayTask[]) => {
-    const payload = { matchup_id: matchup_id, legs: legs };
-    navigator.clipboard.writeText(JSON.stringify(payload));
+  const handleShareSlip = (parlay_id: string) => {
+    const url = `${window.location.href.substring(0, window.location.href.length - 8)}/${parlay_id}`;
+    navigator.clipboard.writeText(url);
+    setNotification({
+      show: true,
+      legs: 0,
+      message: "Copied parlay link!",
+    });
   };
 
   const handleCaptureClick = async () => {
@@ -450,7 +456,7 @@ export function Parlay(props: ParlayProps) {
             <div className="flex flex-row w-1/16 m-1 mt-2 justify-end">
               <button
                 className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl justify-end"
-                onClick={() => handleShareSlip(legs)}
+                onClick={() => handleShareSlip(parlay_id)}
               >
                 <FontAwesomeIcon icon={faShare as IconProp} />
               </button>
