@@ -41,13 +41,7 @@ export function Matchup(props: MatchupsProps) {
   if (!matchup) return <ErrorLander />;
 
   return (
-    <div
-      className={
-        tasks.length > 0
-          ? "w-full h-screen bg-gray-900"
-          : "w-full h-screen bg-gray-900"
-      }
-    >
+    <div className="w-full h-screen bg-gray-900">
       <div className="z-10 items-stretch justify-start bg-gray-800 flex-col flex box-border relative">
         <div className="box-border flex relative  w-full flex-col justify-center text-white items-stretch">
           <div className="flex flex-row w-full h-full pt-20 border-t-2">
