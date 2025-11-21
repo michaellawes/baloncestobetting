@@ -117,6 +117,21 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     }
   };
 
+  const getPayoutWithRespectToScreenWidth = (payout: number) => {
+    if (window.innerWidth < 501) {
+      const fullText = `wins $${numberWithCommas(parseFloat(payout.toFixed(2)))}`;
+      if (fullText.length > 20) {
+        return "";
+      } else if (fullText.length > 15) {
+        return fullText.substring(0, 15) + "...";
+      } else {
+        return fullText;
+      }
+    } else {
+      return `wins $${numberWithCommas(parseFloat(payout.toFixed(2)))}`;
+    }
+  };
+
   const getStyling = (showSlip: boolean) => {
     if (showSlip) {
       if (tasks.length == 1) {
@@ -168,12 +183,12 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
         <div className="flex flex-row mb-2">
           <div key={"header"} className="flex flex-row ml-5 w-5/8">
             <div className="text-base flex flex-row w-full font-bold">
-              <div className="flex flex-row justify-start text-start items-center w-3/8">
+              <div className="flex flex-row justify-start text-start items-center w-4/8">
                 <span className="flex">
                   {tasks.length} leg {getParlayTypeAbbreviated(tasks.length)}
                 </span>
               </div>
-              <div className="flex flex-row justify-center text-center items-center w-5/8">
+              <div className="flex flex-row justify-center text-center items-center w-4/8">
                 <div
                   className={
                     shouldDisplay
@@ -181,8 +196,8 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                       : "flex w-full text-center justify-center items-center box-border transition-opacity opacity-0 invisible"
                   }
                 >
-                  <span className="font-[Proxima Nova, serif] w-fit tracking-[1px] font-light text-gray-300 text-xs relative">
-                    wins ${numberWithCommas(parseFloat(payout.toFixed(2)))}
+                  <span className="font-[Proxima Nova, serif] w-full tracking-[1px] font-light text-gray-300 text-xs relative">
+                    {getPayoutWithRespectToScreenWidth(payout)}
                   </span>
                 </div>
               </div>

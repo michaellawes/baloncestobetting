@@ -77,6 +77,7 @@ export interface NotificationMetadata {
   show: boolean;
   legs: number;
   message: string;
+  type: string;
 }
 
 export function App() {
@@ -85,8 +86,6 @@ export function App() {
   const [balance, setBalance] = useState<number>(0);
   const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
-  const [supabaseAuthenticated, setSupabaseAuthenticated] =
-    useState<boolean>(false);
   const [matchup, setMatchup] = useState<number>(0);
   const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
@@ -99,10 +98,13 @@ export function App() {
   const [isViewingMatchup, setIsViewingMatchup] = useState<boolean>(false);
   const [lockout, setLockout] = useState<boolean>(false);
   const [notificationMetadata, setNotificationMetadata] =
-    useState<NotificationMetadata>({ show: false, legs: 0, message: "" });
+    useState<NotificationMetadata>({
+      show: false,
+      legs: 0,
+      message: "",
+      type: "INITIAL",
+    });
   const [currentMatchup, setCurrentMatchup] = useState<MatchupSchema>(null);
-  const [triggerAuthenication, setTriggerAuthenication] =
-    useState<boolean>(true);
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -113,7 +115,6 @@ export function App() {
 
       if (error) {
         console.log(error);
-        setSupabaseAuthenticated(false);
       }
 
       if (data) {
@@ -121,7 +122,6 @@ export function App() {
           access_token: data.session.access_token,
           refresh_token: data.session.refresh_token,
         });
-        setSupabaseAuthenticated(true);
       }
     };
 
@@ -274,17 +274,27 @@ export function App() {
             );
           }
         }
-        tasks = [
-          ...tasks,
-          {
-            frontend_id: action.frontend_id,
-            team: action.team,
-            betType: action.betType,
-            text: action.text,
-            odds: action.odds,
-          },
-        ];
-        return tasks;
+        if (tasks.length === 25) {
+          setNotificationMetadata({
+            legs: 0,
+            show: true,
+            message: "Max legs added!",
+            type: "LIMIT",
+          });
+          return tasks;
+        } else {
+          tasks = [
+            ...tasks,
+            {
+              frontend_id: action.frontend_id,
+              team: action.team,
+              betType: action.betType,
+              text: action.text,
+              odds: action.odds,
+            },
+          ];
+          return tasks;
+        }
       }
       case "removeLeg": {
         return tasks.filter((task) => task.frontend_id !== action.frontend_id);
@@ -301,6 +311,7 @@ export function App() {
           show: true,
           legs: tasks.length,
           message: " leg parlay saved!",
+          type: "SUBMIT",
         });
         return [];
       }

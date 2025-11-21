@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import { NotificationMetadata, ParlayTask } from "../../App";
 import html2canvas from "html2canvas-pro";
@@ -18,7 +12,7 @@ import {
   numberWithCommas,
   progressBarWidth,
   propField,
-  round5,
+  round5
 } from "../../utils/Util";
 
 library.add(fas);
@@ -156,6 +150,7 @@ export function Parlay(props: ParlayProps) {
       show: true,
       legs: 0,
       message: "Copied parlay link!",
+      type: "CLIPBOARD",
     });
   };
 
