@@ -126,8 +126,10 @@ export function Parlays(props: ParlaysViewerProps) {
 
   const validateFinishedSlips = async (data: SupabaseParlay[]) => {
     const newlyExpiredParlays: SupabaseParlay[] = [];
+    const activeSlips: SupabaseParlay[] = [];
     const expiredParlays: SupabaseParlay[] = [];
 
+    console.log("validating finished slips");
     for (const parlay of data) {
       const startOfExpirationDate = new Date(parlay.expires_at);
       startOfExpirationDate.setHours(0, 0, 0, 0);
@@ -135,12 +137,21 @@ export function Parlays(props: ParlaysViewerProps) {
         Date.now() < Date.parse(startOfExpirationDate.toISOString());
       if (!parlay.frontend_is_active && !parlay.is_payed_out) {
         newlyExpiredParlays.push(parlay);
-      } else {
+      } else if (!parlay.frontend_is_active && parlay.is_payed_out) {
         expiredParlays.push(parlay);
+      } else {
+        activeSlips.push(parlay);
       }
     }
 
-    const processedData = expiredParlays;
+    const processedData: SupabaseParlay[] = activeSlips;
+
+    if (expiredParlays.length > 0) {
+      for (const parlay of expiredParlays) {
+        const processedParlay = await getIndividualLegResultForParlays(parlay);
+        processedData.push(processedParlay);
+      }
+    }
 
     if (newlyExpiredParlays.length > 0) {
       for (const parlay of newlyExpiredParlays) {
@@ -153,6 +164,42 @@ export function Parlays(props: ParlaysViewerProps) {
   };
 
   const dispatch = useContext(TasksDispatchContext);
+
+  const getIndividualLegResultForParlays = async (parlay: SupabaseParlay) => {
+    const matchup_id = Number(parlay.matchup_id);
+    const query_ids = parlay.legs.map((leg) => {
+      if (leg.betType !== propField[4]) {
+        return leg.team + "/" + leg.betType;
+      } else {
+        return leg.frontend_id.split("/")[0] + "/" + leg.betType;
+      }
+    });
+
+    const { data, error } = await supabase
+      .from("legs")
+      .select("*")
+      .eq("matchup_id", matchup_id)
+      .in("id", query_ids);
+
+    if (error) {
+      console.log(error);
+    }
+
+    if (data) {
+      const legDictionary = Object.assign(
+        {},
+        ...data.map((x) => ({ [x.id]: x.point_value })),
+      );
+
+      for (const leg of parlay.legs) {
+        leg.didHit = evaluateLeg(
+          leg,
+          legDictionary[leg.team + "/" + leg.betType],
+        );
+      }
+      return parlay;
+    }
+  };
 
   const validateResultOfFinishedSlips = async (parlay: SupabaseParlay) => {
     const matchup_id = Number(parlay.matchup_id);
@@ -179,9 +226,15 @@ export function Parlays(props: ParlaysViewerProps) {
         {},
         ...data.map((x) => ({ [x.id]: x.point_value })),
       );
-      const slipHit = parlay.legs.every((leg) =>
-        evaluateLeg(leg, legDictionary[leg.team + "/" + leg.betType]),
-      );
+
+      for (const leg of parlay.legs) {
+        leg.didHit = evaluateLeg(
+          leg,
+          legDictionary[leg.team + "/" + leg.betType],
+        );
+      }
+
+      const slipHit = parlay.legs.every((leg) => leg.didHit);
 
       const updateSlip = async () => {
         parlay["is_payed_out"] = true;

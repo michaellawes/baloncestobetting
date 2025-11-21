@@ -14,6 +14,9 @@ export interface DashboardProps {
   setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
   lockout: boolean;
   setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
+  setMatchup: React.Dispatch<React.SetStateAction<number>>;
+  setLockout: React.Dispatch<React.SetStateAction<boolean>>;
+  setWeeklySlate: React.Dispatch<React.SetStateAction<MatchupSchema[]>>;
 }
 
 export function Dashboard(props: DashboardProps) {
@@ -23,6 +26,9 @@ export function Dashboard(props: DashboardProps) {
     lockout,
     setCurrentMatchup,
     setIsViewingMatchup,
+    setMatchup,
+    setWeeklySlate,
+    setLockout,
   } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
@@ -32,31 +38,51 @@ export function Dashboard(props: DashboardProps) {
   useEffect(() => {
     setIsViewingDashboard(true);
     setIsViewingMatchup(false);
-    if (parlayId != undefined) {
-      const getSharedSlip = async () => {
-        const { data, error } = await supabase
-          .from("parlays")
-          .select("*")
-          .eq("parlay_id", parlayId);
+    const getMatchup = async () => {
+      const { data, error } = await supabase
+        .from("matchup")
+        .select()
+        .order("id", { ascending: false })
+        .limit(1);
 
-        if (error) {
-          console.log(error);
-        }
+      if (error) {
+        console.log(error);
+      }
 
-        if (data) {
-          const parlay = data[0];
-          dispatch({
-            type: "loadSharedSlip",
-            expires_at: parlay["expires_at"],
-            legs: parlay["legs"],
-          });
-        }
-      };
-      getSharedSlip();
-    } else {
-      console.log("Standard /parlays");
-    }
+      if (data) {
+        setMatchup(data[0]["id"]);
+        setLockout(data[0]["is_done"]);
+        setWeeklySlate(data[0]["weekly_slate"]);
+        //setWeeklySlate(refactoredDemo);
+      }
+
+      if (parlayId != undefined) {
+        const getSharedSlip = async () => {
+          const { data, error } = await supabase
+            .from("parlays")
+            .select("*")
+            .eq("parlay_id", parlayId);
+
+          if (error) {
+            console.log(error);
+          }
+
+          if (data) {
+            const parlay = data[0];
+            dispatch({
+              type: "loadSharedSlip",
+              expires_at: parlay["expires_at"],
+              legs: parlay["legs"],
+            });
+          }
+        };
+        await getSharedSlip();
+      }
+    };
+    getMatchup();
   }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <div

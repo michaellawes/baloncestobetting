@@ -9,7 +9,13 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { generateId, MatchupSchema, propField } from "./utils/Util";
+import {
+  generateId,
+  MatchupSchema,
+  Player,
+  propField,
+  Team,
+} from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { SupabaseParlay } from "./components/parlays/Parlay";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
@@ -23,6 +29,7 @@ export interface ParlayTask {
   betType: string;
   text: string;
   odds: number;
+  didHit?: boolean;
 }
 
 export interface ParlayAction {
@@ -94,6 +101,8 @@ export function App() {
   const [notificationMetadata, setNotificationMetadata] =
     useState<NotificationMetadata>({ show: false, legs: 0, message: "" });
   const [currentMatchup, setCurrentMatchup] = useState<MatchupSchema>(null);
+  const [triggerAuthenication, setTriggerAuthenication] =
+    useState<boolean>(true);
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -119,29 +128,70 @@ export function App() {
     authenticateUser();
   }, []);
 
-  useEffect(() => {
-    if (supabaseAuthenticated) {
-      const getMatchup = async () => {
-        const { data, error } = await supabase
-          .from("matchup")
-          .select()
-          .order("id", { ascending: false })
-          .limit(1);
-
-        if (error) {
-          console.log(error);
+  const getUpdatedParlayValues = (legs: ParlayTask[]) => {
+    const updatedArray: ParlayTask[] = [];
+    for (const leg of legs) {
+      const relevantMatchup: MatchupSchema = weeklySlate.filter(
+        (slate) => slate.home.name === leg.team || slate.road.name === leg.team,
+      )[0];
+      const relevantTeam: Team =
+        relevantMatchup.home.name === leg.team
+          ? relevantMatchup.home
+          : relevantMatchup.road;
+      if (leg.betType === propField[4]) {
+        const relevantPlayerFilter: Player[] = relevantTeam.top_5.filter(
+          (player) => player.name === leg.frontend_id.split("/")[0],
+        );
+        if (relevantPlayerFilter.length > 0) {
+          const relevantPlayer = relevantPlayerFilter[0];
+          updatedArray.push({
+            frontend_id: leg.frontend_id,
+            team: leg.team,
+            betType: leg.betType,
+            text: relevantPlayer.prop_line.text,
+            odds: leg.text.startsWith("U")
+              ? relevantPlayer.prop_line.under_odds
+              : relevantPlayer.prop_line.over_odds,
+          });
         }
-
-        if (data) {
-          setMatchup(data[0]["id"]);
-          setLockout(data[0]["is_done"]);
-          setWeeklySlate(data[0]["weekly_slate"]);
-          //setWeeklySlate(refactoredDemo);
-        }
-      };
-      getMatchup();
+      } else if (leg.betType === propField[3]) {
+        updatedArray.push({
+          frontend_id: leg.frontend_id,
+          team: leg.team,
+          betType: leg.betType,
+          text: relevantTeam.team_total.text,
+          odds: leg.text.startsWith("U")
+            ? relevantTeam.team_total.under_odds
+            : relevantTeam.team_total.over_odds,
+        });
+      } else if (leg.betType === propField[2]) {
+        updatedArray.push({
+          frontend_id: leg.frontend_id,
+          team: leg.team,
+          betType: leg.betType,
+          text: relevantTeam.moneyline.text,
+          odds: relevantTeam.moneyline.odds,
+        });
+      } else if (leg.betType === propField[1]) {
+        updatedArray.push({
+          frontend_id: leg.frontend_id,
+          team: leg.team,
+          betType: leg.betType,
+          text: relevantTeam.points.text,
+          odds: relevantTeam.points.odds,
+        });
+      } else if (leg.betType === propField[0]) {
+        updatedArray.push({
+          frontend_id: leg.frontend_id,
+          team: leg.team,
+          betType: leg.betType,
+          text: relevantTeam.spread.text,
+          odds: relevantTeam.spread.odds,
+        });
+      }
     }
-  }, [supabaseAuthenticated]);
+    return updatedArray;
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -269,7 +319,7 @@ export function App() {
         const startOfExpirationDate = new Date(action.expires_at);
         startOfExpirationDate.setHours(0, 0, 0, 0);
         if (Date.now() < Date.parse(startOfExpirationDate.toISOString())) {
-          return action.legs;
+          return getUpdatedParlayValues(action.legs);
         }
         return tasks;
       }
@@ -410,6 +460,9 @@ export function App() {
                   setIsViewingMatchup={setIsViewingMatchup}
                   lockout={lockout}
                   setCurrentMatchup={setCurrentMatchup}
+                  setLockout={setLockout}
+                  setWeeklySlate={setWeeklySlate}
+                  setMatchup={setMatchup}
                 />
               }
             />

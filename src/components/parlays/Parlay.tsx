@@ -305,7 +305,15 @@ export function Parlay(props: ParlayProps) {
                 }
               >
                 <div className="flex flex-col grow items-stretch pl-5 justify-start w-7/8">
-                  <span className="block relative text-white text-sm">
+                  <span
+                    className={
+                      !frontend_is_active
+                        ? leg.didHit
+                          ? "block relative text-green-500 text-sm"
+                          : "block relative text-red-500 text-sm"
+                        : "block relative text-white text-sm"
+                    }
+                  >
                     {getPropTextWithRespectToScreenSize(leg, window.innerWidth)}
                   </span>
                   <span className="flex relative text-gray-400 text-xs">

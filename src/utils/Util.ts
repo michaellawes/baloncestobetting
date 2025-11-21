@@ -94,6 +94,14 @@ export const getSuffix = (rank: number) => {
   }
 };
 
+export const propField = [
+  "SPREAD BETTING",
+  "TOTAL POINTS",
+  "MONEYLINE",
+  "TEAM SCORE",
+  "PLAYER SCORE",
+];
+
 export const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
@@ -798,14 +806,6 @@ export const demoParlays: SupabaseParlay[] = [
     created_at: 1762973845208,
     expires_at: 1763417915502,
   },
-];
-
-export const propField = [
-  "SPREAD BETTING",
-  "TOTAL POINTS",
-  "MONEYLINE",
-  "TEAM SCORE",
-  "PLAYER SCORE",
 ];
 
 export const evaluateLeg = (leg: ParlayTask, event: number) => {
