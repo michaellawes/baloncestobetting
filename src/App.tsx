@@ -94,6 +94,7 @@ export function App() {
   const [justAffectedParlayFieldUpdate, setJustAffectedParlayFieldUpdate] =
     useState<boolean>(false);
   const [isViewingDashboard, setIsViewingDashboard] = useState<boolean>(true);
+  const [isViewingMatchup, setIsViewingMatchup] = useState<boolean>(false);
   const [lockout, setLockout] = useState<boolean>(false);
   const [notificationMetadata, setNotificationMetadata] =
     useState<NotificationMetadata>({ show: false, legs: 0 });
@@ -399,6 +400,7 @@ export function App() {
                 <Dashboard
                   weeklySlate={weeklySlate}
                   setIsViewingDashboard={setIsViewingDashboard}
+                  setIsViewingMatchup={setIsViewingMatchup}
                   lockout={lockout}
                   setCurrentMatchup={setCurrentMatchup}
                 />
@@ -412,6 +414,7 @@ export function App() {
                   user={user}
                   setParlayFieldUpdate={setParlayFieldUpdate}
                   setIsViewingDashboard={setIsViewingDashboard}
+                  setIsViewingMatchup={setIsViewingMatchup}
                   matchups={weeklySlate}
                 />
               }
@@ -422,6 +425,7 @@ export function App() {
                 <Matchup
                   matchup={currentMatchup}
                   setIsViewingDashboard={setIsViewingDashboard}
+                  setIsViewingMatchup={setIsViewingMatchup}
                 />
               }
             ></Route>

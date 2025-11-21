@@ -9,17 +9,24 @@ import { Lockout } from "./Lockout";
 export interface DashboardProps {
   weeklySlate: MatchupSchema[];
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
   lockout: boolean;
   setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
 }
 
 export function Dashboard(props: DashboardProps) {
-  const { weeklySlate, setIsViewingDashboard, lockout, setCurrentMatchup } =
-    props;
+  const {
+    weeklySlate,
+    setIsViewingDashboard,
+    lockout,
+    setCurrentMatchup,
+    setIsViewingMatchup,
+  } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
 
   useEffect(() => {
     setIsViewingDashboard(true);
+    setIsViewingMatchup(false);
   }, []);
 
   return (

@@ -17,6 +17,7 @@ import { ErrorLander } from "../dashboard/ErrorLander";
 export interface MatchupsProps {
   matchup: MatchupSchema;
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const getPlayerNameIsTooLong = (playerName: string) => {
@@ -28,12 +29,13 @@ const getTeamNameIsTooLong = (teamName: string) => {
 };
 
 export function Matchup(props: MatchupsProps) {
-  const { matchup, setIsViewingDashboard } = props;
+  const { matchup, setIsViewingDashboard, setIsViewingMatchup } = props;
 
   const tasks: ParlayTask[] = useContext(TasksContext);
 
   useEffect(() => {
     setIsViewingDashboard(false);
+    setIsViewingMatchup(true);
   }, []);
 
   if (!matchup) return <ErrorLander />;
@@ -42,7 +44,7 @@ export function Matchup(props: MatchupsProps) {
     <div
       className={
         tasks.length > 0
-          ? "w-full h-screen mb-37 bg-gray-900"
+          ? "w-full h-screen bg-gray-900"
           : "w-full h-screen bg-gray-900"
       }
     >
@@ -194,7 +196,13 @@ export function Matchup(props: MatchupsProps) {
               <div className="w-full flex flex-col justify-center text-center">
                 <div className="flex flex-col w-full justify-start">
                   <div className="w-full flex flex-col justify-center text-center">
-                    <div className="flex flex-col w-full justify-start">
+                    <div
+                      className={
+                        tasks.length > 0
+                          ? "flex flex-col w-full justify-start mb-20"
+                          : "flex flex-col w-full justify-start"
+                      }
+                    >
                       {matchup.road.top_5.map((player, index) => (
                         <div
                           className="flex flex-col w-full border-b-2 border-b-gray-400"
@@ -293,7 +301,13 @@ export function Matchup(props: MatchupsProps) {
               <div className="w-full flex flex-col justify-center text-center">
                 <div className="flex flex-col w-full justify-start">
                   <div className="w-full flex flex-col justify-center text-center">
-                    <div className="flex flex-col w-full justify-start">
+                    <div
+                      className={
+                        tasks.length > 0
+                          ? "flex flex-col w-full justify-start mb-20"
+                          : "flex flex-col w-full justify-start"
+                      }
+                    >
                       {matchup.home.top_5.map((player, index) => (
                         <div
                           className="flex flex-col w-full border-b-2 border-b-gray-400"

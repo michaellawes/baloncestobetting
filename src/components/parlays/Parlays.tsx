@@ -11,6 +11,7 @@ export interface ParlaysViewerProps {
   user: UserData;
   setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
   matchups: MatchupSchema[];
 }
 export function Parlays(props: ParlaysViewerProps) {
@@ -20,6 +21,7 @@ export function Parlays(props: ParlaysViewerProps) {
     user,
     setIsViewingDashboard,
     matchups,
+    setIsViewingMatchup,
   } = props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
   const [liveTeamData, setLiveTeamData] = React.useState<
@@ -94,6 +96,7 @@ export function Parlays(props: ParlaysViewerProps) {
 
   useEffect(() => {
     setIsViewingDashboard(false);
+    setIsViewingMatchup(false);
     const processedTeamData = getTeamData(matchups);
     setLiveTeamData(processedTeamData);
   }, []);
