@@ -181,7 +181,9 @@ export const getPropTextWithRespectToScreenSize = (
   if (leg.betType !== propField[1]) {
     if (leg.betType === propField[4]) {
       console.log(leg);
-      return `${leg.frontend_id.split("/")[0]} ${leg.frontend_id.split("/")[1]} ${leg.text}`;
+      console.log(leg.frontend_id.split("/")[0]);
+      console.log(leg.frontend_id.split("/")[1]);
+      return `${leg.frontend_id.split("/")[0]} ${leg.text}`;
     }
     return `${leg.team} ${leg.text}`;
   } else {
