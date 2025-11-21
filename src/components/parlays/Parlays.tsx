@@ -3,7 +3,6 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
 import {
-  evaluateLeg,
   getIndividualLegResultForParlays,
   getTeamData,
 } from "../../utils/Util";
@@ -15,7 +14,6 @@ import {
   ParlayFieldUpdate,
   UserData,
 } from "../../utils/Interfaces";
-import { propField } from "../../utils/Constants";
 
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -82,57 +80,22 @@ export function Parlays(props: ParlaysViewerProps) {
   };
 
   const validateResultOfFinishedSlips = async (parlay: SupabaseParlay) => {
-    const matchup_id = Number(parlay.matchup_id);
-    const query_ids = parlay.legs.map((leg) => {
-      if (leg.betType !== propField[4]) {
-        return leg.team + "/" + leg.betType;
-      } else {
-        return leg.frontend_id.split("/")[0] + "/" + leg.betType;
-      }
-    });
-
-    const { data, error } = await supabase
-      .from("legs")
-      .select("*")
-      .eq("matchup_id", matchup_id)
-      .in("id", query_ids);
-
-    if (error) {
-      console.log(error);
-    }
-
-    if (data) {
-      const legDictionary = Object.assign(
-        {},
-        ...data.map((x) => ({ [x.id]: x.point_value })),
-      );
-
-      for (const leg of parlay.legs) {
-        leg.didHit = evaluateLeg(
-          leg,
-          legDictionary[leg.team + "/" + leg.betType],
-        );
-      }
-
-      const slipHit = parlay.legs.every((leg) => leg.didHit);
-
-      const updateSlip = async () => {
-        parlay["is_payed_out"] = true;
-        parlay["is_winner"] = slipHit;
-        setParlayFieldUpdate({
-          user_id: parlay.user_id,
-          parlay_id: parlay.parlay_id,
-          parlay_modification_type: "validateSlip",
-          parlay: parlay,
-          payout: parlay.payout,
-        });
-        dispatch({
-          type: "parlayFieldUpdate",
-        });
-        return parlay;
-      };
-      return await updateSlip();
-    }
+    const validatedParlay = await getIndividualLegResultForParlays(parlay);
+    const updateSlip = async () => {
+      validatedParlay.is_payed_out = true;
+      setParlayFieldUpdate({
+        user_id: validatedParlay.user_id,
+        parlay_id: validatedParlay.parlay_id,
+        parlay_modification_type: "validateSlip",
+        parlay: validatedParlay,
+        payout: validatedParlay.payout,
+      });
+      dispatch({
+        type: "parlayFieldUpdate",
+      });
+      return validatedParlay;
+    };
+    return await updateSlip();
   };
 
   useEffect(() => {

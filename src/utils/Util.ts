@@ -116,7 +116,6 @@ export const getIndividualLegResultForParlays = async (
           : roundToInteger(lastLiveValue.toString());
     }
     parlay.is_winner = parlay.legs.every((leg) => leg.didHit);
-    console.log(parlay);
     return parlay;
   }
 };
