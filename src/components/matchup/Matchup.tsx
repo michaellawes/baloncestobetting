@@ -30,6 +30,7 @@ const getTeamNameIsTooLong = (teamName: string) => {
 
 export function Matchup(props: MatchupsProps) {
   const { matchup, setIsViewingDashboard, setIsViewingMatchup } = props;
+  console.log(matchup);
 
   const tasks: ParlayTask[] = useContext(TasksContext);
 
