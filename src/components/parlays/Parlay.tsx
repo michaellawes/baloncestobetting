@@ -3,6 +3,7 @@ import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import {
   faDownload,
   fas,
+  faShare,
   faSquareCheck,
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -48,6 +49,7 @@ export function Parlay(props: ParlayProps) {
     parlay_id,
     created_at,
     frontend_is_active,
+    matchup_id,
     legs,
     total_odds,
     payout,
@@ -144,6 +146,11 @@ export function Parlay(props: ParlayProps) {
       " " +
       getStandardTime(d.getHours(), d.getMinutes())
     );
+  };
+
+  const handleShareSlip = (legs: ParlayTask[]) => {
+    const payload = { matchup_id: matchup_id, legs: legs };
+    navigator.clipboard.writeText(JSON.stringify(payload));
   };
 
   const handleCaptureClick = async () => {
@@ -410,7 +417,13 @@ export function Parlay(props: ParlayProps) {
       </div>
       <div className="border-t-1 flex flex-col w-full items-center justify-between border-b-1 rounded-b-sm bg-gray-800 border-gray-700">
         <div className="flex flex-row text-left pl-2 border-b-1 border-b-gray-700 w-full pb-1">
-          <div className="flex flex-row w-15/16">
+          <div
+            className={
+              frontend_is_active
+                ? "flex flex-row w-14/16"
+                : "flex flex-row w-15/16"
+            }
+          >
             <div className="flex flex-col basis-0 grow justify-center items-stretch box-border relative pl-2">
               <span className="font-[Proxima Nova, serif] tracking-[1px] uppercase text-gray-300 text-base text-left relative">
                 ${wager}
@@ -433,6 +446,17 @@ export function Parlay(props: ParlayProps) {
               </span>
             </div>
           </div>
+          {frontend_is_active && (
+            <div className="flex flex-row w-1/16 m-1 mt-2 justify-end">
+              <button
+                className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl justify-end"
+                onClick={() => handleShareSlip(legs)}
+              >
+                <FontAwesomeIcon icon={faShare as IconProp} />
+              </button>
+            </div>
+          )}
+
           <div className="flex flex-row w-1/16 m-1 mt-2 justify-end">
             <button
               className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl justify-end"

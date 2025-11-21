@@ -28,7 +28,6 @@ export function Parlays(props: ParlaysViewerProps) {
   const [liveTeamData, setLiveTeamData] = React.useState<
     Map<string, Map<string, string>>
   >(new Map<string, Map<string, string>>());
-  const [dataLoaded, setDataLoaded] = React.useState(true);
 
   const getTeamData = (live_matchups: MatchupSchema[]) => {
     const teamData = new Map<string, Map<string, string>>();
@@ -100,6 +99,27 @@ export function Parlays(props: ParlaysViewerProps) {
     setIsViewingMatchup(false);
     const processedTeamData = getTeamData(matchups);
     setLiveTeamData(processedTeamData);
+    const getParlays = async () => {
+      let userId = "";
+      if (user) {
+        userId = user.id;
+      }
+      const { data, error } = await supabase
+        .from("parlays")
+        .select("*")
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
+
+      if (error || userId === "") {
+        console.log("Could not retrieve parlay data", error);
+      }
+
+      if (data) {
+        const validatedSlips = await validateFinishedSlips(data);
+        setParlays(validatedSlips);
+      }
+    };
+    getParlays();
   }, []);
 
   const validateFinishedSlips = async (data: SupabaseParlay[]) => {
@@ -180,33 +200,7 @@ export function Parlays(props: ParlaysViewerProps) {
     }
   };
 
-  useEffect(() => {
-    const getParlays = async () => {
-      let userId = "";
-      if (user) {
-        userId = user.id;
-      }
-      const { data, error } = await supabase
-        .from("parlays")
-        .select("*")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false });
-
-      if (error || userId === "") {
-        console.log(error);
-        setDataLoaded(false);
-      }
-
-      if (data) {
-        const validatedSlips = await validateFinishedSlips(data);
-        setParlays(validatedSlips);
-        setDataLoaded(false);
-      }
-    };
-    getParlays();
-  }, []);
-
-  if (!dataLoaded) return <ErrorLander />;
+  if (!user) return <ErrorLander />;
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
