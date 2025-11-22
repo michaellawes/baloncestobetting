@@ -1,9 +1,18 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { getPlayerNameIsTooLong, getTeamNameIsTooLong, roundToInteger } from "../../utils/Util";
+import {
+  getPlayerNameIsTooLong,
+  getTeamNameIsTooLong,
+  roundToInteger,
+} from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBasketball, faFaceDizzy, faFaceGrimace, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBasketball,
+  faFaceDizzy,
+  faFaceGrimace,
+  faFaceGrin,
+} from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../dashboard/wagers/PropLine";
 import { ErrorLander } from "../dashboard/ErrorLander";
@@ -179,7 +188,7 @@ export function Matchup(props: MatchupsProps) {
                           : "flex flex-col w-full justify-start"
                       }
                     >
-                      {matchup.road.top_5.map((player, index) => (
+                      {matchup.road.top_5.slice(0, 5).map((player, index) => (
                         <div
                           className="flex flex-col w-full border-b-2 border-b-gray-400"
                           key={player.name}
@@ -203,9 +212,9 @@ export function Matchup(props: MatchupsProps) {
                                   icon={faFaceGrimace as IconProp}
                                 />
                               )}
-                              {player.status === "INJURED" && (
+                              {player.status === "OUT" && (
                                 <FontAwesomeIcon
-                                  className="text-red-900"
+                                  className="text-red-600"
                                   icon={faFaceDizzy as IconProp}
                                 />
                               )}
@@ -284,7 +293,7 @@ export function Matchup(props: MatchupsProps) {
                           : "flex flex-col w-full justify-start"
                       }
                     >
-                      {matchup.home.top_5.map((player, index) => (
+                      {matchup.home.top_5.slice(0, 5).map((player, index) => (
                         <div
                           className="flex flex-col w-full border-b-2 border-b-gray-400"
                           key={player.name}
@@ -308,9 +317,9 @@ export function Matchup(props: MatchupsProps) {
                                   icon={faFaceGrimace as IconProp}
                                 />
                               )}
-                              {player.status === "INJURED" && (
+                              {player.status === "OUT" && (
                                 <FontAwesomeIcon
-                                  className="text-red-900"
+                                  className="text-red-600"
                                   icon={faFaceDizzy as IconProp}
                                 />
                               )}

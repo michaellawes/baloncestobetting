@@ -234,28 +234,13 @@ export const getTeamData = (live_matchups: MatchupSchema[]) => {
         ["live_spread", matchup.road.spread.live_value],
         ["live_points", matchup.road.points.live_value],
         ["live_moneyline", matchup.road.moneyline.live_value],
-        [
-          `${matchup.road.top_5[0].name}_score`,
-          matchup.road.top_5[0].live_total.toString(),
-        ],
-        [
-          `${matchup.road.top_5[1].name}_score`,
-          matchup.road.top_5[1].live_total.toString(),
-        ],
-        [
-          `${matchup.road.top_5[2].name}_score`,
-          matchup.road.top_5[2].live_total.toString(),
-        ],
-        [
-          `${matchup.road.top_5[3].name}_score`,
-          matchup.road.top_5[3].live_total.toString(),
-        ],
-        [
-          `${matchup.road.top_5[4].name}_score`,
-          matchup.road.top_5[4].live_total.toString(),
-        ],
       ]),
     );
+    for (const player of matchup.road.top_5) {
+      teamData
+        .get(matchup.road.name)
+        .set(`${player.name}_score`, player.live_total.toString());
+    }
     teamData.set(
       matchup.home.name,
       new Map<string, string>([
@@ -263,28 +248,13 @@ export const getTeamData = (live_matchups: MatchupSchema[]) => {
         ["live_spread", matchup.home.spread.live_value],
         ["live_points", matchup.home.points.live_value],
         ["live_moneyline", matchup.home.moneyline.live_value],
-        [
-          `${matchup.home.top_5[0].name}_score`,
-          matchup.home.top_5[0].live_total.toString(),
-        ],
-        [
-          `${matchup.home.top_5[1].name}_score`,
-          matchup.home.top_5[1].live_total.toString(),
-        ],
-        [
-          `${matchup.home.top_5[2].name}_score`,
-          matchup.home.top_5[2].live_total.toString(),
-        ],
-        [
-          `${matchup.home.top_5[3].name}_score`,
-          matchup.home.top_5[3].live_total.toString(),
-        ],
-        [
-          `${matchup.home.top_5[4].name}_score`,
-          matchup.home.top_5[4].live_total.toString(),
-        ],
       ]),
     );
+    for (const player of matchup.home.top_5) {
+      teamData
+        .get(matchup.home.name)
+        .set(`${player.name}_score`, player.live_total.toString());
+    }
   }
   return teamData;
 };

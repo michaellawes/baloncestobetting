@@ -69,7 +69,6 @@ export function Dashboard(props: DashboardProps) {
 
           if (data) {
             const parlay = data[0];
-            console.log(parlay);
             dispatch({
               type: "loadSharedSlip",
               expires_at: parlay["expires_at"],
