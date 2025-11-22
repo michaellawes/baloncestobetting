@@ -1,14 +1,9 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { getPlayerNameIsTooLong, getTeamNameIsTooLong } from "../../utils/Util";
+import { getPlayerNameIsTooLong, getTeamNameIsTooLong, roundToInteger } from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBasketball,
-  faFaceDizzy,
-  faFaceGrimace,
-  faFaceGrin,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, faFaceDizzy, faFaceGrimace, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../dashboard/wagers/PropLine";
 import { ErrorLander } from "../dashboard/ErrorLander";
@@ -241,7 +236,7 @@ export function Matchup(props: MatchupsProps) {
                                 <span className="font-[ProximaNova, serif] font-light text-green-500 mr-1">
                                   AVG:
                                 </span>
-                                {player.average}
+                                {roundToInteger(player.average.toString())}
                               </div>
                             </div>
                             <div className="flex flex-row justify-center w-full mr-2">
@@ -249,7 +244,7 @@ export function Matchup(props: MatchupsProps) {
                                 <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
                                   TOTAL:
                                 </span>
-                                {player.live_total}
+                                {roundToInteger(player.live_total.toString())}
                               </div>
                             </div>
                           </div>
@@ -346,7 +341,7 @@ export function Matchup(props: MatchupsProps) {
                                 <span className="font-[ProximaNova, serif] font-light text-green-500 mr-1">
                                   AVG:
                                 </span>
-                                {player.average}
+                                {roundToInteger(player.average.toString())}
                               </div>
                             </div>
                             <div className="flex flex-row justify-center w-full mr-2">
@@ -354,7 +349,7 @@ export function Matchup(props: MatchupsProps) {
                                 <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
                                   TOTAL:
                                 </span>
-                                {player.live_total}
+                                {roundToInteger(player.live_total.toString())}
                               </div>
                             </div>
                           </div>
