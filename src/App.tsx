@@ -268,10 +268,11 @@ export function App() {
             .update({
               is_winner: temp.parlay.is_winner,
               is_payed_out: temp.parlay.is_payed_out,
+              legs: temp.parlay.legs,
             })
             .eq("user_id", temp.user_id)
             .eq("parlay_id", temp.parlay_id);
-
+          console.log(temp.parlay.legs);
           if (error) {
             console.log(error);
           }

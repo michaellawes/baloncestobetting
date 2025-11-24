@@ -64,15 +64,24 @@ export function Parlays(props: ParlaysViewerProps) {
 
     if (expiredParlays.length > 0) {
       for (const parlay of expiredParlays) {
-        const processedParlay = await getIndividualLegResultForParlays(parlay);
-        processedData.push(processedParlay);
+        if (parlay.legs[0].lastValue) {
+          processedData.push(parlay);
+        } else {
+          const processedParlay =
+            await getIndividualLegResultForParlays(parlay);
+          processedData.push(processedParlay);
+        }
       }
     }
 
     if (newlyExpiredParlays.length > 0) {
       for (const parlay of newlyExpiredParlays) {
-        const processedParlay = await validateResultOfFinishedSlips(parlay);
-        processedData.push(processedParlay);
+        if (parlay.legs[0].lastValue) {
+          processedData.push(parlay);
+        } else {
+          const processedParlay = await validateResultOfFinishedSlips(parlay);
+          processedData.push(processedParlay);
+        }
       }
     }
 

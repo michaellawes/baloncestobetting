@@ -52,7 +52,6 @@ export function Parlay(props: ParlayProps) {
     parlay_id,
     created_at,
     frontend_is_active,
-    matchup_id,
     legs,
     total_odds,
     payout,
