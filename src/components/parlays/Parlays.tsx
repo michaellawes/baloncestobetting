@@ -83,6 +83,12 @@ export function Parlays(props: ParlaysViewerProps) {
     const validatedParlay = await getIndividualLegResultForParlays(parlay);
     const updateSlip = async () => {
       validatedParlay.is_payed_out = true;
+      if (validatedParlay.is_winner) {
+        setBalance((prev) => prev + parseFloat(parlay.payout.toFixed(2)));
+        dispatch({
+          type: "acceptPayout",
+        });
+      }
       setParlayFieldUpdate({
         user_id: validatedParlay.user_id,
         parlay_id: validatedParlay.parlay_id,

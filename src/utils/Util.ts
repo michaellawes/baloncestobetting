@@ -26,23 +26,30 @@ const downloadImage = async (blob: string, imageFileName: string) => {
 };
 
 export const evaluateLeg = (leg: ParlayTask, event: number) => {
-  if (leg.betType == propField[0]) {
+  if (leg.betType === propField[0]) {
     return event <= Number(leg.text);
-  } else if (leg.betType == propField[1]) {
+  } else if (leg.betType === propField[1]) {
     const totalPointsProps = leg.text.split(" ");
     if (totalPointsProps[0] === "O") {
       return event > Number(totalPointsProps[1]);
     } else {
       return event < Number(totalPointsProps[1]);
     }
-  } else if (leg.betType == propField[2]) {
+  } else if (leg.betType === propField[2]) {
     return event === 1;
-  } else if (leg.betType == propField[3]) {
+  } else if (leg.betType === propField[3]) {
     const totalTeamScoreProps = leg.text.split(" ");
     if (totalTeamScoreProps[0] === "O") {
       return event > Number(totalTeamScoreProps[1]);
     } else {
       return event < Number(totalTeamScoreProps[1]);
+    }
+  } else if (leg.betType === propField[4]) {
+    const totalPlayerScoreProps = leg.text.split(" ");
+    if (totalPlayerScoreProps[0] === "O") {
+      return event > Number(totalPlayerScoreProps[1]);
+    } else {
+      return event < Number(totalPlayerScoreProps[1]);
     }
   }
 };
@@ -109,11 +116,20 @@ export const getIndividualLegResultForParlays = async (
           ? leg.team + "/" + leg.betType
           : leg.frontend_id.split("/")[0] + "/" + leg.betType;
       const lastLiveValue: number = legDictionary[legId];
+      /*if (lastLiveValue === undefined) {
+        console.log(legId);
+        leg.didHit = false;
+        leg.lastValue = 0;
+        console.log(
+          `For ${legId} the lastLiveValue ${lastLiveValue} and it was true is? ${leg.didHit}`,
+        );
+      } else {*/
       leg.didHit = evaluateLeg(leg, lastLiveValue);
       leg.lastValue =
         leg.betType === propField[0]
           ? lastLiveValue
           : roundToInteger(lastLiveValue.toString());
+      //}
     }
     parlay.is_winner = parlay.legs.every((leg) => leg.didHit);
     return parlay;

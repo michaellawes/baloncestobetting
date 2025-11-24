@@ -762,7 +762,7 @@ export const progressBarWidth: Map<string, string> = new Map([
   ],
   [
     "80",
-    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-80/100 z-50",
+    "h-[4px] bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-75/100 z-50",
   ],
   [
     "85",

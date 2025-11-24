@@ -52,6 +52,7 @@ export function Parlay(props: ParlayProps) {
     parlay_id,
     created_at,
     frontend_is_active,
+    matchup_id,
     legs,
     total_odds,
     payout,
@@ -71,16 +72,24 @@ export function Parlay(props: ParlayProps) {
             liveTeamData.get(roadTeamName).get("live_points"),
           ).toFixed();
     } else if (leg.betType === propField[0]) {
-      return parseFloat(
-        liveTeamData.get(leg.team).get("live_points"),
-      ).toFixed();
+      return leg.lastValue
+        ? leg.lastValue
+        : parseFloat(liveTeamData.get(leg.team).get("live_points")).toFixed();
+    } else if (leg.betType === propField[2]) {
+      return leg.lastValue
+        ? leg.lastValue
+        : parseFloat(liveTeamData.get(leg.team).get("live_points")).toFixed();
     } else if (leg.betType === propField[3]) {
-      return parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
+      return leg.lastValue
+        ? leg.lastValue
+        : parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
     } else if (leg.betType === propField[4]) {
       const playerName = leg.frontend_id.split("/")[0];
-      return parseFloat(
-        liveTeamData.get(leg.team).get(`${playerName}_score`),
-      ).toFixed();
+      return leg.lastValue
+        ? leg.lastValue
+        : parseFloat(
+            liveTeamData.get(leg.team).get(`${playerName}_score`),
+          ).toFixed();
     }
   };
 
@@ -155,9 +164,11 @@ export function Parlay(props: ParlayProps) {
       }
     } else if (leg.betType === propField[3]) {
       const team = leg.team;
-      const liveTeamScore = parseFloat(
-        parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
-      );
+      const liveTeamScore = leg.lastValue
+        ? leg.lastValue
+        : parseFloat(
+            parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
+          );
       const propTeamScore = parseFloat(getPropValue(leg.text));
       let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
       if (liveTeamScore >= propTeamScore) {
@@ -173,9 +184,13 @@ export function Parlay(props: ParlayProps) {
     } else if (leg.betType === propField[4]) {
       const team = leg.team;
       const playerName = leg.frontend_id.split("/")[0];
-      const liveTeamScore = parseFloat(
-        parseFloat(liveTeamData.get(team).get(`${playerName}_score`)).toFixed(),
-      );
+      const liveTeamScore = leg.lastValue
+        ? leg.lastValue
+        : parseFloat(
+            parseFloat(
+              liveTeamData.get(team).get(`${playerName}_score`),
+            ).toFixed(),
+          );
       const propTeamScore = parseFloat(getPropValue(leg.text));
       let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
       if (liveTeamScore >= propTeamScore) {
