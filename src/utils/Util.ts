@@ -187,7 +187,7 @@ export const getPayoutWithRespectToScreenWidth = (payout: number) => {
 };
 
 export const getPlayerNameIsTooLong = (playerName: string) => {
-  return playerName.length > 16 && window.innerWidth < 501;
+  return playerName.length > 15 && window.innerWidth < 501;
 };
 
 export const getPropTextWithRespectToScreenSize = (
