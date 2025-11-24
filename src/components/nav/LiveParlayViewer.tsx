@@ -80,7 +80,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     if (value > balance) {
       event.target.style.borderColor = "red";
       setDisplayWarning("Insufficient balance");
-    } else if (value < 0.01) {
+    } else if (value < 0) {
       event.target.style.borderColor = "red";
       setDisplayWarning("Min wager $0.01");
     } else {
@@ -151,6 +151,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
         setShowSlip(false);
         setHasOpenedOnce(false);
       }
+      setWager(10);
     }
   }, [totalOdds, tasks]);
 
@@ -276,7 +277,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               type="number"
               value={wager}
               max={balance}
-              min={0.01}
+              min={0}
               onChange={(e) => handleWagerChange(e)}
               className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none focus:outline-none bg-gray-800 w-20 mt-1 h-5 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
             />
@@ -288,7 +289,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               </div>
             )}
           </div>
-          {isLoggedIn && balance > 0 && (
+          {isLoggedIn && balance > 0 && wager > 0.01 && (
             <div className="overflow-hidden w-1/4 md:w-1/2 pr-2 ml-2 mr-2">
               <button
                 className="cursor-pointer float-right hover:bg-gray-700 rounded-xl pl-4 pr-4 mt-1"
