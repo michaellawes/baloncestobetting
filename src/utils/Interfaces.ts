@@ -126,6 +126,17 @@ export interface PropLineProps {
   isHome?: boolean;
 }
 
+export interface SqlPropSlate {
+  day_id: number;
+  main_prop_id: string;
+  main_prop_odds: number;
+  matchup_id: number;
+  point_value: number;
+  prop_id: string;
+  sub_prop_id: string;
+  sub_prop_odds: number;
+}
+
 export interface Team {
   icon: string;
   name: string;

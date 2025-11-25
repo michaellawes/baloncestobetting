@@ -12,7 +12,6 @@ import {
   evaluateLeg,
   exportAsImage,
   getOverUnderStyling,
-  getParlayLegStyling,
   getParlayType,
   getPropTextWithRespectToScreenSize,
   getPropValue,
@@ -251,7 +250,7 @@ export function Parlay(props: ParlayProps) {
           </div>
         )}
       </div>
-      <div className={getParlayLegStyling(frontend_is_active)}>
+      <div className="flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
         {legs.map((leg, index) => (
           <div
             key={leg.frontend_id}

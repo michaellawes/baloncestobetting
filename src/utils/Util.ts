@@ -1,6 +1,6 @@
 import { v5 as uuidv5 } from "uuid";
 import { propField } from "./Constants";
-import { MatchupSchema, ParlayTask } from "./Interfaces";
+import { MatchupSchema, ParlayTask, SqlPropSlate, Team } from "./Interfaces";
 import { SupabaseParlay } from "../components/parlays/Parlay";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -83,6 +83,18 @@ export const generateId = () => {
   );
 };
 
+export const getDaysSinceLastMonday = () => {
+  const prevMonday = new Date();
+  prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
+  const today = new Date();
+  console.log(`${today.getDay()} === ${prevMonday.getDay()}`);
+  if (today.getDay() === prevMonday.getDay()) {
+    return 0;
+  }
+  console.log(`${((today.getDay() - 1) % 7) + 1}`);
+  return ((today.getDay() - 1) % 7) + 1;
+};
+
 export const getIndividualLegResultForParlays = async (
   parlay: SupabaseParlay,
 ) => {
@@ -153,14 +165,6 @@ export const getOverUnderStyling = (prop: string) => {
     return "h-[4px] bg-green-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
   }
   return "h-[4px] bg-red-400 basis-0 grow flex-rowbox-border rounded-md relative w-full";
-};
-
-export const getParlayLegStyling = (frontend_is_active: boolean) => {
-  if (frontend_is_active) {
-    return "flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
-  } else {
-    return "flex mb-2 max-h-64 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900";
-  }
 };
 
 export const getParlayType = (numberOfLegs: number) => {
@@ -298,6 +302,49 @@ export const oddsToDecimal = (value: number) => {
 
 export const getPropValue = (text: string) => {
   return text.substring(2);
+};
+
+/*
+export interface Team {
+  icon: string;
+  name: string;
+  record: string;
+  spread: PropLineMetadata;
+  points: PropLineMetadata;
+  moneyline: PropLineMetadata;
+  live_score: number;
+  team_total: IndividualLineMetadata;
+  top_5: Player[];
+}
+* */
+
+export const refactorDailySlate = (data: SqlPropSlate[]) => {
+  const distinctTeams = Array.from(
+    new Set<string>(data.map((prop_metadata) => prop_metadata.main_prop_id)),
+  );
+  const matchups = Array.from(
+    new Set(
+      data.map((prop_metadata) => {
+        if (prop_metadata.prop_id.split("/")[0].includes(" v ")) {
+          return prop_metadata.prop_id.split("/")[0];
+        }
+      }),
+    ),
+  ).filter((matchup) => matchup !== undefined);
+  const teamNameToTeam = new Map<string, Team>();
+  for (const teamName of distinctTeams) {
+    teamNameToTeam.set(teamName, {
+      icon: "",
+      name: teamName,
+      top_5: [],
+      team_total: { text: "", over_odds: 0, under_odds: 0 },
+      points: { text: "", odds: 0, live_value: "" },
+      live_score: 0,
+      record: "",
+      moneyline: { text: "", odds: 0, live_value: "" },
+      spread: { text: "", odds: 0, live_value: "" },
+    });
+  }
 };
 
 export const round5 = (x: number) => {

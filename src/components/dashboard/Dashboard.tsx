@@ -44,16 +44,26 @@ export function Dashboard(props: DashboardProps) {
         .select()
         .order("id", { ascending: false })
         .limit(1);
+      /*const { data, error } = await supabase
+        .from("fb_props")
+        .select("*")
+        .eq("matchup_id", 6)
+        .eq("day_id", 0);*/
 
       if (error) {
         console.log(error);
       }
 
       if (data) {
+        //console.log(data);
+        //console.log(getDaysSinceLastMonday());
+        //refactorDailySlate(data);
+        //setWeeklySlate(demoWeeklySlate);
+        //setMatchup(6);
+
         setMatchup(data[0]["id"]);
         setLockout(data[0]["is_done"]);
         setWeeklySlate(data[0]["weekly_slate"]);
-        //setWeeklySlate(refactoredDemo);
       }
 
       if (parlayId != undefined) {
