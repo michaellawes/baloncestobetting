@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -17,7 +11,7 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5,
+  round5
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { NotificationMetadata, ParlayTask } from "../../utils/Interfaces";
@@ -64,26 +58,26 @@ export function Parlay(props: ParlayProps) {
     if (leg.betType === propField[1]) {
       const teams = leg.frontend_id.split("/")[0].split(" v ");
       const roadTeamName = teams[0];
-      return leg.lastValue
+      return leg.lastValue !== undefined
         ? leg.lastValue
         : parseFloat(
             liveTeamData.get(roadTeamName).get("live_points"),
           ).toFixed();
     } else if (leg.betType === propField[0]) {
-      return leg.lastValue
+      return leg.lastValue !== undefined
         ? leg.lastValue
         : parseFloat(liveTeamData.get(leg.team).get("live_points")).toFixed();
     } else if (leg.betType === propField[2]) {
-      return leg.lastValue
+      return leg.lastValue !== undefined
         ? leg.lastValue
         : parseFloat(liveTeamData.get(leg.team).get("live_points")).toFixed();
     } else if (leg.betType === propField[3]) {
-      return leg.lastValue
+      return leg.lastValue !== undefined
         ? leg.lastValue
         : parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
     } else if (leg.betType === propField[4]) {
       const playerName = leg.frontend_id.split("/")[0];
-      return leg.lastValue
+      return leg.lastValue !== undefined
         ? leg.lastValue
         : parseFloat(
             liveTeamData.get(leg.team).get(`${playerName}_score`),
