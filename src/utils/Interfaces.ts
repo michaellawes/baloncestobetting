@@ -5,6 +5,10 @@ export interface AuthProps {
   profileImg: string;
 }
 
+export interface ErrorLanderProps {
+  message: string;
+}
+
 export interface IndividualLineMetadata {
   text: string;
   over_odds: number;

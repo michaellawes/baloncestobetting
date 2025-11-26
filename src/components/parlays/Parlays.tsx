@@ -27,6 +27,7 @@ export function Parlays(props: ParlaysViewerProps) {
   const [liveTeamData, setLiveTeamData] = React.useState<
     Map<string, Map<string, string>>
   >(new Map<string, Map<string, string>>());
+  const [hasNoParlays, setHasNoParlays] = React.useState(false);
 
   const dispatch = useContext(TasksDispatchContext);
 
@@ -116,20 +117,32 @@ export function Parlays(props: ParlaysViewerProps) {
         const validatedSlips = await validateFinishedSlips(parlaysWithLegs);
         setParlays(validatedSlips);
       } else {
-        setParlays([]);
+        setHasNoParlays(true);
       }
     };
     getParlays();
   }, []);
 
-  if (!user) return <ErrorLander />;
+  if (!user)
+    return (
+      <ErrorLander message="Please return to the homepage and refresh..." />
+    );
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
-      {parlays.length === 0 && matchup >= 0 && (
+      {parlays.length === 0 && matchup >= 0 && !hasNoParlays && (
         <Lockout message={"Please wait while we load your parlays..."} />
       )}
-      {matchup < 0 && <ErrorLander />}
+      {hasNoParlays && (
+        <ErrorLander
+          message={
+            "No parlays found. Please return to the homepage and place some!"
+          }
+        />
+      )}
+      {matchup < 0 && (
+        <ErrorLander message="Please return to the homepage and refresh..." />
+      )}
       <ul className="w-full h-full scrollbar-hide mt-18 ml-1">
         {parlays.map((parlay, i) => (
           <li key={i} className="scrollbar-hide mr-1 pr-1">

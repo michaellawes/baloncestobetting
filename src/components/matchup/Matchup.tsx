@@ -29,7 +29,10 @@ export function Matchup(props: MatchupsProps) {
     setIsViewingMatchup(true);
   }, []);
 
-  if (!matchup) return <ErrorLander />;
+  if (!matchup)
+    return (
+      <ErrorLander message="Please return to the homepage and refresh..." />
+    );
 
   return (
     <div className="w-full h-screen bg-gray-900">

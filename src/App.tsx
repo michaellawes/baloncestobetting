@@ -463,7 +463,12 @@ export function App() {
                 />
               }
             />
-            <Route path={"*"} element={<ErrorLander />} />
+            <Route
+              path={"*"}
+              element={
+                <ErrorLander message="Please return to the homepage and refresh..." />
+              }
+            />
           </Routes>
           <div className="relative text-white">
             <LiveParlayViewer
