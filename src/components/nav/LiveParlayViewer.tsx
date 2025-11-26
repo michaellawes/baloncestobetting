@@ -236,7 +236,11 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                       )}
                     </span>
                     <span className="flex relative text-gray-400 text-xs">
-                      {leg.betType}
+                      {
+                        leg.frontend_id.split("/")[
+                          leg.frontend_id.split("/").length - 1
+                        ]
+                      }
                     </span>
                   </div>
                   <div className="flex justify-end items-center text-right w-1/16">

@@ -22,7 +22,7 @@ export function Parlay(props: ParlayProps) {
   const {
     parlay_id,
     created_at,
-    frontend_is_active,
+    is_active,
     legs,
     total_odds,
     payout,
@@ -33,30 +33,45 @@ export function Parlay(props: ParlayProps) {
   } = props;
 
   const getLiveValue = (leg: ParlayTask) => {
-    if (leg.betType === propField[1]) {
+    if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[1]
+    ) {
       const teams = leg.frontend_id.split("/")[0].split(" v ");
       const roadTeamName = teams[0];
-      return leg.lastValue !== undefined
-        ? leg.lastValue
+      return leg.live_value !== undefined
+        ? leg.live_value
         : parseFloat(
             liveTeamData.get(roadTeamName).get("live_points"),
           ).toFixed();
-    } else if (leg.betType === propField[0]) {
-      return leg.lastValue !== undefined
-        ? leg.lastValue
+    } else if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[0]
+    ) {
+      return leg.live_value !== undefined
+        ? leg.live_value
         : parseFloat(liveTeamData.get(leg.team).get("live_points")).toFixed();
-    } else if (leg.betType === propField[2]) {
-      return leg.lastValue !== undefined
-        ? leg.lastValue
+    } else if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[2]
+    ) {
+      return leg.live_value !== undefined
+        ? leg.live_value
         : parseFloat(liveTeamData.get(leg.team).get("live_points")).toFixed();
-    } else if (leg.betType === propField[3]) {
-      return leg.lastValue !== undefined
-        ? leg.lastValue
+    } else if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[3]
+    ) {
+      return leg.live_value !== undefined
+        ? leg.live_value
         : parseFloat(liveTeamData.get(leg.team).get("live_score")).toFixed();
-    } else if (leg.betType === propField[4]) {
+    } else if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[4]
+    ) {
       const playerName = leg.frontend_id.split("/")[0];
-      return leg.lastValue !== undefined
-        ? leg.lastValue
+      return leg.live_value !== undefined
+        ? leg.live_value
         : parseFloat(
             liveTeamData.get(leg.team).get(`${playerName}_score`),
           ).toFixed();
@@ -108,11 +123,14 @@ export function Parlay(props: ParlayProps) {
   };
 
   const getProgressBarWidth = (leg: ParlayTask) => {
-    if (leg.betType === propField[1]) {
+    if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[1]
+    ) {
       const teams = leg.frontend_id.split("/")[0].split(" v ");
       const roadTeamName = teams[0];
-      const liveTotalPointsScored = leg.lastValue
-        ? leg.lastValue
+      const liveTotalPointsScored = leg.live_value
+        ? leg.live_value
         : parseFloat(
             parseFloat(
               liveTeamData.get(roadTeamName).get("live_points"),
@@ -132,10 +150,13 @@ export function Parlay(props: ParlayProps) {
         const styling = round5(percentFull).toString();
         return progressBarWidth.get(styling);
       }
-    } else if (leg.betType === propField[3]) {
+    } else if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[3]
+    ) {
       const team = leg.team;
-      const liveTeamScore = leg.lastValue
-        ? leg.lastValue
+      const liveTeamScore = leg.live_value
+        ? leg.live_value
         : parseFloat(
             parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
           );
@@ -151,11 +172,14 @@ export function Parlay(props: ParlayProps) {
         const styling = round5(percentFull).toString();
         return progressBarWidth.get(styling);
       }
-    } else if (leg.betType === propField[4]) {
+    } else if (
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
+      propField[4]
+    ) {
       const team = leg.team;
       const playerName = leg.frontend_id.split("/")[0];
-      const liveTeamScore = leg.lastValue
-        ? leg.lastValue
+      const liveTeamScore = leg.live_value
+        ? leg.live_value
         : parseFloat(
             parseFloat(
               liveTeamData.get(team).get(`${playerName}_score`),
@@ -196,7 +220,6 @@ export function Parlay(props: ParlayProps) {
       message: "Copied parlay link!",
       type: "CLIPBOARD",
     });
-    console.log(`parlay id: ${parlay_id}`, legs);
   };
 
   return (
@@ -212,12 +235,12 @@ export function Parlay(props: ParlayProps) {
           {total_odds > 0 && "+"}
           {total_odds}
         </span>
-        {!frontend_is_active && is_winner && (
+        {!is_active && is_winner && (
           <div className="text-green-600 z-40 w-1/8 justify-end flex">
             <FontAwesomeIcon icon={faSquareCheck as IconProp} />
           </div>
         )}
-        {!frontend_is_active && !is_winner && (
+        {!is_active && !is_winner && (
           <div className="text-red-600 text-base w-1/8 justify-end flex">
             <FontAwesomeIcon icon={faSquareXmark as IconProp} />
           </div>
@@ -240,8 +263,8 @@ export function Parlay(props: ParlayProps) {
                 <div className="flex flex-col grow items-stretch pl-5 justify-start w-7/8">
                   <span
                     className={
-                      !frontend_is_active
-                        ? leg.didHit
+                      !is_active
+                        ? leg.did_hit
                           ? "block relative text-green-500 text-sm"
                           : "block relative text-red-500 text-sm"
                         : "block relative text-white text-sm"
@@ -250,7 +273,11 @@ export function Parlay(props: ParlayProps) {
                     {getPropTextWithRespectToScreenSize(leg, window.innerWidth)}
                   </span>
                   <span className="flex relative text-gray-400 text-xs">
-                    {leg.betType}
+                    {
+                      leg.frontend_id.split("/")[
+                        leg.frontend_id.split("/").length - 1
+                      ]
+                    }
                   </span>
                 </div>
                 <div className="flex flex-row justify-end w-1/8 text-right pr-5">
@@ -261,14 +288,19 @@ export function Parlay(props: ParlayProps) {
                 </div>
               </div>
             </div>
-            {frontend_is_active && leg.betType === propField[0] && (
-              <div className="flex flex-row w-full grow items-center justify-start h-auto m1-2 px-5">
-                <span className={getLiveSpreadUpdateStyle(leg)}>
-                  {getLiveSpreadUpdate(leg)}
-                </span>
-              </div>
-            )}
-            {leg.betType === propField[1] && (
+            {is_active &&
+              leg.frontend_id.split("/")[
+                leg.frontend_id.split("/").length - 1
+              ] === propField[0] && (
+                <div className="flex flex-row w-full grow items-center justify-start h-auto m1-2 px-5">
+                  <span className={getLiveSpreadUpdateStyle(leg)}>
+                    {getLiveSpreadUpdate(leg)}
+                  </span>
+                </div>
+              )}
+            {leg.frontend_id.split("/")[
+              leg.frontend_id.split("/").length - 1
+            ] === propField[1] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
                 <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
                   <div className={getOverUnderStyling(leg.text)}>
@@ -292,16 +324,23 @@ export function Parlay(props: ParlayProps) {
                 </div>
               </div>
             )}
-            {frontend_is_active && leg.betType === propField[2] && (
-              <div className="flex flex-row w-full grow items-center justify-start h-auto m1-2 px-5">
-                <span className={getLiveMoneylineUpdateStyle(leg)}>
-                  {getLiveMoneylineUpdate(leg)}
-                </span>
-              </div>
-            )}
-            {leg.betType === propField[3] && (
+            {is_active &&
+              leg.frontend_id.split("/")[
+                leg.frontend_id.split("/").length - 1
+              ] === propField[2] && (
+                <div className="flex flex-row w-full grow items-center justify-start h-auto m1-2 px-5">
+                  <span className={getLiveMoneylineUpdateStyle(leg)}>
+                    {getLiveMoneylineUpdate(leg)}
+                  </span>
+                </div>
+              )}
+            {leg.frontend_id.split("/")[
+              leg.frontend_id.split("/").length - 1
+            ] === propField[3] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
-                {leg.betType === propField[3] && (
+                {leg.frontend_id.split("/")[
+                  leg.frontend_id.split("/").length - 1
+                ] === propField[3] && (
                   <>
                     <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
                       <div className={getOverUnderStyling(leg.text)}>
@@ -327,32 +366,30 @@ export function Parlay(props: ParlayProps) {
                 )}
               </div>
             )}
-            {leg.betType === propField[4] && (
+            {leg.frontend_id.split("/")[
+              leg.frontend_id.split("/").length - 1
+            ] === propField[4] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
-                {leg.betType === propField[4] && (
-                  <>
-                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
-                      <div className={getOverUnderStyling(leg.text)}>
-                        <div
-                          id={leg.frontend_id}
-                          className={getProgressBarWidth(leg)}
-                        >
-                          <div className="h-[4px] flex justify-end items-center ">
-                            <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
-                              {getLiveValue(leg)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow rounded-l-md justify-end text-end flex-rowbox-border relative w-75/100"></div>
-                        <div className="w-75/100 flex justify-end ml-4 mt-1">
-                          <span className="flex text-white text-end h-[4px] font-light text-xs">
-                            {getPropValue(leg.text)}
-                          </span>
-                        </div>
+                <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
+                  <div className={getOverUnderStyling(leg.text)}>
+                    <div
+                      id={leg.frontend_id}
+                      className={getProgressBarWidth(leg)}
+                    >
+                      <div className="h-[4px] flex justify-end items-center ">
+                        <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
+                          {getLiveValue(leg)}
+                        </span>
                       </div>
                     </div>
-                  </>
-                )}
+                    <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow rounded-l-md justify-end text-end flex-rowbox-border relative w-75/100"></div>
+                    <div className="w-75/100 flex justify-end ml-4 mt-1">
+                      <span className="flex text-white text-end h-[4px] font-light text-xs">
+                        {getPropValue(leg.text)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -362,9 +399,7 @@ export function Parlay(props: ParlayProps) {
         <div className="flex flex-row text-left pl-2 border-b-1 border-b-gray-700 w-full pb-1">
           <div
             className={
-              frontend_is_active
-                ? "flex flex-row w-14/16"
-                : "flex flex-row w-15/16"
+              is_active ? "flex flex-row w-14/16" : "flex flex-row w-15/16"
             }
           >
             <div className="flex flex-col basis-0 grow justify-center items-stretch box-border relative pl-2">
@@ -380,7 +415,7 @@ export function Parlay(props: ParlayProps) {
                 className={
                   is_winner
                     ? "text-green-500 text-sm font-bold font-[Proxima Nova, serif]"
-                    : frontend_is_active
+                    : is_active
                       ? "text-gray-300 text-sm font-bold font-[Proxima Nova, serif]"
                       : "text-gray-500 text-sm font-bold font-[Proxima Nova, serif]"
                 }
@@ -389,7 +424,7 @@ export function Parlay(props: ParlayProps) {
               </span>
             </div>
           </div>
-          {frontend_is_active && (
+          {is_active && (
             <div className="flex flex-row w-1/16 m-1 mt-2 justify-end">
               <button
                 className="pl-1 pr-1 block text-white text-sm hover:bg-gray-700 border border-transparent rounded-4xl justify-end"

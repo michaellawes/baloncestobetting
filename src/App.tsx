@@ -9,7 +9,7 @@ import {
   TasksContext,
   TasksDispatchContext,
 } from "./components/reducer/TasksContext";
-import { generateId } from "./utils/Util";
+import { generateId, getDaysSinceLastMonday } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
@@ -64,53 +64,65 @@ export function App() {
         relevantMatchup.home.name === leg.team
           ? relevantMatchup.home
           : relevantMatchup.road;
-      if (leg.betType === propField[4]) {
+      const propMetadata = leg.frontend_id.split("/");
+      const betType = propMetadata[propMetadata.length - 1];
+      if (betType === propField[4]) {
         const relevantPlayerFilter: Player[] = relevantTeam.top_5.filter(
-          (player) => player.name === leg.frontend_id.split("/")[0],
+          (player) => player.name === propMetadata[0],
         );
         if (relevantPlayerFilter.length > 0) {
           const relevantPlayer = relevantPlayerFilter[0];
           updatedArray.push({
             frontend_id: leg.frontend_id,
             team: leg.team,
-            betType: leg.betType,
+            parlay_id: "temp",
+            matchup_id: matchup,
+            day_id: getDaysSinceLastMonday(),
             text: leg.text.substring(0, 2) + relevantPlayer.prop_line.text,
             odds: leg.text.startsWith("U")
               ? relevantPlayer.prop_line.under_odds
               : relevantPlayer.prop_line.over_odds,
           });
         }
-      } else if (leg.betType === propField[3]) {
+      } else if (betType === propField[3]) {
         updatedArray.push({
           frontend_id: leg.frontend_id,
           team: leg.team,
-          betType: leg.betType,
+          parlay_id: "temp",
+          matchup_id: matchup,
+          day_id: getDaysSinceLastMonday(),
           text: leg.text.substring(0, 2) + relevantTeam.team_total.text,
           odds: leg.text.startsWith("U")
             ? relevantTeam.team_total.under_odds
             : relevantTeam.team_total.over_odds,
         });
-      } else if (leg.betType === propField[2]) {
+      } else if (betType === propField[2]) {
         updatedArray.push({
           frontend_id: leg.frontend_id,
           team: leg.team,
-          betType: leg.betType,
+          parlay_id: "temp",
+          matchup_id: matchup,
+          day_id: getDaysSinceLastMonday(),
           text: relevantTeam.moneyline.text,
           odds: relevantTeam.moneyline.odds,
         });
-      } else if (leg.betType === propField[1]) {
+      } else if (betType === propField[1]) {
         updatedArray.push({
           frontend_id: leg.frontend_id,
           team: leg.team,
-          betType: leg.betType,
+          parlay_id: "temp",
+          matchup_id: matchup,
+          day_id: getDaysSinceLastMonday(),
           text: relevantTeam.points.text,
           odds: relevantTeam.points.odds,
         });
-      } else if (leg.betType === propField[0]) {
+      } else if (betType === propField[0]) {
         updatedArray.push({
           frontend_id: leg.frontend_id,
           team: leg.team,
-          betType: leg.betType,
+          parlay_id: "temp",
+          matchup_id: matchup,
+          day_id: getDaysSinceLastMonday(),
           text: relevantTeam.spread.text,
           odds: relevantTeam.spread.odds,
         });
@@ -202,33 +214,44 @@ export function App() {
       expires.setUTCDate(
         expires.getUTCDate() + ((7 - expires.getUTCDay()) % 7) + 1,
       );
+      const parlayId = generateId();
 
       const uploadParlay = async () => {
         const newParlay = {
           user_id: user.id,
-          parlay_id: generateId(),
+          parlay_id: parlayId,
           created_at: +now,
           expires_at: +expires,
           matchup_id: matchup,
           total_odds: parseFloat(currentParlay.totalOdds.toFixed()),
           payout: parseFloat(currentParlay.payout.toFixed(2)),
           wager: parseFloat(currentParlay.wager.toFixed(2)),
+          day_id: getDaysSinceLastMonday(),
           is_winner: false,
           is_active: true,
-          legs: parlayLegs,
         };
 
-        const { data, error } = await supabase
-          .from("parlays")
-          .insert([newParlay]);
-        if (error) {
-          console.log(error);
-        }
+        await supabase
+          .from("fb_parlays")
+          .insert([newParlay])
+          .then((response) => {
+            if (response.error) {
+              throw response.error;
+            }
 
-        if (data) {
-          setParlayLegs([]);
-          setCurrentParlay(null);
-        }
+            for (const leg of parlayLegs) {
+              leg.parlay_id = parlayId;
+            }
+
+            supabase
+              .from("fb_parlay_legs")
+              .insert(parlayLegs)
+              .then((response) => {
+                if (response.error) throw response.error;
+                setParlayLegs([]);
+                setCurrentParlay(null);
+              });
+          });
       };
       uploadParlay();
     }
@@ -331,7 +354,9 @@ export function App() {
             {
               frontend_id: action.frontend_id,
               team: action.team,
-              betType: action.betType,
+              parlay_id: "temp",
+              matchup_id: matchup,
+              day_id: getDaysSinceLastMonday(),
               text: action.text,
               odds: action.odds,
             },
@@ -370,12 +395,7 @@ export function App() {
         return [];
       }
       case "loadSharedSlip": {
-        const startOfExpirationDate = new Date(action.expires_at);
-        startOfExpirationDate.setHours(0, 0, 0, 0);
-        if (Date.now() < Date.parse(startOfExpirationDate.toISOString())) {
-          return getUpdatedParlayValues(action.legs);
-        }
-        return tasks;
+        return getUpdatedParlayValues(action.legs);
       }
       default: {
         throw Error("Unknown action: " + action.type);

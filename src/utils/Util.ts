@@ -34,36 +34,37 @@ const downloadImage = async (blob: string, imageFileName: string) => {
 };
 
 export const evaluateLeg = (leg: ParlayTask, event: number) => {
-  if (leg.betType === propField[0]) {
+  const betType =
+    leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1];
+  if (betType === propField[0]) {
     return event <= Number(leg.text);
-  } else if (leg.betType === propField[1]) {
+  } else if (betType === propField[1]) {
     const totalPointsProps = leg.text.split(" ");
     if (totalPointsProps[0] === "O") {
       return event > Number(totalPointsProps[1]);
     } else {
       return event < Number(totalPointsProps[1]);
     }
-  } else if (leg.betType === propField[2]) {
+  } else if (betType === propField[2]) {
     const matchup = leg.frontend_id.split("/")[0];
     if (matchup[0].includes(" v ")) {
       const teamNames = matchup.split(" v ");
       const roadName = teamNames[0];
       const homeName = teamNames[1];
-      console.log(leg);
       if (event === 1 && leg.team === homeName) {
         return true;
       } else return event === -1 && leg.team === roadName;
     } else {
       return event === 1;
     }
-  } else if (leg.betType === propField[3]) {
+  } else if (betType === propField[3]) {
     const totalTeamScoreProps = leg.text.split(" ");
     if (totalTeamScoreProps[0] === "O") {
       return event > Number(totalTeamScoreProps[1]);
     } else {
       return event < Number(totalTeamScoreProps[1]);
     }
-  } else if (leg.betType === propField[4]) {
+  } else if (betType === propField[4]) {
     const totalPlayerScoreProps = leg.text.split(" ");
     if (totalPlayerScoreProps[0] === "O") {
       return event > Number(totalPlayerScoreProps[1]);
@@ -138,10 +139,12 @@ export const getIndividualLegResultForParlays = async (
 ) => {
   const matchup_id = Number(parlay.matchup_id);
   const query_ids = parlay.legs.map((leg: ParlayTask) => {
-    if (leg.betType === propField[4] || leg.betType === propField[1]) {
-      return leg.frontend_id.split("/")[0] + "/" + leg.betType;
+    const betType =
+      leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1];
+    if (betType === propField[4] || betType === propField[1]) {
+      return leg.frontend_id.split("/")[0] + "/" + betType;
     } else {
-      return leg.team + "/" + leg.betType;
+      return leg.team + "/" + betType;
     }
   });
 
@@ -162,10 +165,12 @@ export const getIndividualLegResultForParlays = async (
       ...data.map((x) => ({ [x.prop_id]: x.live_value })),
     );
     for (const leg of parlay.legs) {
+      const betType =
+        leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1];
       const legId =
-        leg.betType !== propField[4] && leg.betType !== propField[1]
-          ? leg.team + "/" + leg.betType
-          : leg.frontend_id.split("/")[0] + "/" + leg.betType;
+        betType !== propField[4] && betType !== propField[1]
+          ? leg.team + "/" + betType
+          : leg.frontend_id.split("/")[0] + "/" + betType;
       const lastLiveValue: number = legDictionary[legId];
       /*if (lastLiveValue === undefined) {
         console.log(legId);
@@ -175,14 +180,14 @@ export const getIndividualLegResultForParlays = async (
           `For ${legId} the lastLiveValue ${lastLiveValue} and it was true is? ${leg.didHit}`,
         );
       } else {*/
-      leg.didHit = evaluateLeg(leg, lastLiveValue);
-      leg.lastValue =
-        leg.betType === propField[0]
+      leg.did_hit = evaluateLeg(leg, lastLiveValue);
+      leg.live_value =
+        betType === propField[0]
           ? lastLiveValue
           : roundToInteger(lastLiveValue.toString());
       //}
     }
-    parlay.is_winner = parlay.legs.every((leg: ParlayTask) => leg.didHit);
+    parlay.is_winner = parlay.legs.every((leg: ParlayTask) => leg.did_hit);
     return parlay;
   }
 };
@@ -240,22 +245,21 @@ export const getParlaysWithLegs = async (fbParlays: SqlParlayMetadata[]) => {
   const allParlayLegs = await getAllParlayLegs(allParlayIds);
   const parlayIdToLegs = new Map<string, ParlayTask[]>();
   for (const leg of allParlayLegs) {
-    const propId: string = leg["prop_id"];
-    const propTokens = propId.split("/");
     const newLeg: ParlayTask = {
-      text: leg["prop_text"],
-      team: leg["fantasy_team"],
-      odds: leg["prop_odds"],
+      text: leg["text"],
+      team: leg["team"],
+      odds: leg["odds"],
+      matchup_id: leg["matchup_id"],
+      day_id: leg["day_id"],
       parlay_id: leg["parlay_id"],
-      betType: propTokens[propTokens.length - 1],
-      frontend_id: propId,
+      frontend_id: leg["frontend_id"],
       index: leg["index"],
     };
     if (leg["live_value"] !== undefined && leg["live_value"] !== null) {
-      newLeg.lastValue = leg["live_value"];
+      newLeg.live_value = leg["live_value"];
     }
     if (leg["did_hit"] !== undefined && leg["did_hit"] !== null) {
-      newLeg.didHit = leg["did_hit"];
+      newLeg.did_hit = leg["did_hit"];
     }
     if (parlayIdToLegs.has(leg.parlay_id)) {
       const legs: ParlayTask[] = parlayIdToLegs.get(leg.parlay_id);
@@ -315,8 +319,10 @@ export const getPropTextWithRespectToScreenSize = (
   leg: ParlayTask,
   screenWidth: number,
 ) => {
-  if (leg.betType !== propField[1]) {
-    if (leg.betType === propField[4]) {
+  const betType =
+    leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1];
+  if (betType !== propField[1]) {
+    if (betType === propField[4]) {
       return `${leg.frontend_id.split("/")[0]} ${leg.text}`;
     }
     return `${leg.team} ${leg.text}`;
