@@ -116,8 +116,9 @@ export function Parlays(props: ParlaysViewerProps) {
         const parlaysWithLegs = await getParlaysWithLegs(data);
         const validatedSlips = await validateFinishedSlips(parlaysWithLegs);
         setParlays(validatedSlips);
-      } else {
-        setHasNoParlays(true);
+        if (validatedSlips.length === 0) {
+          setHasNoParlays(true);
+        }
       }
     };
     getParlays();
@@ -135,9 +136,7 @@ export function Parlays(props: ParlaysViewerProps) {
       )}
       {hasNoParlays && (
         <ErrorLander
-          message={
-            "No parlays found. Please return to the homepage and place some!"
-          }
+          message={"No parlays found. Visit the homepage to place some!"}
         />
       )}
       {matchup < 0 && (
