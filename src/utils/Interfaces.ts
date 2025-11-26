@@ -64,7 +64,6 @@ export interface ParlayAction {
   isHome?: boolean;
   user_id?: string;
   parlay_id?: string;
-  is_payed_out?: boolean;
   is_winner?: boolean;
   parlay_modification_type?: string;
   expires_at?: number;
@@ -200,7 +199,7 @@ export interface SupabaseParlay {
   payout?: number;
   wager?: number;
   is_winner?: boolean;
-  is_payed_out?: boolean;
+  is_active?: boolean;
   frontend_is_active?: boolean;
   legs?: ParlayTask[];
 }

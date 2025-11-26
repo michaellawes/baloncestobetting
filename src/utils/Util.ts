@@ -44,7 +44,18 @@ export const evaluateLeg = (leg: ParlayTask, event: number) => {
       return event < Number(totalPointsProps[1]);
     }
   } else if (leg.betType === propField[2]) {
-    return event === 1;
+    const matchup = leg.frontend_id.split("/")[0];
+    if (matchup[0].includes(" v ")) {
+      const teamNames = matchup.split(" v ");
+      const roadName = teamNames[0];
+      const homeName = teamNames[1];
+      console.log(leg);
+      if (event === 1 && leg.team === homeName) {
+        return true;
+      } else return event === -1 && leg.team === roadName;
+    } else {
+      return event === 1;
+    }
   } else if (leg.betType === propField[3]) {
     const totalTeamScoreProps = leg.text.split(" ");
     if (totalTeamScoreProps[0] === "O") {
@@ -135,10 +146,11 @@ export const getIndividualLegResultForParlays = async (
   });
 
   const { data, error } = await supabase
-    .from("legs")
+    .from("fb_props")
     .select("*")
     .eq("matchup_id", matchup_id)
-    .in("id", query_ids);
+    .eq("day_id", 6)
+    .in("prop_id", query_ids);
 
   if (error) {
     console.log(error);
@@ -147,7 +159,7 @@ export const getIndividualLegResultForParlays = async (
   if (data) {
     const legDictionary = Object.assign(
       {},
-      ...data.map((x) => ({ [x.id]: x.point_value })),
+      ...data.map((x) => ({ [x.prop_id]: x.live_value })),
     );
     for (const leg of parlay.legs) {
       const legId =
@@ -230,7 +242,6 @@ export const getParlaysWithLegs = async (fbParlays: SqlParlayMetadata[]) => {
   for (const leg of allParlayLegs) {
     const propId: string = leg["prop_id"];
     const propTokens = propId.split("/");
-    console.log(propTokens);
     const newLeg: ParlayTask = {
       text: leg["prop_text"],
       team: leg["fantasy_team"],
@@ -264,6 +275,7 @@ export const getParlaysWithLegs = async (fbParlays: SqlParlayMetadata[]) => {
   for (const parlay of fbParlays) {
     const frontendParlay: SupabaseParlay = {
       user_id: parlay.user_id,
+      is_active: parlay.is_active,
       parlay_id: parlay.parlay_id,
       created_at: parlay.created_at,
       expires_at: parlay.expires_at,

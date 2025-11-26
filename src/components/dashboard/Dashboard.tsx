@@ -53,7 +53,6 @@ export function Dashboard(props: DashboardProps) {
       if (data) {
         setMatchup(data[0]["id"]);
         setLockout(data[0]["is_done"]);
-        //setWeeklySlate(data[0]["weekly_slate"]);
         const weeklySlate = await getDailySlate(data[0]["id"]);
         //setWeeklySlate(demoWeeklySlate);
         setWeeklySlate(weeklySlate);

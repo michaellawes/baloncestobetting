@@ -53,37 +53,21 @@ export function Parlays(props: ParlaysViewerProps) {
       startOfExpirationDate.setHours(0, 0, 0, 0);
       parlay.frontend_is_active =
         Date.now() < Date.parse(startOfExpirationDate.toISOString());
-      if (!parlay.frontend_is_active && !parlay.is_payed_out) {
+      if (!parlay.frontend_is_active && parlay.is_active) {
         newlyExpiredParlays.push(parlay);
-      } else if (!parlay.frontend_is_active && parlay.is_payed_out) {
+      } else if (!parlay.frontend_is_active && !parlay.is_active) {
         expiredParlays.push(parlay);
       } else {
         activeSlips.push(parlay);
       }
     }
 
-    const processedData: SupabaseParlay[] = activeSlips;
-
-    if (expiredParlays.length > 0) {
-      for (const parlay of expiredParlays) {
-        if (parlay.legs[0].lastValue) {
-          processedData.push(parlay);
-        } else {
-          const processedParlay =
-            await getIndividualLegResultForParlays(parlay);
-          processedData.push(processedParlay);
-        }
-      }
-    }
+    const processedData: SupabaseParlay[] = activeSlips.concat(expiredParlays);
 
     if (newlyExpiredParlays.length > 0) {
       for (const parlay of newlyExpiredParlays) {
-        if (parlay.legs[0].lastValue) {
-          processedData.push(parlay);
-        } else {
-          const processedParlay = await validateResultOfFinishedSlips(parlay);
-          processedData.push(processedParlay);
-        }
+        const processedParlay = await validateResultOfFinishedSlips(parlay);
+        processedData.push(processedParlay);
       }
     }
 
@@ -93,7 +77,7 @@ export function Parlays(props: ParlaysViewerProps) {
   const validateResultOfFinishedSlips = async (parlay: SupabaseParlay) => {
     const validatedParlay = await getIndividualLegResultForParlays(parlay);
     const updateSlip = async () => {
-      validatedParlay.is_payed_out = true;
+      validatedParlay.is_active = false;
       if (validatedParlay.is_winner) {
         setBalance((prev) => prev + parseFloat(parlay.payout.toFixed(2)));
         dispatch({
@@ -142,9 +126,8 @@ export function Parlays(props: ParlaysViewerProps) {
 
       if (data) {
         const parlaysWithLegs = await getParlaysWithLegs(data);
-        setParlays(parlaysWithLegs);
-        //const validatedSlips = await validateFinishedSlips(data);
-        //setParlays(validatedSlips);
+        const validatedSlips = await validateFinishedSlips(parlaysWithLegs);
+        setParlays(validatedSlips);
       }
     };
     getParlays();

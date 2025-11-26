@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -17,7 +11,7 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5,
+  round5
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
@@ -202,6 +196,7 @@ export function Parlay(props: ParlayProps) {
       message: "Copied parlay link!",
       type: "CLIPBOARD",
     });
+    console.log(`parlay id: ${parlay_id}`, legs);
   };
 
   return (
@@ -275,30 +270,26 @@ export function Parlay(props: ParlayProps) {
             )}
             {leg.betType === propField[1] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
-                {leg.betType === propField[1] && (
-                  <>
-                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
-                      <div className={getOverUnderStyling(leg.text)}>
-                        <div
-                          id={leg.frontend_id}
-                          className={getProgressBarWidth(leg)}
-                        >
-                          <div className="h-[4px] flex justify-end items-center ">
-                            <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
-                              {getLiveValue(leg)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
-                        <div className="w-75/100 flex justify-end ml-4 mt-1">
-                          <span className="flex text-white text-end h-[4px] font-light text-xs">
-                            {getPropValue(leg.text)}
-                          </span>
-                        </div>
+                <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
+                  <div className={getOverUnderStyling(leg.text)}>
+                    <div
+                      id={leg.frontend_id}
+                      className={getProgressBarWidth(leg)}
+                    >
+                      <div className="h-[4px] flex justify-end items-center ">
+                        <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
+                          {getLiveValue(leg)}
+                        </span>
                       </div>
                     </div>
-                  </>
-                )}
+                    <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
+                    <div className="w-75/100 flex justify-end ml-4 mt-1">
+                      <span className="flex text-white text-end h-[4px] font-light text-xs">
+                        {getPropValue(leg.text)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {frontend_is_active && leg.betType === propField[2] && (

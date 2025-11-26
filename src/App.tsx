@@ -214,7 +214,7 @@ export function App() {
           payout: parseFloat(currentParlay.payout.toFixed(2)),
           wager: parseFloat(currentParlay.wager.toFixed(2)),
           is_winner: false,
-          is_payed_out: false,
+          is_active: true,
           legs: parlayLegs,
         };
 
@@ -264,15 +264,13 @@ export function App() {
       if (temp.parlay_modification_type === "validateSlip") {
         const updateParlay = async () => {
           const { error } = await supabase
-            .from("parlays")
+            .from("fb_parlays")
             .update({
               is_winner: temp.parlay.is_winner,
-              is_payed_out: temp.parlay.is_payed_out,
-              legs: temp.parlay.legs,
+              is_active: temp.parlay.is_active,
             })
             .eq("user_id", temp.user_id)
             .eq("parlay_id", temp.parlay_id);
-          console.log(temp.parlay.legs);
           if (error) {
             console.log(error);
           }
@@ -328,13 +326,6 @@ export function App() {
           });
           return tasks;
         } else {
-          console.log({
-            frontend_id: action.frontend_id,
-            team: action.team,
-            betType: action.betType,
-            text: action.text,
-            odds: action.odds,
-          });
           tasks = [
             ...tasks,
             {
