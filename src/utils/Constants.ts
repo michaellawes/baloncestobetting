@@ -1,12 +1,11 @@
-import { MatchupSchema } from "./Interfaces";
-import { SupabaseParlay } from "../components/parlays/Parlay";
+import { MatchupSchema, SupabaseParlay } from "./Interfaces";
 
 export const demoParlays: SupabaseParlay[] = [
   {
     user_id: "c967b5a2-479d-5b20-9c58-27e164630d33",
     parlay_id: "67",
     frontend_is_active: false,
-    is_payed_out: false,
+    is_active: true,
     is_winner: false,
     legs: [
       {
@@ -33,7 +32,7 @@ export const demoParlays: SupabaseParlay[] = [
     wager: 20,
     frontend_is_active: false,
     is_winner: false,
-    is_payed_out: false,
+    is_active: true,
     legs: [
       {
         frontend_id: "Amen's Shampoo-SPREAD BETTING",

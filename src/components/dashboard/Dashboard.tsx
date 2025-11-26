@@ -6,6 +6,7 @@ import { Lockout } from "./Lockout";
 import { useParams } from "react-router-dom";
 import supabase from "../../config/supabaseConfig";
 import { MatchupSchema, ParlayTask } from "../../utils/Interfaces";
+import { getDailySlate } from "../../utils/Util";
 
 export interface DashboardProps {
   weeklySlate: MatchupSchema[];
@@ -41,29 +42,20 @@ export function Dashboard(props: DashboardProps) {
     const getMatchup = async () => {
       const { data, error } = await supabase
         .from("matchup")
-        .select()
+        .select("id, is_done")
         .order("id", { ascending: false })
         .limit(1);
-      /*const { data, error } = await supabase
-        .from("fb_props")
-        .select("*")
-        .eq("matchup_id", 6)
-        .eq("day_id", 0);*/
 
       if (error) {
         console.log(error);
       }
 
       if (data) {
-        //console.log(data);
-        //console.log(getDaysSinceLastMonday());
-        //refactorDailySlate(data);
-        //setWeeklySlate(demoWeeklySlate);
-        //setMatchup(6);
-
         setMatchup(data[0]["id"]);
         setLockout(data[0]["is_done"]);
-        setWeeklySlate(data[0]["weekly_slate"]);
+        const weeklySlate = await getDailySlate(data[0]["id"]);
+        //setWeeklySlate(demoWeeklySlate);
+        setWeeklySlate(weeklySlate);
       }
 
       if (parlayId != undefined) {

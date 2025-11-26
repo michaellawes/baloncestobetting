@@ -14,31 +14,9 @@ import {
   round5
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
-import { NotificationMetadata, ParlayTask } from "../../utils/Interfaces";
+import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
-
-export interface SupabaseParlay {
-  frontend_id?: string;
-  user_id?: string;
-  created_at?: number;
-  expires_at?: number;
-  parlay_id?: string;
-  matchup_id?: number;
-  total_odds?: number;
-  payout?: number;
-  wager?: number;
-  is_winner?: boolean;
-  is_payed_out?: boolean;
-  frontend_is_active?: boolean;
-  legs?: ParlayTask[];
-}
-
-export interface ParlayProps extends SupabaseParlay {
-  setBalance: React.Dispatch<React.SetStateAction<number>>;
-  liveTeamData: Map<string, Map<string, string>>;
-  setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
-}
 
 export function Parlay(props: ParlayProps) {
   const {
@@ -218,6 +196,7 @@ export function Parlay(props: ParlayProps) {
       message: "Copied parlay link!",
       type: "CLIPBOARD",
     });
+    console.log(`parlay id: ${parlay_id}`, legs);
   };
 
   return (
@@ -291,30 +270,26 @@ export function Parlay(props: ParlayProps) {
             )}
             {leg.betType === propField[1] && (
               <div className="flex w-full pb-4 flex-row grow justify-start h-auto items-center px-3 my-2">
-                {leg.betType === propField[1] && (
-                  <>
-                    <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
-                      <div className={getOverUnderStyling(leg.text)}>
-                        <div
-                          id={leg.frontend_id}
-                          className={getProgressBarWidth(leg)}
-                        >
-                          <div className="h-[4px] flex justify-end items-center ">
-                            <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
-                              {getLiveValue(leg)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
-                        <div className="w-75/100 flex justify-end ml-4 mt-1">
-                          <span className="flex text-white text-end h-[4px] font-light text-xs">
-                            {getPropValue(leg.text)}
-                          </span>
-                        </div>
+                <div className="flex basis-0 grow flex-rowbox-border rounded-md relative w-full pl-2">
+                  <div className={getOverUnderStyling(leg.text)}>
+                    <div
+                      id={leg.frontend_id}
+                      className={getProgressBarWidth(leg)}
+                    >
+                      <div className="h-[4px] flex justify-end items-center ">
+                        <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
+                          {getLiveValue(leg)}
+                        </span>
                       </div>
                     </div>
-                  </>
-                )}
+                    <div className="h-[4px] z-8 bg-gray-400 mt-[-4px] border-r-gray-900 border-r-6 basis-0 grow justify-end text-end flex-rowbox-border rounded-l-md relative w-75/100"></div>
+                    <div className="w-75/100 flex justify-end ml-4 mt-1">
+                      <span className="flex text-white text-end h-[4px] font-light text-xs">
+                        {getPropValue(leg.text)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {frontend_is_active && leg.betType === propField[2] && (
