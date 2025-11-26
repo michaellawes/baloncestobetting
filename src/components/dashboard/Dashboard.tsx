@@ -90,8 +90,14 @@ export function Dashboard(props: DashboardProps) {
           : "w-full h-screen bg-gray-900"
       }
     >
-      {lockout ? (
-        <Lockout />
+      {lockout || weeklySlate.length === 0 ? (
+        <Lockout
+          message={
+            lockout
+              ? "Please wait while we process last week's results..."
+              : "Please wait while we load today's slate..."
+          }
+        />
       ) : (
         <WeeklySlate
           matchups={weeklySlate}

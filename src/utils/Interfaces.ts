@@ -17,6 +17,10 @@ export interface LiveParlayViewerProps {
   isLoggedIn: boolean;
 }
 
+export interface LockoutProps {
+  message: string;
+}
+
 export interface MatchupSchema {
   road: Team;
   home: Team;
