@@ -16,6 +16,7 @@ import {
   SupabaseParlay,
   UserData,
 } from "../../utils/Interfaces";
+import { Lockout } from "../dashboard/Lockout";
 
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -137,6 +138,9 @@ export function Parlays(props: ParlaysViewerProps) {
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
+      {parlays.length === 0 && (
+        <Lockout message={"Please wait while we load your parlays..."} />
+      )}
       <ul className="w-full h-full scrollbar-hide mt-18 ml-1">
         {parlays.map((parlay, i) => (
           <li key={i} className="scrollbar-hide mr-1 pr-1">
