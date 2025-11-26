@@ -1,9 +1,9 @@
 import { v5 as uuidv5 } from "uuid";
 import { propField } from "./Constants";
 import { MatchupSchema, ParlayTask, SqlPropSlate, Team } from "./Interfaces";
-import { SupabaseParlay } from "../components/parlays/Parlay";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
+import { SupabaseParlay } from "../components/parlays/Parlay";
 
 export const decimalToOdds = (decimal: number) => {
   if (decimal >= 2) {
@@ -95,11 +95,27 @@ export const getDaysSinceLastMonday = () => {
   return ((today.getDay() - 1) % 7) + 1;
 };
 
+export const getId = (
+  teamName: string,
+  text: string,
+  secondIndex: number,
+  roadName: string,
+  homeName: string,
+) => {
+  return (
+    (secondIndex === 1 ? roadName + " v " + homeName : teamName) +
+    "/" +
+    (secondIndex === 1
+      ? text.substring(0, 1) + "/" + propField[secondIndex]
+      : propField[secondIndex])
+  );
+};
+
 export const getIndividualLegResultForParlays = async (
   parlay: SupabaseParlay,
 ) => {
   const matchup_id = Number(parlay.matchup_id);
-  const query_ids = parlay.legs.map((leg) => {
+  const query_ids = parlay.legs.map((leg: ParlayTask) => {
     if (leg.betType === propField[4] || leg.betType === propField[1]) {
       return leg.frontend_id.split("/")[0] + "/" + leg.betType;
     } else {
@@ -158,6 +174,23 @@ export const getNotificationStyling = (type: string) => {
   } else {
     return "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-gray-500 rounded-sm";
   }
+};
+
+export const getOppId = (
+  oppName: string,
+  oppPropText: string,
+  secondIndex: number,
+  roadName: string,
+  homeName: string,
+) => {
+  const totalPointsTeam = roadName + " v " + homeName;
+  return (
+    (secondIndex === 1 ? totalPointsTeam : oppName) +
+    "/" +
+    (secondIndex === 1
+      ? oppPropText.substring(0, 1) + "/" + propField[secondIndex]
+      : propField[secondIndex])
+  );
 };
 
 export const getOverUnderStyling = (prop: string) => {

@@ -6,6 +6,7 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema } from "../../../utils/Interfaces";
 import { propField } from "../../../utils/Constants";
+import { getId, getOppId } from "../../../utils/Util";
 
 library.add(fas);
 
@@ -16,36 +17,6 @@ export interface WeeklySlateProps {
 
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups, setCurrentMatchup } = props;
-
-  const getId = (
-    teamName: string,
-    text: string,
-    secondIndex: number,
-    roadName: string,
-    homeName: string,
-  ) => {
-    return (
-      (secondIndex === 1 ? roadName + " v " + homeName : teamName) +
-      "/" +
-      (secondIndex === 1 ? text : propField[secondIndex])
-    );
-  };
-
-  const getOppId = (
-    oppName: string,
-    oppPropText: string,
-    secondIndex: number,
-    roadName: string,
-    homeName: string,
-  ) => {
-    const totalPointsTeam = roadName + " v " + homeName;
-    return (
-      (secondIndex === 1 ? totalPointsTeam : oppName) +
-      "/" +
-      (secondIndex === 1 ? oppPropText : propField[secondIndex])
-    );
-  };
-
   return (
     <div className="z-10 items-stretch justify-start flex-col flex box-border relative">
       <div className="box-border relative mt-30">
