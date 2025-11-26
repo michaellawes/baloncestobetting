@@ -126,6 +126,18 @@ export interface PropLineProps {
   isHome?: boolean;
 }
 
+export interface SqlPlayerMetadata {
+  name: string;
+  team: string;
+  pos: string;
+  live_score: number;
+  status: string;
+  matchup_id?: number;
+  fantasy_team_name: string;
+  avg: number;
+  games_left: number;
+}
+
 export interface SqlPropSlate {
   day_id: number;
   main_prop_id: string;
@@ -135,6 +147,14 @@ export interface SqlPropSlate {
   prop_id: string;
   sub_prop_id: string;
   sub_prop_odds: number;
+}
+
+export interface SqlTeamMetadata {
+  name: string;
+  live_score: number;
+  profile_url: string;
+  wins: number;
+  losses: number;
 }
 
 export interface Team {

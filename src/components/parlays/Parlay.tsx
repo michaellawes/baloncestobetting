@@ -1,6 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  fas,
+  faShare,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -11,7 +17,7 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5
+  round5,
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { NotificationMetadata, ParlayTask } from "../../utils/Interfaces";
