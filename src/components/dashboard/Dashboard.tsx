@@ -56,29 +56,27 @@ export function Dashboard(props: DashboardProps) {
         const weeklySlate = await getDailySlate(data[0]["id"]);
         //setWeeklySlate(demoWeeklySlate);
         setWeeklySlate(weeklySlate);
-      }
+        if (parlayId != undefined) {
+          const getSharedSlip = async () => {
+            const { data, error } = await supabase
+              .from("fb_parlay_legs")
+              .select("*")
+              .eq("parlay_id", parlayId)
+              .order("index");
 
-      if (parlayId != undefined) {
-        const getSharedSlip = async () => {
-          const { data, error } = await supabase
-            .from("parlays")
-            .select("legs, expires_at")
-            .eq("parlay_id", parlayId);
+            if (error) {
+              console.log(error);
+            }
 
-          if (error) {
-            console.log(error);
-          }
-
-          if (data) {
-            const parlay = data[0];
-            dispatch({
-              type: "loadSharedSlip",
-              expires_at: parlay["expires_at"],
-              legs: parlay["legs"],
-            });
-          }
-        };
-        await getSharedSlip();
+            if (data) {
+              dispatch({
+                type: "loadSharedSlip",
+                legs: data,
+              });
+            }
+          };
+          await getSharedSlip();
+        }
       }
     };
     getMatchup();

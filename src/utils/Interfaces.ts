@@ -92,13 +92,14 @@ export interface ParlayProps extends SupabaseParlay {
 export interface ParlayTask {
   frontend_id: string;
   team: string;
-  betType: string;
   text: string;
   odds: number;
-  didHit?: boolean;
-  lastValue?: number;
-  parlay_id?: string;
+  matchup_id: number;
+  day_id: number;
+  parlay_id: string;
   index?: number;
+  did_hit?: boolean;
+  live_value?: number;
 }
 
 export interface Player {
@@ -129,18 +130,6 @@ export interface PropLineProps {
   frontend_id: string;
   oppId: string;
   isHome?: boolean;
-}
-
-export interface SqlParlayLeg {
-  parlay_id: string;
-  prop_id: string;
-  matchup_id: number;
-  index: number;
-  prop_text: string;
-  prop_odds: number;
-  day_id: number;
-  did_hit?: boolean;
-  live_value: number;
 }
 
 export interface SqlParlayMetadata {
