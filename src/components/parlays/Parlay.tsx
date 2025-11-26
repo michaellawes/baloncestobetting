@@ -1,6 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  fas,
+  faShare,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -11,7 +17,7 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5
+  round5,
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
@@ -86,6 +92,7 @@ export function Parlay(props: ParlayProps) {
       return "text-sm text-yellow-400 font-light";
     }
     const live_spread = parseFloat(live_spread_text);
+    console.log(`${leg.text} prop with ${live_spread} live value`);
     if (evaluateLeg(leg, live_spread)) {
       return "text-sm text-green-500 font-light";
     } else {

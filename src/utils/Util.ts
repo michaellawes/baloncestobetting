@@ -558,12 +558,12 @@ const getMatchupInformation = async (matchupId: number) => {
               : propInfo.sub_prop_odds;
           matchup.home.spread.text =
             homeTeam === propInfo.main_prop_id
-              ? "- " + propInfo.point_value
-              : "+ " + propInfo.point_value;
+              ? "-" + propInfo.point_value
+              : "+" + propInfo.point_value;
           matchup.road.spread.text =
             homeTeam !== propInfo.main_prop_id
-              ? "- " + propInfo.point_value
-              : "+ " + propInfo.point_value;
+              ? "-" + propInfo.point_value
+              : "+" + propInfo.point_value;
         } else if (betType === propField[1]) {
           matchup.home.points.odds =
             homeTeam === propInfo.main_prop_id
