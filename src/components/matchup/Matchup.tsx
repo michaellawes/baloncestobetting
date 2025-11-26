@@ -239,22 +239,36 @@ export function Matchup(props: MatchupsProps) {
                               </div>
                             </div>
                           </div>
-                          <div className="flex flex-row justify-start w-full m-2">
-                            <div className="flex flex-row justify-start w-full">
+                          <div className="flex flex-row justify-start w-full mt-2">
+                            <div className="flex flex-row justify-center w-1/2">
                               <div className="flex flex-row justify-center text-sm items-center text-center">
-                                <span className="font-[ProximaNova, serif] font-light text-green-500 mr-1">
+                                <span className="font-[ProximaNova, serif] font-bold text-blue-500 mr-1">
                                   AVG:
                                 </span>
-                                {roundToInteger(player.average.toString())}
+                                {roundToInteger(player.average.toString()) +
+                                  " PPG"}
                               </div>
                             </div>
-                            <div className="flex flex-row justify-center w-full mr-2">
-                              <div className="flex-row justify-center text-sm items-center text-center">
+                            <div className="flex flex-row justify-center w-1/2 mr-1">
+                              <div className="flex flex-row justify-center text-sm items-center text-center">
                                 <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
                                   TOTAL:
                                 </span>
-                                {roundToInteger(player.live_total.toString())}
+                                {roundToInteger(player.live_total.toString()) +
+                                  " PTS"}
                               </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-row justify-center w-full">
+                            <div className="flex flex-row justify-center text-sm items-center text-center my-2">
+                              <span className="font-[ProximaNova, serif] font-light text-white mr-1">
+                                Games Left:
+                              </span>
+                              {player.status === "OUT" ? (
+                                <span className="text-gray-500">TBD</span>
+                              ) : (
+                                player.games_left
+                              )}
                             </div>
                           </div>
                           <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
@@ -344,22 +358,36 @@ export function Matchup(props: MatchupsProps) {
                               </div>
                             </div>
                           </div>
-                          <div className="flex flex-row justify-start w-full m-2">
-                            <div className="flex flex-row justify-start w-full">
+                          <div className="flex flex-row justify-start w-full mt-2">
+                            <div className="flex flex-row justify-center w-1/2">
                               <div className="flex flex-row justify-center text-sm items-center text-center">
-                                <span className="font-[ProximaNova, serif] font-light text-green-500 mr-1">
+                                <span className="font-[ProximaNova, serif] font-bold text-blue-500 mr-1">
                                   AVG:
                                 </span>
-                                {roundToInteger(player.average.toString())}
+                                {roundToInteger(player.average.toString()) +
+                                  " PPG"}
                               </div>
                             </div>
-                            <div className="flex flex-row justify-center w-full mr-2">
-                              <div className="flex-row justify-center text-sm items-center text-center">
+                            <div className="flex flex-row justify-center w-1/2 mr-1">
+                              <div className="flex flex-row justify-center text-sm items-center text-center">
                                 <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
                                   TOTAL:
                                 </span>
-                                {roundToInteger(player.live_total.toString())}
+                                {roundToInteger(player.live_total.toString()) +
+                                  " PTS"}
                               </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-row justify-center w-full">
+                            <div className="flex flex-row justify-center text-sm items-center text-center my-2">
+                              <span className="font-[ProximaNova, serif] font-light text-white mr-1">
+                                Games Left:
+                              </span>
+                              {player.status === "OUT" ? (
+                                <span className="text-gray-500">TBD</span>
+                              ) : (
+                                player.games_left
+                              )}
                             </div>
                           </div>
                           <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
