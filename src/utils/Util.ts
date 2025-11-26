@@ -3,12 +3,13 @@ import { propField } from "./Constants";
 import {
   MatchupSchema,
   ParlayTask,
+  SqlParlayMetadata,
   SqlPlayerMetadata,
   SqlPropSlate,
   SqlTeamMetadata,
+  SupabaseParlay,
   Team,
 } from "./Interfaces";
-import { SupabaseParlay } from "../components/parlays/Parlay";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
 
@@ -90,6 +91,17 @@ export const generateId = () => {
   );
 };
 
+export const getAllParlayLegs = async (parlayIds: string[]) => {
+  const { data, error } = await supabase
+    .from("fb_parlay_legs")
+    .select("*")
+    .in("parlay_id", parlayIds);
+  if (error) throw error;
+  if (data) {
+    return data;
+  }
+};
+
 export const getDaysSinceLastMonday = () => {
   return new Date().getDay() - 1;
 };
@@ -98,7 +110,7 @@ export const getIndividualLegResultForParlays = async (
   parlay: SupabaseParlay,
 ) => {
   const matchup_id = Number(parlay.matchup_id);
-  const query_ids = parlay.legs.map((leg) => {
+  const query_ids = parlay.legs.map((leg: ParlayTask) => {
     if (leg.betType === propField[4] || leg.betType === propField[1]) {
       return leg.frontend_id.split("/")[0] + "/" + leg.betType;
     } else {
@@ -142,7 +154,7 @@ export const getIndividualLegResultForParlays = async (
           : roundToInteger(lastLiveValue.toString());
       //}
     }
-    parlay.is_winner = parlay.legs.every((leg) => leg.didHit);
+    parlay.is_winner = parlay.legs.every((leg: ParlayTask) => leg.didHit);
     return parlay;
   }
 };
@@ -172,6 +184,67 @@ export const getParlayType = (numberOfLegs: number) => {
 
 export const getParlayTypeAbbreviated = (numberOfLegs: number) => {
   return numberOfLegs === 1 ? "SGP" : "SGP+";
+};
+
+export const getParlaysWithLegs = async (fbParlays: SqlParlayMetadata[]) => {
+  const frontendParlays: SupabaseParlay[] = [];
+  const allParlayIds: string[] = fbParlays.map(
+    (parlayMetadata) => parlayMetadata.parlay_id,
+  );
+
+  const allParlayLegs = await getAllParlayLegs(allParlayIds);
+  const parlayIdToLegs = new Map<string, ParlayTask[]>();
+  for (const leg of allParlayLegs) {
+    const propId: string = leg["prop_id"];
+    const propTokens = propId.split("/");
+    console.log(propTokens);
+    const newLeg: ParlayTask = {
+      text: leg["prop_text"],
+      team: leg["fantasy_team"],
+      odds: leg["prop_odds"],
+      parlay_id: leg["parlay_id"],
+      betType: propTokens[propTokens.length - 1],
+      frontend_id: propId,
+      index: leg["index"],
+    };
+    if (leg["live_value"] !== undefined && leg["live_value"] !== null) {
+      newLeg.lastValue = leg["live_value"];
+    }
+    if (leg["did_hit"] !== undefined && leg["did_hit"] !== null) {
+      newLeg.didHit = leg["did_hit"];
+    }
+    if (parlayIdToLegs.has(leg.parlay_id)) {
+      const legs: ParlayTask[] = parlayIdToLegs.get(leg.parlay_id);
+      legs.push(newLeg);
+      parlayIdToLegs.set(leg.parlay_id, legs);
+    } else {
+      const newLegs = [newLeg];
+      parlayIdToLegs.set(leg.parlay_id, newLegs);
+    }
+  }
+  for (const parlayId of allParlayIds) {
+    const sortedLegs = parlayIdToLegs
+      .get(parlayId)
+      .sort((a, b) => a.index - b.index);
+    parlayIdToLegs.set(parlayId, sortedLegs);
+  }
+  for (const parlay of fbParlays) {
+    const frontendParlay: SupabaseParlay = {
+      user_id: parlay.user_id,
+      parlay_id: parlay.parlay_id,
+      created_at: parlay.created_at,
+      expires_at: parlay.expires_at,
+      matchup_id: parlay.matchup_id,
+      total_odds: parlay.total_odds,
+      payout: parlay.payout,
+      wager: parlay.wager,
+      frontend_is_active: parlay.is_active,
+      is_winner: parlay.is_winner,
+      legs: parlayIdToLegs.get(parlay.parlay_id),
+    };
+    frontendParlays.push(frontendParlay);
+  }
+  return frontendParlays;
 };
 
 export const getPayoutWithRespectToScreenWidth = (payout: number) => {
@@ -415,7 +488,6 @@ const getMatchupInformation = async (matchupId: number) => {
         home: teamNameToTeam.get(homeTeam),
       });
     }
-    const playerPropInfo: SqlPropSlate[] = [];
     for (const propInfo of typedData) {
       const propIdAndBetType = propInfo.prop_id.split("/");
       const propId = propIdAndBetType[0];
@@ -474,11 +546,9 @@ const getMatchupInformation = async (matchupId: number) => {
           matchupTeam.team_total.under_odds = propInfo.sub_prop_odds;
           matchupToMatchupSchema.set(matchupName, matchup);
         } else {
-          console.log(propInfo);
           const playerMetadata = playerToMetadata.get(propId);
           const matchupName = teamNameToMatchupName.get(propInfo.main_prop_id);
           const matchup = matchupToMatchupSchema.get(matchupName);
-          console.log(`${propId} is on ${propInfo.main_prop_id}`);
           if (matchup.home.name === propInfo.main_prop_id) {
             matchup.home.top_5.push({
               name: propId,
@@ -509,9 +579,6 @@ const getMatchupInformation = async (matchupId: number) => {
                 under_odds: propInfo.sub_prop_odds,
               },
             });
-            console.log(
-              `Matchup Road Top 5 Size: ${matchup.road.top_5.length}`,
-            );
           }
           matchupToMatchupSchema.set(matchupName, matchup);
         }
@@ -575,7 +642,6 @@ const getMatchupInformation = async (matchupId: number) => {
       ).toFixed();
       weeklySlate.push(matchupPropSlate);
     }
-    console.log(weeklySlate);
     return weeklySlate;
   }
 };

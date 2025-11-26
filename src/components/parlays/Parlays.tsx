@@ -1,9 +1,10 @@
-import { Parlay, SupabaseParlay } from "./Parlay";
+import { Parlay } from "./Parlay";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
 import {
   getIndividualLegResultForParlays,
+  getParlaysWithLegs,
   getTeamData,
 } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
@@ -12,6 +13,7 @@ import {
   MatchupSchema,
   NotificationMetadata,
   ParlayFieldUpdate,
+  SupabaseParlay,
   UserData,
 } from "../../utils/Interfaces";
 
@@ -123,8 +125,13 @@ export function Parlays(props: ParlaysViewerProps) {
       if (user) {
         userId = user.id;
       }
-      const { data, error } = await supabase
+      /*const { data, error } = await supabase
         .from("parlays")
+        .select("*")
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });*/
+      const { data, error } = await supabase
+        .from("fb_parlays")
         .select("*")
         .eq("user_id", userId)
         .order("created_at", { ascending: false });
@@ -134,8 +141,10 @@ export function Parlays(props: ParlaysViewerProps) {
       }
 
       if (data) {
-        const validatedSlips = await validateFinishedSlips(data);
-        setParlays(validatedSlips);
+        const parlaysWithLegs = await getParlaysWithLegs(data);
+        setParlays(parlaysWithLegs);
+        //const validatedSlips = await validateFinishedSlips(data);
+        //setParlays(validatedSlips);
       }
     };
     getParlays();

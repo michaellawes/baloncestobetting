@@ -1,5 +1,4 @@
 import * as React from "react";
-import { SupabaseParlay } from "../components/parlays/Parlay";
 
 export interface AuthProps {
   isLoggedIn: boolean;
@@ -85,6 +84,11 @@ export interface ParlayInfo {
   payout: number;
   wager: number;
 }
+export interface ParlayProps extends SupabaseParlay {
+  setBalance: React.Dispatch<React.SetStateAction<number>>;
+  liveTeamData: Map<string, Map<string, string>>;
+  setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
+}
 
 export interface ParlayTask {
   frontend_id: string;
@@ -94,6 +98,8 @@ export interface ParlayTask {
   odds: number;
   didHit?: boolean;
   lastValue?: number;
+  parlay_id?: string;
+  index?: number;
 }
 
 export interface Player {
@@ -126,6 +132,32 @@ export interface PropLineProps {
   isHome?: boolean;
 }
 
+export interface SqlParlayLeg {
+  parlay_id: string;
+  prop_id: string;
+  matchup_id: number;
+  index: number;
+  prop_text: string;
+  prop_odds: number;
+  day_id: number;
+  did_hit?: boolean;
+  live_value: number;
+}
+
+export interface SqlParlayMetadata {
+  parlay_id: string;
+  created_at: number;
+  expires_at: number;
+  is_active: boolean;
+  is_winner: boolean;
+  wager: number;
+  user_id: string;
+  matchup_id: number;
+  day_id: number;
+  total_odds: number;
+  payout: number;
+}
+
 export interface SqlPlayerMetadata {
   name: string;
   team: string;
@@ -155,6 +187,22 @@ export interface SqlTeamMetadata {
   profile_url: string;
   wins: number;
   losses: number;
+}
+
+export interface SupabaseParlay {
+  frontend_id?: string;
+  user_id?: string;
+  created_at?: number;
+  expires_at?: number;
+  parlay_id?: string;
+  matchup_id?: number;
+  total_odds?: number;
+  payout?: number;
+  wager?: number;
+  is_winner?: boolean;
+  is_payed_out?: boolean;
+  frontend_is_active?: boolean;
+  legs?: ParlayTask[];
 }
 
 export interface Team {
