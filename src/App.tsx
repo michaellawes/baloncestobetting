@@ -34,7 +34,7 @@ export function App() {
   const [balance, setBalance] = useState<number>(0);
   const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
-  const [matchup, setMatchup] = useState<number>(0);
+  const [matchup, setMatchup] = useState<number>(-1);
   const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
@@ -448,6 +448,7 @@ export function App() {
                   setIsViewingDashboard={setIsViewingDashboard}
                   setIsViewingMatchup={setIsViewingMatchup}
                   matchups={weeklySlate}
+                  matchup={matchup}
                   setNotification={setNotificationMetadata}
                 />
               }

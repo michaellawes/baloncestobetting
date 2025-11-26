@@ -9,24 +9,9 @@ import {
 } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
 import { ErrorLander } from "../dashboard/ErrorLander";
-import {
-  MatchupSchema,
-  NotificationMetadata,
-  ParlayFieldUpdate,
-  SupabaseParlay,
-  UserData,
-} from "../../utils/Interfaces";
+import { ParlaysViewerProps, SupabaseParlay } from "../../utils/Interfaces";
 import { Lockout } from "../dashboard/Lockout";
 
-export interface ParlaysViewerProps {
-  setBalance: React.Dispatch<React.SetStateAction<number>>;
-  user: UserData;
-  setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
-  setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
-  matchups: MatchupSchema[];
-  setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
-}
 export function Parlays(props: ParlaysViewerProps) {
   const {
     setBalance,
@@ -36,6 +21,7 @@ export function Parlays(props: ParlaysViewerProps) {
     matchups,
     setIsViewingMatchup,
     setNotification,
+    matchup,
   } = props;
   const [parlays, setParlays] = React.useState<SupabaseParlay[]>([]);
   const [liveTeamData, setLiveTeamData] = React.useState<
@@ -129,6 +115,8 @@ export function Parlays(props: ParlaysViewerProps) {
         const parlaysWithLegs = await getParlaysWithLegs(data);
         const validatedSlips = await validateFinishedSlips(parlaysWithLegs);
         setParlays(validatedSlips);
+      } else {
+        setParlays([]);
       }
     };
     getParlays();
@@ -138,9 +126,10 @@ export function Parlays(props: ParlaysViewerProps) {
 
   return (
     <div className="w-full h-full bg-gray-900 overflow-hidden scrollbar-hide ">
-      {parlays.length === 0 && (
+      {parlays.length === 0 && matchup >= 0 && (
         <Lockout message={"Please wait while we load your parlays..."} />
       )}
+      {matchup < 0 && <ErrorLander />}
       <ul className="w-full h-full scrollbar-hide mt-18 ml-1">
         {parlays.map((parlay, i) => (
           <li key={i} className="scrollbar-hide mr-1 pr-1">

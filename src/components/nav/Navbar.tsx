@@ -51,7 +51,7 @@ export function Navbar(props: NavbarProps) {
           >
             <span className="">CnB Baloncesto Betting</span>
             <span className="text-xs md:text-sm text-gray-400 pl-1">
-              Week {matchup}
+              Week {matchup >= 0 ? matchup : ""}
             </span>
           </Link>
         </div>

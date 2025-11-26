@@ -105,6 +105,16 @@ export interface ParlayTask {
   did_hit?: boolean;
   live_value?: number;
 }
+export interface ParlaysViewerProps {
+  setBalance: React.Dispatch<React.SetStateAction<number>>;
+  user: UserData;
+  setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
+  setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
+  matchups: MatchupSchema[];
+  setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
+  matchup: number;
+}
 
 export interface Player {
   name: string;
