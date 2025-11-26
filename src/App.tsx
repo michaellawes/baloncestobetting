@@ -328,6 +328,13 @@ export function App() {
           });
           return tasks;
         } else {
+          console.log({
+            frontend_id: action.frontend_id,
+            team: action.team,
+            betType: action.betType,
+            text: action.text,
+            odds: action.odds,
+          });
           tasks = [
             ...tasks,
             {

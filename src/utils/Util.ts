@@ -106,6 +106,22 @@ export const getDaysSinceLastMonday = () => {
   return new Date().getDay() - 1;
 };
 
+export const getId = (
+  teamName: string,
+  text: string,
+  secondIndex: number,
+  roadName: string,
+  homeName: string,
+) => {
+  return (
+    (secondIndex === 1 ? roadName + " v " + homeName : teamName) +
+    "/" +
+    (secondIndex === 1
+      ? text.substring(0, 1) + "/" + propField[secondIndex]
+      : propField[secondIndex])
+  );
+};
+
 export const getIndividualLegResultForParlays = async (
   parlay: SupabaseParlay,
 ) => {
@@ -169,6 +185,23 @@ export const getNotificationStyling = (type: string) => {
   } else {
     return "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-gray-500 rounded-sm";
   }
+};
+
+export const getOppId = (
+  oppName: string,
+  oppPropText: string,
+  secondIndex: number,
+  roadName: string,
+  homeName: string,
+) => {
+  const totalPointsTeam = roadName + " v " + homeName;
+  return (
+    (secondIndex === 1 ? totalPointsTeam : oppName) +
+    "/" +
+    (secondIndex === 1
+      ? oppPropText.substring(0, 1) + "/" + propField[secondIndex]
+      : propField[secondIndex])
+  );
 };
 
 export const getOverUnderStyling = (prop: string) => {
