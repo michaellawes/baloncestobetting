@@ -162,7 +162,7 @@ export function Parlays(props: ParlaysViewerProps) {
       {parlays.length === 0 && matchup >= 0 && !hasNoParlays && (
         <Lockout message={"Please wait while we load your parlays..."} />
       )}
-      {hasNoParlays && (
+      {hasNoParlays && matchup > 0 && (
         <ErrorLander
           message={"No parlays found. Visit the homepage to place some!"}
         />
