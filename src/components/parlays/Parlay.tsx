@@ -411,7 +411,7 @@ export function Parlay(props: ParlayProps) {
           >
             <div className="flex flex-col basis-0 grow justify-center items-stretch box-border relative pl-2">
               <span className="font-[Proxima Nova, serif] tracking-[1px] uppercase text-gray-300 text-base text-left relative">
-                ${wager}
+                ${numberWithCommas(wager)}
               </span>
               <span className="font-mono flex flex-row tracking-[1px] uppercase text-gray-300 text-xs text-[7px] relative">
                 total wager

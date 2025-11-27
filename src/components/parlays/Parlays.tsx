@@ -97,11 +97,6 @@ export function Parlays(props: ParlaysViewerProps) {
       if (user) {
         userId = user.id;
       }
-      /*const { data, error } = await supabase
-        .from("parlays")
-        .select("*")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false });*/
       const { data, error } = await supabase
         .from("fb_parlays")
         .select("*")
