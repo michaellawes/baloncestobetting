@@ -170,6 +170,9 @@ export function Parlays(props: ParlaysViewerProps) {
       {matchup < 0 && (
         <ErrorLander message="Please return to the homepage and refresh..." />
       )}
+      {filteredParlays.length === 0 && parlays.length > 0 && (
+        <ErrorLander message={"No parlays match this filter."} />
+      )}
       <div className="w-full h-full scrollbar-hide mt-20 text-white">
         {parlays.length > 0 && (
           <div className="w-full h-full flex flex-row justify-start p-2 mb-1 border-b-blue-500 border-b-2 rounded-b-md">
@@ -314,9 +317,6 @@ export function Parlays(props: ParlaysViewerProps) {
               </div>
             </div>
           </div>
-        )}
-        {filteredParlays.length === 0 && parlays.length > 0 && (
-          <ErrorLander message={"No parlays match this filter."} />
         )}
         <div className="w-full h-full scrollbar-hide mx-1">
           <ul className="w-full h-full scrollbar-hide">
