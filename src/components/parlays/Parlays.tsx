@@ -168,9 +168,9 @@ export function Parlays(props: ParlaysViewerProps) {
       {matchup < 0 && (
         <ErrorLander message="Please return to the homepage and refresh..." />
       )}
-      <div className="w-full h-full scrollbar-hide mt-20 text-white">
+      <div className="w-full h-full scrollbar-hide mt-18 text-white">
         {parlays.length > 0 && (
-          <div className="w-full h-full flex flex-row justify-start p-2 mb-1 border-b-blue-500 border-b-2 rounded-b-md">
+          <div className="w-full h-full flex flex-row justify-start p-2 mb-1 mt-2 border-b-blue-500 border-b-2 rounded-b-md">
             <div className="w-1/5 h-full flex flex-row justify-center items-center">
               <div
                 className={
