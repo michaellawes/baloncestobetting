@@ -252,7 +252,7 @@ export function Parlays(props: ParlaysViewerProps) {
                         : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-sm md:text-base font-[ProximaNova-Bold, serif]"
                     }`}
                   >
-                    Completed
+                    {window.innerWidth < 469 ? "Done" : "Completed"}
                   </span>
                 </button>
               </div>
