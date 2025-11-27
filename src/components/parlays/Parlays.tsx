@@ -2,7 +2,11 @@ import { Parlay } from "./Parlay";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
-import { getIndividualLegResultForParlays, getParlaysWithLegs, getTeamData } from "../../utils/Util";
+import {
+  getIndividualLegResultForParlays,
+  getParlaysWithLegs,
+  getTeamData,
+} from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
 import { ErrorLander } from "../dashboard/ErrorLander";
 import { ParlaysViewerProps, SupabaseParlay } from "../../utils/Interfaces";
@@ -188,8 +192,8 @@ export function Parlays(props: ParlaysViewerProps) {
                   <span
                     className={`switch ${
                       currentFilter === "ALL"
-                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-base font-[ProximaNova-Bold, serif] font-bold"
-                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-base font-[ProximaNova-Bold, serif]"
+                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-sm md:text-base font-[ProximaNova-Bold, serif] font-bold"
+                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-sm md:text-base font-[ProximaNova-Bold, serif]"
                     }`}
                   >
                     All
@@ -216,8 +220,8 @@ export function Parlays(props: ParlaysViewerProps) {
                   <span
                     className={`switch ${
                       currentFilter === "ACTIVE"
-                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-base font-[ProximaNova-Bold, serif] font-bold"
-                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-base font-[ProximaNova-Bold, serif]"
+                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-sm md:text-base font-[ProximaNova-Bold, serif] font-bold"
+                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-sm md:text-base font-[ProximaNova-Bold, serif]"
                     }`}
                   >
                     Active
@@ -244,8 +248,8 @@ export function Parlays(props: ParlaysViewerProps) {
                   <span
                     className={`switch ${
                       currentFilter === "COMPLETED"
-                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-base font-[ProximaNova-Bold, serif] font-bold"
-                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-base font-[ProximaNova-Bold, serif]"
+                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-sm md:text-base font-[ProximaNova-Bold, serif] font-bold"
+                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-sm md:text-base font-[ProximaNova-Bold, serif]"
                     }`}
                   >
                     Completed
@@ -272,8 +276,8 @@ export function Parlays(props: ParlaysViewerProps) {
                   <span
                     className={`switch ${
                       currentFilter === "WON"
-                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-base font-[ProximaNova-Bold, serif] font-bold"
-                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-base font-[ProximaNova-Bold, serif]"
+                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-sm md:text-base font-[ProximaNova-Bold, serif] font-bold"
+                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-sm md:text-base font-[ProximaNova-Bold, serif]"
                     }`}
                   >
                     Won
@@ -300,8 +304,8 @@ export function Parlays(props: ParlaysViewerProps) {
                   <span
                     className={`switch ${
                       currentFilter === "LOST"
-                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-base font-[ProximaNova-Bold, serif] font-bold"
-                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-base font-[ProximaNova-Bold, serif]"
+                        ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-sm md:text-base font-[ProximaNova-Bold, serif] font-bold"
+                        : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-sm md:text-base font-[ProximaNova-Bold, serif]"
                     }`}
                   >
                     Lost
