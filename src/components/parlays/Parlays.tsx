@@ -315,7 +315,7 @@ export function Parlays(props: ParlaysViewerProps) {
             </div>
           </div>
         )}
-        {filteredParlays.length === 0 && (
+        {filteredParlays.length === 0 && parlays.length > 0 && (
           <ErrorLander message={"No parlays match this filter."} />
         )}
         <div className="w-full h-full scrollbar-hide mx-1">
