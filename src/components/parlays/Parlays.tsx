@@ -37,9 +37,7 @@ export function Parlays(props: ParlaysViewerProps) {
 
   const selectFilter = (filterName: string) => {
     if (currentFilter === filterName) {
-      console.log(currentFilter);
       setCurrentFilter("ALL");
-      console.log(currentFilter);
       setFilteredParlays(parlays);
     } else if (filterName === "ALL") {
       setCurrentFilter("ALL");
@@ -169,9 +167,6 @@ export function Parlays(props: ParlaysViewerProps) {
       )}
       {matchup < 0 && (
         <ErrorLander message="Please return to the homepage and refresh..." />
-      )}
-      {filteredParlays.length === 0 && parlays.length > 0 && (
-        <ErrorLander message={"No parlays match this filter."} />
       )}
       <div className="w-full h-full scrollbar-hide mt-20 text-white">
         {parlays.length > 0 && (
@@ -317,6 +312,9 @@ export function Parlays(props: ParlaysViewerProps) {
               </div>
             </div>
           </div>
+        )}
+        {filteredParlays.length === 0 && parlays.length > 0 && (
+          <ErrorLander message={"No parlays match this filter."} />
         )}
         <div className="w-full h-full scrollbar-hide mx-1">
           <ul className="w-full h-full scrollbar-hide">
