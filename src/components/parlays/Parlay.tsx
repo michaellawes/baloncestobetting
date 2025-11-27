@@ -92,7 +92,6 @@ export function Parlay(props: ParlayProps) {
       return "text-sm text-yellow-400 font-light";
     }
     const live_spread = parseFloat(live_spread_text);
-    console.log(`${leg.text} prop with ${live_spread} live value`);
     if (evaluateLeg(leg, live_spread)) {
       return "text-sm text-green-500 font-light";
     } else {
