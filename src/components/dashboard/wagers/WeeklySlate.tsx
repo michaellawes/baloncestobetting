@@ -6,7 +6,11 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema } from "../../../utils/Interfaces";
 import { propField } from "../../../utils/Constants";
-import { getId, getOppId } from "../../../utils/Util";
+import {
+  getId,
+  getOppId,
+  getTeamNameWithRespectToScreenSize,
+} from "../../../utils/Util";
 
 library.add(fas);
 
@@ -116,7 +120,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                   {Math.abs(
                                     matchup.road.live_score -
                                       matchup.home.live_score,
-                                  ) < 10 ? (
+                                  ) < 11 ? (
                                     <span>Matchup is nearly tied!</span>
                                   ) : matchup.road.live_score >
                                     matchup.home.live_score ? (
@@ -177,7 +181,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                 <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
                                   <div className="flex flex-row">
                                     <span className="font-[ProximaNova-Bold, serif] text-blue-400 wrap-break-word hyphens-none text-ellipsis text-sm md:text-lg box-border overflow-hidden relative">
-                                      {matchup.home.name}
+                                      {getTeamNameWithRespectToScreenSize(
+                                        matchup.home.name,
+                                      )}
                                     </span>
                                   </div>
                                   <div className="flex flex-col justify-center">

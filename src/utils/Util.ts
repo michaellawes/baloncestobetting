@@ -426,20 +426,6 @@ export const getPropValue = (text: string) => {
   return text.substring(2);
 };
 
-/*
-export interface Team {
-  icon: string;
-  name: string;
-  record: string;
-  spread: PropLineMetadata;
-  points: PropLineMetadata;
-  moneyline: PropLineMetadata;
-  live_score: number;
-  team_total: IndividualLineMetadata;
-  top_5: Player[];
-}
-* */
-
 const getAllPlayerData = async () => {
   const { data, error } = await supabase
     .from("fb_players")
@@ -711,6 +697,12 @@ export const getDailySlate = async (matchupId: number) => {
   return slate;
 };
 
+export const getTeamNameWithRespectToScreenSize = (teamName: string) => {
+  if (window.innerWidth < 428) {
+    return teamName.substring(0, 20) + "...";
+  }
+  return teamName;
+};
 export const round5 = (x: number) => {
   return Math.ceil(x / 5) * 5;
 };
