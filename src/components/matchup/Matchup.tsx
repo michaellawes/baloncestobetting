@@ -1,18 +1,9 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import {
-  getPlayerNameIsTooLong,
-  getTeamNameIsTooLong,
-  roundToInteger,
-} from "../../utils/Util";
+import { getPlayerNameIsTooLong, getTeamNameIsTooLong, roundToInteger } from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBasketball,
-  faFaceDizzy,
-  faFaceGrimace,
-  faFaceGrin,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, faFaceDizzy, faFaceGrimace, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../dashboard/wagers/PropLine";
 import { ErrorLander } from "../dashboard/ErrorLander";
@@ -255,7 +246,7 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex flex-row justify-center w-1/2 mr-1">
                               <div className="flex flex-row justify-center text-sm items-center text-center">
                                 <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
-                                  TOTAL:
+                                  {window.innerWidth < 468 ? "CUR:" : "TOTAL:"}
                                 </span>
                                 {roundToInteger(player.live_total.toString()) +
                                   " PTS"}
@@ -374,7 +365,7 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex flex-row justify-center w-1/2 mr-1">
                               <div className="flex flex-row justify-center text-sm items-center text-center">
                                 <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
-                                  TOTAL:
+                                  {window.innerWidth < 468 ? "CUR:" : "TOTAL:"}
                                 </span>
                                 {roundToInteger(player.live_total.toString()) +
                                   " PTS"}
