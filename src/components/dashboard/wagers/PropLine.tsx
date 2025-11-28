@@ -40,8 +40,12 @@ export function PropLine(props: PropLineProps) {
     <div
       className={`switch ${
         isAdded
-          ? "h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-blue-500 rounded-xs flex-col flex box-border overflow-hidden relative"
-          : "hover:bg-gray-600 h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative"
+          ? isClose !== undefined && isClose
+            ? "h-full w-full basis-0 grow border-yellow-400 border border-solid justify-center items-center bg-yellow-400 rounded-xs flex-col flex box-border overflow-hidden relative"
+            : "h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-blue-500 rounded-xs flex-col flex box-border overflow-hidden relative"
+          : isClose !== undefined && isClose
+            ? "hover:bg-gray-600 h-full w-full basis-0 grow border-yellow-400 border border-solid justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative"
+            : "hover:bg-gray-600 h-full w-full basis-0 grow border-blue-500 border border-solid justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative"
       }`}
     >
       {text.length > 0 ? (
@@ -49,14 +53,18 @@ export function PropLine(props: PropLineProps) {
           onClick={() => selectParlay()}
           className={`switch ${
             isAdded
-              ? "h-full w-full basis-0 grow bg-blue-500 justify-center items-center rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+              ? isClose !== undefined && isClose
+                ? "h-full w-full basis-0 grow bg-yellow-400 justify-center items-center rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
+                : "h-full w-full basis-0 grow bg-blue-500 justify-center items-center rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
               : "hover:bg-gray-800 h-full w-full basis-0 grow justify-center items-center bg-transparent rounded-xs flex-col flex box-border overflow-hidden relative cursor-pointer"
           }`}
         >
           <span
             className={`switch ${
               isAdded
-                ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
+                ? isClose !== undefined && isClose
+                  ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-white font-bold"
+                  : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
                 : isClose !== undefined && isClose
                   ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-yellow-300"
                   : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300"
@@ -67,8 +75,12 @@ export function PropLine(props: PropLineProps) {
           <span
             className={`switch ${
               isAdded
-                ? "leading-none tracking-[.5px] opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
-                : "leading-none tracking-[.5px] opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-blue-500"
+                ? isClose !== undefined && isClose
+                  ? "tracking-[.5px] leading-none opacity-[1] text-white text-xs font-[ProximaNova-Bold, serif] font-bold"
+                  : "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-xs font-[ProximaNova-Bold, serif] font-bold"
+                : isClose !== undefined && isClose
+                  ? "tracking-[.5px] leading-none opacity-[1] text-yellow-500 text-xs font-[ProximaNova-Bold, serif]"
+                  : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-xs font-[ProximaNova-Bold, serif]"
             }`}
           >
             {odds > 0 && "+"}
@@ -80,16 +92,20 @@ export function PropLine(props: PropLineProps) {
           onClick={() => selectParlay()}
           className={`switch ${
             isAdded
-              ? 'cursor-pointer h-full w-full mr-1 ml-1 bg-blue-500 basis-0 grow justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"'
+              ? isClose !== undefined && isClose
+                ? "cursor-pointer h-full w-full mr-1 ml-1 bg-yellow-400 basis-0 grow justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"
+                : "cursor-pointer h-full w-full mr-1 ml-1 bg-blue-500 basis-0 grow justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"
               : "hover:bg-gray-800 cursor-pointer h-full w-full mr-1 ml-1 bg-transparent basis-0 grow border border-solid justify-center items-center flex-col flex box-border overflow-hidden rounded-sm relative"
           }`}
         >
           <span
             className={`switch ${
               isAdded
-                ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-xs font-[ProximaNova-Bold, serif] font-bold"
+                ? isClose !== undefined && isClose
+                  ? "tracking-[.5px] leading-none opacity-[1] text-white text-xs font-[ProximaNova-Bold, serif] font-bold"
+                  : "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-xs font-[ProximaNova-Bold, serif] font-bold"
                 : isClose !== undefined && isClose
-                  ? "tracking-[.5px] leading-none opacity-[1] text-yellow-300 text-xs font-[ProximaNova-Bold, serif]"
+                  ? "tracking-[.5px] leading-none opacity-[1] text-yellow-500 text-xs font-[ProximaNova-Bold, serif]"
                   : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-xs font-[ProximaNova-Bold, serif]"
             }`}
           >

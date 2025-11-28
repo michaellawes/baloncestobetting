@@ -32,8 +32,8 @@ export function WeeklySlate(props: WeeklySlateProps) {
                   }
                 >
                   {matchup.isClose && (
-                    <div className="relative z-70 ml-16 w-full justify-start flex h-0">
-                      <span className="text-sm font-light text-yellow-300 font-face-cinema">
+                    <div className="relative z-70 ml-15 w-full justify-start flex h-0">
+                      <span className="text-sm md:text-base font-bold text-yellow-400 font-face-cinema">
                         cinema matchup
                       </span>
                     </div>
@@ -41,7 +41,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                   <div
                     className={
                       matchup.isClose
-                        ? "border-b-yellow-300 rounded-b-md w-full pb-2.25 border-b-2 basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative"
+                        ? "border-b-yellow-400 rounded-b-md w-full pb-2.25 border-b-2 basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative"
                         : "border-b-gray-700 w-full pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative"
                     }
                   >

@@ -170,7 +170,6 @@ export interface SqlPlayerMetadata {
   name: string;
   team: string;
   pos: string;
-  live_score: number;
   status: string;
   matchup_id?: number;
   fantasy_team_name: string;
@@ -179,14 +178,13 @@ export interface SqlPlayerMetadata {
 }
 
 export interface SqlPropSlate {
-  day_id: number;
   main_prop_id: string;
   main_prop_odds: number;
   matchup_id: number;
   point_value: number;
   prop_id: string;
-  sub_prop_id: string;
   sub_prop_odds: number;
+  live_value: number;
 }
 
 export interface SqlTeamMetadata {

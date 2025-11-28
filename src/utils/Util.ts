@@ -8,7 +8,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -152,7 +152,6 @@ export const getIndividualLegResultForParlays = async (
     .from("fb_props")
     .select("*")
     .eq("matchup_id", matchup_id)
-    .eq("day_id", 6)
     .in("prop_id", query_ids);
 
   if (error) {
@@ -441,13 +440,10 @@ export interface Team {
 }
 * */
 
-const getAllPlayerData = async (matchupId: number) => {
+const getAllPlayerData = async () => {
   const { data, error } = await supabase
     .from("fb_players")
-    .select(
-      "name, team, pos, live_score, status, fantasy_team_name, avg, games_left",
-    )
-    .eq("matchup_id", matchupId);
+    .select("name, team, pos, status, fantasy_team_name, avg, games_left");
 
   if (error) throw error;
 
@@ -474,8 +470,7 @@ const getMatchupInformation = async (matchupId: number) => {
   const { data, error } = await supabase
     .from("fb_props")
     .select("*")
-    .eq("matchup_id", matchupId)
-    .eq("day_id", getDaysSinceLastMonday());
+    .eq("matchup_id", matchupId);
 
   if (error) throw error;
 
@@ -493,8 +488,7 @@ const getMatchupInformation = async (matchupId: number) => {
       teamToMetadata.set(teamMetadata.name, teamMetadata);
     }
 
-    const allPlayerMetadata: SqlPlayerMetadata[] =
-      await getAllPlayerData(matchupId);
+    const allPlayerMetadata: SqlPlayerMetadata[] = await getAllPlayerData();
     const playerToMetadata = new Map<string, SqlPlayerMetadata>();
     for (const playerMetadata of allPlayerMetadata) {
       playerToMetadata.set(playerMetadata.name, playerMetadata);
@@ -609,7 +603,7 @@ const getMatchupInformation = async (matchupId: number) => {
               status: playerMetadata.status,
               games_left: playerMetadata.games_left,
               team: playerMetadata.team,
-              live_total: playerMetadata.live_score,
+              live_total: propInfo.live_value,
               prop_line: {
                 text: propInfo.point_value.toString(),
                 over_odds: propInfo.main_prop_odds,
@@ -624,7 +618,7 @@ const getMatchupInformation = async (matchupId: number) => {
               status: playerMetadata.status,
               games_left: playerMetadata.games_left,
               team: playerMetadata.team,
-              live_total: playerMetadata.live_score,
+              live_total: propInfo.live_value,
               prop_line: {
                 text: propInfo.point_value.toString(),
                 over_odds: propInfo.main_prop_odds,
