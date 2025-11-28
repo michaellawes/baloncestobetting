@@ -40,11 +40,11 @@ export function WeeklySlate(props: WeeklySlateProps) {
                       <span
                         className={
                           window.innerWidth < 469
-                            ? "text-[14px] md:text-base font-bold text-yellow-400 font-face-cinema-upright"
+                            ? "text-[12px] md:text-base font-bold text-yellow-400 font-face-cinema-upright"
                             : "text-sm md:text-base font-bold text-yellow-400 font-face-cinema-upright"
                         }
                       >
-                        cinema
+                        cinema matchup
                       </span>
                     </div>
                   )}
