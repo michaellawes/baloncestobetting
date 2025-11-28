@@ -108,12 +108,12 @@ export function WeeklySlate(props: WeeklySlateProps) {
                           </div>
                         </div>
                         <div className="pl-3.5 mb-1 overflow-visible h-0.25 justify-start items-center z-40 flex-row flex w-full box-border relative">
-                          <div className="flex flex-row w-1/6 md:w-1/20">
+                          <div className="flex flex-row w-1/6 md:w-1/16">
                             <span className="text-white font-light text-[20px]">
                               @
                             </span>
                           </div>
-                          <div className="flex flex-row justify-center md:justify-start w-5/6 md:w-19/20">
+                          <div className="flex flex-row justify-center md:justify-start w-5/6 md:w-15/16">
                             <span className="font-[ProximaNova, serif] text-[10px] md:text-sm text-yellow-400 items-center">
                               {matchup.isClose ? (
                                 <div className="flex flex-row w-full italic justify-center">
