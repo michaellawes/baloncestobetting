@@ -36,15 +36,15 @@ export function WeeklySlate(props: WeeklySlateProps) {
                   }
                 >
                   {matchup.isClose && (
-                    <div className="relative z-70 justify-center w-1/2 flex h-0">
+                    <div className="relative z-70 justify-center w-1/2 flex flex-row h-0">
                       <span
                         className={
                           window.innerWidth < 469
-                            ? "text-xs md:text-base font-bold text-yellow-400 font-face-cinema"
-                            : "text-sm md:text-base font-bold text-yellow-400 font-face-cinema"
+                            ? "text-[14px] md:text-base font-bold text-yellow-400 font-face-cinema-upright"
+                            : "text-sm md:text-base font-bold text-yellow-400 font-face-cinema-upright"
                         }
                       >
-                        cinema matchup
+                        cinema
                       </span>
                     </div>
                   )}
@@ -114,14 +114,14 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             </span>
                           </div>
                           <div className="flex flex-row justify-center md:justify-start w-5/6 md:w-19/20">
-                            <span className="font-[ProximaNova, serif] text-xs md:text-sm text-yellow-400 items-center">
+                            <span className="font-[ProximaNova, serif] text-[10px] md:text-sm text-yellow-400 items-center">
                               {matchup.isClose ? (
-                                <div className="flex flex-row w-full italic justify-center text-yellow-400 text-xs md:text-sm">
+                                <div className="flex flex-row w-full italic justify-center">
                                   {Math.abs(
                                     matchup.road.live_score -
                                       matchup.home.live_score,
                                   ) < 11 ? (
-                                    <span>Matchup is nearly tied!</span>
+                                    <span>Matchup nearly tied!</span>
                                   ) : matchup.road.live_score >
                                     matchup.home.live_score ? (
                                     <span>

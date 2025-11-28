@@ -7,3 +7,10 @@
     url("./fonts/SFSportsNight/SFSportsNight.ttf") format("truetype");
     font-weight: normal;
 }
+
+@font-face {
+    font-family: "SFSportsNightUpright";
+    src: local("SFSportsNightUpright"),
+    url("./fonts/SFSportsNight/SFSportsNightUpright.ttf") format("truetype");
+    font-weight: normal;
+}
