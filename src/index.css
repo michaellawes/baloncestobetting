@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "tailwind-scrollbar-hide/v4";
+
+@font-face {
+    font-family: "SFSportsNight";
+    src: local("SFSportsNight"),
+    url("./fonts/SFSportsNight/SFSportsNight.ttf") format("truetype");
+    font-weight: normal;
+}

@@ -28,6 +28,7 @@ export interface LockoutProps {
 export interface MatchupSchema {
   road: Team;
   home: Team;
+  isClose: boolean;
 }
 
 export interface MatchupsProps {
@@ -148,6 +149,7 @@ export interface PropLineProps {
   frontend_id: string;
   oppId: string;
   isHome?: boolean;
+  isClose?: boolean;
 }
 
 export interface SqlParlayMetadata {

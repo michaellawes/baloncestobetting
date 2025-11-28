@@ -537,6 +537,7 @@ const getMatchupInformation = async (matchupId: number) => {
       matchupToMatchupSchema.set(matchup, {
         road: teamNameToTeam.get(roadTeam),
         home: teamNameToTeam.get(homeTeam),
+        isClose: false,
       });
     }
     for (const propInfo of typedData) {
@@ -699,7 +700,22 @@ const getMatchupInformation = async (matchupId: number) => {
 
 export const getDailySlate = async (matchupId: number) => {
   const matchupToMatchupSchema = await getMatchupInformation(matchupId);
-  return Array.from(matchupToMatchupSchema.values());
+  const slate = Array.from(matchupToMatchupSchema.values());
+  for (const matchup of slate) {
+    const roadScore =
+      matchup.road.live_score > 0
+        ? matchup.road.live_score
+        : parseFloat(matchup.road.team_total.text);
+    const homeScore =
+      matchup.home.live_score > 0
+        ? matchup.home.live_score
+        : parseFloat(matchup.home.team_total.text);
+    if (Math.abs(homeScore - roadScore) < 50) {
+      matchup.isClose = true;
+    }
+  }
+  console.log(slate);
+  return slate;
 };
 
 export const round5 = (x: number) => {

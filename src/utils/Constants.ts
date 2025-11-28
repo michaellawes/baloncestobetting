@@ -195,6 +195,7 @@ export const demoWeeklySlate: MatchupSchema[] = [
         },
       ],
     },
+    isClose: true,
   },
   {
     road: {
@@ -321,6 +322,7 @@ export const demoWeeklySlate: MatchupSchema[] = [
         },
       ],
     },
+    isClose: false,
   },
   {
     road: {
@@ -447,6 +449,7 @@ export const demoWeeklySlate: MatchupSchema[] = [
         },
       ],
     },
+    isClose: false,
   },
   {
     road: {
@@ -573,6 +576,7 @@ export const demoWeeklySlate: MatchupSchema[] = [
         },
       ],
     },
+    isClose: false,
   },
   {
     road: {
@@ -699,6 +703,7 @@ export const demoWeeklySlate: MatchupSchema[] = [
         },
       ],
     },
+    isClose: true,
   },
 ];
 

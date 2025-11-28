@@ -8,7 +8,8 @@ import {
 } from "../../../utils/Interfaces";
 
 export function PropLine(props: PropLineProps) {
-  const { text, odds, frontend_id, oppId, team, betType, isHome } = props;
+  const { text, odds, frontend_id, oppId, team, betType, isHome, isClose } =
+    props;
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
   const [isAdded, setIsAdded] = React.useState(false);
@@ -56,7 +57,9 @@ export function PropLine(props: PropLineProps) {
             className={`switch ${
               isAdded
                 ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
-                : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300"
+                : isClose !== undefined && isClose
+                  ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-yellow-300"
+                  : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300"
             }`}
           >
             {text}
@@ -85,7 +88,9 @@ export function PropLine(props: PropLineProps) {
             className={`switch ${
               isAdded
                 ? "tracking-[.5px] leading-none opacity-[1] text-gray-300 text-xs font-[ProximaNova-Bold, serif] font-bold"
-                : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-xs font-[ProximaNova-Bold, serif]"
+                : isClose !== undefined && isClose
+                  ? "tracking-[.5px] leading-none opacity-[1] text-yellow-300 text-xs font-[ProximaNova-Bold, serif]"
+                  : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-xs font-[ProximaNova-Bold, serif]"
             }`}
           >
             {odds > 0 && "+"}

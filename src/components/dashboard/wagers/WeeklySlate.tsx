@@ -18,16 +18,34 @@ export interface WeeklySlateProps {
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups, setCurrentMatchup } = props;
   return (
-    <div className="z-10 items-stretch justify-start flex-col flex box-border relative">
-      <div className="box-border relative mt-30">
-        <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative">
-          <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0">
-            <li key={"header"} className="w-full fixed z-60"></li>
+    <div className="z-10 items-stretch justify-start flex-col flex box-border relative w-full">
+      <div className="box-border relative mt-28 w-full">
+        <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative w-full">
+          <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0 w-full">
             {matchups.map((matchup: MatchupSchema) => (
               <li key={matchup.road.name + "/" + matchup.home.name}>
-                <div className="h-[8.688rem] box-border overflow-hidden relative mr-2 cursor-pointer">
-                  <div className="border-b-gray-700 pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative">
-                    <div className="pl-2 width-1/2 pr-3 basis-0 grow justify-center items-stretch flex-col flex box-border relative bg-transparent">
+                <div
+                  className={
+                    matchup.isClose
+                      ? "h-[8.688rem] box-border w-full overflow-hidden pt-1.75 relative cursor-pointer"
+                      : "h-[8.688rem] box-border w-full overflow-hidden pt-2.25 relative cursor-pointer"
+                  }
+                >
+                  {matchup.isClose && (
+                    <div className="relative z-70 ml-16 w-full justify-start flex h-0">
+                      <span className="text-sm font-light text-yellow-300 font-face-cinema">
+                        MATCHUP Cinema
+                      </span>
+                    </div>
+                  )}
+                  <div
+                    className={
+                      matchup.isClose
+                        ? "border-b-yellow-300 rounded-b-md w-full pb-2.25 border-b-2 basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative"
+                        : "border-b-gray-700 w-full pb-2.25 border-b basis-0 grow border-solid items-stretch justify-start flex-row flex box-border relative"
+                    }
+                  >
+                    <div className="pl-2 w-1/2 pr-3 bg-transparent basis-0 grow justify-center items-stretch flex-col flex box-border relative">
                       <Link
                         to={"/matchup"}
                         onClick={() => setCurrentMatchup(matchup)}
@@ -125,7 +143,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                         </div>
                       </Link>
                     </div>
-                    <div className="w-1/2 items-stretch justify-start flex-col flex box-border relative">
+                    <div className="w-1/2 items-stretch justify-start flex-col flex box-border relative mr-2">
                       <div className="flex-row flex h-[56px] mb-2 items-center justify-start box-border relative">
                         <PropLine
                           team={matchup.road.name}
@@ -147,6 +165,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.home.name,
                           )}
                           isHome={false}
+                          isClose={matchup.isClose}
                         />
                         <PropLine
                           team={matchup.road.name}
@@ -168,6 +187,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.home.name,
                           )}
                           isHome={false}
+                          isClose={matchup.isClose}
                         />
                         <PropLine
                           team={matchup.road.name}
@@ -189,6 +209,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.home.name,
                           )}
                           isHome={false}
+                          isClose={matchup.isClose}
                         />
                       </div>
                       <div className="h-[56px] items-center flex-row flex justify-start box-border relative">
@@ -212,6 +233,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.home.name,
                           )}
                           isHome={true}
+                          isClose={matchup.isClose}
                         />
                         <PropLine
                           team={matchup.home.name}
@@ -233,6 +255,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.home.name,
                           )}
                           isHome={true}
+                          isClose={matchup.isClose}
                         />
                         <PropLine
                           team={matchup.home.name}
@@ -254,6 +277,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             matchup.home.name,
                           )}
                           isHome={true}
+                          isClose={matchup.isClose}
                         />
                       </div>
                     </div>

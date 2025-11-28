@@ -1,1 +1,2 @@
-export declare function Lockout(): import("react/jsx-runtime").JSX.Element;
+import { LockoutProps } from "../../utils/Interfaces";
+export declare function Lockout(props: LockoutProps): import("react/jsx-runtime").JSX.Element;

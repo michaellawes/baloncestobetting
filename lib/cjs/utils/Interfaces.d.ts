@@ -3,6 +3,9 @@ export interface AuthProps {
     isLoggedIn: boolean;
     profileImg: string;
 }
+export interface ErrorLanderProps {
+    message: string;
+}
 export interface IndividualLineMetadata {
     text: string;
     over_odds: number;
@@ -13,9 +16,13 @@ export interface LiveParlayViewerProps {
     setBalance: React.Dispatch<React.SetStateAction<number>>;
     isLoggedIn: boolean;
 }
+export interface LockoutProps {
+    message: string;
+}
 export interface MatchupSchema {
     road: Team;
     home: Team;
+    isClose: boolean;
 }
 export interface MatchupsProps {
     matchup: MatchupSchema;
@@ -88,6 +95,16 @@ export interface ParlayTask {
     index?: number;
     did_hit?: boolean;
     live_value?: number;
+}
+export interface ParlaysViewerProps {
+    setBalance: React.Dispatch<React.SetStateAction<number>>;
+    user: UserData;
+    setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
+    setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
+    matchups: MatchupSchema[];
+    setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
+    matchup: number;
 }
 export interface Player {
     name: string;
