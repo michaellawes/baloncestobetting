@@ -34,7 +34,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                   {matchup.isClose && (
                     <div className="relative z-70 ml-16 w-full justify-start flex h-0">
                       <span className="text-sm font-light text-yellow-300 font-face-cinema">
-                        MATCHUP Cinema
+                        cinema matchup
                       </span>
                     </div>
                   )}
@@ -290,18 +290,4 @@ export function WeeklySlate(props: WeeklySlateProps) {
       </div>
     </div>
   );
-  /*
-  return (
-    <div>
-      {matchups.length > 0 && (
-        <div className="weekly-slate-matchup-wrapper">
-          {matchups.map((matchup, index) => (
-            <div key={index} className="weekly-slate-matchup">
-              <Matchup {...matchup} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );*/
 }
