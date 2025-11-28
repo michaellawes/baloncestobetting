@@ -32,8 +32,14 @@ export function WeeklySlate(props: WeeklySlateProps) {
                   }
                 >
                   {matchup.isClose && (
-                    <div className="relative z-70 ml-15 w-full justify-start flex h-0">
-                      <span className="text-sm md:text-base font-bold text-yellow-400 font-face-cinema">
+                    <div className="relative z-70 justify-center w-1/2 flex h-0">
+                      <span
+                        className={
+                          window.innerWidth < 469
+                            ? "text-xs md:text-base font-bold text-yellow-400 font-face-cinema"
+                            : "text-sm md:text-base font-bold text-yellow-400 font-face-cinema"
+                        }
+                      >
                         cinema matchup
                       </span>
                     </div>
@@ -82,21 +88,60 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                   )}
                                 </div>
                                 <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
-                                  <span className="font-[ProximaNova-Bold, serif] text-gray-200 wrap-break-word hyphens-none text-ellipsis text-sm md:text-lg box-border overflow-hidden relative">
-                                    {matchup.road.name}
-                                  </span>
-                                  <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
-                                    {matchup.road.record}
-                                  </span>
+                                  <div className="flex flex-row">
+                                    <span className="font-[ProximaNova-Bold, serif] text-gray-200 wrap-break-word hyphens-none text-ellipsis text-sm md:text-lg box-border overflow-hidden relative">
+                                      {matchup.road.name}
+                                    </span>
+                                  </div>
+                                  <div className="flex flex-col justify-center">
+                                    <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
+                                      {matchup.road.record}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div className="pl-3.5 mb-1 overflow-visible h-0.25 justify-start items-center z-40 flex-row flex box-border relative">
-                          <span className="text-white font-light text-[20px]">
-                            @
-                          </span>
+                        <div className="pl-3.5 mb-1 overflow-visible h-0.25 justify-start items-center z-40 flex-row flex w-full box-border relative">
+                          <div className="flex flex-row w-1/6 md:w-1/20">
+                            <span className="text-white font-light text-[20px]">
+                              @
+                            </span>
+                          </div>
+                          <div className="flex flex-row justify-center md:justify-start w-5/6 md:w-19/20">
+                            <span className="font-[ProximaNova, serif] text-xs md:text-sm text-yellow-400 items-center">
+                              {matchup.isClose ? (
+                                <div className="flex flex-row w-full italic justify-center text-yellow-400 text-xs md:text-sm">
+                                  {Math.abs(
+                                    matchup.road.live_score -
+                                      matchup.home.live_score,
+                                  ) < 10 ? (
+                                    <span>Matchup is nearly tied!</span>
+                                  ) : matchup.road.live_score >
+                                    matchup.home.live_score ? (
+                                    <span>
+                                      Road team leads by{" "}
+                                      {(
+                                        matchup.road.live_score -
+                                        matchup.home.live_score
+                                      ).toFixed()}
+                                    </span>
+                                  ) : (
+                                    <span>
+                                      Home team leads by{" "}
+                                      {(
+                                        matchup.home.live_score -
+                                        matchup.road.live_score
+                                      ).toFixed()}
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          </div>
                         </div>
                         <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">
                           <div className="basis-0 grow justify-between flex-row items-stretch flex box-border relative">
@@ -130,12 +175,16 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                   )}
                                 </div>
                                 <div className="pl-4 basis-0 grow items-stretch justify-start flex-row flex box-border relative">
-                                  <span className="font-[ProximaNova-Bold, serif] text-blue-400 text-sm md:text-lg wrap-break-word hyphens-none text-ellipsis box-border overflow-hidden relative">
-                                    {matchup.home.name}
-                                  </span>
-                                  <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
-                                    {matchup.home.record}
-                                  </span>
+                                  <div className="flex flex-row">
+                                    <span className="font-[ProximaNova-Bold, serif] text-blue-400 wrap-break-word hyphens-none text-ellipsis text-sm md:text-lg box-border overflow-hidden relative">
+                                      {matchup.home.name}
+                                    </span>
+                                  </div>
+                                  <div className="flex flex-col justify-center">
+                                    <span className="font-[ProximaNova-Bold, serif] text-gray-400 wrap-break-word text-ellipsis text-[10px] md:text-xs hidden md:inline box-border overflow-hidden relative ml-2">
+                                      {matchup.home.record}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
