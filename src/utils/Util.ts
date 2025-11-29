@@ -8,7 +8,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -570,14 +570,8 @@ const getMatchupInformation = async (matchupId: number) => {
           matchup.home.points.text = "U " + propInfo.point_value;
           matchup.road.points.text = "O " + propInfo.point_value;
         } else if (betType === propField[2]) {
-          matchup.home.moneyline.odds =
-            homeTeam === propInfo.main_prop_id
-              ? propInfo.main_prop_odds
-              : propInfo.sub_prop_odds;
-          matchup.road.moneyline.odds =
-            homeTeam !== propInfo.main_prop_id
-              ? propInfo.main_prop_odds
-              : propInfo.sub_prop_odds;
+          matchup.home.moneyline.odds = propInfo.main_prop_odds;
+          matchup.road.moneyline.odds = propInfo.sub_prop_odds;
         }
         matchupToMatchupSchema.set(propId, matchup);
       } else {
