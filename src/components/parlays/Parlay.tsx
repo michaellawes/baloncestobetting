@@ -36,9 +36,11 @@ export function Parlay(props: ParlayProps) {
     is_winner,
     liveTeamData,
     setNotification,
+    livePlayerData,
   } = props;
 
   const getLiveValue = (leg: ParlayTask) => {
+    console.log(leg.frontend_id);
     if (
       leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
       propField[1]
@@ -78,9 +80,7 @@ export function Parlay(props: ParlayProps) {
       const playerName = leg.frontend_id.split("/")[0];
       return leg.live_value !== undefined
         ? leg.live_value
-        : parseFloat(
-            liveTeamData.get(leg.team).get(`${playerName}_score`),
-          ).toFixed();
+        : parseFloat(livePlayerData.get(playerName)).toFixed();
     }
   };
 
@@ -182,15 +182,10 @@ export function Parlay(props: ParlayProps) {
       leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
       propField[4]
     ) {
-      const team = leg.team;
       const playerName = leg.frontend_id.split("/")[0];
       const liveTeamScore = leg.live_value
         ? leg.live_value
-        : parseFloat(
-            parseFloat(
-              liveTeamData.get(team).get(`${playerName}_score`),
-            ).toFixed(),
-          );
+        : parseFloat(livePlayerData.get(playerName));
       const propTeamScore = parseFloat(getPropValue(leg.text));
       let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
       if (liveTeamScore >= propTeamScore) {

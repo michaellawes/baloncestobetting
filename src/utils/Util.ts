@@ -114,6 +114,19 @@ export const getAllParlayLegs = async (parlayIds: string[]) => {
   }
 };
 
+export const getAllPlayerLiveScores = (matchups: MatchupSchema[]) => {
+  const allPlayerData = new Map<string, string>();
+  for (const matchup of matchups) {
+    for (const player of matchup.road.top_5) {
+      allPlayerData.set(player.name, player.live_total.toString());
+    }
+    for (const player of matchup.home.top_5) {
+      allPlayerData.set(player.name, player.live_total.toString());
+    }
+  }
+  return allPlayerData;
+};
+
 export const getDaysSinceLastMonday = () => {
   return new Date().getDay() - 1;
 };

@@ -95,6 +95,7 @@ export interface ParlayInfo {
 export interface ParlayProps extends SupabaseParlay {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   liveTeamData: Map<string, Map<string, string>>;
+  livePlayerData: Map<string, string>;
   setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
 }
 

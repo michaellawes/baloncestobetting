@@ -3,6 +3,7 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import supabase from "../../config/supabaseConfig";
 import {
+  getAllPlayerLiveScores,
   getIndividualLegResultForParlays,
   getParlaysWithLegs,
   getTeamData,
@@ -30,6 +31,9 @@ export function Parlays(props: ParlaysViewerProps) {
   const [liveTeamData, setLiveTeamData] = React.useState<
     Map<string, Map<string, string>>
   >(new Map<string, Map<string, string>>());
+  const [livePlayerData, setLivePlayerData] = React.useState<
+    Map<string, string>
+  >(new Map<string, string>());
   const [hasNoParlays, setHasNoParlays] = React.useState(false);
   const [currentFilter, setCurrentFilter] = React.useState("ACTIVE");
 
@@ -122,6 +126,8 @@ export function Parlays(props: ParlaysViewerProps) {
     setIsViewingMatchup(false);
     const processedTeamData = getTeamData(matchups);
     setLiveTeamData(processedTeamData);
+    const getPlayerData = getAllPlayerLiveScores(matchups);
+    setLivePlayerData(getPlayerData);
     const getParlays = async () => {
       let userId = "";
       if (user) {
@@ -324,6 +330,7 @@ export function Parlays(props: ParlaysViewerProps) {
                   {...parlay}
                   setBalance={setBalance}
                   liveTeamData={liveTeamData}
+                  livePlayerData={livePlayerData}
                   setNotification={setNotification}
                 />
               </li>
