@@ -28,6 +28,7 @@ export function Parlay(props: ParlayProps) {
   const {
     parlay_id,
     created_at,
+    expires_at,
     is_active,
     legs,
     total_odds,
@@ -446,7 +447,7 @@ export function Parlay(props: ParlayProps) {
           </div>
         </div>
         <div className="w-full flex row shadow-sm rounded-xs bg-gray-800 ">
-          <div className="pl-2 flex w-1/2 items-center justify-start box-border relative font-mono">
+          <div className="pl-2 flex w-1/3 items-center justify-start box-border relative font-mono">
             <span className="text-gray-400 text-[8px]">
               <span className="uppercase text-gray-400 text-[8px]">
                 bet id:{" "}
@@ -454,7 +455,12 @@ export function Parlay(props: ParlayProps) {
               {parlay_id.substring(parlay_id.length - 5)}
             </span>
           </div>
-          <div className="pr-2 flex w-1/2 flex-row items-center justify-end box-border relative">
+          <div className="flex w-1/3 items-center justify-start box-border relative font-mono">
+            <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
+              expires: {getReadableDate(expires_at)}
+            </span>
+          </div>
+          <div className="pr-2 flex w-1/3 flex-row items-center justify-end box-border relative">
             <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
               placed: {getReadableDate(created_at)}
             </span>

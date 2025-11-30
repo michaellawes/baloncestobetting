@@ -287,23 +287,28 @@ export function App() {
       setJustAffectedParlayFieldUpdate(false);
       if (temp.parlay_modification_type === "validateSlip") {
         const updateParlay = async () => {
-          const { error } = await supabase
+          await supabase
             .from("fb_parlays")
             .update({
               is_winner: temp.parlay.is_winner,
               is_active: temp.parlay.is_active,
             })
             .eq("user_id", temp.user_id)
-            .eq("parlay_id", temp.parlay_id);
-          if (error) {
-            console.log(error);
-          }
+            .eq("parlay_id", temp.parlay_id)
+            .then((response) => {
+              if (response.error) {
+                throw response.error;
+              }
+
+              supabase
+                .from("fb_parlay_legs")
+                .upsert(temp.parlay.legs)
+                .then((response) => {
+                  if (response.error) throw response.error;
+                });
+            });
         };
         updateParlay();
-        if (temp.parlay.is_winner) {
-          setBalance((prev) => prev + parseFloat(temp.payout.toFixed(2)));
-          setJustAffectedBalance(true);
-        }
       }
     }
   }, [user, parlayFieldUpdate, justAffectedParlayFieldUpdate]);

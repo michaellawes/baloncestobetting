@@ -179,25 +179,13 @@ export const getIndividualLegResultForParlays = async (
     for (const leg of parlay.legs) {
       const betType =
         leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1];
-      const legId =
-        betType !== propField[4] && betType !== propField[1]
-          ? leg.team + "/" + betType
-          : leg.frontend_id.split("/")[0] + "/" + betType;
+      const legId = leg.frontend_id.split("/")[0] + "/" + betType;
       const lastLiveValue: number = legDictionary[legId];
-      /*if (lastLiveValue === undefined) {
-        console.log(legId);
-        leg.didHit = false;
-        leg.lastValue = 0;
-        console.log(
-          `For ${legId} the lastLiveValue ${lastLiveValue} and it was true is? ${leg.didHit}`,
-        );
-      } else {*/
       leg.did_hit = evaluateLeg(leg, lastLiveValue);
       leg.live_value =
         betType === propField[0]
           ? lastLiveValue
           : roundToInteger(lastLiveValue.toString());
-      //}
     }
     parlay.is_winner = parlay.legs.every((leg: ParlayTask) => leg.did_hit);
     return parlay;
