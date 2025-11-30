@@ -214,6 +214,7 @@ export function App() {
       expires.setUTCDate(
         expires.getUTCDate() + ((7 - expires.getUTCDay()) % 7) + 1,
       );
+      expires.setHours(4, 0, 0, 0);
       const parlayId = generateId();
 
       const uploadParlay = async () => {

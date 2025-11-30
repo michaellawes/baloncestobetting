@@ -73,9 +73,10 @@ export function Parlays(props: ParlaysViewerProps) {
     for (const parlay of data) {
       const startOfExpirationDate = new Date(parlay.expires_at);
       startOfExpirationDate.setHours(0, 0, 0, 0);
-      parlay.frontend_is_active =
-        Date.now() < Date.parse(startOfExpirationDate.toISOString());
-      if (!parlay.frontend_is_active && parlay.is_active) {
+      if (
+        parlay.is_active &&
+        Date.now() > Date.parse(startOfExpirationDate.toISOString())
+      ) {
         newlyExpiredParlays.push(parlay);
       } else if (!parlay.frontend_is_active && !parlay.is_active) {
         expiredParlays.push(parlay);

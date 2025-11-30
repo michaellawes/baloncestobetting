@@ -8,7 +8,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -542,14 +542,8 @@ const getMatchupInformation = async (matchupId: number) => {
         const teamNames = propId.split(" v ");
         const homeTeam = teamNames[1];
         if (betType === propField[0]) {
-          matchup.home.spread.odds =
-            homeTeam === propInfo.main_prop_id
-              ? propInfo.main_prop_odds
-              : propInfo.sub_prop_odds;
-          matchup.road.spread.odds =
-            homeTeam !== propInfo.main_prop_id
-              ? propInfo.main_prop_odds
-              : propInfo.sub_prop_odds;
+          matchup.home.spread.odds = propInfo.main_prop_odds;
+          matchup.road.spread.odds = propInfo.sub_prop_odds;
           matchup.home.spread.text =
             homeTeam === propInfo.main_prop_id
               ? "-" + propInfo.point_value
