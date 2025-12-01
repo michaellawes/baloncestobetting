@@ -66,6 +66,15 @@ export function Matchup(props: MatchupsProps) {
       <ErrorLander message="Please return to the homepage and refresh..." />
     );
 
+  const isPlayerLockedOut = (lastGame: string) => {
+    return Date.now() >= new Date(lastGame).getTime();
+  };
+
+  const isTeamScoreLockedOut = (lastFirstGame: number) => {
+    return Date.now() >= lastFirstGame;
+  };
+
+  // || new Date().getDate() >= new Date(player.last_game).getDate()
   return (
     <div className="w-full h-screen bg-gray-900">
       <div className="z-10 items-stretch justify-start bg-gray-800 flex-col flex box-border relative">
@@ -119,22 +128,32 @@ export function Matchup(props: MatchupsProps) {
                   </div>
                 </div>
                 <div className="w-full h-14 mt-2 items-center justify-center flex flex-row box-border relative px-6 py-1 ">
-                  <PropLine
-                    text={"O " + matchup.road.team_total.text}
-                    team={matchup.road.name}
-                    betType={propField[3]}
-                    odds={matchup.road.team_total.over_odds}
-                    frontend_id={matchup.road.name + "/O/" + propField[3]}
-                    oppId={matchup.road.name + "/U/" + propField[3]}
-                  />
-                  <PropLine
-                    text={"U " + matchup.road.team_total.text}
-                    team={matchup.road.name}
-                    betType={propField[3]}
-                    odds={matchup.road.team_total.under_odds}
-                    frontend_id={matchup.road.name + "/U/" + propField[3]}
-                    oppId={matchup.road.name + "/O/" + propField[3]}
-                  />
+                  {isTeamScoreLockedOut(matchup.road.first_last_game) ? (
+                    <>
+                      <span className="text-gray-500 uppercase">
+                        first game started
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <PropLine
+                        text={"O " + matchup.road.team_total.text}
+                        team={matchup.road.name}
+                        betType={propField[3]}
+                        odds={matchup.road.team_total.over_odds}
+                        frontend_id={matchup.road.name + "/O/" + propField[3]}
+                        oppId={matchup.road.name + "/U/" + propField[3]}
+                      />
+                      <PropLine
+                        text={"U " + matchup.road.team_total.text}
+                        team={matchup.road.name}
+                        betType={propField[3]}
+                        odds={matchup.road.team_total.under_odds}
+                        frontend_id={matchup.road.name + "/U/" + propField[3]}
+                        oppId={matchup.road.name + "/O/" + propField[3]}
+                      />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -184,22 +203,32 @@ export function Matchup(props: MatchupsProps) {
                   </div>
                 </div>
                 <div className="w-full h-14 mt-2 items-center justify-center flex flex-row box-border relative px-6 py-1 ">
-                  <PropLine
-                    text={"O " + matchup.home.team_total.text}
-                    team={matchup.home.name}
-                    betType={propField[3]}
-                    odds={matchup.home.team_total.over_odds}
-                    frontend_id={matchup.home.name + "/O/" + propField[3]}
-                    oppId={matchup.home.name + "/U/" + propField[3]}
-                  />
-                  <PropLine
-                    text={"U " + matchup.home.team_total.text}
-                    team={matchup.home.name}
-                    betType={propField[3]}
-                    odds={matchup.home.team_total.under_odds}
-                    frontend_id={matchup.home.name + "/U/" + propField[3]}
-                    oppId={matchup.home.name + "/O/" + propField[3]}
-                  />
+                  {isTeamScoreLockedOut(matchup.road.first_last_game) ? (
+                    <>
+                      <span className="text-gray-500 uppercase">
+                        first game started
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <PropLine
+                        text={"O " + matchup.road.team_total.text}
+                        team={matchup.road.name}
+                        betType={propField[3]}
+                        odds={matchup.road.team_total.over_odds}
+                        frontend_id={matchup.road.name + "/O/" + propField[3]}
+                        oppId={matchup.road.name + "/U/" + propField[3]}
+                      />
+                      <PropLine
+                        text={"U " + matchup.road.team_total.text}
+                        team={matchup.road.name}
+                        betType={propField[3]}
+                        odds={matchup.road.team_total.under_odds}
+                        frontend_id={matchup.road.name + "/U/" + propField[3]}
+                        oppId={matchup.road.name + "/O/" + propField[3]}
+                      />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -308,13 +337,18 @@ export function Matchup(props: MatchupsProps) {
                           </div>
                           <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
                             {player.games_left < 1 ||
-                            player.status === "OUT" ? (
-                              <div>
-                                <span className="text-gray-500 uppercase">
-                                  {player.status !== "OUT"
-                                    ? "no games left"
-                                    : player.status}
-                                </span>
+                            player.status === "OUT" ||
+                            isPlayerLockedOut(player.last_game) ? (
+                              <div className="text-gray-500 uppercase">
+                                {isPlayerLockedOut(player.last_game) ? (
+                                  <span>Last Game Started</span>
+                                ) : (
+                                  <span>
+                                    {player.status !== "OUT"
+                                      ? "no games left"
+                                      : player.status}
+                                  </span>
+                                )}
                               </div>
                             ) : (
                               <>
@@ -444,13 +478,18 @@ export function Matchup(props: MatchupsProps) {
                           </div>
                           <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
                             {player.games_left < 1 ||
-                            player.status === "OUT" ? (
-                              <div>
-                                <span className="text-gray-500 uppercase">
-                                  {player.status !== "OUT"
-                                    ? "no games left"
-                                    : player.status}
-                                </span>
+                            player.status === "OUT" ||
+                            isPlayerLockedOut(player.last_game) ? (
+                              <div className="text-gray-500 uppercase">
+                                {isPlayerLockedOut(player.last_game) ? (
+                                  <span>Last Game Started</span>
+                                ) : (
+                                  <span>
+                                    {player.status !== "OUT"
+                                      ? "no games left"
+                                      : player.status}
+                                  </span>
+                                )}
                               </div>
                             ) : (
                               <>

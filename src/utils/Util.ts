@@ -4,6 +4,7 @@ import {
   MatchupSchema,
   ParlayTask,
   SqlParlayMetadata,
+  SqlPlayerLastGame,
   SqlPlayerMetadata,
   SqlPropSlate,
   SqlTeamMetadata,
@@ -80,7 +81,7 @@ export const exportAsImage = async (
 ) => {
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
-  downloadImage(image, imageFileName);
+  await downloadImage(image, imageFileName);
 };
 
 export const generateId = () => {
@@ -427,6 +428,18 @@ export const getPropValue = (text: string) => {
   return text.substring(2);
 };
 
+const getPlayerLastGame = async () => {
+  const { data, error } = await supabase
+    .from("fb_player_last_game")
+    .select("*");
+
+  if (error) throw error;
+
+  if (data) {
+    return data;
+  }
+};
+
 const getAllPlayerData = async () => {
   const { data, error } = await supabase
     .from("fb_players")
@@ -435,7 +448,20 @@ const getAllPlayerData = async () => {
   if (error) throw error;
 
   if (data) {
-    return data;
+    const typedData: SqlPlayerMetadata[] = data;
+    const playerLastGameData: SqlPlayerLastGame[] = await getPlayerLastGame();
+    const playerToLastGame = Object.assign(
+      {},
+      ...playerLastGameData.map((x) => ({ [x.name]: x.last_game })),
+    );
+    for (const player of typedData) {
+      if (playerToLastGame[player.name] === undefined) {
+        player.last_game = "";
+      } else {
+        player.last_game = playerToLastGame[player.name];
+      }
+    }
+    return typedData;
   }
 };
 
@@ -584,6 +610,7 @@ const getMatchupInformation = async (matchupId: number) => {
                 over_odds: propInfo.main_prop_odds,
                 under_odds: propInfo.sub_prop_odds,
               },
+              last_game: playerMetadata.last_game,
             });
           } else if (matchup.road.name === propInfo.main_prop_id) {
             matchup.road.top_5.push({
@@ -599,6 +626,7 @@ const getMatchupInformation = async (matchupId: number) => {
                 over_odds: propInfo.main_prop_odds,
                 under_odds: propInfo.sub_prop_odds,
               },
+              last_game: playerMetadata.last_game,
             });
           }
           matchupToMatchupSchema.set(matchupName, matchup);
@@ -661,6 +689,18 @@ const getMatchupInformation = async (matchupId: number) => {
       matchupPropSlate.home.points.live_value = (
         roadLiveScore + homeLiveScore
       ).toFixed();
+      const lastDayRoadGamesSorted = matchupPropSlate.road.top_5
+        .map((player) => new Date(player.last_game).getTime())
+        .sort((a, b) => a - b);
+      matchupPropSlate.road.first_last_game = lastDayRoadGamesSorted[0];
+      const lastDayHomeGamesSorted = matchupPropSlate.home.top_5
+        .map((player) => new Date(player.last_game).getTime())
+        .sort((a, b) => a - b);
+      matchupPropSlate.home.first_last_game = lastDayHomeGamesSorted[0];
+      matchupPropSlate.lastGame = Math.max(
+        lastDayHomeGamesSorted[lastDayHomeGamesSorted.length - 1],
+        lastDayRoadGamesSorted[lastDayRoadGamesSorted.length - 1],
+      );
       weeklySlate.push(matchupPropSlate);
     }
     return weeklySlate;

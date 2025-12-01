@@ -29,6 +29,7 @@ export interface MatchupSchema {
   road: Team;
   home: Team;
   isClose: boolean;
+  lastGame?: number;
 }
 
 export interface MatchupsProps {
@@ -132,6 +133,7 @@ export interface Player {
   live_total: number;
   position: string;
   prop_line: IndividualLineMetadata;
+  last_game: string;
 }
 
 export interface PropLineInterface {
@@ -168,6 +170,11 @@ export interface SqlParlayMetadata {
   payout: number;
 }
 
+export interface SqlPlayerLastGame {
+  name: string;
+  last_game: string;
+}
+
 export interface SqlPlayerMetadata {
   name: string;
   team: string;
@@ -177,6 +184,7 @@ export interface SqlPlayerMetadata {
   fantasy_team_name: string;
   avg: number;
   games_left: number;
+  last_game?: string;
 }
 
 export interface SqlPropSlate {
@@ -223,6 +231,7 @@ export interface Team {
   live_score: number;
   team_total: IndividualLineMetadata;
   top_5: Player[];
+  first_last_game?: number;
 }
 
 export interface UserData {
