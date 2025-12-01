@@ -121,7 +121,12 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                     matchup.road.live_score -
                                       matchup.home.live_score,
                                   ) < 11 ? (
-                                    <span>Matchup nearly tied!</span>
+                                    <span>
+                                      {matchup.road.live_score > 0 ||
+                                      matchup.home.live_score > 0
+                                        ? "Matchup nearly tied!"
+                                        : ""}
+                                    </span>
                                   ) : matchup.road.live_score >
                                     matchup.home.live_score ? (
                                     <span>
