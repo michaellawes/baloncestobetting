@@ -177,9 +177,9 @@ export const getIndividualLegResultForParlays = async (
       ...data.map((x) => ({ [x.prop_id]: x.live_value })),
     );
     for (const leg of parlay.legs) {
-      const betType =
-        leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1];
-      const legId = leg.frontend_id.split("/")[0] + "/" + betType;
+      const legTokens = leg.frontend_id.split("/");
+      const betType = legTokens[legTokens.length - 1];
+      const legId = legTokens[0] + "/" + betType;
       const lastLiveValue: number = legDictionary[legId];
       leg.did_hit = evaluateLeg(leg, lastLiveValue);
       leg.live_value =

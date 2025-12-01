@@ -102,6 +102,9 @@ export function Parlays(props: ParlaysViewerProps) {
     const updateSlip = async () => {
       validatedParlay.is_active = false;
       if (validatedParlay.is_winner) {
+        console.log(
+          `Add winnings from ${validatedParlay.parlay_id} of ${parseFloat(parlay.payout.toFixed(2))}`,
+        );
         setBalance((prev) => prev + parseFloat(parlay.payout.toFixed(2)));
         dispatch({
           type: "acceptPayout",

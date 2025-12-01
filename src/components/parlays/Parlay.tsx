@@ -41,7 +41,6 @@ export function Parlay(props: ParlayProps) {
   } = props;
 
   const getLiveValue = (leg: ParlayTask) => {
-    console.log(leg.frontend_id);
     if (
       leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
       propField[1]
