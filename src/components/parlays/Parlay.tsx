@@ -454,7 +454,7 @@ export function Parlay(props: ParlayProps) {
               {parlay_id.substring(parlay_id.length - 5)}
             </span>
           </div>
-          <div className="flex w-1/3 items-center justify-start box-border relative font-mono">
+          <div className="flex w-1/3 items-center justify-center box-border relative font-mono">
             <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
               expires: {getReadableDate(expires_at)}
             </span>
