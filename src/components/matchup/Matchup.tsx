@@ -196,7 +196,7 @@ export function Matchup(props: MatchupsProps) {
                           className="flex flex-col w-full border-b-2 border-b-gray-400"
                           key={player.name}
                         >
-                          <div className="flex flex-row w-full justify-start ml-1 mt-1 font-bold items-start">
+                          <div className="flex flex-row w-full justify-start ml-2 mt-1 font-bold items-start">
                             <span className="text-gray-300 text-xs">
                               {index + 1}
                             </span>
@@ -275,22 +275,39 @@ export function Matchup(props: MatchupsProps) {
                             </div>
                           </div>
                           <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
-                            <PropLine
-                              text={"O " + player.prop_line.text}
-                              team={matchup.road.name}
-                              betType={propField[4]}
-                              odds={player.prop_line.over_odds}
-                              frontend_id={player.name + "/O/" + propField[4]}
-                              oppId={player.name + "/U/" + propField[4]}
-                            />
-                            <PropLine
-                              text={"U " + player.prop_line.text}
-                              team={matchup.road.name}
-                              betType={propField[4]}
-                              odds={player.prop_line.under_odds}
-                              frontend_id={player.name + "/U/" + propField[4]}
-                              oppId={player.name + "/O/" + propField[4]}
-                            />
+                            {player.games_left < 1 ||
+                            player.status === "OUT" ? (
+                              <div>
+                                <span className="text-gray-500 uppercase">
+                                  {player.status !== "OUT"
+                                    ? "no games left"
+                                    : player.status}
+                                </span>
+                              </div>
+                            ) : (
+                              <>
+                                <PropLine
+                                  text={"O " + player.prop_line.text}
+                                  team={matchup.home.name}
+                                  betType={propField[4]}
+                                  odds={player.prop_line.over_odds}
+                                  frontend_id={
+                                    player.name + "/O/" + propField[4]
+                                  }
+                                  oppId={player.name + "/U/" + propField[4]}
+                                />
+                                <PropLine
+                                  text={"U " + player.prop_line.text}
+                                  team={matchup.home.name}
+                                  betType={propField[4]}
+                                  odds={player.prop_line.under_odds}
+                                  frontend_id={
+                                    player.name + "/U/" + propField[4]
+                                  }
+                                  oppId={player.name + "/O/" + propField[4]}
+                                />
+                              </>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -394,22 +411,39 @@ export function Matchup(props: MatchupsProps) {
                             </div>
                           </div>
                           <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
-                            <PropLine
-                              text={"O " + player.prop_line.text}
-                              team={matchup.home.name}
-                              betType={propField[4]}
-                              odds={player.prop_line.over_odds}
-                              frontend_id={player.name + "/O/" + propField[4]}
-                              oppId={player.name + "/U/" + propField[4]}
-                            />
-                            <PropLine
-                              text={"U " + player.prop_line.text}
-                              team={matchup.home.name}
-                              betType={propField[4]}
-                              odds={player.prop_line.under_odds}
-                              frontend_id={player.name + "/U/" + propField[4]}
-                              oppId={player.name + "/O/" + propField[4]}
-                            />
+                            {player.games_left < 1 ||
+                            player.status === "OUT" ? (
+                              <div>
+                                <span className="text-gray-500 uppercase">
+                                  {player.status !== "OUT"
+                                    ? "no games left"
+                                    : player.status}
+                                </span>
+                              </div>
+                            ) : (
+                              <>
+                                <PropLine
+                                  text={"O " + player.prop_line.text}
+                                  team={matchup.home.name}
+                                  betType={propField[4]}
+                                  odds={player.prop_line.over_odds}
+                                  frontend_id={
+                                    player.name + "/O/" + propField[4]
+                                  }
+                                  oppId={player.name + "/U/" + propField[4]}
+                                />
+                                <PropLine
+                                  text={"U " + player.prop_line.text}
+                                  team={matchup.home.name}
+                                  betType={propField[4]}
+                                  odds={player.prop_line.under_odds}
+                                  frontend_id={
+                                    player.name + "/U/" + propField[4]
+                                  }
+                                  oppId={player.name + "/O/" + propField[4]}
+                                />
+                              </>
+                            )}
                           </div>
                         </div>
                       ))}
