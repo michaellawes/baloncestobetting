@@ -27,6 +27,38 @@ export function Matchup(props: MatchupsProps) {
   useEffect(() => {
     setIsViewingDashboard(false);
     setIsViewingMatchup(true);
+    const tempRoadPlayers = matchup.road.top_5;
+    const tempHomePlayers = matchup.home.top_5;
+    matchup.road.top_5 = matchup.road.top_5.filter(
+      (player) => player.status !== "OUT",
+    );
+    matchup.home.top_5 = matchup.home.top_5.filter(
+      (player) => player.status !== "OUT",
+    );
+    if (matchup.road.top_5.length < 5) {
+      const injuredPlayers = tempRoadPlayers.filter(
+        (player) => player.status === "OUT",
+      );
+      let availableSpots = 5 - matchup.road.top_5.length;
+      let index = 0;
+      while (availableSpots > 0) {
+        matchup.road.top_5.push(injuredPlayers[index]);
+        index++;
+        availableSpots--;
+      }
+    }
+    if (matchup.home.top_5.length < 5) {
+      const injuredPlayers = tempHomePlayers.filter(
+        (player) => player.status === "OUT",
+      );
+      let availableSpots = 5 - matchup.home.top_5.length;
+      let index = 0;
+      while (availableSpots > 0) {
+        matchup.home.top_5.push(injuredPlayers[index]);
+        index++;
+        availableSpots--;
+      }
+    }
   }, []);
 
   if (!matchup)
@@ -288,7 +320,7 @@ export function Matchup(props: MatchupsProps) {
                               <>
                                 <PropLine
                                   text={"O " + player.prop_line.text}
-                                  team={matchup.home.name}
+                                  team={matchup.road.name}
                                   betType={propField[4]}
                                   odds={player.prop_line.over_odds}
                                   frontend_id={
@@ -298,7 +330,7 @@ export function Matchup(props: MatchupsProps) {
                                 />
                                 <PropLine
                                   text={"U " + player.prop_line.text}
-                                  team={matchup.home.name}
+                                  team={matchup.road.name}
                                   betType={propField[4]}
                                   odds={player.prop_line.under_odds}
                                   frontend_id={
