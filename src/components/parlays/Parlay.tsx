@@ -1,6 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  fas,
+  faShare,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -11,7 +17,7 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5
+  round5,
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
@@ -129,13 +135,14 @@ export function Parlay(props: ParlayProps) {
     ) {
       const teams = leg.frontend_id.split("/")[0].split(" v ");
       const roadTeamName = teams[0];
-      const liveTotalPointsScored = leg.live_value
-        ? leg.live_value
-        : parseFloat(
-            parseFloat(
-              liveTeamData.get(roadTeamName).get("live_points"),
-            ).toFixed(),
-          );
+      const liveTotalPointsScored =
+        leg.live_value !== undefined
+          ? leg.live_value
+          : parseFloat(
+              parseFloat(
+                liveTeamData.get(roadTeamName).get("live_points"),
+              ).toFixed(),
+            );
       const propTotalPointsScored = parseFloat(getPropValue(leg.text));
       let propTotalPointsScoredFull = parseFloat(
         (propTotalPointsScored * 1.2).toFixed(2),
@@ -146,8 +153,15 @@ export function Parlay(props: ParlayProps) {
       const percentFull = parseFloat(
         ((liveTotalPointsScored / propTotalPointsScoredFull) * 100).toFixed(),
       );
-      if (percentFull <= 80) {
-        const styling = round5(percentFull).toString();
+      if (percentFull < 85) {
+        let styling = round5(percentFull).toString();
+        if (
+          leg.did_hit !== undefined &&
+          !leg.did_hit &&
+          leg.text.startsWith("O")
+        ) {
+          styling = Math.min(75, percentFull).toString();
+        }
         return progressBarWidth.get(styling);
       }
     } else if (
@@ -155,11 +169,12 @@ export function Parlay(props: ParlayProps) {
       propField[3]
     ) {
       const team = leg.team;
-      const liveTeamScore = leg.live_value
-        ? leg.live_value
-        : parseFloat(
-            parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
-          );
+      const liveTeamScore =
+        leg.live_value !== undefined
+          ? leg.live_value
+          : parseFloat(
+              parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
+            );
       const propTeamScore = parseFloat(getPropValue(leg.text));
       let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
       if (liveTeamScore >= propTeamScore) {
@@ -168,8 +183,15 @@ export function Parlay(props: ParlayProps) {
       const percentFull = parseFloat(
         ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
-      if (percentFull <= 80) {
-        const styling = round5(percentFull).toString();
+      if (percentFull < 85) {
+        let styling = round5(percentFull).toString();
+        if (
+          leg.did_hit !== undefined &&
+          !leg.did_hit &&
+          leg.text.startsWith("O")
+        ) {
+          styling = Math.min(75, percentFull).toString();
+        }
         return progressBarWidth.get(styling);
       }
     } else if (
@@ -177,9 +199,10 @@ export function Parlay(props: ParlayProps) {
       propField[4]
     ) {
       const playerName = leg.frontend_id.split("/")[0];
-      const liveTeamScore = leg.live_value
-        ? leg.live_value
-        : parseFloat(livePlayerData.get(playerName));
+      const liveTeamScore =
+        leg.live_value !== undefined
+          ? leg.live_value
+          : parseFloat(livePlayerData.get(playerName));
       const propTeamScore = parseFloat(getPropValue(leg.text));
       let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
       if (liveTeamScore >= propTeamScore) {
@@ -188,7 +211,7 @@ export function Parlay(props: ParlayProps) {
       const percentFull = parseFloat(
         ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
-      if (percentFull <= 80) {
+      if (percentFull < 85) {
         let styling = round5(percentFull).toString();
         if (
           leg.did_hit !== undefined &&
