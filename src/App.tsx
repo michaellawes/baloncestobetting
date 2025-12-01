@@ -273,7 +273,7 @@ export function App() {
       };
       updateBalance();
     }
-  }, [balance, user, justAffectedBalance]);
+  }, [user, justAffectedBalance, balance]);
 
   useEffect(() => {
     if (user && justAffectedParlayFieldUpdate) {
@@ -389,12 +389,12 @@ export function App() {
         });
         return [];
       }
-      case "acceptPayout": {
-        setJustAffectedBalance(true);
-        return tasks;
-      }
       case "parlayFieldUpdate": {
         setJustAffectedParlayFieldUpdate(true);
+        return tasks;
+      }
+      case "updateBalanceAfterWinning": {
+        setJustAffectedBalance(true);
         return tasks;
       }
       case "clearSlip": {
@@ -450,6 +450,7 @@ export function App() {
                 <Parlays
                   setBalance={setBalance}
                   user={user}
+                  balance={balance}
                   setParlayFieldUpdate={setParlayFieldUpdate}
                   setIsViewingDashboard={setIsViewingDashboard}
                   setIsViewingMatchup={setIsViewingMatchup}

@@ -114,6 +114,7 @@ export interface ParlayTask {
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   user: UserData;
+  balance: number;
   setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
   setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
   setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;

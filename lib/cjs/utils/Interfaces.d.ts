@@ -82,6 +82,7 @@ export interface ParlayInfo {
 export interface ParlayProps extends SupabaseParlay {
     setBalance: React.Dispatch<React.SetStateAction<number>>;
     liveTeamData: Map<string, Map<string, string>>;
+    livePlayerData: Map<string, string>;
     setNotification: React.Dispatch<React.SetStateAction<NotificationMetadata>>;
 }
 export interface ParlayTask {
@@ -99,6 +100,7 @@ export interface ParlayTask {
 export interface ParlaysViewerProps {
     setBalance: React.Dispatch<React.SetStateAction<number>>;
     user: UserData;
+    balance: number;
     setParlayFieldUpdate: React.Dispatch<React.SetStateAction<ParlayFieldUpdate>>;
     setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
     setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -131,6 +133,7 @@ export interface PropLineProps {
     frontend_id: string;
     oppId: string;
     isHome?: boolean;
+    isClose?: boolean;
 }
 export interface SqlParlayMetadata {
     parlay_id: string;
@@ -149,7 +152,6 @@ export interface SqlPlayerMetadata {
     name: string;
     team: string;
     pos: string;
-    live_score: number;
     status: string;
     matchup_id?: number;
     fantasy_team_name: string;
@@ -157,14 +159,13 @@ export interface SqlPlayerMetadata {
     games_left: number;
 }
 export interface SqlPropSlate {
-    day_id: number;
     main_prop_id: string;
     main_prop_odds: number;
     matchup_id: number;
     point_value: number;
     prop_id: string;
-    sub_prop_id: string;
     sub_prop_odds: number;
+    live_value: number;
 }
 export interface SqlTeamMetadata {
     name: string;

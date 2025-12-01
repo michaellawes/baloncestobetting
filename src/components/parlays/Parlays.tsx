@@ -16,6 +16,7 @@ import { Lockout } from "../dashboard/Lockout";
 export function Parlays(props: ParlaysViewerProps) {
   const {
     setBalance,
+    balance,
     setParlayFieldUpdate,
     user,
     setIsViewingDashboard,
@@ -88,9 +89,28 @@ export function Parlays(props: ParlaysViewerProps) {
     const processedData: SupabaseParlay[] = activeSlips.concat(expiredParlays);
 
     if (newlyExpiredParlays.length > 0) {
+      let totalWinnings = 0;
       for (const parlay of newlyExpiredParlays) {
         const processedParlay = await validateResultOfFinishedSlips(parlay);
+        if (processedParlay.is_winner) {
+          totalWinnings += processedParlay.payout;
+        }
         processedData.push(processedParlay);
+      }
+      if (totalWinnings > 0) {
+        const newBalance = parseFloat(totalWinnings.toFixed(2)) + balance;
+        const { error } = await supabase
+          .from("users")
+          .update({ balance: newBalance })
+          .eq("id", user.id);
+
+        if (error) {
+          console.log(error);
+        }
+        setBalance(newBalance);
+        dispatch({
+          type: "updateBalanceAfterWinning",
+        });
       }
     }
 
@@ -101,15 +121,6 @@ export function Parlays(props: ParlaysViewerProps) {
     const validatedParlay = await getIndividualLegResultForParlays(parlay);
     const updateSlip = async () => {
       validatedParlay.is_active = false;
-      if (validatedParlay.is_winner) {
-        console.log(
-          `Add winnings from ${validatedParlay.parlay_id} of ${parseFloat(parlay.payout.toFixed(2))}`,
-        );
-        setBalance((prev) => prev + parseFloat(parlay.payout.toFixed(2)));
-        dispatch({
-          type: "acceptPayout",
-        });
-      }
       setParlayFieldUpdate({
         user_id: validatedParlay.user_id,
         parlay_id: validatedParlay.parlay_id,
