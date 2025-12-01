@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -17,7 +11,7 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5,
+  round5
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
@@ -195,7 +189,14 @@ export function Parlay(props: ParlayProps) {
         ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
       if (percentFull <= 80) {
-        const styling = round5(percentFull).toString();
+        let styling = round5(percentFull).toString();
+        if (
+          leg.did_hit !== undefined &&
+          !leg.did_hit &&
+          leg.text.startsWith("O")
+        ) {
+          styling = Math.min(75, percentFull).toString();
+        }
         return progressBarWidth.get(styling);
       }
     }
