@@ -17,7 +17,6 @@ import {
   getPropValue,
   getReadableDate,
   numberWithCommas,
-  round5,
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
@@ -144,26 +143,28 @@ export function Parlay(props: ParlayProps) {
               ).toFixed(),
             );
       const propTotalPointsScored = parseFloat(getPropValue(leg.text));
-      let propTotalPointsScoredFull = parseFloat(
-        (propTotalPointsScored * 1.2).toFixed(2),
+      const propTotalPointsScoredFull = parseFloat(
+        (propTotalPointsScored * 1.2).toFixed(),
       );
-      if (liveTotalPointsScored >= propTotalPointsScored) {
-        propTotalPointsScoredFull = liveTotalPointsScored;
-      }
       const percentFull = parseFloat(
         ((liveTotalPointsScored / propTotalPointsScoredFull) * 100).toFixed(),
       );
-      if (percentFull < 85) {
-        let styling = round5(percentFull).toString();
-        if (
-          leg.did_hit !== undefined &&
-          !leg.did_hit &&
-          leg.text.startsWith("O")
-        ) {
-          styling = Math.min(75, percentFull).toString();
-        }
-        return progressBarWidth.get(styling);
+      let styling = percentFull.toString();
+      if (
+        leg.did_hit !== undefined &&
+        !leg.did_hit &&
+        leg.text.startsWith("O")
+      ) {
+        styling = Math.min(75, percentFull).toString();
       }
+      if (
+        leg.did_hit !== undefined &&
+        leg.did_hit &&
+        leg.text.startsWith("U")
+      ) {
+        styling = Math.min(75, percentFull).toString();
+      }
+      return progressBarWidth.get(styling);
     } else if (
       leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
       propField[3]
@@ -176,52 +177,56 @@ export function Parlay(props: ParlayProps) {
               parseFloat(liveTeamData.get(team).get("live_score")).toFixed(),
             );
       const propTeamScore = parseFloat(getPropValue(leg.text));
-      let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
-      if (liveTeamScore >= propTeamScore) {
-        propTeamScoreFull = liveTeamScore;
-      }
+      const propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed());
       const percentFull = parseFloat(
         ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
-      if (percentFull < 85) {
-        let styling = round5(percentFull).toString();
-        if (
-          leg.did_hit !== undefined &&
-          !leg.did_hit &&
-          leg.text.startsWith("O")
-        ) {
-          styling = Math.min(75, percentFull).toString();
-        }
-        return progressBarWidth.get(styling);
+      let styling = percentFull.toString();
+      if (
+        leg.did_hit !== undefined &&
+        !leg.did_hit &&
+        leg.text.startsWith("O")
+      ) {
+        styling = Math.min(75, percentFull).toString();
       }
+      if (
+        leg.did_hit !== undefined &&
+        leg.did_hit &&
+        leg.text.startsWith("U")
+      ) {
+        styling = Math.min(75, percentFull).toString();
+      }
+      return progressBarWidth.get(styling);
     } else if (
       leg.frontend_id.split("/")[leg.frontend_id.split("/").length - 1] ===
       propField[4]
     ) {
       const playerName = leg.frontend_id.split("/")[0];
-      const liveTeamScore =
+      const livePlayerScore =
         leg.live_value !== undefined
           ? leg.live_value
           : parseFloat(livePlayerData.get(playerName));
-      const propTeamScore = parseFloat(getPropValue(leg.text));
-      let propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed(2));
-      if (liveTeamScore >= propTeamScore) {
-        propTeamScoreFull = liveTeamScore;
-      }
+      const propPlayerScore = parseFloat(getPropValue(leg.text));
+      const propPlayerScoreFull = parseFloat((propPlayerScore * 1.2).toFixed());
       const percentFull = parseFloat(
-        ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
+        ((livePlayerScore / propPlayerScoreFull) * 100).toFixed(),
       );
-      if (percentFull < 85) {
-        let styling = round5(percentFull).toString();
-        if (
-          leg.did_hit !== undefined &&
-          !leg.did_hit &&
-          leg.text.startsWith("O")
-        ) {
-          styling = Math.min(75, percentFull).toString();
-        }
-        return progressBarWidth.get(styling);
+      let styling = percentFull.toString();
+      if (
+        leg.did_hit !== undefined &&
+        !leg.did_hit &&
+        leg.text.startsWith("O")
+      ) {
+        styling = Math.min(75, percentFull).toString();
       }
+      if (
+        leg.did_hit !== undefined &&
+        leg.did_hit &&
+        leg.text.startsWith("U")
+      ) {
+        styling = Math.min(75, percentFull).toString();
+      }
+      return progressBarWidth.get(styling);
     }
     return "h-[4px] z-50 bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-full";
   };

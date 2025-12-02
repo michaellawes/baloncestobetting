@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import {
   getPlayerNameIsTooLong,
+  getStandardTime,
   getTeamNameIsTooLong,
   roundToInteger,
 } from "../../utils/Util";
@@ -30,33 +31,57 @@ export function Matchup(props: MatchupsProps) {
     const tempRoadPlayers = matchup.road.top_5;
     const tempHomePlayers = matchup.home.top_5;
     matchup.road.top_5 = matchup.road.top_5.filter(
-      (player) => player.status !== "OUT",
+      (player) => player.status !== "OUT" && player.games_left > 0,
     );
     matchup.home.top_5 = matchup.home.top_5.filter(
-      (player) => player.status !== "OUT",
+      (player) => player.status !== "OUT" && player.games_left > 0,
     );
     if (matchup.road.top_5.length < 5) {
-      const injuredPlayers = tempRoadPlayers.filter(
-        (player) => player.status === "OUT",
+      const playersWithNoGamesLeft = tempRoadPlayers.filter(
+        (player) => player.games_left == 0,
       );
       let availableSpots = 5 - matchup.road.top_5.length;
       let index = 0;
       while (availableSpots > 0) {
-        matchup.road.top_5.push(injuredPlayers[index]);
+        matchup.road.top_5.push(playersWithNoGamesLeft[index]);
         index++;
         availableSpots--;
       }
+      if (matchup.road.top_5.length < 5) {
+        const injuredPlayers = tempRoadPlayers.filter(
+          (player) => player.status === "OUT",
+        );
+        let availableSpots = 5 - matchup.road.top_5.length;
+        let index = 0;
+        while (availableSpots > 0) {
+          matchup.road.top_5.push(injuredPlayers[index]);
+          index++;
+          availableSpots--;
+        }
+      }
     }
     if (matchup.home.top_5.length < 5) {
-      const injuredPlayers = tempHomePlayers.filter(
-        (player) => player.status === "OUT",
+      const playersWithNoGamesLeft = tempHomePlayers.filter(
+        (player) => player.games_left == 0,
       );
       let availableSpots = 5 - matchup.home.top_5.length;
       let index = 0;
       while (availableSpots > 0) {
-        matchup.home.top_5.push(injuredPlayers[index]);
+        matchup.home.top_5.push(playersWithNoGamesLeft[index]);
         index++;
         availableSpots--;
+      }
+      if (matchup.home.top_5.length < 5) {
+        const injuredPlayers = tempRoadPlayers.filter(
+          (player) => player.status === "OUT",
+        );
+        let availableSpots = 5 - matchup.home.top_5.length;
+        let index = 0;
+        while (availableSpots > 0) {
+          matchup.home.top_5.push(injuredPlayers[index]);
+          index++;
+          availableSpots--;
+        }
       }
     }
   }, []);
@@ -72,6 +97,14 @@ export function Matchup(props: MatchupsProps) {
 
   const isTeamScoreLockedOut = (lastFirstGame: number) => {
     return Date.now() >= lastFirstGame;
+  };
+
+  const getFinalGameFormatted = (lastGame: string) => {
+    const withRespectiveToTimezone = new Date(lastGame);
+    return getStandardTime(
+      withRespectiveToTimezone.getHours(),
+      withRespectiveToTimezone.getMinutes(),
+    );
   };
 
   // || new Date().getDate() >= new Date(player.last_game).getDate()
@@ -325,13 +358,24 @@ export function Matchup(props: MatchupsProps) {
                           </div>
                           <div className="flex flex-row justify-center w-full">
                             <div className="flex flex-row justify-center text-sm items-center text-center my-2">
-                              <span className="font-[ProximaNova, serif] font-light text-white mr-1">
-                                Games Left:
-                              </span>
+                              {player.games_left == 1 ? (
+                                <span className="text-yellow-400 font-bold font-[ProximaNova, serif]">
+                                  {"Final Game Today @ " +
+                                    getFinalGameFormatted(player.last_game)}
+                                </span>
+                              ) : (
+                                <span className="font-[ProximaNova, serif] font-light text-white mr-1">
+                                  Games Left:
+                                </span>
+                              )}
                               {player.status === "OUT" ? (
                                 <span className="text-gray-500">TBD</span>
                               ) : (
-                                player.games_left
+                                <span>
+                                  {player.games_left > 1
+                                    ? player.games_left
+                                    : ""}
+                                </span>
                               )}
                             </div>
                           </div>
@@ -466,13 +510,24 @@ export function Matchup(props: MatchupsProps) {
                           </div>
                           <div className="flex flex-row justify-center w-full">
                             <div className="flex flex-row justify-center text-sm items-center text-center my-2">
-                              <span className="font-[ProximaNova, serif] font-light text-white mr-1">
-                                Games Left:
-                              </span>
+                              {player.games_left == 1 ? (
+                                <span className="text-yellow-400 font-bold font-[ProximaNova, serif]">
+                                  {"Final Game Today @ " +
+                                    getFinalGameFormatted(player.last_game)}
+                                </span>
+                              ) : (
+                                <span className="font-[ProximaNova, serif] font-light text-white mr-1">
+                                  Games Left:
+                                </span>
+                              )}
                               {player.status === "OUT" ? (
                                 <span className="text-gray-500">TBD</span>
                               ) : (
-                                player.games_left
+                                <span>
+                                  {player.games_left > 1
+                                    ? player.games_left
+                                    : ""}
+                                </span>
                               )}
                             </div>
                           </div>
