@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -689,18 +689,24 @@ const getMatchupInformation = async (matchupId: number) => {
       matchupPropSlate.home.points.live_value = (
         roadLiveScore + homeLiveScore
       ).toFixed();
-      const lastDayRoadGamesSorted = matchupPropSlate.road.top_5
-        .map((player) => new Date(player.last_game).getTime())
-        .sort((a, b) => a - b);
-      matchupPropSlate.road.first_last_game = lastDayRoadGamesSorted[0];
-      const lastDayHomeGamesSorted = matchupPropSlate.home.top_5
-        .map((player) => new Date(player.last_game).getTime())
-        .sort((a, b) => a - b);
-      matchupPropSlate.home.first_last_game = lastDayHomeGamesSorted[0];
-      matchupPropSlate.lastGame = Math.max(
-        lastDayHomeGamesSorted[lastDayHomeGamesSorted.length - 1],
-        lastDayRoadGamesSorted[lastDayRoadGamesSorted.length - 1],
-      );
+      if (getDaysSinceLastMonday() == 6) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const lastDayRoadGamesSorted = matchupPropSlate.road.top_5
+          .map((player) => new Date(player.last_game).getTime())
+          .sort((a, b) => a - b)
+          .filter((time) => time > today.getTime());
+        matchupPropSlate.road.first_last_game = lastDayRoadGamesSorted[0];
+        const lastDayHomeGamesSorted = matchupPropSlate.home.top_5
+          .map((player) => new Date(player.last_game).getTime())
+          .sort((a, b) => a - b)
+          .filter((time) => time > today.getTime());
+        matchupPropSlate.home.first_last_game = lastDayHomeGamesSorted[0];
+        matchupPropSlate.lastGame = Math.max(
+          lastDayHomeGamesSorted[lastDayHomeGamesSorted.length - 1],
+          lastDayRoadGamesSorted[lastDayRoadGamesSorted.length - 1],
+        );
+      }
       weeklySlate.push(matchupPropSlate);
     }
     return weeklySlate;
