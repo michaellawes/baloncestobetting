@@ -41,7 +41,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                         className={
                           window.innerWidth < 469
                             ? "text-[12px] md:text-base font-bold text-yellow-400 font-face-cinema-upright"
-                            : "text-sm md:text-base font-bold text-yellow-400 font-face-cinema-upright"
+                            : "text-xs md:text-base font-bold text-yellow-400 font-face-cinema-upright"
                         }
                       >
                         cinema matchup
@@ -114,9 +114,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                             </span>
                           </div>
                           <div className="flex flex-row justify-center md:justify-start w-5/6 md:w-15/16">
-                            <span className="font-[ProximaNova, serif] text-[10px] md:text-sm text-yellow-400 items-center">
+                            <div className="font-[ProximaNova, serif] text-[10px] md:text-sm text-yellow-400 items-center">
                               {matchup.isClose ? (
-                                <div className="flex flex-row w-full italic justify-center">
+                                <div className="flex flex-row w-full italic justify-center mt-1">
                                   {Math.abs(
                                     matchup.road.live_score -
                                       matchup.home.live_score,
@@ -147,9 +147,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                   )}
                                 </div>
                               ) : (
-                                ""
+                                <span></span>
                               )}
-                            </span>
+                            </div>
                           </div>
                         </div>
                         <div className="basis-0 grow items-stretch justify-start flex-col flex box-border relative">

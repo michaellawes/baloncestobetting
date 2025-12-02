@@ -28,68 +28,65 @@ export function Matchup(props: MatchupsProps) {
   useEffect(() => {
     setIsViewingDashboard(false);
     setIsViewingMatchup(true);
-    const tempRoadPlayers = matchup.road.top_5;
-    const tempHomePlayers = matchup.home.top_5;
-    matchup.road.top_5 = matchup.road.top_5.filter(
-      (player) => player.status !== "OUT" && player.games_left > 0,
-    );
-    matchup.home.top_5 = matchup.home.top_5.filter(
-      (player) => player.status !== "OUT" && player.games_left > 0,
-    );
-    if (matchup.road.top_5.length < 5) {
-      const playersWithNoGamesLeft = tempRoadPlayers.filter(
-        (player) => player.games_left == 0,
+    if (matchup !== null) {
+      const tempRoadPlayers = matchup.road.top_5;
+      const tempHomePlayers = matchup.home.top_5;
+      matchup.road.top_5 = matchup.road.top_5.filter(
+        (player) => player.status !== "OUT" && player.games_left > 0,
       );
-      let availableSpots = 5 - matchup.road.top_5.length;
-      let index = 0;
-      while (availableSpots > 0) {
-        matchup.road.top_5.push(playersWithNoGamesLeft[index]);
-        index++;
-        availableSpots--;
-      }
+      matchup.home.top_5 = matchup.home.top_5.filter(
+        (player) => player.status !== "OUT" && player.games_left > 0,
+      );
       if (matchup.road.top_5.length < 5) {
-        const injuredPlayers = tempRoadPlayers.filter(
-          (player) => player.status === "OUT",
+        const playersWithNoGamesLeft = tempRoadPlayers.filter(
+          (player) => player.games_left == 0,
         );
         let availableSpots = 5 - matchup.road.top_5.length;
         let index = 0;
         while (availableSpots > 0) {
-          matchup.road.top_5.push(injuredPlayers[index]);
+          matchup.road.top_5.push(playersWithNoGamesLeft[index]);
           index++;
           availableSpots--;
         }
-      }
-    }
-    if (matchup.home.top_5.length < 5) {
-      const playersWithNoGamesLeft = tempHomePlayers.filter(
-        (player) => player.games_left == 0,
-      );
-      let availableSpots = 5 - matchup.home.top_5.length;
-      let index = 0;
-      while (availableSpots > 0) {
-        matchup.home.top_5.push(playersWithNoGamesLeft[index]);
-        index++;
-        availableSpots--;
+        if (matchup.road.top_5.length < 5) {
+          const injuredPlayers = tempRoadPlayers.filter(
+            (player) => player.status === "OUT",
+          );
+          let availableSpots = 5 - matchup.road.top_5.length;
+          let index = 0;
+          while (availableSpots > 0) {
+            matchup.road.top_5.push(injuredPlayers[index]);
+            index++;
+            availableSpots--;
+          }
+        }
       }
       if (matchup.home.top_5.length < 5) {
-        const injuredPlayers = tempRoadPlayers.filter(
-          (player) => player.status === "OUT",
+        const playersWithNoGamesLeft = tempHomePlayers.filter(
+          (player) => player.games_left == 0,
         );
         let availableSpots = 5 - matchup.home.top_5.length;
         let index = 0;
         while (availableSpots > 0) {
-          matchup.home.top_5.push(injuredPlayers[index]);
+          matchup.home.top_5.push(playersWithNoGamesLeft[index]);
           index++;
           availableSpots--;
+        }
+        if (matchup.home.top_5.length < 5) {
+          const injuredPlayers = tempRoadPlayers.filter(
+            (player) => player.status === "OUT",
+          );
+          let availableSpots = 5 - matchup.home.top_5.length;
+          let index = 0;
+          while (availableSpots > 0) {
+            matchup.home.top_5.push(injuredPlayers[index]);
+            index++;
+            availableSpots--;
+          }
         }
       }
     }
   }, []);
-
-  if (!matchup)
-    return (
-      <ErrorLander message="Please return to the homepage and refresh..." />
-    );
 
   const isPlayerLockedOut = (lastGame: string) => {
     return Date.now() >= new Date(lastGame).getTime();
@@ -113,7 +110,12 @@ export function Matchup(props: MatchupsProps) {
     return Date.now() >= withRespectiveToTimezone.getTime();
   };
 
-  // || new Date().getDate() >= new Date(player.last_game).getDate()
+  if (!matchup) {
+    return (
+      <ErrorLander message="Please return to the homepage and refresh..." />
+    );
+  }
+
   return (
     <div className="w-full h-screen bg-gray-900">
       <div className="z-10 items-stretch justify-start bg-gray-800 flex-col flex box-border relative">
