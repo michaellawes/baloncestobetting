@@ -236,7 +236,7 @@ export function Matchup(props: MatchupsProps) {
                   </div>
                 </div>
                 <div className="w-full h-14 mt-2 items-center justify-center flex flex-row box-border relative px-6 py-1 ">
-                  {isTeamScoreLockedOut(matchup.road.first_last_game) ? (
+                  {isTeamScoreLockedOut(matchup.home.first_last_game) ? (
                     <>
                       <span className="text-gray-500 uppercase">
                         first game started
@@ -245,20 +245,20 @@ export function Matchup(props: MatchupsProps) {
                   ) : (
                     <>
                       <PropLine
-                        text={"O " + matchup.road.team_total.text}
-                        team={matchup.road.name}
+                        text={"O " + matchup.home.team_total.text}
+                        team={matchup.home.name}
                         betType={propField[3]}
-                        odds={matchup.road.team_total.over_odds}
-                        frontend_id={matchup.road.name + "/O/" + propField[3]}
-                        oppId={matchup.road.name + "/U/" + propField[3]}
+                        odds={matchup.home.team_total.over_odds}
+                        frontend_id={matchup.home.name + "/O/" + propField[3]}
+                        oppId={matchup.home.name + "/U/" + propField[3]}
                       />
                       <PropLine
-                        text={"U " + matchup.road.team_total.text}
-                        team={matchup.road.name}
+                        text={"U " + matchup.home.team_total.text}
+                        team={matchup.home.name}
                         betType={propField[3]}
-                        odds={matchup.road.team_total.under_odds}
-                        frontend_id={matchup.road.name + "/U/" + propField[3]}
-                        oppId={matchup.road.name + "/O/" + propField[3]}
+                        odds={matchup.home.team_total.under_odds}
+                        frontend_id={matchup.home.name + "/U/" + propField[3]}
+                        oppId={matchup.home.name + "/O/" + propField[3]}
                       />
                     </>
                   )}
