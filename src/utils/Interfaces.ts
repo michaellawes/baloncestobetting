@@ -76,7 +76,7 @@ export interface ParlayAction {
   parlay_id?: string;
   is_winner?: boolean;
   parlay_modification_type?: string;
-  expires_at?: number;
+  expires_at?: string;
   legs?: ParlayTask[];
 }
 
@@ -158,8 +158,8 @@ export interface PropLineProps {
 
 export interface SqlParlayMetadata {
   parlay_id: string;
-  created_at: number;
-  expires_at: number;
+  created_at: string;
+  expires_at: string;
   is_active: boolean;
   is_winner: boolean;
   wager: number;
@@ -208,8 +208,8 @@ export interface SqlTeamMetadata {
 export interface SupabaseParlay {
   frontend_id?: string;
   user_id?: string;
-  created_at?: number;
-  expires_at?: number;
+  created_at?: string;
+  expires_at?: string;
   parlay_id?: string;
   matchup_id?: number;
   total_odds?: number;

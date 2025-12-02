@@ -214,15 +214,15 @@ export function App() {
       expires.setUTCDate(
         expires.getUTCDate() + ((7 - expires.getUTCDay()) % 7) + 1,
       );
-      expires.setHours(4, 0, 0, 0);
+      expires.setHours(0, 0, 0, 0);
       const parlayId = generateId();
 
       const uploadParlay = async () => {
         const newParlay = {
           user_id: user.id,
           parlay_id: parlayId,
-          created_at: +now,
-          expires_at: +expires,
+          created_at: now.toUTCString(),
+          expires_at: expires.toUTCString(),
           matchup_id: matchup,
           total_odds: parseFloat(currentParlay.totalOdds.toFixed()),
           payout: parseFloat(currentParlay.payout.toFixed(2)),

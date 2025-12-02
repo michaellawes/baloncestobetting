@@ -485,12 +485,12 @@ export function Parlay(props: ParlayProps) {
           </div>
           <div className="flex w-1/3 items-center justify-center box-border relative font-mono">
             <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
-              expires: {getReadableDate(expires_at)}
+              expires: {getReadableDate(new Date(expires_at))}
             </span>
           </div>
           <div className="pr-2 flex w-1/3 flex-row items-center justify-end box-border relative">
             <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
-              placed: {getReadableDate(created_at)}
+              placed: {getReadableDate(new Date(created_at))}
             </span>
           </div>
         </div>

@@ -19,11 +19,11 @@ export const demoParlays: SupabaseParlay[] = [
       },
     ],
     payout: 16.67,
-    created_at: 1762659052276,
+    created_at: new Date(1762659052276).toUTCString(),
     total_odds: -150,
     wager: 10,
     matchup_id: 4,
-    expires_at: 1762659052276,
+    expires_at: new Date(1762659052276).toUTCString(),
   },
   {
     user_id: "c967b5a2-479d-5b20-9c58-27e164630d33",
@@ -64,8 +64,8 @@ export const demoParlays: SupabaseParlay[] = [
         odds: -110,
       },
     ],
-    created_at: 1762973845208,
-    expires_at: 1763417915502,
+    created_at: new Date(1762973845208).toUTCString(),
+    expires_at: new Date(1763417915502).toUTCString(),
   },
 ];
 

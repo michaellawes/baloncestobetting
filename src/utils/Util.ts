@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -338,8 +338,7 @@ export const getPropTextWithRespectToScreenSize = (
   }
 };
 
-export const getReadableDate = (timestamp: number) => {
-  const d = new Date(timestamp);
+export const getReadableDate = (d: Date) => {
   return (
     d.getMonth() +
     1 +

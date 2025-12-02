@@ -72,11 +72,9 @@ export function Parlays(props: ParlaysViewerProps) {
     const expiredParlays: SupabaseParlay[] = [];
 
     for (const parlay of data) {
-      const startOfExpirationDate = new Date(parlay.expires_at);
-      startOfExpirationDate.setHours(0, 0, 0, 0);
       if (
         parlay.is_active &&
-        Date.now() > Date.parse(startOfExpirationDate.toISOString())
+        Date.now() > new Date(parlay.expires_at).getTime()
       ) {
         newlyExpiredParlays.push(parlay);
       } else if (!parlay.frontend_is_active && !parlay.is_active) {
@@ -114,7 +112,10 @@ export function Parlays(props: ParlaysViewerProps) {
       }
     }
 
-    return processedData.sort((a, b) => b.created_at - a.created_at);
+    return processedData.sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+    );
   };
 
   const validateResultOfFinishedSlips = async (parlay: SupabaseParlay) => {
