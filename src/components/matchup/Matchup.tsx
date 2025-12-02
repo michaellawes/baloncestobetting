@@ -107,6 +107,12 @@ export function Matchup(props: MatchupsProps) {
     );
   };
 
+  const getTodayIsLastDay = (lastGame: string) => {
+    const withRespectiveToTimezone = new Date(lastGame);
+    withRespectiveToTimezone.setHours(0, 0, 0, 0);
+    return Date.now() >= withRespectiveToTimezone.getTime();
+  };
+
   // || new Date().getDate() >= new Date(player.last_game).getDate()
   return (
     <div className="w-full h-screen bg-gray-900">
@@ -358,7 +364,8 @@ export function Matchup(props: MatchupsProps) {
                           </div>
                           <div className="flex flex-row justify-center w-full">
                             <div className="flex flex-row justify-center text-sm items-center text-center my-2">
-                              {player.games_left == 1 ? (
+                              {player.games_left == 1 &&
+                              getTodayIsLastDay(player.last_game) ? (
                                 <span className="text-yellow-400 font-bold font-[ProximaNova, serif]">
                                   {"Final Game Today @ " +
                                     getFinalGameFormatted(player.last_game)}
@@ -372,7 +379,8 @@ export function Matchup(props: MatchupsProps) {
                                 <span className="text-gray-500">TBD</span>
                               ) : (
                                 <span>
-                                  {player.games_left > 1
+                                  {player.games_left >= 1 &&
+                                  !getTodayIsLastDay(player.last_game)
                                     ? player.games_left
                                     : ""}
                                 </span>
@@ -510,7 +518,8 @@ export function Matchup(props: MatchupsProps) {
                           </div>
                           <div className="flex flex-row justify-center w-full">
                             <div className="flex flex-row justify-center text-sm items-center text-center my-2">
-                              {player.games_left == 1 ? (
+                              {player.games_left == 1 &&
+                              getTodayIsLastDay(player.last_game) ? (
                                 <span className="text-yellow-400 font-bold font-[ProximaNova, serif]">
                                   {"Final Game Today @ " +
                                     getFinalGameFormatted(player.last_game)}
@@ -524,7 +533,8 @@ export function Matchup(props: MatchupsProps) {
                                 <span className="text-gray-500">TBD</span>
                               ) : (
                                 <span>
-                                  {player.games_left > 1
+                                  {player.games_left >= 1 &&
+                                  !getTodayIsLastDay(player.last_game)
                                     ? player.games_left
                                     : ""}
                                 </span>
