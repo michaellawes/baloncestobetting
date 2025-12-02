@@ -1,6 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  fas,
+  faShare,
+  faSquareCheck,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -10,7 +16,7 @@ import {
   getPropTextWithRespectToScreenSize,
   getPropValue,
   getReadableDate,
-  numberWithCommas
+  numberWithCommas,
 } from "../../utils/Util";
 import { progressBarWidth, propField } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
@@ -469,7 +475,7 @@ export function Parlay(props: ParlayProps) {
           </div>
         </div>
         <div className="w-full flex row shadow-sm rounded-xs bg-gray-800 ">
-          <div className="pl-2 flex w-1/5 items-center justify-start box-border relative font-mono">
+          <div className="flex w-1/5 justify-start items-center box-border relative font-mono pl-2">
             <span className="text-gray-400 text-[8px]">
               <span className="uppercase text-gray-400 text-[8px]">
                 bet id:{" "}
@@ -477,12 +483,12 @@ export function Parlay(props: ParlayProps) {
               {parlay_id.substring(parlay_id.length - 5)}
             </span>
           </div>
-          <div className="flex w-2/5 items-center justify-center box-border relative font-mono">
+          <div className="flex w-2/5 justify-end items-center box-border relative font-mono">
             <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
               expires: {getReadableDate(new Date(expires_at))}
             </span>
           </div>
-          <div className="pr-2 flex w-2/5 flex-row items-center justify-end box-border relative">
+          <div className="flex w-2/5 justify-end items-center box-border relative pr-2">
             <span className="text-gray-400 text-[8px] float-left font-light uppercase font-mono">
               placed: {getReadableDate(new Date(created_at))}
             </span>
