@@ -18,7 +18,11 @@ import {
   getReadableDate,
   numberWithCommas,
 } from "../../utils/Util";
-import { progressBarWidth, propField } from "../../utils/Constants";
+import {
+  progressBarWidth,
+  propField,
+  specialLegTypes,
+} from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
@@ -252,6 +256,16 @@ export function Parlay(props: ParlayProps) {
     });
   };
 
+  const getContainsCinemaLeg = () => {
+    if (legs !== undefined && legs.length > 0) {
+      return legs.some(
+        (leg) =>
+          leg.special_leg_type !== undefined &&
+          leg.special_leg_type === specialLegTypes[0],
+      );
+    }
+    return false;
+  };
   return (
     <div
       className="w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-sm bg-gray-900 border-t-1 border-r-1"
@@ -261,10 +275,17 @@ export function Parlay(props: ParlayProps) {
         <span className="text-blue-500 text-base flex w-6/8 font-bold">
           {legs.length} leg {getParlayType(legs.length)}
         </span>
-        <span className="text-white text-sm w-1/8 justify-end flex font-bold">
-          {total_odds > 0 && "+"}
-          {total_odds}
-        </span>
+        {getContainsCinemaLeg() ? (
+          <span className="text-yellow-300 text-sm w-1/8 justify-end flex font-bold">
+            {total_odds > 0 && "+"}
+            {total_odds}
+          </span>
+        ) : (
+          <span className="text-white text-sm w-1/8 justify-end flex font-bold">
+            {total_odds > 0 && "+"}
+            {total_odds}
+          </span>
+        )}
         {!is_active && is_winner && (
           <div className="text-green-600 z-40 w-1/8 justify-end flex">
             <FontAwesomeIcon icon={faSquareCheck as IconProp} />
@@ -302,13 +323,25 @@ export function Parlay(props: ParlayProps) {
                   >
                     {getPropTextWithRespectToScreenSize(leg, window.innerWidth)}
                   </span>
-                  <span className="flex relative text-gray-400 text-xs">
-                    {
-                      leg.frontend_id.split("/")[
-                        leg.frontend_id.split("/").length - 1
-                      ]
-                    }
-                  </span>
+                  {leg.special_leg_type !== undefined &&
+                  leg.special_leg_type === specialLegTypes[0] ? (
+                    <span className="flex relative text-yellow-300 text-xs">
+                      {"CINEMA "}
+                      {
+                        leg.frontend_id.split("/")[
+                          leg.frontend_id.split("/").length - 1
+                        ]
+                      }
+                    </span>
+                  ) : (
+                    <span className="flex relative text-gray-400 text-xs">
+                      {
+                        leg.frontend_id.split("/")[
+                          leg.frontend_id.split("/").length - 1
+                        ]
+                      }
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-row justify-end w-1/8 text-right pr-5">
                   <span className="text-gray-300">

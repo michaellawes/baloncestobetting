@@ -78,6 +78,7 @@ export interface ParlayAction {
   parlay_modification_type?: string;
   expires_at?: string;
   legs?: ParlayTask[];
+  special_leg_type?: string;
 }
 
 export interface ParlayFieldUpdate {
@@ -111,6 +112,7 @@ export interface ParlayTask {
   index?: number;
   did_hit?: boolean;
   live_value?: number;
+  special_leg_type?: string;
 }
 export interface ParlaysViewerProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -154,6 +156,7 @@ export interface PropLineProps {
   oppId: string;
   isHome?: boolean;
   isClose?: boolean;
+  specialLegType?: string;
 }
 
 export interface SqlParlayMetadata {

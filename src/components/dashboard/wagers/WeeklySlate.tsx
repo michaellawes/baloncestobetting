@@ -234,6 +234,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               )}
                               isHome={false}
                               isClose={matchup.isClose}
+                              specialLegType={
+                                matchup.isClose ? "CINEMA" : undefined
+                              }
                             />
                             <PropLine
                               team={matchup.road.name}
@@ -256,6 +259,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               )}
                               isHome={false}
                               isClose={matchup.isClose}
+                              specialLegType={
+                                matchup.isClose ? "CINEMA" : undefined
+                              }
                             />
                             <PropLine
                               team={matchup.road.name}
@@ -278,6 +284,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               )}
                               isHome={false}
                               isClose={matchup.isClose}
+                              specialLegType={
+                                matchup.isClose ? "CINEMA" : undefined
+                              }
                             />
                           </div>
                           <div className="h-[56px] flex flex-row justify-start items-center box-border relative">
@@ -302,6 +311,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               )}
                               isHome={true}
                               isClose={matchup.isClose}
+                              specialLegType={
+                                matchup.isClose ? "CINEMA" : undefined
+                              }
                             />
                             <PropLine
                               team={matchup.home.name}
@@ -324,6 +336,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               )}
                               isHome={true}
                               isClose={matchup.isClose}
+                              specialLegType={
+                                matchup.isClose ? "CINEMA" : undefined
+                              }
                             />
                             <PropLine
                               team={matchup.home.name}
@@ -346,6 +361,9 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               )}
                               isHome={true}
                               isClose={matchup.isClose}
+                              specialLegType={
+                                matchup.isClose ? "CINEMA" : undefined
+                              }
                             />
                           </div>
                         </>

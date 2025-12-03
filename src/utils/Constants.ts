@@ -1171,3 +1171,5 @@ export const propField = [
   "TEAM SCORE",
   "PLAYER SCORE",
 ];
+
+export const specialLegTypes = ["CINEMA"];

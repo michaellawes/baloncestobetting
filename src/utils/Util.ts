@@ -262,6 +262,12 @@ export const getParlaysWithLegs = async (fbParlays: SqlParlayMetadata[]) => {
     if (leg["did_hit"] !== undefined && leg["did_hit"] !== null) {
       newLeg.did_hit = leg["did_hit"];
     }
+    if (
+      leg["special_leg_type"] !== undefined &&
+      leg["special_leg_type"] !== null
+    ) {
+      newLeg.special_leg_type = leg["special_leg_type"];
+    }
     if (parlayIdToLegs.has(leg.parlay_id)) {
       const legs: ParlayTask[] = parlayIdToLegs.get(leg.parlay_id);
       legs.push(newLeg);

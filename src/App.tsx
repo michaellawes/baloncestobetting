@@ -365,6 +365,10 @@ export function App() {
               day_id: getDaysSinceLastMonday(),
               text: action.text,
               odds: action.odds,
+              special_leg_type:
+                action.special_leg_type !== undefined
+                  ? action.special_leg_type
+                  : undefined,
             },
           ];
           return tasks;
@@ -374,6 +378,9 @@ export function App() {
         return tasks.filter((task) => task.frontend_id !== action.frontend_id);
       }
       case "submitParlay": {
+        for (let i = 0; i < tasks.length; i++) {
+          tasks[i].index = i;
+        }
         setParlayLegs(tasks);
         setCurrentParlay({
           totalOdds: action.totalOdds,

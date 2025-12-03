@@ -6,10 +6,21 @@ import {
   ParlayTask,
   PropLineProps,
 } from "../../../utils/Interfaces";
+import { specialLegTypes } from "../../../utils/Constants";
+import { decimalToOdds, oddsToDecimal } from "../../../utils/Util";
 
 export function PropLine(props: PropLineProps) {
-  const { text, odds, frontend_id, oppId, team, betType, isHome, isClose } =
-    props;
+  const {
+    text,
+    odds,
+    frontend_id,
+    oppId,
+    team,
+    betType,
+    isHome,
+    isClose,
+    specialLegType,
+  } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
   const [isAdded, setIsAdded] = React.useState(false);
@@ -20,11 +31,15 @@ export function PropLine(props: PropLineProps) {
       type: type,
       frontend_id: frontend_id,
       text: text,
-      odds: odds,
+      odds:
+        specialLegType !== undefined && specialLegType === specialLegTypes[0]
+          ? parseFloat(decimalToOdds(oddsToDecimal(odds) * 1.25).toFixed())
+          : odds,
       team: team,
       betType: betType,
       oppId: oppId,
       isHome: isHome,
+      special_leg_type: specialLegType,
     };
     dispatch(action);
   };
