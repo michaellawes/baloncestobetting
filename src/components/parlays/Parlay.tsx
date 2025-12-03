@@ -344,10 +344,18 @@ export function Parlay(props: ParlayProps) {
                   )}
                 </div>
                 <div className="flex flex-row justify-end w-1/8 text-right pr-5">
-                  <span className="text-gray-300">
-                    {leg.odds > 0 && "+"}
-                    {leg.odds}
-                  </span>
+                  {leg.special_leg_type !== undefined &&
+                  leg.special_leg_type === specialLegTypes[0] ? (
+                    <span className="text-yellow-400">
+                      {leg.odds > 0 && "+"}
+                      {leg.odds}
+                    </span>
+                  ) : (
+                    <span className="text-gray-300">
+                      {leg.odds > 0 && "+"}
+                      {leg.odds}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
