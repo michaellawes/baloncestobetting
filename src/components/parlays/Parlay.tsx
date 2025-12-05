@@ -266,13 +266,40 @@ export function Parlay(props: ParlayProps) {
     }
     return false;
   };
+
+  const getAllCinemaLegs = () => {
+    if (legs !== undefined && legs.length > 0) {
+      return legs.every(
+        (leg) =>
+          leg.special_leg_type !== undefined &&
+          leg.special_leg_type === specialLegTypes[0],
+      );
+    }
+    return false;
+  };
   return (
     <div
-      className="w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-sm bg-gray-900 border-t-1 border-r-1"
+      className={
+        getContainsCinemaLeg()
+          ? "w-full mb-2 border-l-3 border-l-yellow-400 border-t-yellow-400  border-r-yellow-400 float-left rounded-t-sm rounded-l-sm rounded-r-xs bg-gray-900 border-t-1 border-r-1"
+          : "w-full mb-2 border-l-3 border-l-gray-500 border-t-gray-500  border-r-gray-600 float-left rounded-t-sm rounded-l-sm rounded-r-xs bg-gray-900 border-t-1 border-r-1"
+      }
       id={parlay_id}
     >
-      <div className="p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-gray-500">
-        <span className="text-blue-500 text-base flex w-6/8 font-bold">
+      <div
+        className={
+          getContainsCinemaLeg()
+            ? "p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-yellow-500"
+            : "p-4 flex flex-row w-full items-center justify-between border-b-1 border-b-gray-500"
+        }
+      >
+        <span
+          className={
+            getAllCinemaLegs()
+              ? "text-yellow-300 text-base flex w-6/8 font-bold"
+              : "text-blue-500 text-base flex w-6/8 font-bold"
+          }
+        >
           {legs.length} leg {getParlayType(legs.length)}
         </span>
         {getContainsCinemaLeg() ? (
@@ -346,7 +373,7 @@ export function Parlay(props: ParlayProps) {
                 <div className="flex flex-row justify-end w-1/8 text-right pr-5">
                   {leg.special_leg_type !== undefined &&
                   leg.special_leg_type === specialLegTypes[0] ? (
-                    <span className="text-yellow-400">
+                    <span className="text-yellow-300">
                       {leg.odds > 0 && "+"}
                       {leg.odds}
                     </span>
@@ -466,7 +493,13 @@ export function Parlay(props: ParlayProps) {
           </div>
         ))}
       </div>
-      <div className="border-t-1 flex flex-col w-full items-center justify-between border-b-1 rounded-b-sm bg-gray-800 border-gray-700">
+      <div
+        className={
+          getContainsCinemaLeg()
+            ? "border-t-1 flex flex-col w-full items-center justify-between border-b-1 bg-gray-800 border-yellow-400"
+            : "border-t-1 flex flex-col w-full items-center justify-between border-b-1 bg-gray-800 border-gray-700"
+        }
+      >
         <div className="flex flex-row text-left pl-2 border-b-1 border-b-gray-700 w-full pb-1">
           <div
             className={
@@ -485,7 +518,9 @@ export function Parlay(props: ParlayProps) {
               <span
                 className={
                   is_winner
-                    ? "text-green-500 text-sm font-bold font-[Proxima Nova, serif]"
+                    ? getAllCinemaLegs()
+                      ? "text-yellow-500 text-sm font-bold font-[Proxima Nova, serif]"
+                      : "text-green-500 text-sm font-bold font-[Proxima Nova, serif]"
                     : is_active
                       ? "text-gray-300 text-sm font-bold font-[Proxima Nova, serif]"
                       : "text-gray-500 text-sm font-bold font-[Proxima Nova, serif]"
