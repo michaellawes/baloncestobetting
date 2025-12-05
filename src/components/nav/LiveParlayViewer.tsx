@@ -17,6 +17,7 @@ import {
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { LiveParlayViewerProps, ParlayTask } from "../../utils/Interfaces";
+import { specialLegTypes } from "../../utils/Constants";
 
 library.add(fas);
 
@@ -155,6 +156,17 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     }
   }, [totalOdds, tasks]);
 
+  const getContainsCinemaLeg = () => {
+    if (tasks.length > 0) {
+      return tasks.some(
+        (leg) =>
+          leg.special_leg_type !== undefined &&
+          leg.special_leg_type === specialLegTypes[0],
+      );
+    }
+    return false;
+  };
+
   return (
     <div
       id="slideover-container"
@@ -193,7 +205,13 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             }
           >
             {totalOdds > 0 && (
-              <span className="font-bold ">
+              <span
+                className={
+                  getContainsCinemaLeg()
+                    ? "text-yellow-300 font-bold"
+                    : "text-white font-bold"
+                }
+              >
                 {decimalToOdds(totalOdds) > 0 && "+"}
                 {decimalToOdds(totalOdds).toFixed()}
               </span>
@@ -235,19 +253,39 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                         window.innerWidth,
                       )}
                     </span>
-                    <span className="flex relative text-gray-400 text-xs">
-                      {
-                        leg.frontend_id.split("/")[
-                          leg.frontend_id.split("/").length - 1
-                        ]
-                      }
-                    </span>
+                    {leg.special_leg_type !== undefined &&
+                    leg.special_leg_type === specialLegTypes[0] ? (
+                      <span className="flex relative text-yellow-300 text-xs">
+                        {"CINEMA "}
+                        {
+                          leg.frontend_id.split("/")[
+                            leg.frontend_id.split("/").length - 1
+                          ]
+                        }
+                      </span>
+                    ) : (
+                      <span className="flex relative text-gray-400 text-xs">
+                        {
+                          leg.frontend_id.split("/")[
+                            leg.frontend_id.split("/").length - 1
+                          ]
+                        }
+                      </span>
+                    )}
                   </div>
                   <div className="flex justify-end items-center text-right w-1/16">
-                    <span className="text-gray-300 pl-2">
-                      {leg.odds > 0 && "+"}
-                      {leg.odds}
-                    </span>
+                    {leg.special_leg_type !== undefined &&
+                    leg.special_leg_type === specialLegTypes[0] ? (
+                      <span className="text-yellow-400">
+                        {leg.odds > 0 && "+"}
+                        {leg.odds}
+                      </span>
+                    ) : (
+                      <span className="text-gray-300">
+                        {leg.odds > 0 && "+"}
+                        {leg.odds}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}

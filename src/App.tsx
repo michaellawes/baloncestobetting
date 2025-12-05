@@ -5,11 +5,8 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import {
-  TasksContext,
-  TasksDispatchContext,
-} from "./components/reducer/TasksContext";
-import { generateId, getDaysSinceLastMonday } from "./utils/Util";
+import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
+import { decimalToOdds, generateId, getDaysSinceLastMonday, oddsToDecimal } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
@@ -24,9 +21,9 @@ import {
   ParlayTask,
   Player,
   Team,
-  UserData,
+  UserData
 } from "./utils/Interfaces";
-import { propField } from "./utils/Constants";
+import { propField, specialLegTypes } from "./utils/Constants";
 
 export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -324,14 +321,14 @@ export function App() {
       case "addLeg": {
         tasks = tasks.filter((task) => task.frontend_id !== action.oppId);
         // Remove road team moneyline if betting home team cover
-        if (action.betType == propField[0] && action.text.startsWith("-")) {
+        if (action.betType === propField[0] && action.text.startsWith("-")) {
           tasks = tasks.filter(
             (task) =>
               task.frontend_id !==
               action.oppId.split("/")[0] + "/" + propField[2],
           );
         }
-        if (action.betType == propField[2]) {
+        if (action.betType === propField[2]) {
           const opposingTeam = action.oppId.split("/")[0];
           if (
             isInvalidOpposingSpreadForMoneyLineAddition(
@@ -344,6 +341,37 @@ export function App() {
                 task.frontend_id !==
                 action.oppId.split("/")[0] + "/" + propField[0],
             );
+          }
+        }
+        if (
+          action.betType === propField[0] ||
+          action.betType === propField[2]
+        ) {
+          const teamName = action.frontend_id.split("/")[0];
+          const teamRelatedProps: Set<string> = new Set<string>(
+            tasks
+              .filter((task) => task.frontend_id.split("/")[0] === teamName)
+              .map(
+                (task) =>
+                  task.frontend_id.split("/")[
+                    task.frontend_id.split("/").length - 1
+                  ],
+              ),
+          );
+          if (
+            (action.betType === propField[0] &&
+              teamRelatedProps.has(propField[2])) ||
+            (action.betType === propField[2] &&
+              teamRelatedProps.has(propField[0]))
+          ) {
+            if (
+              action.special_leg_type === undefined ||
+              action.special_leg_type !== specialLegTypes[0]
+            ) {
+              action.odds = parseFloat(
+                decimalToOdds(oddsToDecimal(13.34)).toFixed(),
+              );
+            }
           }
         }
         if (tasks.length === 25) {
