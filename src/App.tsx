@@ -328,7 +328,6 @@ export function App() {
     switch (action.type) {
       case "addLeg": {
         tasks = tasks.filter((task) => task.frontend_id !== action.oppId);
-        // Remove road team moneyline if betting home team cover
         if (action.betType === propField[0] && action.text.startsWith("-")) {
           tasks = tasks.filter(
             (task) =>
@@ -356,15 +355,17 @@ export function App() {
           action.betType === propField[2]
         ) {
           const teamName = action.frontend_id.split("/")[0];
+          const teamRelatedLegs = tasks.filter(
+            (task) => task.frontend_id.split("/")[0] === teamName,
+          );
+
           const teamRelatedProps: Set<string> = new Set<string>(
-            tasks
-              .filter((task) => task.frontend_id.split("/")[0] === teamName)
-              .map(
-                (task) =>
-                  task.frontend_id.split("/")[
-                    task.frontend_id.split("/").length - 1
-                  ],
-              ),
+            teamRelatedLegs.map(
+              (task) =>
+                task.frontend_id.split("/")[
+                  task.frontend_id.split("/").length - 1
+                ],
+            ),
           );
           if (
             (action.betType === propField[0] &&
@@ -376,10 +377,33 @@ export function App() {
               action.special_leg_type === undefined ||
               action.special_leg_type !== specialLegTypes[0]
             ) {
-              action.odds = Math.min(
-                parseFloat(decimalToOdds(oddsToDecimal(22.1)).toFixed()),
-                action.odds,
-              );
+              for (const leg of tasks) {
+                const legTokens = leg.frontend_id.split("/");
+                const legBetType = legTokens[legTokens.length - 1];
+                if (
+                  action.team === legTokens[0] &&
+                  ((action.betType === propField[0] &&
+                    legBetType === propField[2]) ||
+                    (action.betType === propField[2] &&
+                      legBetType === propField[0]))
+                ) {
+                  const allOdds = new Set<number>(
+                    [
+                      parseFloat(decimalToOdds(oddsToDecimal(19.1)).toFixed()),
+                      action.odds,
+                      leg.odds,
+                    ].sort((a, b) => a - b),
+                  );
+                  const lowestTwoOdds = Array.from(allOdds);
+                  action.odds = lowestTwoOdds[0];
+                  leg.odds =
+                    lowestTwoOdds[
+                      lowestTwoOdds.length > 2
+                        ? lowestTwoOdds.length - 2
+                        : lowestTwoOdds.length - 1
+                    ];
+                }
+              }
             }
           }
         }
