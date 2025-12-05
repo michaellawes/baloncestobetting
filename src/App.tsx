@@ -5,8 +5,16 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
-import { decimalToOdds, generateId, getDaysSinceLastMonday, oddsToDecimal } from "./utils/Util";
+import {
+  TasksContext,
+  TasksDispatchContext,
+} from "./components/reducer/TasksContext";
+import {
+  decimalToOdds,
+  generateId,
+  getDaysSinceLastMonday,
+  oddsToDecimal,
+} from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
@@ -21,7 +29,7 @@ import {
   ParlayTask,
   Player,
   Team,
-  UserData
+  UserData,
 } from "./utils/Interfaces";
 import { propField, specialLegTypes } from "./utils/Constants";
 
@@ -368,8 +376,9 @@ export function App() {
               action.special_leg_type === undefined ||
               action.special_leg_type !== specialLegTypes[0]
             ) {
-              action.odds = parseFloat(
-                decimalToOdds(oddsToDecimal(13.34)).toFixed(),
+              action.odds = Math.min(
+                parseFloat(decimalToOdds(oddsToDecimal(22.1)).toFixed()),
+                action.odds,
               );
             }
           }
