@@ -443,8 +443,18 @@ export function App() {
           tasks[i].index = i;
         }
         setParlayLegs(tasks);
+        let shouldBoostParlay = false;
+        shouldBoostParlay = tasks.every(
+          (leg) =>
+            leg.special_leg_type !== undefined &&
+            leg.special_leg_type === specialLegTypes[0],
+        );
         setCurrentParlay({
-          totalOdds: action.totalOdds,
+          totalOdds: shouldBoostParlay
+            ? parseFloat(
+                decimalToOdds(oddsToDecimal(action.totalOdds) * 1.5).toFixed(),
+              )
+            : action.totalOdds,
           payout: action.payout,
           wager: action.wager,
         });
