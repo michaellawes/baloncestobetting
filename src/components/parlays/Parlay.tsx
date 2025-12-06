@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -16,13 +10,9 @@ import {
   getPropTextWithRespectToScreenSize,
   getPropValue,
   getReadableDate,
-  numberWithCommas,
+  numberWithCommas
 } from "../../utils/Util";
-import {
-  progressBarWidth,
-  propField,
-  specialLegTypes,
-} from "../../utils/Constants";
+import { progressBarWidth, propField, specialLegTypes } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
@@ -138,7 +128,7 @@ export function Parlay(props: ParlayProps) {
     ) {
       const teams = leg.frontend_id.split("/")[0].split(" v ");
       const roadTeamName = teams[0];
-      const liveTotalPointsScored =
+      let liveTotalPointsScored =
         leg.live_value !== undefined
           ? leg.live_value
           : parseFloat(
@@ -150,6 +140,9 @@ export function Parlay(props: ParlayProps) {
       const propTotalPointsScoredFull = parseFloat(
         (propTotalPointsScored * 1.2).toFixed(),
       );
+      if (liveTotalPointsScored > propTotalPointsScoredFull) {
+        liveTotalPointsScored = propTotalPointsScoredFull;
+      }
       const percentFull = parseFloat(
         ((liveTotalPointsScored / propTotalPointsScoredFull) * 100).toFixed(),
       );
@@ -174,7 +167,7 @@ export function Parlay(props: ParlayProps) {
       propField[3]
     ) {
       const team = leg.team;
-      const liveTeamScore =
+      let liveTeamScore =
         leg.live_value !== undefined
           ? leg.live_value
           : parseFloat(
@@ -182,6 +175,9 @@ export function Parlay(props: ParlayProps) {
             );
       const propTeamScore = parseFloat(getPropValue(leg.text));
       const propTeamScoreFull = parseFloat((propTeamScore * 1.2).toFixed());
+      if (liveTeamScore > propTeamScoreFull) {
+        liveTeamScore = propTeamScoreFull;
+      }
       const percentFull = parseFloat(
         ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
@@ -206,12 +202,15 @@ export function Parlay(props: ParlayProps) {
       propField[4]
     ) {
       const playerName = leg.frontend_id.split("/")[0];
-      const livePlayerScore =
+      let livePlayerScore =
         leg.live_value !== undefined
           ? leg.live_value
           : parseFloat(livePlayerData.get(playerName));
       const propPlayerScore = parseFloat(getPropValue(leg.text));
       const propPlayerScoreFull = parseFloat((propPlayerScore * 1.2).toFixed());
+      if (livePlayerScore > propPlayerScoreFull) {
+        livePlayerScore = propPlayerScoreFull;
+      }
       const percentFull = parseFloat(
         ((livePlayerScore / propPlayerScoreFull) * 100).toFixed(),
       );
@@ -232,7 +231,7 @@ export function Parlay(props: ParlayProps) {
       }
       return progressBarWidth.get(styling);
     }
-    return "h-[4px] z-50 bg-blue-900 bases-0 grow flex-roxbox-border rounded-l-md relative w-full";
+    return "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-full";
   };
 
   const handleCaptureClick = async () => {
