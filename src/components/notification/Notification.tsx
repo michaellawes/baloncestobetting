@@ -1,6 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faCloudArrowDown,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { faClipboard } from "@fortawesome/free-regular-svg-icons";
 import { NotificationProps } from "../../utils/Interfaces";
@@ -49,19 +53,25 @@ export function Notification(props: NotificationProps) {
           {notification.type === "SUBMIT" && (
             <FontAwesomeIcon
               icon={faCheck as IconProp}
-              className="text-green-500 "
+              className="text-green-500"
             />
           )}
           {notification.type === "LIMIT" && (
             <FontAwesomeIcon
               icon={faXmark as IconProp}
-              className="text-red-500 "
+              className="text-red-500"
             />
           )}
           {notification.type === "CLIPBOARD" && (
             <FontAwesomeIcon
               icon={faClipboard as IconProp}
-              className="text-blue-500 "
+              className="text-blue-500"
+            />
+          )}
+          {notification.type === "DOWNLOAD" && (
+            <FontAwesomeIcon
+              icon={faCloudArrowDown as IconProp}
+              className="text-white"
             />
           )}
         </div>

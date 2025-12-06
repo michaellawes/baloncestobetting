@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -200,6 +200,8 @@ export const getNotificationStyling = (type: string) => {
     return "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-red-500 rounded-sm";
   } else if (type === "CLIPBOARD") {
     return "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-blue-500 rounded-sm";
+  } else if (type === "DOWNLOAD") {
+    return "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-white rounded-sm";
   } else {
     return "h-[16px] flex-row p-5 mt-16 fixed flex w-1/2 justify-center items-center text-center z-100 text-white bg-gray-900 border border-gray-500 rounded-sm";
   }
