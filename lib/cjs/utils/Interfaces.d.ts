@@ -23,6 +23,7 @@ export interface MatchupSchema {
     road: Team;
     home: Team;
     isClose: boolean;
+    lastGame?: number;
 }
 export interface MatchupsProps {
     matchup: MatchupSchema;
@@ -64,8 +65,9 @@ export interface ParlayAction {
     parlay_id?: string;
     is_winner?: boolean;
     parlay_modification_type?: string;
-    expires_at?: number;
+    expires_at?: string;
     legs?: ParlayTask[];
+    special_leg_type?: string;
 }
 export interface ParlayFieldUpdate {
     user_id: string;
@@ -96,6 +98,7 @@ export interface ParlayTask {
     index?: number;
     did_hit?: boolean;
     live_value?: number;
+    special_leg_type?: string;
 }
 export interface ParlaysViewerProps {
     setBalance: React.Dispatch<React.SetStateAction<number>>;
@@ -117,6 +120,7 @@ export interface Player {
     live_total: number;
     position: string;
     prop_line: IndividualLineMetadata;
+    last_game: string;
 }
 export interface PropLineInterface {
     text: string;
@@ -134,11 +138,12 @@ export interface PropLineProps {
     oppId: string;
     isHome?: boolean;
     isClose?: boolean;
+    specialLegType?: string;
 }
 export interface SqlParlayMetadata {
     parlay_id: string;
-    created_at: number;
-    expires_at: number;
+    created_at: string;
+    expires_at: string;
     is_active: boolean;
     is_winner: boolean;
     wager: number;
@@ -147,6 +152,10 @@ export interface SqlParlayMetadata {
     day_id: number;
     total_odds: number;
     payout: number;
+}
+export interface SqlPlayerLastGame {
+    name: string;
+    last_game: string;
 }
 export interface SqlPlayerMetadata {
     name: string;
@@ -157,6 +166,7 @@ export interface SqlPlayerMetadata {
     fantasy_team_name: string;
     avg: number;
     games_left: number;
+    last_game?: string;
 }
 export interface SqlPropSlate {
     main_prop_id: string;
@@ -177,8 +187,8 @@ export interface SqlTeamMetadata {
 export interface SupabaseParlay {
     frontend_id?: string;
     user_id?: string;
-    created_at?: number;
-    expires_at?: number;
+    created_at?: string;
+    expires_at?: string;
     parlay_id?: string;
     matchup_id?: number;
     total_odds?: number;
@@ -199,6 +209,7 @@ export interface Team {
     live_score: number;
     team_total: IndividualLineMetadata;
     top_5: Player[];
+    first_last_game?: number;
 }
 export interface UserData {
     id: string;
