@@ -10,7 +10,6 @@ import {
 import * as React from "react";
 import {
   evaluateLeg,
-  exportAsImage,
   getOverUnderStyling,
   getParlayType,
   getPropTextWithRespectToScreenSize,
@@ -24,6 +23,8 @@ import {
   specialLegTypes,
 } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
+import html2canvas from "html2canvas-pro";
+import { downloadImage } from "../../../lib/cjs/utils/exportAsImage";
 
 library.add(fas);
 
@@ -248,14 +249,23 @@ export function Parlay(props: ParlayProps) {
     const parlayElement = document.getElementById(parlay_id);
     if (!parlayElement) return;
 
-    await exportAsImage(
+    /*await exportAsImage(
       parlayElement,
       `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
-    );
+    );*/
+    setTimeout(() => {
+      html2canvas(parlayElement).then((canvas) => {
+        const image = canvas.toDataURL("image/png", 1.0);
+        downloadImage(
+          image,
+          `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
+        );
+      });
+    }, 1000);
     setNotification({
       show: true,
       legs: 0,
-      message: `Saved parlay-${parlay_id.substring(parlay_id.length - 5)}!`,
+      message: "Downloaded parlay!",
       type: "DOWNLOAD",
     });
     //setTimeout(exportAsImage, 1000);
