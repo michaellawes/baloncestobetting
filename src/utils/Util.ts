@@ -24,9 +24,8 @@ export const decimalToOdds = (decimal: number) => {
 
 const downloadImage = (blob: string, imageFileName: string) => {
   const fakeLink = window.document.createElement("a");
-  fakeLink.target = "_blank";
   fakeLink.style.display = "none";
-  //fakeLink.download = imageFileName;
+  fakeLink.download = imageFileName;
   fakeLink.href = blob;
   document.body.appendChild(fakeLink);
   fakeLink.click();
