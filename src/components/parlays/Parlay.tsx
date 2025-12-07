@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -16,13 +10,9 @@ import {
   getPropTextWithRespectToScreenSize,
   getPropValue,
   getReadableDate,
-  numberWithCommas,
+  numberWithCommas
 } from "../../utils/Util";
-import {
-  progressBarWidth,
-  propField,
-  specialLegTypes,
-} from "../../utils/Constants";
+import { progressBarWidth, propField, specialLegTypes } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
@@ -153,9 +143,12 @@ export function Parlay(props: ParlayProps) {
       if (liveTotalPointsScored > propTotalPointsScoredFull) {
         liveTotalPointsScored = propTotalPointsScoredFull;
       }
-      const percentFull = parseFloat(
+      let percentFull = parseFloat(
         ((liveTotalPointsScored / propTotalPointsScoredFull) * 100).toFixed(),
       );
+      if (percentFull > 75 && percentFull < 80) {
+        percentFull = 75;
+      }
       let styling = percentFull.toString();
       if (
         leg.did_hit !== undefined &&
@@ -188,9 +181,12 @@ export function Parlay(props: ParlayProps) {
       if (liveTeamScore > propTeamScoreFull) {
         liveTeamScore = propTeamScoreFull;
       }
-      const percentFull = parseFloat(
+      let percentFull = parseFloat(
         ((liveTeamScore / propTeamScoreFull) * 100).toFixed(),
       );
+      if (percentFull > 75 && percentFull < 80) {
+        percentFull = 75;
+      }
       let styling = percentFull.toString();
       if (
         leg.did_hit !== undefined &&
@@ -221,9 +217,12 @@ export function Parlay(props: ParlayProps) {
       if (livePlayerScore > propPlayerScoreFull) {
         livePlayerScore = propPlayerScoreFull;
       }
-      const percentFull = parseFloat(
+      let percentFull = parseFloat(
         ((livePlayerScore / propPlayerScoreFull) * 100).toFixed(),
       );
+      if (percentFull > 75 && percentFull < 80) {
+        percentFull = 75;
+      }
       let styling = percentFull.toString();
       if (
         leg.did_hit !== undefined &&
@@ -251,15 +250,6 @@ export function Parlay(props: ParlayProps) {
       parlayElement,
       `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
     );
-    /*setTimeout(() => {
-      html2canvas(parlayElement).then((canvas) => {
-        const image = canvas.toDataURL("image/png", 1.0);
-        downloadImage(
-          image,
-          `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
-        );
-      });
-    }, 1000);*/
     setNotification({
       show: true,
       legs: 0,

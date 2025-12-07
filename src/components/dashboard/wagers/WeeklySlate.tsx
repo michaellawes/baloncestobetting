@@ -6,7 +6,11 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema } from "../../../utils/Interfaces";
 import { propField } from "../../../utils/Constants";
-import { getId, getOppId, getTeamNameWithRespectToScreenSize } from "../../../utils/Util";
+import {
+  getId,
+  getOppId,
+  getTeamNameWithRespectToScreenSize,
+} from "../../../utils/Util";
 
 library.add(fas);
 
