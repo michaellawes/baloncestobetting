@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -128,7 +128,7 @@ export const getAllPlayerLiveScores = (matchups: MatchupSchema[]) => {
 };
 
 export const getDaysSinceLastMonday = () => {
-  return new Date().getDay() - 1;
+  return (new Date().getDay() + 6) % 7;
 };
 
 export const getId = (
