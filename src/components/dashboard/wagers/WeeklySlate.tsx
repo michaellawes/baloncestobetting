@@ -6,11 +6,7 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema } from "../../../utils/Interfaces";
 import { propField } from "../../../utils/Constants";
-import {
-  getId,
-  getOppId,
-  getTeamNameWithRespectToScreenSize,
-} from "../../../utils/Util";
+import { getId, getOppId, getTeamNameWithRespectToScreenSize } from "../../../utils/Util";
 
 library.add(fas);
 
@@ -120,7 +116,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                                   {Math.abs(
                                     matchup.road.live_score -
                                       matchup.home.live_score,
-                                  ) < 11 ? (
+                                  ) < 4 ? (
                                     <span>
                                       {matchup.road.live_score > 0 ||
                                       matchup.home.live_score > 0
