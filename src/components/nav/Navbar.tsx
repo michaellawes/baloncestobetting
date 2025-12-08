@@ -49,7 +49,11 @@ export function Navbar(props: NavbarProps) {
             className="px-4 justify-start text-start text-white flex-1 flex-row font-bold"
             to={"/"}
           >
-            <span className="">CnB Baloncesto Betting</span>
+            <span className="">
+              {window.innerWidth < 469
+                ? "CnB Fantasy Bets"
+                : "CnB Baloncesto Betting"}
+            </span>
             <span className="text-xs md:text-sm text-gray-400 pl-1">
               Week {matchup >= 0 ? matchup : ""}
             </span>
