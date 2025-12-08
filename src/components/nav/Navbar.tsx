@@ -62,9 +62,9 @@ export function Navbar(props: NavbarProps) {
         </div>
         <Menu
           as="div"
-          className="flex justify-center grow px-2 md:justify-end relative w-1/8"
+          className="flex justify-center grow px-4 md:justify-end relative w-1/8"
         >
-          <MenuButton className="cursor-pointer inline-flex rounded-md hover:bg-gray-800 focus:outline-none text-base py-2 px-2 focus-visible:ring-1 focus-visible:ring-gray-800">
+          <MenuButton className="cursor-pointer inline-flex rounded-md hover:bg-gray-800 focus:outline-none text-base py-2 focus-visible:ring-1 focus-visible:ring-gray-800">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
           </MenuButton>
           <MenuItems

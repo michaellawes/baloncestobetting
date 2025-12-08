@@ -80,6 +80,7 @@ export function Parlays(props: ParlaysViewerProps) {
       } else if (!parlay.frontend_is_active && !parlay.is_active) {
         expiredParlays.push(parlay);
       } else {
+        console.log(parlay);
         activeSlips.push(parlay);
       }
     }

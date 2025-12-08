@@ -14,10 +14,10 @@ export function Auth(props: AuthProps) {
           src={profileImg}
           alt="Google Account Profile Picture"
           referrerPolicy="no-referrer"
-          className="md:w-8 md:h-8 h-6 w-6 border-transparent border rounded-4xl"
+          className="md:w-6 md:h-6 h-6 w-6 border-transparent border rounded-4xl"
         />
       ) : (
-        <div className="md:w-8 md:h-8 h-6 w-6 flex flex-col justify-center items-center">
+        <div className="md:w-6 md:h-6 h-6 w-6 flex flex-col justify-center items-center">
           <FontAwesomeIcon icon={faUser as IconProp} />
         </div>
       )}
