@@ -760,407 +760,407 @@ export const demoWeeklySlate: MatchupSchema[] = [
 export const progressBarWidth: Map<string, string> = new Map([
   [
     "0",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
   ],
   [
     "1",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
   ],
   [
     "2",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
   ],
   [
     "3",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-3/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-3/100",
   ],
   [
     "4",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-4/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-4/100",
   ],
   [
     "5",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
   ],
   [
     "6",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-6/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-6/100",
   ],
   [
     "7",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-7/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-7/100",
   ],
   [
     "8",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-8/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-8/100",
   ],
   [
     "9",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-9/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-9/100",
   ],
   [
     "10",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-10/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-10/100",
   ],
   [
     "11",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-11/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-11/100",
   ],
   [
     "12",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-12/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-12/100",
   ],
   [
     "13",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-13/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-13/100",
   ],
   [
     "14",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-14/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-14/100",
   ],
   [
     "15",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-15/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-15/100",
   ],
   [
     "16",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-16/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-16/100",
   ],
   [
     "17",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-17/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-17/100",
   ],
   [
     "18",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-18/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-18/100",
   ],
   [
     "19",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-19/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-19/100",
   ],
   [
     "20",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-20/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-20/100",
   ],
   [
     "21",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-21/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-21/100",
   ],
   [
     "22",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-22/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-22/100",
   ],
   [
     "23",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-23/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-23/100",
   ],
   [
     "24",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-24/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-24/100",
   ],
   [
     "25",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-25/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-25/100",
   ],
   [
     "26",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-26/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-26/100",
   ],
   [
     "27",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-27/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-27/100",
   ],
   [
     "28",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-28/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-28/100",
   ],
   [
     "29",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-29/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-29/100",
   ],
   [
     "30",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-30/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-30/100",
   ],
   [
     "31",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-31/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-31/100",
   ],
   [
     "32",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-32/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-32/100",
   ],
   [
     "33",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-33/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-33/100",
   ],
   [
     "34",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-34/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-34/100",
   ],
   [
     "35",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-35/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-35/100",
   ],
   [
     "36",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-36/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-36/100",
   ],
   [
     "37",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-37/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-37/100",
   ],
   [
     "38",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-38/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-38/100",
   ],
   [
     "39",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-39/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-39/100",
   ],
   [
     "40",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-40/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-40/100",
   ],
   [
     "41",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-41/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-41/100",
   ],
   [
     "42",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-42/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-42/100",
   ],
   [
     "43",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-43/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-43/100",
   ],
   [
     "44",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-44/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-44/100",
   ],
   [
     "45",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-45/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-45/100",
   ],
   [
     "46",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-46/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-46/100",
   ],
   [
     "47",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-47/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-47/100",
   ],
   [
     "48",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-48/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-48/100",
   ],
   [
     "49",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-49/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-49/100",
   ],
   [
     "50",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-50/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-50/100",
   ],
   [
     "51",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-51/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-51/100",
   ],
   [
     "52",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-52/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-52/100",
   ],
   [
     "53",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-53/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-53/100",
   ],
   [
     "54",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-54/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-54/100",
   ],
   [
     "55",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-55/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-55/100",
   ],
   [
     "56",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-56/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-56/100",
   ],
   [
     "57",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-57/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-57/100",
   ],
   [
     "58",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-58/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-58/100",
   ],
   [
     "59",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-59/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-59/100",
   ],
   [
     "60",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-60/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-60/100",
   ],
   [
     "61",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-61/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-61/100",
   ],
   [
     "62",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-62/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-62/100",
   ],
   [
     "63",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-63/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-63/100",
   ],
   [
     "64",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-64/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-64/100",
   ],
   [
     "65",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-65/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-65/100",
   ],
   [
     "66",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-66/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-66/100",
   ],
   [
     "67",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-67/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-67/100",
   ],
   [
     "68",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-68/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-68/100",
   ],
   [
     "69",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-69/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-69/100",
   ],
   [
     "70",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-70/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-70/100",
   ],
   [
     "71",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-71/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-71/100",
   ],
   [
     "72",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-72/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-72/100",
   ],
   [
     "73",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-73/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-73/100",
   ],
   [
     "74",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-74/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-74/100",
   ],
   [
     "75",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-75/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-75/100",
   ],
   [
     "76",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-76/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-76/100",
   ],
   [
     "77",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-77/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-77/100",
   ],
   [
     "78",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-78/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-78/100",
   ],
   [
     "79",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-79/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-79/100",
   ],
   [
     "80",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-80/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-80/100",
   ],
   [
     "81",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-81/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-81/100",
   ],
   [
     "82",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-82/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-82/100",
   ],
   [
     "83",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-83/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-83/100",
   ],
   [
     "84",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-84/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-84/100",
   ],
   [
     "85",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-85/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-85/100",
   ],
   [
     "86",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-86/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-86/100",
   ],
   [
     "87",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-87/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-87/100",
   ],
   [
     "88",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-88/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-88/100",
   ],
   [
     "89",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-89/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-89/100",
   ],
   [
     "90",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-90/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-90/100",
   ],
   [
     "91",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-91/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-91/100",
   ],
   [
     "92",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-92/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-92/100",
   ],
   [
     "93",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-93/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-93/100",
   ],
   [
     "94",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-94/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-94/100",
   ],
   [
     "95",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-95/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-95/100",
   ],
   [
     "96",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-96/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-96/100",
   ],
   [
     "97",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-97/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-97/100",
   ],
   [
     "98",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-98/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-98/100",
   ],
   [
     "99",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-99/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-99/100",
   ],
   [
     "100",
-    "h-[4px] z-80 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-100/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-100/100",
   ],
 ]);
 
