@@ -10,7 +10,7 @@ export function ErrorLander(props: ErrorLanderProps) {
     <div
       className={
         window.innerWidth < 469
-          ? "flex flex-col w-full h-screen justify-start"
+          ? "flex flex-col w-full justify-center"
           : "flex flex-col w-full h-screen justify-center"
       }
     >
