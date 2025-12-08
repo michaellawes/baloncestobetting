@@ -7,7 +7,13 @@ library.add(fas);
 
 export function ErrorLander(props: ErrorLanderProps) {
   return (
-    <div className="flex flex-col w-full h-screen justify-center">
+    <div
+      className={
+        window.innerWidth < 469
+          ? "flex flex-col w-full h-screen justify-start"
+          : "flex flex-col w-full h-screen justify-center"
+      }
+    >
       <div className="block text-4xl w-full text-white text-center mb-2">
         <FontAwesomeIcon icon={faFaceDizzy as IconProp} className="fa-spin" />
       </div>
