@@ -260,13 +260,18 @@ export function Parlay(props: ParlayProps) {
       parlayElement,
       `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
     );*/
-    setNotification({
-      show: true,
-      legs: 0,
-      message: "Downloaded parlay!",
-      type: "DOWNLOAD",
-    });
-    setTimeout(exportAsImage, 1000);
+    setTimeout(async () => {
+      await exportAsImage(
+        parlayElement,
+        `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
+      );
+      setNotification({
+        show: true,
+        legs: 0,
+        message: "Downloaded parlay!",
+        type: "DOWNLOAD",
+      });
+    }, 1000);
   };
 
   const handleShareSlip = (parlay_id: string) => {
