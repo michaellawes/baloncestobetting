@@ -44,7 +44,7 @@ export function Navbar(props: NavbarProps) {
   return (
     <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
       <div className="flex-row py-4 items-center flex justify-start box-border relative">
-        <div className="flex flex-row grow justify-start w-5/8 md:w-18/20">
+        <div className="flex flex-row grow justify-start w-6/10 md:w-18/20">
           <Link
             className="px-4 justify-start text-start text-white flex-1 flex-row font-bold"
             to={"/"}
@@ -55,14 +55,14 @@ export function Navbar(props: NavbarProps) {
             </span>
           </Link>
         </div>
-        <div className="flex flex-row grow justify-end w-2/8 md:w-1/20">
+        <div className="flex flex-row grow justify-end w-2/10 md:w-1/20">
           <span className="px-3 flex font-[ProximaNova-Bold, serif]">
             ${numberWithCommas(parseFloat(balance.toFixed(2)))}
           </span>
         </div>
         <Menu
           as="div"
-          className="flex justify-center grow px-4 md:justify-end relative w-1/8"
+          className="flex justify-center grow px-4 md:justify-end relative w-2/10 md:w-1/20"
         >
           <MenuButton className="cursor-pointer inline-flex rounded-md hover:bg-gray-800 focus:outline-none text-base py-2 focus-visible:ring-1 focus-visible:ring-gray-800">
             <Auth isLoggedIn={isLoggedIn} profileImg={profileImg} />
