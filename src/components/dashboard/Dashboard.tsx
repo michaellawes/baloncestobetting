@@ -27,6 +27,7 @@ export function Dashboard(props: DashboardProps) {
   useEffect(() => {
     setIsViewingDashboard(true);
     setIsViewingMatchup(false);
+    window.scrollTo(0, 0);
     const getMatchup = async () => {
       const { data, error } = await supabase
         .from("matchup")

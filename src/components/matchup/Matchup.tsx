@@ -85,6 +85,8 @@ export function Matchup(props: MatchupsProps) {
           }
         }
       }
+
+      window.scrollTo(0, 0);
     }
   }, []);
 

@@ -145,6 +145,7 @@ export function Parlays(props: ParlaysViewerProps) {
     setLiveTeamData(processedTeamData);
     const getPlayerData = getAllPlayerLiveScores(matchups);
     setLivePlayerData(getPlayerData);
+    window.scrollTo(0, 0);
     const getParlays = async () => {
       let userId = "";
       if (user) {
