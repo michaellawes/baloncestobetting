@@ -173,6 +173,17 @@ export function App() {
       }
     };
 
+    if (getDaysSinceLastMonday() === 6) {
+      const startOfLockout = new Date();
+      const endOfLockout = new Date();
+      startOfLockout.setHours(8, 0, 0, 0);
+      endOfLockout.setUTCDate(endOfLockout.getUTCDate() + 1);
+      endOfLockout.setHours(0, 10, 0, 0);
+      const currentTime = new Date();
+      if (currentTime >= startOfLockout && currentTime < endOfLockout) {
+        setLockout(true);
+      }
+    }
     authenticateUser();
   }, []);
 
@@ -516,7 +527,6 @@ export function App() {
                   setIsViewingMatchup={setIsViewingMatchup}
                   lockout={lockout}
                   setCurrentMatchup={setCurrentMatchup}
-                  setLockout={setLockout}
                   setWeeklySlate={setWeeklySlate}
                   setMatchup={setMatchup}
                 />

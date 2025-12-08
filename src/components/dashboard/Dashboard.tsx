@@ -5,19 +5,8 @@ import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import { Lockout } from "./Lockout";
 import { useParams } from "react-router-dom";
 import supabase from "../../config/supabaseConfig";
-import { MatchupSchema, ParlayTask } from "../../utils/Interfaces";
+import { DashboardProps, ParlayTask } from "../../utils/Interfaces";
 import { getDailySlate } from "../../utils/Util";
-
-export interface DashboardProps {
-  weeklySlate: MatchupSchema[];
-  setIsViewingDashboard: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsViewingMatchup: React.Dispatch<React.SetStateAction<boolean>>;
-  lockout: boolean;
-  setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
-  setMatchup: React.Dispatch<React.SetStateAction<number>>;
-  setLockout: React.Dispatch<React.SetStateAction<boolean>>;
-  setWeeklySlate: React.Dispatch<React.SetStateAction<MatchupSchema[]>>;
-}
 
 export function Dashboard(props: DashboardProps) {
   const {
@@ -28,7 +17,6 @@ export function Dashboard(props: DashboardProps) {
     setIsViewingMatchup,
     setMatchup,
     setWeeklySlate,
-    setLockout,
   } = props;
 
   const dispatch = useContext(TasksDispatchContext);
@@ -52,30 +40,30 @@ export function Dashboard(props: DashboardProps) {
 
       if (data) {
         setMatchup(data[0]["id"]);
-        setLockout(data[0]["is_done"]);
-        const weeklySlate = await getDailySlate(data[0]["id"]);
-        //setWeeklySlate(demoWeeklySlate);
-        setWeeklySlate(weeklySlate);
-        if (parlayId != undefined) {
-          const getSharedSlip = async () => {
-            const { data, error } = await supabase
-              .from("fb_parlay_legs")
-              .select("*")
-              .eq("parlay_id", parlayId)
-              .order("index");
+        if (!lockout && !data[0]["is_done"]) {
+          const weeklySlate = await getDailySlate(data[0]["id"]);
+          setWeeklySlate(weeklySlate);
+          if (parlayId != undefined) {
+            const getSharedSlip = async () => {
+              const { data, error } = await supabase
+                .from("fb_parlay_legs")
+                .select("*")
+                .eq("parlay_id", parlayId)
+                .order("index");
 
-            if (error) {
-              console.log(error);
-            }
+              if (error) {
+                console.log(error);
+              }
 
-            if (data) {
-              dispatch({
-                type: "loadSharedSlip",
-                legs: data,
-              });
-            }
-          };
-          await getSharedSlip();
+              if (data) {
+                dispatch({
+                  type: "loadSharedSlip",
+                  legs: data,
+                });
+              }
+            };
+            await getSharedSlip();
+          }
         }
       }
     };
