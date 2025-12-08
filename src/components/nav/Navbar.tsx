@@ -110,11 +110,7 @@ export function Navbar(props: NavbarProps) {
                   <MenuItem>
                     <button
                       type="submit"
-                      className={
-                        window.innerWidth < 469
-                          ? "block w-full mr-8 bg-transparent"
-                          : "block w-full mr-4 bg-transparent"
-                      }
+                      className="block w-full mr-4 bg-transparent"
                     >
                       <GoogleLogin
                         onSuccess={(credentialResponse) => {

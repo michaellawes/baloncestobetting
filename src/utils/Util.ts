@@ -337,8 +337,12 @@ export const getPropTextWithRespectToScreenSize = (
   } else {
     let teamMatchupString: string = leg.frontend_id.split("/")[0];
     if (screenWidth < 500) {
-      teamMatchupString =
-        leg.frontend_id.split("/")[0].substring(0, 40) + "...";
+      const teams = leg.frontend_id.split("/")[0];
+      const roadTeam =
+        teams[0].length > 15 ? teams[0].substring(0, 13) + "..." : teams[0];
+      const homeTeam =
+        teams[1].length > 15 ? teams[1].substring(0, 13) + "..." : teams[1];
+      teamMatchupString = roadTeam + " v " + homeTeam;
     }
 
     return `${teamMatchupString} ${leg.text}`;
