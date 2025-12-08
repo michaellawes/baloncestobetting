@@ -256,17 +256,17 @@ export function Parlay(props: ParlayProps) {
   const handleCaptureClick = async () => {
     const parlayElement = document.getElementById(parlay_id);
     if (!parlayElement) return;
-    await exportAsImage(
+    /*await exportAsImage(
       parlayElement,
       `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
-    );
+    );*/
     setNotification({
       show: true,
       legs: 0,
       message: "Downloaded parlay!",
       type: "DOWNLOAD",
     });
-    //setTimeout(exportAsImage, 1000);
+    setTimeout(exportAsImage, 1000);
   };
 
   const handleShareSlip = (parlay_id: string) => {

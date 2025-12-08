@@ -22,7 +22,7 @@ export const decimalToOdds = (decimal: number) => {
   }
 };
 
-const downloadImage = (blob: string, imageFileName: string) => {
+const downloadImage = async (blob: string, imageFileName: string) => {
   const fakeLink = window.document.createElement("a");
   fakeLink.style.display = "none";
   fakeLink.download = imageFileName;
@@ -80,7 +80,7 @@ export const exportAsImage = async (
 ) => {
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
-  downloadImage(image, imageFileName);
+  await downloadImage(image, imageFileName);
 };
 
 export const generateId = () => {
