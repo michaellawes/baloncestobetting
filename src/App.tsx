@@ -183,6 +183,15 @@ export function App() {
       if (currentTime >= startOfLockout && currentTime < endOfLockout) {
         setLockout(true);
       }
+    } else if (getDaysSinceLastMonday() === 0) {
+      const startOfLockout = new Date();
+      const endOfLockout = new Date();
+      startOfLockout.setHours(0, 0, 0, 0);
+      endOfLockout.setHours(0, 10, 0, 0);
+      const currentTime = new Date();
+      if (currentTime >= startOfLockout && currentTime < endOfLockout) {
+        setLockout(true);
+      }
     }
     authenticateUser();
   }, []);
