@@ -593,7 +593,7 @@ export function Parlay(props: ParlayProps) {
               <span className="uppercase text-gray-400 text-[8px]">
                 bet id:{" "}
               </span>
-              {parlay_id.substring(parlay_id.length - 5)}
+              {window.innerHeight}
             </span>
           </div>
           <div className="flex w-2/5 justify-end items-center box-border relative font-mono">
