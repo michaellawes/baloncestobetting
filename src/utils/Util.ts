@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -81,7 +81,7 @@ export const exportAsImage = async (
 ) => {
   const currentPosition = legs.scrollTop;
   legs.scrollTop = 0;
-  legs.style.maxHeight = `${Math.min(window.innerHeight, 890)}px`;
+  legs.style.maxHeight = `${Math.min(window.innerHeight - parseFloat((window.innerHeight / 4).toFixed()), 890)}px`;
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
   await downloadImage(image, imageFileName);
