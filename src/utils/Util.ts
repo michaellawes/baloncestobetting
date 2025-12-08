@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -337,7 +337,7 @@ export const getPropTextWithRespectToScreenSize = (
   } else {
     let teamMatchupString: string = leg.frontend_id.split("/")[0];
     if (screenWidth < 500) {
-      const teams = leg.frontend_id.split(" v ")[0];
+      const teams = leg.frontend_id.split(" v ");
       const roadTeam =
         teams[0].length > 15 ? teams[0].substring(0, 13) + "..." : teams[0];
       const homeTeam =
