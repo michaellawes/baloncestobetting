@@ -9,7 +9,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -612,7 +612,10 @@ const getMatchupInformation = async (matchupId: number) => {
           const playerMetadata = playerToMetadata.get(propId);
           const matchupName = teamNameToMatchupName.get(propInfo.main_prop_id);
           const matchup = matchupToMatchupSchema.get(matchupName);
-          if (matchup.home.name === propInfo.main_prop_id) {
+          if (
+            playerMetadata !== undefined &&
+            matchup.home.name === propInfo.main_prop_id
+          ) {
             matchup.home.top_5.push({
               name: propId,
               average: playerMetadata.avg,
@@ -628,7 +631,10 @@ const getMatchupInformation = async (matchupId: number) => {
               },
               last_game: playerMetadata.last_game,
             });
-          } else if (matchup.road.name === propInfo.main_prop_id) {
+          } else if (
+            playerMetadata !== undefined &&
+            matchup.road.name === propInfo.main_prop_id
+          ) {
             matchup.road.top_5.push({
               name: propId,
               average: playerMetadata.avg,
