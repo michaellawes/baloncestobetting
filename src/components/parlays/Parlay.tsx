@@ -338,7 +338,13 @@ export function Parlay(props: ParlayProps) {
           </span>
         )}
         {!is_active && is_winner && (
-          <div className="text-green-600 z-40 w-1/8 justify-end flex">
+          <div
+            className={
+              getAllCinemaLegs()
+                ? "text-yellow-300 z-40 w-1/8 justify-end flex"
+                : "text-green-600 z-40 w-1/8 justify-end flex"
+            }
+          >
             <FontAwesomeIcon icon={faSquareCheck as IconProp} />
           </div>
         )}
@@ -543,7 +549,7 @@ export function Parlay(props: ParlayProps) {
                 className={
                   is_winner
                     ? getAllCinemaLegs()
-                      ? "text-yellow-500 text-sm font-bold font-[Proxima Nova, serif]"
+                      ? "text-yellow-300 text-sm font-bold font-[Proxima Nova, serif]"
                       : "text-green-500 text-sm font-bold font-[Proxima Nova, serif]"
                     : is_active
                       ? "text-gray-300 text-sm font-bold font-[Proxima Nova, serif]"
