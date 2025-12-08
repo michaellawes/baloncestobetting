@@ -255,14 +255,12 @@ export function Parlay(props: ParlayProps) {
 
   const handleCaptureClick = async () => {
     const parlayElement = document.getElementById(parlay_id);
+    const parlayLegs = document.getElementById(parlay_id + "/legs");
     if (!parlayElement) return;
-    /*await exportAsImage(
-      parlayElement,
-      `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
-    );*/
     setTimeout(async () => {
       await exportAsImage(
         parlayElement,
+        parlayLegs,
         `parlay-${parlay_id.substring(parlay_id.length - 5)}.png`,
       );
       setNotification({
@@ -359,10 +357,14 @@ export function Parlay(props: ParlayProps) {
           </div>
         )}
       </div>
-      <div className="flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900">
+      <div
+        id={parlay_id + "/legs"}
+        className="flex mb-2 max-h-110 overflow-y-scroll scrollbar-hide w-full flex-col bg-gray-900"
+      >
         {legs.map((leg, index) => (
           <div
             key={leg.frontend_id}
+            id={leg.text + "-" + parlay_id.substring(parlay_id.length - 5)}
             className="flex flex-col grow items-stretch w-full"
           >
             <div className="flex flew-row grow items-stretch w-full">

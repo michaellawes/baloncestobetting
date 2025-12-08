@@ -76,11 +76,17 @@ export const evaluateLeg = (leg: ParlayTask, event: number) => {
 
 export const exportAsImage = async (
   element: HTMLElement,
+  legs: HTMLElement,
   imageFileName: string,
 ) => {
+  const currentPosition = legs.scrollTop;
+  legs.scrollTop = 0;
+  legs.style.maxHeight = `${Math.min(window.innerHeight, 890)}px`;
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
   await downloadImage(image, imageFileName);
+  legs.style.maxHeight = "440px";
+  legs.scrollTop = currentPosition;
 };
 
 export const generateId = () => {
