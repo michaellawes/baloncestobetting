@@ -3,6 +3,7 @@ import { propField } from "./Constants";
 import {
   MatchupSchema,
   ParlayTask,
+  Player,
   SqlParlayMetadata,
   SqlPlayerLastGame,
   SqlPlayerMetadata,
@@ -13,6 +14,12 @@ import {
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
+
+export const createPlayerSpecials = (weeklySlate: MatchupSchema[]) => {
+  const playerSpecials: Player[] = [];
+
+  return playerSpecials;
+};
 
 export const decimalToOdds = (decimal: number) => {
   if (decimal >= 2) {
@@ -135,6 +142,14 @@ export const getAllPlayerLiveScores = (matchups: MatchupSchema[]) => {
 
 export const getDaysSinceLastMonday = () => {
   return (new Date().getDay() + 6) % 7;
+};
+
+export const getFinalGameFormatted = (lastGame: string) => {
+  const withRespectiveToTimezone = new Date(lastGame);
+  return getStandardTime(
+    withRespectiveToTimezone.getHours(),
+    withRespectiveToTimezone.getMinutes(),
+  );
 };
 
 export const getId = (
@@ -421,6 +436,12 @@ export const getTeamData = (live_matchups: MatchupSchema[]) => {
 
 export const getTeamNameIsTooLong = (teamName: string) => {
   return teamName.length > 16 && window.innerWidth < 469;
+};
+
+export const getTodayIsLastDay = (lastGame: string) => {
+  const withRespectiveToTimezone = new Date(lastGame);
+  withRespectiveToTimezone.setHours(0, 0, 0, 0);
+  return Date.now() >= withRespectiveToTimezone.getTime();
 };
 
 export const getUuid = (id: string) => {
@@ -760,6 +781,15 @@ export const getTeamNameWithRespectToScreenSize = (teamName: string) => {
   }
   return teamName;
 };
+
+export const isPlayerLockedOut = (lastGame: string) => {
+  return Date.now() >= new Date(lastGame).getTime();
+};
+
+export const isTeamScoreLockedOut = (lastFirstGame: number) => {
+  return Date.now() >= lastFirstGame;
+};
+
 export const round5 = (x: number) => {
   return Math.ceil(x / 5) * 5;
 };

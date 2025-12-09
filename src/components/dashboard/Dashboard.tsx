@@ -6,7 +6,8 @@ import { Lockout } from "../errors/Lockout";
 import { useParams } from "react-router-dom";
 import supabase from "../../config/supabaseConfig";
 import { DashboardProps, ParlayTask } from "../../utils/Interfaces";
-import { getDailySlate } from "../../utils/Util";
+import { createPlayerSpecials, getDailySlate } from "../../utils/Util";
+import { Specials } from "./Specials";
 
 export function Dashboard(props: DashboardProps) {
   const {
@@ -17,6 +18,8 @@ export function Dashboard(props: DashboardProps) {
     setIsViewingMatchup,
     setMatchup,
     setWeeklySlate,
+    setSpecials,
+    specials,
   } = props;
 
   const dispatch = useContext(TasksDispatchContext);
@@ -43,7 +46,9 @@ export function Dashboard(props: DashboardProps) {
         setMatchup(data[0]["id"]);
         if (!lockout && !data[0]["is_done"]) {
           const weeklySlate = await getDailySlate(data[0]["id"]);
+          const getSpecials = createPlayerSpecials(weeklySlate);
           setWeeklySlate(weeklySlate);
+          setSpecials(getSpecials);
           if (parlayId != undefined) {
             const getSharedSlip = async () => {
               const { data, error } = await supabase
@@ -88,10 +93,13 @@ export function Dashboard(props: DashboardProps) {
           }
         />
       ) : (
-        <WeeklySlate
-          matchups={weeklySlate}
-          setCurrentMatchup={setCurrentMatchup}
-        />
+        <>
+          <Specials players={specials} />
+          <WeeklySlate
+            matchups={weeklySlate}
+            setCurrentMatchup={setCurrentMatchup}
+          />
+        </>
       )}
     </div>
   );

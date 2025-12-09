@@ -1,9 +1,12 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import {
+  getFinalGameFormatted,
   getPlayerNameIsTooLong,
-  getStandardTime,
   getTeamNameIsTooLong,
+  getTodayIsLastDay,
+  isPlayerLockedOut,
+  isTeamScoreLockedOut,
   roundToInteger,
 } from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
@@ -89,28 +92,6 @@ export function Matchup(props: MatchupsProps) {
     }
   }, []);
 
-  const isPlayerLockedOut = (lastGame: string) => {
-    return Date.now() >= new Date(lastGame).getTime();
-  };
-
-  const isTeamScoreLockedOut = (lastFirstGame: number) => {
-    return Date.now() >= lastFirstGame;
-  };
-
-  const getFinalGameFormatted = (lastGame: string) => {
-    const withRespectiveToTimezone = new Date(lastGame);
-    return getStandardTime(
-      withRespectiveToTimezone.getHours(),
-      withRespectiveToTimezone.getMinutes(),
-    );
-  };
-
-  const getTodayIsLastDay = (lastGame: string) => {
-    const withRespectiveToTimezone = new Date(lastGame);
-    withRespectiveToTimezone.setHours(0, 0, 0, 0);
-    return Date.now() >= withRespectiveToTimezone.getTime();
-  };
-
   if (!matchup) {
     return (
       <ErrorLander message="Please return to the homepage and refresh..." />
@@ -123,16 +104,16 @@ export function Matchup(props: MatchupsProps) {
         <div
           className={
             matchup.isClose
-              ? "box-border flex relative border-l-2 border-r-2 border-yellow-400 w-full flex-col justify-center text-white items-stretch"
-              : "box-border flex relative border-l-2 border-r-2 border-blue-500 w-full flex-col justify-center text-white items-stretch"
+              ? "box-border flex relative border-l-1 border-r-1 border-yellow-400 w-full flex-col justify-center text-white items-stretch"
+              : "box-border flex relative border-l-1 border-r-1 border-blue-500 w-full flex-col justify-center text-white items-stretch"
           }
         >
           <div className="flex flex-row w-full pt-18">
             <div
               className={
                 matchup.isClose
-                  ? "flex flex-col w-1/2 border-r-2 border-r-yellow-400 border-t-3 border-t-yellow-400"
-                  : "flex flex-col w-1/2 border-r-2 border-r-blue-500 border-t-3 border-t-blue-500"
+                  ? "flex flex-col w-1/2 border-r-1 border-r-yellow-400 border-t-3 border-t-yellow-400"
+                  : "flex flex-col w-1/2 border-r-1 border-r-blue-500 border-t-3 border-t-blue-500"
               }
             >
               <div className="items-center  w-full flex-col flex justify-start box-border relative rounded-r-none pb-2">
@@ -216,8 +197,8 @@ export function Matchup(props: MatchupsProps) {
             <div
               className={
                 matchup.isClose
-                  ? "flex flex-col w-1/2 border-l-2 border-l-yellow-400 border-t-3 border-t-yellow-400"
-                  : "flex flex-col w-1/2 border-l-2 border-l-blue-500 border-t-3 border-t-blue-500"
+                  ? "flex flex-col w-1/2 border-l-1 border-l-yellow-400 border-t-3 border-t-yellow-400"
+                  : "flex flex-col w-1/2 border-l-1 border-l-blue-500 border-t-3 border-t-blue-500"
               }
             >
               <div className="items-center w-full  flex-col flex justify-start box-border relative rounded-r-none pb-2">
@@ -318,8 +299,8 @@ export function Matchup(props: MatchupsProps) {
             <div
               className={
                 matchup.isClose
-                  ? "flex flex-row w-1/2 justify-center items-center text-center border-r-[2px] border-r-yellow-400"
-                  : "flex flex-row w-1/2 justify-center items-center text-center border-r-[2px] border-r-blue-500"
+                  ? "flex flex-row w-1/2 justify-center items-center text-center border-r-1 border-r-yellow-400"
+                  : "flex flex-row w-1/2 justify-center items-center text-center border-r-1 border-r-blue-500"
               }
             >
               <div className="w-full flex flex-col justify-center text-center">
@@ -502,8 +483,8 @@ export function Matchup(props: MatchupsProps) {
             <div
               className={
                 matchup.isClose
-                  ? "flex flex-row w-1/2 justify-center items-center text-center border-l-[2px] border-l-yellow-400"
-                  : "flex flex-row w-1/2 justify-center items-center text-center border-l-[2px] border-l-blue-500"
+                  ? "flex flex-row w-1/2 justify-center items-center text-center border-l-1 border-l-yellow-400"
+                  : "flex flex-row w-1/2 justify-center items-center text-center border-l-1 border-l-blue-500"
               }
             >
               <div className="w-full flex flex-col justify-center text-center">

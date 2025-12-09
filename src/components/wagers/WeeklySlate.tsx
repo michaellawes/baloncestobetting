@@ -22,7 +22,7 @@ export interface WeeklySlateProps {
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups, setCurrentMatchup } = props;
   return (
-    <div className="z-10 items-stretch justify-start flex-col flex box-border relative w-full">
+    <div className="flex flex-col z-10 items-stretch justify-start box-border relative w-full">
       <div className="box-border relative mt-28 w-full">
         <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative w-full">
           <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0 w-full">

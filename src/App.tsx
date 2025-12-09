@@ -41,6 +41,7 @@ export function App() {
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
   const [matchup, setMatchup] = useState<number>(-1);
   const [weeklySlate, setWeeklySlate] = useState<MatchupSchema[]>([]);
+  const [specials, setSpecials] = useState<Player[]>([]);
   const [justAffectedBalance, setJustAffectedBalance] =
     useState<boolean>(false);
   const [parlayFieldUpdate, setParlayFieldUpdate] =
@@ -538,7 +539,9 @@ export function App() {
                   lockout={lockout}
                   setCurrentMatchup={setCurrentMatchup}
                   setWeeklySlate={setWeeklySlate}
+                  setSpecials={setSpecials}
                   setMatchup={setMatchup}
+                  specials={specials}
                 />
               }
             />

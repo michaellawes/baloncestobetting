@@ -13,6 +13,8 @@ export interface DashboardProps {
   setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
   setMatchup: React.Dispatch<React.SetStateAction<number>>;
   setWeeklySlate: React.Dispatch<React.SetStateAction<MatchupSchema[]>>;
+  setSpecials: React.Dispatch<React.SetStateAction<Player[]>>;
+  specials: Player[];
 }
 
 export interface ErrorLanderProps {
@@ -171,7 +173,7 @@ export interface PropLineProps {
 }
 
 export interface SpecialsProps {
-  matchup_id: number;
+  players: Player[];
 }
 
 export interface SqlParlayMetadata {
