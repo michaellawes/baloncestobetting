@@ -14,7 +14,7 @@ export function Auth(props: AuthProps) {
           src={profileImg}
           alt="Google Account Profile Picture"
           referrerPolicy="no-referrer"
-          className="md:w-6 md:h-6 h-6 w-6 border-transparent border rounded-4xl"
+          className="md:w-6 md:h-6 h-6 w-6 flex items-center border-transparent border rounded-4xl"
         />
       ) : (
         <div className="md:w-6 md:h-6 h-6 w-6 flex flex-col justify-center items-center">
