@@ -19,6 +19,7 @@ export function Navbar(props: NavbarProps) {
     setBalance,
     setUser,
     isViewingDashboard,
+    isViewingMatchup,
     matchup,
   } = props;
   const [profileImg, setProfileImg] = React.useState("");
@@ -42,7 +43,13 @@ export function Navbar(props: NavbarProps) {
   };
 
   return (
-    <nav className="bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1">
+    <nav
+      className={
+        !isViewingMatchup
+          ? "bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-300 border-b-1"
+          : "bg-gray-900 text-white w-full fixed z-60 scrollbar-hide border-b-gray-600 border-b-1"
+      }
+    >
       <div className="flex-row py-4 items-center flex justify-start box-border relative">
         <div className="flex flex-row grow justify-start w-6/10 md:w-18/20">
           <Link

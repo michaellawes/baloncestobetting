@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { TasksContext, TasksDispatchContext } from "../../reducer/TasksContext";
+import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
 import {
   ParlayAction,
   ParlayTask,
   PropLineProps,
-} from "../../../utils/Interfaces";
-import { specialLegTypes } from "../../../utils/Constants";
-import { decimalToOdds, oddsToDecimal } from "../../../utils/Util";
+} from "../../utils/Interfaces";
+import { specialLegTypes } from "../../utils/Constants";
+import { decimalToOdds, oddsToDecimal } from "../../utils/Util";
 
 export function PropLine(props: PropLineProps) {
   const {

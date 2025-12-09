@@ -55,6 +55,7 @@ export interface NavbarProps {
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   setUser: React.Dispatch<React.SetStateAction<UserData>>;
   isViewingDashboard: boolean;
+  isViewingMatchup: boolean;
   matchup: number;
 }
 
@@ -167,6 +168,10 @@ export interface PropLineProps {
   isHome?: boolean;
   isClose?: boolean;
   specialLegType?: string;
+}
+
+export interface SpecialsProps {
+  matchup_id: number;
 }
 
 export interface SqlParlayMetadata {

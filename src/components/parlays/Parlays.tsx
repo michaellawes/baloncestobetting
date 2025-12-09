@@ -9,9 +9,9 @@ import {
   getTeamData,
 } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
-import { ErrorLander } from "../dashboard/ErrorLander";
+import { ErrorLander } from "../errors/ErrorLander";
 import { ParlaysViewerProps, SupabaseParlay } from "../../utils/Interfaces";
-import { Lockout } from "../dashboard/Lockout";
+import { Lockout } from "../errors/Lockout";
 
 export function Parlays(props: ParlaysViewerProps) {
   const {

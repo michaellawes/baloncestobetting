@@ -15,8 +15,8 @@ import {
   faFaceGrin,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { PropLine } from "../dashboard/wagers/PropLine";
-import { ErrorLander } from "../dashboard/ErrorLander";
+import { PropLine } from "../wagers/PropLine";
+import { ErrorLander } from "../errors/ErrorLander";
 import { propField } from "../../utils/Constants";
 import { MatchupsProps, ParlayTask } from "../../utils/Interfaces";
 

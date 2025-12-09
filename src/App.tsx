@@ -19,7 +19,7 @@ import supabase from "./config/supabaseConfig";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
 import { Matchup } from "./components/matchup/Matchup";
-import { ErrorLander } from "./components/dashboard/ErrorLander";
+import { ErrorLander } from "./components/errors/ErrorLander";
 import {
   MatchupSchema,
   NotificationMetadata,
@@ -520,6 +520,7 @@ export function App() {
             setBalance={setBalance}
             setUser={setUser}
             isViewingDashboard={isViewingDashboard}
+            isViewingMatchup={isViewingMatchup}
             matchup={matchup}
           />
           <Notification

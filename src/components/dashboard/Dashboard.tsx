@@ -1,8 +1,8 @@
-import { WeeklySlate } from "./wagers/WeeklySlate";
+import { WeeklySlate } from "../wagers/WeeklySlate";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { TasksContext, TasksDispatchContext } from "../reducer/TasksContext";
-import { Lockout } from "./Lockout";
+import { Lockout } from "../errors/Lockout";
 import { useParams } from "react-router-dom";
 import supabase from "../../config/supabaseConfig";
 import { DashboardProps, ParlayTask } from "../../utils/Interfaces";

@@ -4,13 +4,13 @@ import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
 import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
-import { MatchupSchema } from "../../../utils/Interfaces";
-import { propField } from "../../../utils/Constants";
+import { MatchupSchema } from "../../utils/Interfaces";
+import { propField } from "../../utils/Constants";
 import {
   getId,
   getOppId,
   getTeamNameWithRespectToScreenSize,
-} from "../../../utils/Util";
+} from "../../utils/Util";
 
 library.add(fas);
 
