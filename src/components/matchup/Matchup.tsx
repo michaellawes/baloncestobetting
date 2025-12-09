@@ -1,19 +1,9 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import {
-  getPlayerNameIsTooLong,
-  getStandardTime,
-  getTeamNameIsTooLong,
-  roundToInteger,
-} from "../../utils/Util";
+import { getPlayerNameIsTooLong, getStandardTime, getTeamNameIsTooLong, roundToInteger } from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBasketball,
-  faFaceDizzy,
-  faFaceGrimace,
-  faFaceGrin,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, faFaceDizzy, faFaceGrimace, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../dashboard/wagers/PropLine";
 import { ErrorLander } from "../dashboard/ErrorLander";
@@ -22,7 +12,6 @@ import { MatchupsProps, ParlayTask } from "../../utils/Interfaces";
 
 export function Matchup(props: MatchupsProps) {
   const { matchup, setIsViewingDashboard, setIsViewingMatchup } = props;
-
   const tasks: ParlayTask[] = useContext(TasksContext);
 
   useEffect(() => {
@@ -119,11 +108,23 @@ export function Matchup(props: MatchupsProps) {
   }
 
   return (
-    <div className="w-full h-screen bg-gray-900">
-      <div className="z-10 items-stretch justify-start bg-gray-800 flex-col flex box-border relative">
-        <div className="box-border flex relative  w-full flex-col justify-center text-white items-stretch">
-          <div className="flex flex-row w-full h-full pt-20 border-t-2">
-            <div className="flex flex-col w-1/2 h-full">
+    <div className="w-full h-screen bg-gray-900 overflow-x-hidden">
+      <div className="z-10 items-stretch justify-start bg-gray-900 flex-col flex box-border relative">
+        <div
+          className={
+            matchup.isClose
+              ? "box-border flex relative border-l-2 border-r-2 border-yellow-400 w-full flex-col justify-center text-white items-stretch"
+              : "box-border flex relative border-l-2 border-r-2 border-blue-500 w-full flex-col justify-center text-white items-stretch"
+          }
+        >
+          <div className="flex flex-row w-full pt-18">
+            <div
+              className={
+                matchup.isClose
+                  ? "flex flex-col w-1/2 border-r-2 border-r-yellow-400 border-t-3 border-t-yellow-400"
+                  : "flex flex-col w-1/2 border-r-2 border-r-blue-500 border-t-3 border-t-blue-500"
+              }
+            >
               <div className="items-center  w-full flex-col flex justify-start box-border relative rounded-r-none pb-2">
                 <div className="items-center w-full flex-col flex justify-start box-border relative ">
                   <div className="items-center w-full flex-col flex justify-start box-border relative">
@@ -134,11 +135,11 @@ export function Matchup(props: MatchupsProps) {
                         !matchup.road.icon.startsWith(
                           "https://m.media-amazon",
                         ) ? (
-                          <div className="flex">
+                          <div className="flex pt-2 pb-2">
                             <img
                               src={matchup.road.icon}
                               alt="Can't Get Your PFP Buddy"
-                              className="h-16 w-16 border-transparent border rounded-[40px]"
+                              className="h-12 w-12 border-transparent border rounded-[40px]"
                             />
                           </div>
                         ) : (
@@ -157,14 +158,14 @@ export function Matchup(props: MatchupsProps) {
                             ? matchup.road.name.substring(0, 16) + "..."
                             : matchup.road.name}
                         </span>
-                        <span className="font-[ProximaNova, serif] font-light text-gray-300 text-xs flex box-border overflow-hidden relative w-full justify-center">
+                        <span className="font-[ProximaNova, serif] font-light text-gray-200 text-xs flex box-border overflow-hidden relative w-full justify-center">
                           {matchup.road.record}
                         </span>
                         <span className="font-[ProximaNova, serif] font-light text-white text-base flex box-border overflow-hidden relative w-full justify-center">
                           <span className="font-[ProximaNova, serif] font-bold text-red-500 mr-2">
-                            LIVE:
+                            LIVE SCORE:
                           </span>
-                          {matchup.road.live_score} fpts
+                          {matchup.road.live_score}
                         </span>
                       </div>
                     </div>
@@ -173,7 +174,7 @@ export function Matchup(props: MatchupsProps) {
                 <div className="w-full h-14 mt-2 items-center justify-center flex flex-row box-border relative px-6 py-1 ">
                   {isTeamScoreLockedOut(matchup.road.first_last_game) ? (
                     <>
-                      <span className="text-gray-500 uppercase">
+                      <span className="text-gray-400 uppercase">
                         first game started
                       </span>
                     </>
@@ -186,6 +187,7 @@ export function Matchup(props: MatchupsProps) {
                         odds={matchup.road.team_total.over_odds}
                         frontend_id={matchup.road.name + "/O/" + propField[3]}
                         oppId={matchup.road.name + "/U/" + propField[3]}
+                        isClose={matchup.isClose}
                       />
                       <PropLine
                         text={"U " + matchup.road.team_total.text}
@@ -194,27 +196,34 @@ export function Matchup(props: MatchupsProps) {
                         odds={matchup.road.team_total.under_odds}
                         frontend_id={matchup.road.name + "/U/" + propField[3]}
                         oppId={matchup.road.name + "/O/" + propField[3]}
+                        isClose={matchup.isClose}
                       />
                     </>
                   )}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col w-1/2 h-full">
+            <div
+              className={
+                matchup.isClose
+                  ? "flex flex-col w-1/2 border-l-2 border-l-yellow-400 border-t-3 border-t-yellow-400"
+                  : "flex flex-col w-1/2 border-l-2 border-l-blue-500 border-t-3 border-t-blue-500"
+              }
+            >
               <div className="items-center w-full  flex-col flex justify-start box-border relative rounded-r-none pb-2">
                 <div className="items-center w-full flex-col flex justify-start box-border relative">
-                  <div className="bg-gray-800 items-center w-full flex-col flex justify-start box-border relative">
+                  <div className="bg-gray-900 items-center w-full flex-col flex justify-start box-border relative">
                     <div className="bg-no-repeat bg-center bg-contain w-full justify-center flex ">
                       {matchup.home.icon.length > 0 &&
                       !matchup.home.icon.startsWith("https://mystique") &&
                       !matchup.home.icon.startsWith(
                         "https://m.media-amazon",
                       ) ? (
-                        <div className="flex">
+                        <div className="flex pt-2 pb-2">
                           <img
                             src={matchup.home.icon}
                             alt="Can't Get Your PFP Buddy"
-                            className="w-16 h-16 border-transparent border rounded-[40px]"
+                            className="h-12 w-12 border-transparent border rounded-[40px]"
                           />
                         </div>
                       ) : (
@@ -233,14 +242,14 @@ export function Matchup(props: MatchupsProps) {
                           ? matchup.home.name.substring(0, 16) + "..."
                           : matchup.home.name}
                       </span>
-                      <span className="font-[ProximaNova, serif] font-light text-gray-300 text-xs flex box-border overflow-hidden relative w-full justify-center">
+                      <span className="font-[ProximaNova, serif] font-light text-gray-200 text-xs flex box-border overflow-hidden relative w-full justify-center">
                         {matchup.home.record}
                       </span>
                       <span className="font-[ProximaNova, serif] font-light text-white text-base flex box-border overflow-hidden relative w-full justify-center">
                         <span className="font-[ProximaNova, serif] font-bold text-red-500 mr-2">
-                          LIVE:
+                          LIVE SCORE:
                         </span>
-                        {matchup.home.live_score} fpts
+                        {matchup.home.live_score}
                       </span>
                     </div>
                   </div>
@@ -248,7 +257,7 @@ export function Matchup(props: MatchupsProps) {
                 <div className="w-full h-14 mt-2 items-center justify-center flex flex-row box-border relative px-6 py-1 ">
                   {isTeamScoreLockedOut(matchup.home.first_last_game) ? (
                     <>
-                      <span className="text-gray-500 uppercase">
+                      <span className="text-gray-400 uppercase">
                         first game started
                       </span>
                     </>
@@ -261,6 +270,7 @@ export function Matchup(props: MatchupsProps) {
                         odds={matchup.home.team_total.over_odds}
                         frontend_id={matchup.home.name + "/O/" + propField[3]}
                         oppId={matchup.home.name + "/U/" + propField[3]}
+                        isClose={matchup.isClose}
                       />
                       <PropLine
                         text={"U " + matchup.home.team_total.text}
@@ -269,6 +279,7 @@ export function Matchup(props: MatchupsProps) {
                         odds={matchup.home.team_total.under_odds}
                         frontend_id={matchup.home.name + "/U/" + propField[3]}
                         oppId={matchup.home.name + "/O/" + propField[3]}
+                        isClose={matchup.isClose}
                       />
                     </>
                   )}
@@ -276,15 +287,31 @@ export function Matchup(props: MatchupsProps) {
               </div>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center w-full pb-2 border-b-gray-400 border-b-2 border-t-3 border-t-gray-400">
+          <div
+            className={
+              matchup.isClose
+                ? "flex flex-row items-center justify-center w-full pb-2 border-b-yellow-400 border-b-2 border-t-2 border-t-yellow-400"
+                : "flex flex-row items-center justify-center w-full pb-2 border-b-blue-500 border-b-2 border-t-2 border-t-blue-500"
+            }
+          >
             <div className="flex flex-col w-full justify-center items-center text-center">
-              <span className="font-[ProximaNova, serif] text-white font-bold pt-2">
+              <span
+                className={
+                  "font-[ProximaNova, serif] text-white font-bold pt-2"
+                }
+              >
                 Roster Info
               </span>
             </div>
           </div>
           <div className="flex flex-row items-center justify-center w-full grow">
-            <div className="flex flex-row w-1/2 justify-center items-center text-center border-r-[0.5px] border-r-gray-400">
+            <div
+              className={
+                matchup.isClose
+                  ? "flex flex-row w-1/2 justify-center items-center text-center border-r-[2px] border-r-yellow-400"
+                  : "flex flex-row w-1/2 justify-center items-center text-center border-r-[2px] border-r-blue-500"
+              }
+            >
               <div className="w-full flex flex-col justify-center text-center">
                 <div className="flex flex-col w-full justify-start">
                   <div className="w-full flex flex-col justify-center text-center">
@@ -297,11 +324,21 @@ export function Matchup(props: MatchupsProps) {
                     >
                       {matchup.road.top_5.slice(0, 5).map((player, index) => (
                         <div
-                          className="flex flex-col w-full border-b-2 border-b-gray-400"
+                          className={
+                            matchup.isClose
+                              ? "flex flex-col w-full border-b-2 border-b-yellow-400"
+                              : "flex flex-col w-full border-b-2 border-b-blue-500"
+                          }
                           key={player.name}
                         >
                           <div className="flex flex-row w-full justify-start ml-2 mt-1 font-bold items-start">
-                            <span className="text-gray-300 text-xs">
+                            <span
+                              className={
+                                matchup.isClose
+                                  ? "text-gray-100 text-xs"
+                                  : "text-gray-200 text-xs"
+                              }
+                            >
                               {index + 1}
                             </span>
                           </div>
@@ -315,7 +352,7 @@ export function Matchup(props: MatchupsProps) {
                               )}
                               {player.status === "DAY_TO_DAY" && (
                                 <FontAwesomeIcon
-                                  className="text-yellow-500"
+                                  className="text-orange-400"
                                   icon={faFaceGrimace as IconProp}
                                 />
                               )}
@@ -337,7 +374,7 @@ export function Matchup(props: MatchupsProps) {
                               <div className="flex flex-col justify-end w-full">
                                 <div className="flex flex-row justify-start w-full">
                                   <div className="flex flex-row w-full justify-start">
-                                    <span className="text-xs text-gray-500 flex flex-col justify-end">
+                                    <span className="text-xs text-gray-400 flex flex-col justify-end">
                                       {player.team}
                                       {" " + player.position}
                                     </span>
@@ -370,7 +407,13 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex flex-row justify-center text-sm items-center text-center my-2">
                               {player.games_left == 1 &&
                               getTodayIsLastDay(player.last_game) ? (
-                                <span className="text-yellow-400 font-bold font-[ProximaNova, serif]">
+                                <span
+                                  className={
+                                    matchup.isClose
+                                      ? "text-yellow-300 font-bold font-[ProximaNova, serif]"
+                                      : "text-yellow-400 font-bold font-[ProximaNova, serif]"
+                                  }
+                                >
                                   {"Final Game Today @ " +
                                     getFinalGameFormatted(player.last_game)}
                                 </span>
@@ -380,7 +423,7 @@ export function Matchup(props: MatchupsProps) {
                                 </span>
                               )}
                               {player.status === "OUT" ? (
-                                <span className="text-gray-500">TBD</span>
+                                <span className="text-gray-400">TBD</span>
                               ) : (
                                 <span>
                                   {player.games_left >= 1 &&
@@ -391,11 +434,17 @@ export function Matchup(props: MatchupsProps) {
                               )}
                             </div>
                           </div>
-                          <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
+                          <div
+                            className={
+                              matchup.isClose
+                                ? "w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-yellow-500 relative px-6 py-1"
+                                : "w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-blue-500 relative px-6 py-1"
+                            }
+                          >
                             {player.games_left < 1 ||
                             player.status === "OUT" ||
                             isPlayerLockedOut(player.last_game) ? (
-                              <div className="text-gray-500 uppercase">
+                              <div className="text-gray-400 uppercase">
                                 {isPlayerLockedOut(player.last_game) ? (
                                   <span>Last Game Started</span>
                                 ) : (
@@ -417,6 +466,7 @@ export function Matchup(props: MatchupsProps) {
                                     player.name + "/O/" + propField[4]
                                   }
                                   oppId={player.name + "/U/" + propField[4]}
+                                  isClose={matchup.isClose}
                                 />
                                 <PropLine
                                   text={"U " + player.prop_line.text}
@@ -427,6 +477,7 @@ export function Matchup(props: MatchupsProps) {
                                     player.name + "/U/" + propField[4]
                                   }
                                   oppId={player.name + "/O/" + propField[4]}
+                                  isClose={matchup.isClose}
                                 />
                               </>
                             )}
@@ -438,7 +489,13 @@ export function Matchup(props: MatchupsProps) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-row w-1/2 justify-center items-center text-center border-l-[0.5px] border-l-gray-400">
+            <div
+              className={
+                matchup.isClose
+                  ? "flex flex-row w-1/2 justify-center items-center text-center border-l-[2px] border-l-yellow-400"
+                  : "flex flex-row w-1/2 justify-center items-center text-center border-l-[2px] border-l-blue-500"
+              }
+            >
               <div className="w-full flex flex-col justify-center text-center">
                 <div className="flex flex-col w-full justify-start">
                   <div className="w-full flex flex-col justify-center text-center">
@@ -451,11 +508,21 @@ export function Matchup(props: MatchupsProps) {
                     >
                       {matchup.home.top_5.slice(0, 5).map((player, index) => (
                         <div
-                          className="flex flex-col w-full border-b-2 border-b-gray-400"
+                          className={
+                            matchup.isClose
+                              ? "flex flex-col w-full border-b-2 border-b-yellow-400"
+                              : "flex flex-col w-full border-b-2 border-b-blue-500"
+                          }
                           key={player.name}
                         >
                           <div className="flex flex-row w-full justify-start ml-1 mt-1 font-bold items-start">
-                            <span className="text-gray-300 text-xs">
+                            <span
+                              className={
+                                matchup.isClose
+                                  ? "text-gray-100 text-xs"
+                                  : "text-gray-200 text-xs"
+                              }
+                            >
                               {index + 1}
                             </span>
                           </div>
@@ -469,7 +536,7 @@ export function Matchup(props: MatchupsProps) {
                               )}
                               {player.status === "DAY_TO_DAY" && (
                                 <FontAwesomeIcon
-                                  className="text-yellow-500"
+                                  className="text-orange-400"
                                   icon={faFaceGrimace as IconProp}
                                 />
                               )}
@@ -491,7 +558,7 @@ export function Matchup(props: MatchupsProps) {
                               <div className="flex flex-col justify-end w-full">
                                 <div className="flex flex-row justify-start w-full">
                                   <div className="flex flex-row w-full justify-start">
-                                    <span className="text-xs text-gray-500 flex flex-col justify-end">
+                                    <span className="text-xs text-gray-400 flex flex-col justify-end">
                                       {player.team}
                                       {" " + player.position}
                                     </span>
@@ -524,7 +591,13 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex flex-row justify-center text-sm items-center text-center my-2">
                               {player.games_left == 1 &&
                               getTodayIsLastDay(player.last_game) ? (
-                                <span className="text-yellow-400 font-bold font-[ProximaNova, serif]">
+                                <span
+                                  className={
+                                    matchup.isClose
+                                      ? "text-yellow-300 font-bold font-[ProximaNova, serif]"
+                                      : "text-yellow-400 font-bold font-[ProximaNova, serif]"
+                                  }
+                                >
                                   {"Final Game Today @ " +
                                     getFinalGameFormatted(player.last_game)}
                                 </span>
@@ -534,7 +607,7 @@ export function Matchup(props: MatchupsProps) {
                                 </span>
                               )}
                               {player.status === "OUT" ? (
-                                <span className="text-gray-500">TBD</span>
+                                <span className="text-gray-400">TBD</span>
                               ) : (
                                 <span>
                                   {player.games_left >= 1 &&
@@ -545,11 +618,17 @@ export function Matchup(props: MatchupsProps) {
                               )}
                             </div>
                           </div>
-                          <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-gray-400 relative px-6 py-1 ">
+                          <div
+                            className={
+                              matchup.isClose
+                                ? "w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-yellow-500 relative px-6 py-1"
+                                : "w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-blue-500 relative px-6 py-1"
+                            }
+                          >
                             {player.games_left < 1 ||
                             player.status === "OUT" ||
                             isPlayerLockedOut(player.last_game) ? (
-                              <div className="text-gray-500 uppercase">
+                              <div className="text-gray-400 uppercase">
                                 {isPlayerLockedOut(player.last_game) ? (
                                   <span>Last Game Started</span>
                                 ) : (
@@ -571,6 +650,7 @@ export function Matchup(props: MatchupsProps) {
                                     player.name + "/O/" + propField[4]
                                   }
                                   oppId={player.name + "/U/" + propField[4]}
+                                  isClose={matchup.isClose}
                                 />
                                 <PropLine
                                   text={"U " + player.prop_line.text}
@@ -581,6 +661,7 @@ export function Matchup(props: MatchupsProps) {
                                     player.name + "/U/" + propField[4]
                                   }
                                   oppId={player.name + "/O/" + propField[4]}
+                                  isClose={matchup.isClose}
                                 />
                               </>
                             )}
