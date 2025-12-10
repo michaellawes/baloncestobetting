@@ -10,9 +10,12 @@ export function Specials(props: SpecialsProps) {
     <div className="w-full flex flex-row z-10 justify-start items-stretch box-border relative">
       <div className="w-full box-border relative mt-29">
         <div className="w-full py-2 px-4 flex flex-col justify-start bg-gray-900 box-border relative basis-0 grow text-white ">
-          <div className="w-full flex flex-row ">
+          <div className="w-full flex flex-row overflow-x-scroll">
             {players.map((player) => (
-              <div className="w-full flex flex-row" key={player.name}>
+              <div
+                className="w-full min-w-[200px] flex flex-row"
+                key={player.name}
+              >
                 <div className="w-full flex flex-row justify-center">
                   <div
                     className="flex flex-col w-full pt-2 mx-2 border-2 border-blue-300"
