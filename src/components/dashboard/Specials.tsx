@@ -31,7 +31,7 @@ export function Specials(props: SpecialsProps) {
                       <div className="flex flex-col justify-center w-full">
                         <div className="flex flex-row justify-center text-sm items-center text-center">
                           <span className="text-base md:text-xl flex flex-col ">
-                            {getPlayerNameIsTooLong(player.name)
+                            {getPlayerNameIsTooLong(player.name, true)
                               ? player.name.substring(0, 15) + "..."
                               : player.name}
                           </span>

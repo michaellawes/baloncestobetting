@@ -361,7 +361,7 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex w-6/8 justify-start flex-col">
                               <div className="flex flex-row justify-start items-center text-left">
                                 <span className="text-base md:text-xl flex flex-col justify-start items-start">
-                                  {getPlayerNameIsTooLong(player.name)
+                                  {getPlayerNameIsTooLong(player.name, false)
                                     ? player.name.substring(0, 15) + "..."
                                     : player.name}
                                 </span>
@@ -547,7 +547,7 @@ export function Matchup(props: MatchupsProps) {
                             <div className="flex w-6/8 justify-start flex-col">
                               <div className="flex flex-row justify-start items-center text-left">
                                 <span className="text-base md:text-xl flex flex-col justify-start items-start">
-                                  {getPlayerNameIsTooLong(player.name)
+                                  {getPlayerNameIsTooLong(player.name, false)
                                     ? player.name.substring(0, 15) + "..."
                                     : player.name}
                                 </span>

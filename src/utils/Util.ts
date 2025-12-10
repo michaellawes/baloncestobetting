@@ -1,10 +1,5 @@
 import { v5 as uuidv5 } from "uuid";
-import {
-  discountTypes,
-  lineReductionDiscounts,
-  oddsBoost,
-  propField,
-} from "./Constants";
+import { discountTypes, lineReductionDiscounts, oddsBoost, propField } from "./Constants";
 import {
   IndividualLineMetadata,
   MatchupSchema,
@@ -16,7 +11,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -419,8 +414,14 @@ export const getPayoutWithRespectToScreenWidth = (payout: number) => {
   }
 };
 
-export const getPlayerNameIsTooLong = (playerName: string) => {
-  return playerName.length > 15 && window.innerWidth < 501;
+export const getPlayerNameIsTooLong = (
+  playerName: string,
+  isSpecial: boolean,
+) => {
+  return (
+    (playerName.length > 15 && window.innerWidth < 501) ||
+    (window.innerWidth > 500 && isSpecial && playerName.length > 15)
+  );
 };
 
 export const getPropTextWithRespectToScreenSize = (
