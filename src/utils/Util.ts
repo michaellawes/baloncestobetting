@@ -20,13 +20,18 @@ export const getNewPropLineGivenDiscountAndType = (
   type: string,
   value: string,
   original: IndividualLineMetadata,
+  live_total: number,
 ) => {
   console.log(original);
   console.log(type);
   if (type === discountTypes[0]) {
     return { text: "999.5", over_odds: 0, under_odds: -110 };
   } else if (type === discountTypes[1]) {
-    return { text: "0.5", over_odds: -110, under_odds: 0 };
+    return {
+      text: (parseFloat(live_total.toFixed()) + 0.5).toString(),
+      over_odds: -110,
+      under_odds: 0,
+    };
   } else if (type === discountTypes[2]) {
     const oldProp = parseInt(parseFloat(original.text).toFixed());
     const percentDecrease = parseFloat(value) / 100;
@@ -75,6 +80,7 @@ export const createPlayerSpecials = (weeklySlate: MatchupSchema[]) => {
         discountType,
         discount,
         player.prop_line,
+        player.live_total,
       );
       playerSpecials.push(player);
     }
