@@ -1,7 +1,7 @@
 import { SpecialsProps } from "../../utils/Interfaces";
 import { getPlayerNameIsTooLong, roundToInteger } from "../../utils/Util";
 import { PropLine } from "../wagers/PropLine";
-import { propField } from "../../utils/Constants";
+import { propField, specialLegTypes } from "../../utils/Constants";
 import * as React from "react";
 
 export function Specials(props: SpecialsProps) {
@@ -55,6 +55,7 @@ export function Specials(props: SpecialsProps) {
                           oppId={player.name + "/U/" + propField[4]}
                           isClose={false}
                           isDiscounted={true}
+                          specialLegType={specialLegTypes[1]}
                           oldText={player.prop_line.old_text}
                         />
                       )}
@@ -68,6 +69,7 @@ export function Specials(props: SpecialsProps) {
                           oppId={player.name + "/O/" + propField[4]}
                           isClose={false}
                           isDiscounted={true}
+                          specialLegType={specialLegTypes[1]}
                           oldText={player.prop_line.old_text}
                         />
                       )}

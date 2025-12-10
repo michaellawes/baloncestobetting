@@ -387,16 +387,29 @@ export function Parlay(props: ParlayProps) {
                   >
                     {getPropTextWithRespectToScreenSize(leg, window.innerWidth)}
                   </span>
-                  {leg.special_leg_type !== undefined &&
-                  leg.special_leg_type === specialLegTypes[0] ? (
-                    <span className="flex relative text-yellow-300 text-xs">
-                      {"CINEMA "}
-                      {
-                        leg.frontend_id.split("/")[
-                          leg.frontend_id.split("/").length - 1
-                        ]
-                      }
-                    </span>
+                  {leg.special_leg_type !== undefined ? (
+                    <>
+                      {leg.special_leg_type === specialLegTypes[0] && (
+                        <span className="flex relative text-yellow-300 text-xs">
+                          {"CINEMA "}
+                          {
+                            leg.frontend_id.split("/")[
+                              leg.frontend_id.split("/").length - 1
+                            ]
+                          }
+                        </span>
+                      )}
+                      {leg.special_leg_type === specialLegTypes[1] && (
+                        <span className="flex relative text-blue-400 text-xs">
+                          {"DISCOUNTED "}
+                          {
+                            leg.frontend_id.split("/")[
+                              leg.frontend_id.split("/").length - 1
+                            ]
+                          }
+                        </span>
+                      )}
+                    </>
                   ) : (
                     <span className="flex relative text-gray-400 text-xs">
                       {
@@ -408,12 +421,21 @@ export function Parlay(props: ParlayProps) {
                   )}
                 </div>
                 <div className="flex flex-row justify-end w-1/8 text-right pr-5">
-                  {leg.special_leg_type !== undefined &&
-                  leg.special_leg_type === specialLegTypes[0] ? (
-                    <span className="text-yellow-300">
-                      {leg.odds > 0 && "+"}
-                      {leg.odds}
-                    </span>
+                  {leg.special_leg_type !== undefined ? (
+                    <>
+                      {leg.special_leg_type === specialLegTypes[0] && (
+                        <span className="text-yellow-300">
+                          {leg.odds > 0 && "+"}
+                          {leg.odds}
+                        </span>
+                      )}
+                      {leg.special_leg_type === specialLegTypes[1] && (
+                        <span className="text-blue-400">
+                          {leg.odds > 0 && "+"}
+                          {leg.odds}
+                        </span>
+                      )}
+                    </>
                   ) : (
                     <span className="text-gray-300">
                       {leg.odds > 0 && "+"}
