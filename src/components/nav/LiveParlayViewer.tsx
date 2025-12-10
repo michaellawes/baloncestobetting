@@ -253,16 +253,29 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                         window.innerWidth,
                       )}
                     </span>
-                    {leg.special_leg_type !== undefined &&
-                    leg.special_leg_type === specialLegTypes[0] ? (
-                      <span className="flex relative text-yellow-300 text-xs">
-                        {"CINEMA "}
-                        {
-                          leg.frontend_id.split("/")[
-                            leg.frontend_id.split("/").length - 1
-                          ]
-                        }
-                      </span>
+                    {leg.special_leg_type !== undefined ? (
+                      <>
+                        {leg.special_leg_type === specialLegTypes[0] && (
+                          <span className="flex relative text-yellow-300 text-xs">
+                            {"CINEMA "}
+                            {
+                              leg.frontend_id.split("/")[
+                                leg.frontend_id.split("/").length - 1
+                              ]
+                            }
+                          </span>
+                        )}
+                        {leg.special_leg_type === specialLegTypes[1] && (
+                          <span className="flex relative text-blue-400 text-xs">
+                            {"DISCOUNTED "}
+                            {
+                              leg.frontend_id.split("/")[
+                                leg.frontend_id.split("/").length - 1
+                              ]
+                            }
+                          </span>
+                        )}
+                      </>
                     ) : (
                       <span className="flex relative text-gray-400 text-xs">
                         {
@@ -274,12 +287,21 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
                     )}
                   </div>
                   <div className="flex justify-end items-center text-right w-1/16">
-                    {leg.special_leg_type !== undefined &&
-                    leg.special_leg_type === specialLegTypes[0] ? (
-                      <span className="text-yellow-400">
-                        {leg.odds > 0 && "+"}
-                        {leg.odds}
-                      </span>
+                    {leg.special_leg_type !== undefined ? (
+                      <>
+                        {leg.special_leg_type === specialLegTypes[0] && (
+                          <span className="text-yellow-300">
+                            {leg.odds > 0 && "+"}
+                            {leg.odds}
+                          </span>
+                        )}
+                        {leg.special_leg_type === specialLegTypes[1] && (
+                          <span className="text-blue-400">
+                            {leg.odds > 0 && "+"}
+                            {leg.odds}
+                          </span>
+                        )}
+                      </>
                     ) : (
                       <span className="text-gray-300">
                         {leg.odds > 0 && "+"}
