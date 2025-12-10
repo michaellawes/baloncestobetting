@@ -179,6 +179,7 @@ export function Matchup(props: MatchupsProps) {
                         frontend_id={matchup.road.name + "/O/" + propField[3]}
                         oppId={matchup.road.name + "/U/" + propField[3]}
                         isClose={matchup.isClose}
+                        isDiscounted={false}
                       />
                       <PropLine
                         text={"U " + matchup.road.team_total.text}
@@ -188,6 +189,7 @@ export function Matchup(props: MatchupsProps) {
                         frontend_id={matchup.road.name + "/U/" + propField[3]}
                         oppId={matchup.road.name + "/O/" + propField[3]}
                         isClose={matchup.isClose}
+                        isDiscounted={false}
                       />
                     </>
                   )}
@@ -262,6 +264,7 @@ export function Matchup(props: MatchupsProps) {
                         frontend_id={matchup.home.name + "/O/" + propField[3]}
                         oppId={matchup.home.name + "/U/" + propField[3]}
                         isClose={matchup.isClose}
+                        isDiscounted={false}
                       />
                       <PropLine
                         text={"U " + matchup.home.team_total.text}
@@ -271,6 +274,7 @@ export function Matchup(props: MatchupsProps) {
                         frontend_id={matchup.home.name + "/U/" + propField[3]}
                         oppId={matchup.home.name + "/O/" + propField[3]}
                         isClose={matchup.isClose}
+                        isDiscounted={false}
                       />
                     </>
                   )}
@@ -458,6 +462,7 @@ export function Matchup(props: MatchupsProps) {
                                   }
                                   oppId={player.name + "/U/" + propField[4]}
                                   isClose={matchup.isClose}
+                                  isDiscounted={false}
                                 />
                                 <PropLine
                                   text={"U " + player.prop_line.text}
@@ -469,6 +474,7 @@ export function Matchup(props: MatchupsProps) {
                                   }
                                   oppId={player.name + "/O/" + propField[4]}
                                   isClose={matchup.isClose}
+                                  isDiscounted={false}
                                 />
                               </>
                             )}
@@ -642,6 +648,7 @@ export function Matchup(props: MatchupsProps) {
                                   }
                                   oppId={player.name + "/U/" + propField[4]}
                                   isClose={matchup.isClose}
+                                  isDiscounted={false}
                                 />
                                 <PropLine
                                   text={"U " + player.prop_line.text}
@@ -653,6 +660,7 @@ export function Matchup(props: MatchupsProps) {
                                   }
                                   oppId={player.name + "/O/" + propField[4]}
                                   isClose={matchup.isClose}
+                                  isDiscounted={false}
                                 />
                               </>
                             )}

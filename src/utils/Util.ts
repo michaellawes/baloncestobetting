@@ -1,6 +1,12 @@
 import { v5 as uuidv5 } from "uuid";
-import { propField } from "./Constants";
 import {
+  discountTypes,
+  lineReductionDiscounts,
+  oddsBoost,
+  propField,
+} from "./Constants";
+import {
+  IndividualLineMetadata,
   MatchupSchema,
   ParlayTask,
   Player,
@@ -15,9 +21,68 @@ import {
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
 
+export const getNewPropLineGivenDiscountAndType = (
+  type: string,
+  value: string,
+  original: IndividualLineMetadata,
+) => {
+  console.log(original);
+  console.log(type);
+  if (type === discountTypes[0]) {
+    return { text: "999.5", over_odds: 0, under_odds: -110 };
+  } else if (type === discountTypes[1]) {
+    return { text: "0.5", over_odds: -110, under_odds: 0 };
+  } else if (type === discountTypes[2]) {
+    const oldProp = parseInt(parseFloat(original.text).toFixed());
+    const percentDecrease = parseFloat(value) / 100;
+    const newPropText =
+      parseInt((oldProp * (1 - percentDecrease)).toFixed()) + 0.5;
+    return {
+      text: newPropText.toString(),
+      old_text: original.text,
+      over_odds: original.over_odds,
+      under_odds: original.under_odds,
+    };
+  } else if (type === discountTypes[3]) {
+    const oddsBoost = parseInt(value);
+    const overOddsIncrease = getRandomInteger(
+      parseInt((oddsBoost / 2).toFixed()),
+      oddsBoost,
+    );
+    const base = original.over_odds < 0 ? 100 : original.over_odds;
+    const newOverOdds = base + overOddsIncrease;
+    return {
+      text: original.text,
+      over_odds: newOverOdds,
+      under_odds: original.under_odds,
+    };
+  }
+  return original;
+};
+
 export const createPlayerSpecials = (weeklySlate: MatchupSchema[]) => {
   const playerSpecials: Player[] = [];
-
+  const allPlayers: Player[] = [];
+  for (const slate of weeklySlate) {
+    allPlayers.push(...slate.road.top_5, ...slate.home.top_5);
+  }
+  const allViablePlayers = allPlayers.filter(
+    (player) =>
+      player.has_special_prop_today && !isPlayerLockedOut(player.last_game),
+  );
+  if (allViablePlayers.length > 0) {
+    for (let i = 0; i < allViablePlayers.length; i++) {
+      const discountType = discountTypes[i];
+      const discount = getDiscountFromType(discountType);
+      const player = allViablePlayers[i];
+      player.prop_line = getNewPropLineGivenDiscountAndType(
+        discountType,
+        discount,
+        player.prop_line,
+      );
+      playerSpecials.push(player);
+    }
+  }
   return playerSpecials;
 };
 
@@ -142,6 +207,21 @@ export const getAllPlayerLiveScores = (matchups: MatchupSchema[]) => {
 
 export const getDaysSinceLastMonday = () => {
   return (new Date().getDay() + 6) % 7;
+};
+
+export const getDiscountFromType = (type: string) => {
+  if (type === discountTypes[0]) {
+    return "999.5";
+  } else if (type === discountTypes[1]) {
+    return "0.5";
+  } else if (type === discountTypes[2]) {
+    return lineReductionDiscounts[
+      getRandomInteger(0, lineReductionDiscounts.length - 1)
+    ];
+  } else if (type === discountTypes[3]) {
+    return oddsBoost[getRandomInteger(0, oddsBoost.length - 1)];
+  }
+  return "";
 };
 
 export const getFinalGameFormatted = (lastGame: string) => {
@@ -370,6 +450,10 @@ export const getPropTextWithRespectToScreenSize = (
   }
 };
 
+export const getRandomInteger = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 export const getReadableDate = (d: Date) => {
   return (
     d.getMonth() +
@@ -480,7 +564,9 @@ const getPlayerLastGame = async () => {
 const getAllPlayerData = async () => {
   const { data, error } = await supabase
     .from("fb_players")
-    .select("name, team, pos, status, fantasy_team_name, avg, games_left");
+    .select(
+      "name, team, pos, status, fantasy_team_name, avg, games_left, has_special_prop_today",
+    );
 
   if (error) throw error;
 
@@ -651,6 +737,7 @@ const getMatchupInformation = async (matchupId: number) => {
                 under_odds: propInfo.sub_prop_odds,
               },
               last_game: playerMetadata.last_game,
+              has_special_prop_today: playerMetadata.has_special_prop_today,
             });
           } else if (
             playerMetadata !== undefined &&
@@ -670,6 +757,7 @@ const getMatchupInformation = async (matchupId: number) => {
                 under_odds: propInfo.sub_prop_odds,
               },
               last_game: playerMetadata.last_game,
+              has_special_prop_today: playerMetadata.has_special_prop_today,
             });
           }
           matchupToMatchupSchema.set(matchupName, matchup);

@@ -4,7 +4,7 @@ import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faBasketball, fas } from "@fortawesome/free-solid-svg-icons";
 import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
-import { MatchupSchema } from "../../utils/Interfaces";
+import { MatchupSchema, WeeklySlateProps } from "../../utils/Interfaces";
 import { propField } from "../../utils/Constants";
 import {
   getId,
@@ -14,16 +14,19 @@ import {
 
 library.add(fas);
 
-export interface WeeklySlateProps {
-  matchups: MatchupSchema[];
-  setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
-}
-
 export function WeeklySlate(props: WeeklySlateProps) {
-  const { matchups, setCurrentMatchup } = props;
+  const { matchups, setCurrentMatchup, isDiscountsAvailable } = props;
   return (
     <div className="flex flex-col z-10 items-stretch justify-start box-border relative w-full">
-      <div className="box-border relative mt-28 w-full">
+      <div
+        className={
+          isDiscountsAvailable
+            ? matchups[0].isClose
+              ? "box-border relative border-t-2 mt-2 border-t-yellow-400 w-full"
+              : "box-border relative border-t-2 mt-2 border-t-blue-500 w-full"
+            : "box-border relative mt-28 w-full"
+        }
+      >
         <div className="basis-0 grow items-stretch justify-start flex-col flex bg-gray-900 box-border relative w-full">
           <ul className="flex-col overflow-hidden flex min-w-0 box-border relative list-none p-0 m-0 w-full">
             {matchups.map((matchup: MatchupSchema) => (
@@ -237,6 +240,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               specialLegType={
                                 matchup.isClose ? "CINEMA" : undefined
                               }
+                              isDiscounted={false}
                             />
                             <PropLine
                               team={matchup.road.name}
@@ -262,6 +266,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               specialLegType={
                                 matchup.isClose ? "CINEMA" : undefined
                               }
+                              isDiscounted={false}
                             />
                             <PropLine
                               team={matchup.road.name}
@@ -287,6 +292,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               specialLegType={
                                 matchup.isClose ? "CINEMA" : undefined
                               }
+                              isDiscounted={false}
                             />
                           </div>
                           <div className="h-[56px] flex flex-row justify-start items-center box-border relative">
@@ -314,6 +320,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               specialLegType={
                                 matchup.isClose ? "CINEMA" : undefined
                               }
+                              isDiscounted={false}
                             />
                             <PropLine
                               team={matchup.home.name}
@@ -339,6 +346,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               specialLegType={
                                 matchup.isClose ? "CINEMA" : undefined
                               }
+                              isDiscounted={false}
                             />
                             <PropLine
                               team={matchup.home.name}
@@ -364,6 +372,7 @@ export function WeeklySlate(props: WeeklySlateProps) {
                               specialLegType={
                                 matchup.isClose ? "CINEMA" : undefined
                               }
+                              isDiscounted={false}
                             />
                           </div>
                         </>

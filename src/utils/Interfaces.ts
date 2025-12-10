@@ -23,6 +23,7 @@ export interface ErrorLanderProps {
 
 export interface IndividualLineMetadata {
   text: string;
+  old_text?: string;
   over_odds: number;
   under_odds: number;
 }
@@ -147,8 +148,11 @@ export interface Player {
   games_left: number;
   live_total: number;
   position: string;
+  has_special_prop_today: boolean;
   prop_line: IndividualLineMetadata;
   last_game: string;
+  discountType?: string;
+  discount?: string;
 }
 
 export interface PropLineInterface {
@@ -169,7 +173,9 @@ export interface PropLineProps {
   oppId: string;
   isHome?: boolean;
   isClose?: boolean;
+  isDiscounted?: boolean;
   specialLegType?: string;
+  oldText?: string;
 }
 
 export interface SpecialsProps {
@@ -205,6 +211,7 @@ export interface SqlPlayerMetadata {
   avg: number;
   games_left: number;
   last_game?: string;
+  has_special_prop_today: boolean;
 }
 
 export interface SqlPropSlate {
@@ -258,4 +265,10 @@ export interface UserData {
   id: string;
   name: string;
   profile: string;
+}
+
+export interface WeeklySlateProps {
+  matchups: MatchupSchema[];
+  isDiscountsAvailable: boolean;
+  setCurrentMatchup: React.Dispatch<React.SetStateAction<MatchupSchema>>;
 }

@@ -19,7 +19,9 @@ export function PropLine(props: PropLineProps) {
     betType,
     isHome,
     isClose,
+    isDiscounted,
     specialLegType,
+    oldText,
   } = props;
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
@@ -80,12 +82,23 @@ export function PropLine(props: PropLineProps) {
                 ? isClose !== undefined && isClose
                   ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-white font-bold"
                   : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
-                : isClose !== undefined && isClose
-                  ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-yellow-300"
+                : isDiscounted !== undefined && isDiscounted
+                  ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-blue-300"
                   : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300"
             }`}
           >
-            {text}
+            {isDiscounted !== undefined &&
+            isDiscounted &&
+            oldText !== undefined ? (
+              <span>
+                {text}
+                <span className="ml-1 line-through text-gray-500">
+                  {oldText}
+                </span>
+              </span>
+            ) : (
+              <span>{text}</span>
+            )}
           </span>
           <span
             className={`switch ${

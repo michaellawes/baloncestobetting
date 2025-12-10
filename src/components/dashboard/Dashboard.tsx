@@ -80,7 +80,9 @@ export function Dashboard(props: DashboardProps) {
     <div
       className={
         tasks.length > 0
-          ? "w-full h-screen mb-37 bg-gray-900"
+          ? specials.length > 0
+            ? "w-full h-screen mb-51 bg-gray-900"
+            : "w-full h-screen mb-37 bg-gray-900"
           : "w-full h-screen bg-gray-900"
       }
     >
@@ -94,9 +96,10 @@ export function Dashboard(props: DashboardProps) {
         />
       ) : (
         <>
-          <Specials players={specials} />
+          {specials.length > 0 && <Specials players={specials} />}
           <WeeklySlate
             matchups={weeklySlate}
+            isDiscountsAvailable={specials.length > 0}
             setCurrentMatchup={setCurrentMatchup}
           />
         </>
