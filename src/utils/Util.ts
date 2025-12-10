@@ -79,13 +79,14 @@ export const createPlayerSpecials = (weeklySlate: MatchupSchema[]) => {
       const discountType = discountTypes[i];
       const discount = getDiscountFromType(discountType);
       const player = allViablePlayers[i];
-      player.prop_line = getNewPropLineGivenDiscountAndType(
+      const playerClone: Player = Object.assign({}, player);
+      playerClone.prop_line = getNewPropLineGivenDiscountAndType(
         discountType,
         discount,
         player.prop_line,
         player.live_total,
       );
-      playerSpecials.push(player);
+      playerSpecials.push(playerClone);
     }
   }
   return playerSpecials;
@@ -880,7 +881,7 @@ export const getTeamNameWithRespectToScreenSize = (teamName: string) => {
 };
 
 export const isPlayerLockedOut = (lastGame: string) => {
-  return Date.now() >= new Date(lastGame).getTime();
+  return new Date() >= new Date(lastGame);
 };
 
 export const isTeamScoreLockedOut = (lastFirstGame: number) => {

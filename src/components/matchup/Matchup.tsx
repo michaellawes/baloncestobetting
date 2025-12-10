@@ -440,14 +440,12 @@ export function Matchup(props: MatchupsProps) {
                             player.status === "OUT" ||
                             isPlayerLockedOut(player.last_game) ? (
                               <div className="text-gray-400 uppercase">
-                                {isPlayerLockedOut(player.last_game) ? (
-                                  <span>Last Game Started</span>
+                                {player.games_left < 1 ? (
+                                  <span>no games left</span>
+                                ) : player.status === "OUT" ? (
+                                  <span>{player.status}</span>
                                 ) : (
-                                  <span>
-                                    {player.status !== "OUT"
-                                      ? "no games left"
-                                      : player.status}
-                                  </span>
+                                  <span>last game started</span>
                                 )}
                               </div>
                             ) : (
@@ -626,14 +624,12 @@ export function Matchup(props: MatchupsProps) {
                             player.status === "OUT" ||
                             isPlayerLockedOut(player.last_game) ? (
                               <div className="text-gray-400 uppercase">
-                                {isPlayerLockedOut(player.last_game) ? (
-                                  <span>Last Game Started</span>
+                                {player.games_left < 1 ? (
+                                  <span>no games left</span>
+                                ) : player.status === "OUT" ? (
+                                  <span>{player.status}</span>
                                 ) : (
-                                  <span>
-                                    {player.status !== "OUT"
-                                      ? "no games left"
-                                      : player.status}
-                                  </span>
+                                  <span>last game started</span>
                                 )}
                               </div>
                             ) : (
