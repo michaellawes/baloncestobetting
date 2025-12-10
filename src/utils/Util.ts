@@ -53,6 +53,7 @@ export const getNewPropLineGivenDiscountAndType = (
     const newOverOdds = base + overOddsIncrease;
     return {
       text: original.text,
+      old_text: original.over_odds.toString(),
       over_odds: newOverOdds,
       under_odds: original.under_odds,
     };

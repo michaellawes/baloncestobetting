@@ -89,7 +89,8 @@ export function PropLine(props: PropLineProps) {
           >
             {isDiscounted !== undefined &&
             isDiscounted &&
-            oldText !== undefined ? (
+            oldText !== undefined &&
+            oldText.includes(".") ? (
               <span>
                 {text}
                 <span className="ml-1 line-through text-gray-500">
@@ -111,8 +112,25 @@ export function PropLine(props: PropLineProps) {
                   : "tracking-[.5px] leading-none opacity-[1] text-blue-500 text-xs font-[ProximaNova-Bold, serif]"
             }`}
           >
-            {odds > 0 && "+"}
-            {odds}
+            {isDiscounted !== undefined &&
+            isDiscounted &&
+            oldText !== undefined &&
+            !oldText.includes(".") &&
+            text.includes("O") ? (
+              <span>
+                {odds > 0 && "+"}
+                {odds}
+                <span className="ml-1 line-through text-gray-500">
+                  {parseInt(oldText) > 0 && "+"}
+                  {oldText}
+                </span>
+              </span>
+            ) : (
+              <span>
+                {odds > 0 && "+"}
+                {odds}
+              </span>
+            )}
           </span>
         </button>
       ) : (
