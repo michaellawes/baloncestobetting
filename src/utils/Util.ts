@@ -1,5 +1,10 @@
 import { v5 as uuidv5 } from "uuid";
-import { discountTypes, lineReductionDiscounts, oddsBoost, propField } from "./Constants";
+import {
+  discountTypes,
+  lineReductionDiscounts,
+  oddsBoost,
+  propField,
+} from "./Constants";
 import {
   IndividualLineMetadata,
   MatchupSchema,
@@ -11,7 +16,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -22,8 +27,6 @@ export const getNewPropLineGivenDiscountAndType = (
   original: IndividualLineMetadata,
   live_total: number,
 ) => {
-  console.log(original);
-  console.log(type);
   if (type === discountTypes[0]) {
     return { text: "999.5", over_odds: 0, under_odds: -110 };
   } else if (type === discountTypes[1]) {
