@@ -216,11 +216,9 @@ export const getDiscountFromType = (type: string) => {
   } else if (type === discountTypes[1]) {
     return "0.5";
   } else if (type === discountTypes[2]) {
-    return lineReductionDiscounts[
-      getRandomInteger(0, lineReductionDiscounts.length - 1)
-    ];
+    return lineReductionDiscounts[getDaysSinceLastMonday()];
   } else if (type === discountTypes[3]) {
-    return oddsBoost[getRandomInteger(0, oddsBoost.length - 1)];
+    return oddsBoost[getDaysSinceLastMonday()];
   }
   return "";
 };
