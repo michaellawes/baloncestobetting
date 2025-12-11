@@ -1224,7 +1224,7 @@ export const propField = [
 
 export const specialLegTypes = ["CINEMA", "DISCOUNT"];
 
-export const discountTypes = ["UNDER", "OVER", "LINE REDUCTION", "ODDS BOOST"];
+export const discountTypes = ["LINE REDUCTION", "ODDS BOOST", "OVER", "UNDER"];
 
 export const lineReductionDiscounts = [
   "15",
@@ -1236,4 +1236,4 @@ export const lineReductionDiscounts = [
   "20",
 ];
 
-export const oddsBoost = ["50", "25", "150", "100", "20", "25", "50"];
+export const oddsBoost = ["50", "75", "150", "100", "50", "100", "50"];

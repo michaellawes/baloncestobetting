@@ -81,6 +81,9 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     if (value > balance) {
       event.target.style.borderColor = "red";
       setDisplayWarning("Insufficient balance");
+    } else if (value > 50 && getParlayContainsDiscount()) {
+      event.target.style.borderColor = "red";
+      setDisplayWarning("Max wager for discount");
     } else if (value < 0) {
       event.target.style.borderColor = "red";
       setDisplayWarning("Min wager $0.01");
@@ -165,6 +168,14 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
       );
     }
     return false;
+  };
+
+  const getParlayContainsDiscount = () => {
+    return tasks.some(
+      (leg) =>
+        leg.special_leg_type !== undefined &&
+        leg.special_leg_type === specialLegTypes[1],
+    );
   };
 
   return (
@@ -340,7 +351,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
             <input
               type="number"
               value={wager}
-              max={balance}
+              max={getParlayContainsDiscount() ? 50 : balance}
               min={0}
               onChange={(e) => handleWagerChange(e)}
               className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none focus:outline-none bg-gray-800 w-20 mt-1 h-5 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
