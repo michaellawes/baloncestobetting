@@ -1,10 +1,5 @@
 import { v5 as uuidv5 } from "uuid";
-import {
-  discountTypes,
-  lineReductionDiscounts,
-  oddsBoost,
-  propField,
-} from "./Constants";
+import { discountTypes, lineReductionDiscounts, oddsBoost, propField } from "./Constants";
 import {
   IndividualLineMetadata,
   MatchupSchema,
@@ -16,7 +11,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -28,14 +23,6 @@ export const getNewPropLineGivenDiscountAndType = (
   live_total: number,
 ) => {
   if (type === discountTypes[0]) {
-    return { text: "999.5", over_odds: 0, under_odds: -110 };
-  } else if (type === discountTypes[1]) {
-    return {
-      text: (parseFloat(live_total.toFixed()) + 0.5).toString(),
-      over_odds: -110,
-      under_odds: 0,
-    };
-  } else if (type === discountTypes[2]) {
     const oldProp = parseInt(parseFloat(original.text).toFixed());
     const percentDecrease = parseFloat(value) / 100;
     const newPropText =
@@ -46,7 +33,7 @@ export const getNewPropLineGivenDiscountAndType = (
       over_odds: original.over_odds,
       under_odds: original.under_odds,
     };
-  } else if (type === discountTypes[3]) {
+  } else if (type === discountTypes[1]) {
     const oddsBoost = parseInt(value);
     const overOddsIncrease = getRandomInteger(
       parseInt((oddsBoost / 2).toFixed()),
@@ -60,6 +47,14 @@ export const getNewPropLineGivenDiscountAndType = (
       over_odds: newOverOdds,
       under_odds: original.under_odds,
     };
+  } else if (type === discountTypes[2]) {
+    return {
+      text: (parseFloat(live_total.toFixed()) + 0.5).toString(),
+      over_odds: -110,
+      under_odds: 0,
+    };
+  } else if (type === discountTypes[3]) {
+    return { text: "999.5", over_odds: 0, under_odds: -110 };
   }
   return original;
 };
@@ -217,13 +212,14 @@ export const getDaysSinceLastMonday = () => {
 
 export const getDiscountFromType = (type: string) => {
   if (type === discountTypes[0]) {
-    return "999.5";
-  } else if (type === discountTypes[1]) {
-    return "0.5";
-  } else if (type === discountTypes[2]) {
+    console.log("Getting discount for line reduction");
     return lineReductionDiscounts[getDaysSinceLastMonday()];
-  } else if (type === discountTypes[3]) {
+  } else if (type === discountTypes[1]) {
     return oddsBoost[getDaysSinceLastMonday()];
+  } else if (type === discountTypes[2]) {
+    return "0.5";
+  } else if (type === discountTypes[3]) {
+    return "999.5";
   }
   return "";
 };
