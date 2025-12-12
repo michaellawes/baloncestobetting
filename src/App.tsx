@@ -63,75 +63,82 @@ export function App() {
   const getUpdatedParlayValues = (legs: ParlayTask[]) => {
     const updatedArray: ParlayTask[] = [];
     for (const leg of legs) {
-      const relevantMatchup: MatchupSchema = weeklySlate.filter(
-        (slate) => slate.home.name === leg.team || slate.road.name === leg.team,
-      )[0];
-      const relevantTeam: Team =
-        relevantMatchup.home.name === leg.team
-          ? relevantMatchup.home
-          : relevantMatchup.road;
-      const propMetadata = leg.frontend_id.split("/");
-      const betType = propMetadata[propMetadata.length - 1];
-      if (betType === propField[4]) {
-        const relevantPlayerFilter: Player[] = relevantTeam.top_5.filter(
-          (player) => player.name === propMetadata[0],
-        );
-        if (relevantPlayerFilter.length > 0) {
-          const relevantPlayer = relevantPlayerFilter[0];
+      if (
+        leg.special_leg_type === undefined ||
+        leg.special_leg_type !== specialLegTypes[1]
+      ) {
+        const relevantMatchup: MatchupSchema = weeklySlate.filter(
+          (slate) =>
+            slate.home.name === leg.team || slate.road.name === leg.team,
+        )[0];
+
+        const relevantTeam: Team =
+          relevantMatchup.home.name === leg.team
+            ? relevantMatchup.home
+            : relevantMatchup.road;
+        const propMetadata = leg.frontend_id.split("/");
+        const betType = propMetadata[propMetadata.length - 1];
+        if (betType === propField[4]) {
+          const relevantPlayerFilter: Player[] = relevantTeam.top_5.filter(
+            (player) => player.name === propMetadata[0],
+          );
+          if (relevantPlayerFilter.length > 0) {
+            const relevantPlayer = relevantPlayerFilter[0];
+            updatedArray.push({
+              frontend_id: leg.frontend_id,
+              team: leg.team,
+              parlay_id: "temp",
+              matchup_id: matchup,
+              day_id: getDaysSinceLastMonday(),
+              text: leg.text.substring(0, 2) + relevantPlayer.prop_line.text,
+              odds: leg.text.startsWith("U")
+                ? relevantPlayer.prop_line.under_odds
+                : relevantPlayer.prop_line.over_odds,
+            });
+          }
+        } else if (betType === propField[3]) {
           updatedArray.push({
             frontend_id: leg.frontend_id,
             team: leg.team,
             parlay_id: "temp",
             matchup_id: matchup,
             day_id: getDaysSinceLastMonday(),
-            text: leg.text.substring(0, 2) + relevantPlayer.prop_line.text,
+            text: leg.text.substring(0, 2) + relevantTeam.team_total.text,
             odds: leg.text.startsWith("U")
-              ? relevantPlayer.prop_line.under_odds
-              : relevantPlayer.prop_line.over_odds,
+              ? relevantTeam.team_total.under_odds
+              : relevantTeam.team_total.over_odds,
+          });
+        } else if (betType === propField[2]) {
+          updatedArray.push({
+            frontend_id: leg.frontend_id,
+            team: leg.team,
+            parlay_id: "temp",
+            matchup_id: matchup,
+            day_id: getDaysSinceLastMonday(),
+            text: relevantTeam.moneyline.text,
+            odds: relevantTeam.moneyline.odds,
+          });
+        } else if (betType === propField[1]) {
+          updatedArray.push({
+            frontend_id: leg.frontend_id,
+            team: leg.team,
+            parlay_id: "temp",
+            matchup_id: matchup,
+            day_id: getDaysSinceLastMonday(),
+            text: relevantTeam.points.text,
+            odds: relevantTeam.points.odds,
+          });
+        } else if (betType === propField[0]) {
+          updatedArray.push({
+            frontend_id: leg.frontend_id,
+            team: leg.team,
+            parlay_id: "temp",
+            matchup_id: matchup,
+            day_id: getDaysSinceLastMonday(),
+            text: relevantTeam.spread.text,
+            odds: relevantTeam.spread.odds,
           });
         }
-      } else if (betType === propField[3]) {
-        updatedArray.push({
-          frontend_id: leg.frontend_id,
-          team: leg.team,
-          parlay_id: "temp",
-          matchup_id: matchup,
-          day_id: getDaysSinceLastMonday(),
-          text: leg.text.substring(0, 2) + relevantTeam.team_total.text,
-          odds: leg.text.startsWith("U")
-            ? relevantTeam.team_total.under_odds
-            : relevantTeam.team_total.over_odds,
-        });
-      } else if (betType === propField[2]) {
-        updatedArray.push({
-          frontend_id: leg.frontend_id,
-          team: leg.team,
-          parlay_id: "temp",
-          matchup_id: matchup,
-          day_id: getDaysSinceLastMonday(),
-          text: relevantTeam.moneyline.text,
-          odds: relevantTeam.moneyline.odds,
-        });
-      } else if (betType === propField[1]) {
-        updatedArray.push({
-          frontend_id: leg.frontend_id,
-          team: leg.team,
-          parlay_id: "temp",
-          matchup_id: matchup,
-          day_id: getDaysSinceLastMonday(),
-          text: relevantTeam.points.text,
-          odds: relevantTeam.points.odds,
-        });
-      } else if (betType === propField[0]) {
-        updatedArray.push({
-          frontend_id: leg.frontend_id,
-          team: leg.team,
-          parlay_id: "temp",
-          matchup_id: matchup,
-          day_id: getDaysSinceLastMonday(),
-          text: relevantTeam.spread.text,
-          odds: relevantTeam.spread.odds,
-        });
       }
     }
     return updatedArray;

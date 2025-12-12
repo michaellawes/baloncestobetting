@@ -54,7 +54,7 @@ export function Specials(props: SpecialsProps) {
                       {player.prop_line.over_odds !== 0 && (
                         <PropLine
                           text={"O " + player.prop_line.text}
-                          team={player.team}
+                          team={player.fantasy_team_name}
                           betType={propField[4]}
                           odds={player.prop_line.over_odds}
                           frontend_id={player.name + "/O/" + propField[4]}
@@ -68,7 +68,7 @@ export function Specials(props: SpecialsProps) {
                       {player.prop_line.under_odds !== 0 && (
                         <PropLine
                           text={"U " + player.prop_line.text}
-                          team={player.team}
+                          team={player.fantasy_team_name}
                           betType={propField[4]}
                           odds={player.prop_line.under_odds}
                           frontend_id={player.name + "/U/" + propField[4]}

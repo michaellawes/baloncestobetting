@@ -1,5 +1,10 @@
 import { v5 as uuidv5 } from "uuid";
-import { discountTypes, lineReductionDiscounts, oddsBoost, propField } from "./Constants";
+import {
+  discountTypes,
+  lineReductionDiscounts,
+  oddsBoost,
+  propField,
+} from "./Constants";
 import {
   IndividualLineMetadata,
   MatchupSchema,
@@ -11,7 +16,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -212,7 +217,6 @@ export const getDaysSinceLastMonday = () => {
 
 export const getDiscountFromType = (type: string) => {
   if (type === discountTypes[0]) {
-    console.log("Getting discount for line reduction");
     return lineReductionDiscounts[getDaysSinceLastMonday()];
   } else if (type === discountTypes[1]) {
     return oddsBoost[getDaysSinceLastMonday()];
@@ -736,6 +740,7 @@ const getMatchupInformation = async (matchupId: number) => {
               status: playerMetadata.status,
               games_left: playerMetadata.games_left,
               team: playerMetadata.team,
+              fantasy_team_name: playerMetadata.fantasy_team_name,
               live_total: propInfo.live_value,
               prop_line: {
                 text: propInfo.point_value.toString(),
@@ -756,6 +761,7 @@ const getMatchupInformation = async (matchupId: number) => {
               status: playerMetadata.status,
               games_left: playerMetadata.games_left,
               team: playerMetadata.team,
+              fantasy_team_name: playerMetadata.fantasy_team_name,
               live_total: propInfo.live_value,
               prop_line: {
                 text: propInfo.point_value.toString(),

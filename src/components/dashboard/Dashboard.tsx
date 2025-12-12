@@ -55,22 +55,23 @@ export function Dashboard(props: DashboardProps) {
           setSpecials(getSpecials);
           if (parlayId != undefined) {
             const getSharedSlip = async () => {
-              const { data, error } = await supabase
+              supabase
                 .from("fb_parlay_legs")
                 .select("*")
                 .eq("parlay_id", parlayId)
-                .order("index");
+                .order("index")
+                .then((response) => {
+                  if (response.error) {
+                    console.log(error);
+                  }
 
-              if (error) {
-                console.log(error);
-              }
-
-              if (data) {
-                dispatch({
-                  type: "loadSharedSlip",
-                  legs: data,
+                  if (data) {
+                    dispatch({
+                      type: "loadSharedSlip",
+                      legs: response.data,
+                    });
+                  }
                 });
-              }
             };
             await getSharedSlip();
           }

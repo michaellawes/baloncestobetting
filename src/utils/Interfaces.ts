@@ -151,6 +151,7 @@ export interface Player {
   has_special_prop_today: boolean;
   prop_line: IndividualLineMetadata;
   last_game: string;
+  fantasy_team_name: string;
   discountType?: string;
   discount?: string;
 }
