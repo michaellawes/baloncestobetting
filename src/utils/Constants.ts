@@ -810,23 +810,23 @@ export const demoWeeklySlate: MatchupSchema[] = [
 export const progressBarWidth: Map<string, string> = new Map([
   [
     "0",
-    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-0/100",
   ],
   [
     "1",
-    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-1/100",
   ],
   [
     "2",
-    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-2/100",
   ],
   [
     "3",
-    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-3/100",
   ],
   [
     "4",
-    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-5/100",
+    "h-[4px] z-40 bg-blue-900 bases-0 grow flex-row box-border rounded-l-md relative w-4/100",
   ],
   [
     "5",

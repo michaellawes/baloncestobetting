@@ -465,7 +465,7 @@ export function Parlay(props: ParlayProps) {
                       id={leg.frontend_id}
                       className={getProgressBarWidth(leg)}
                     >
-                      <div className="h-[4px] flex justify-end items-center ">
+                      <div className="h-[4px] flex justify-end items-center ml-5">
                         <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
                           {getLiveValue(leg)}
                         </span>
@@ -505,7 +505,7 @@ export function Parlay(props: ParlayProps) {
                           id={leg.frontend_id}
                           className={getProgressBarWidth(leg)}
                         >
-                          <div className="h-[4px] flex justify-end items-center ">
+                          <div className="h-[4px] flex justify-end items-center ml-5">
                             <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
                               {getLiveValue(leg)}
                             </span>
@@ -533,7 +533,7 @@ export function Parlay(props: ParlayProps) {
                       id={leg.frontend_id}
                       className={getProgressBarWidth(leg)}
                     >
-                      <div className="h-[4px] flex justify-end items-center ">
+                      <div className="h-[4px] flex justify-end items-center ml-5">
                         <span className="bg-gray-900 text-white text-xs px-2 rounded-md border border-gray-400">
                           {getLiveValue(leg)}
                         </span>
