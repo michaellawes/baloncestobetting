@@ -6,7 +6,11 @@ import { Lockout } from "../errors/Lockout";
 import { useParams } from "react-router-dom";
 import supabase from "../../config/supabaseConfig";
 import { DashboardProps, ParlayTask } from "../../utils/Interfaces";
-import { createPlayerSpecials, getDailySlate } from "../../utils/Util";
+import {
+  createPlayerSpecials,
+  getDailySlate,
+  getDaysSinceLastMonday,
+} from "../../utils/Util";
 import { Specials } from "./Specials";
 
 export function Dashboard(props: DashboardProps) {
@@ -90,7 +94,9 @@ export function Dashboard(props: DashboardProps) {
         <Lockout
           message={
             lockout
-              ? "Please wait while we process last week's results..."
+              ? getDaysSinceLastMonday() == 6
+                ? "Please wait while we process last week's results..."
+                : "Please wait while we process yesterday's results..."
               : "Please wait while we load today's slate..."
           }
         />
