@@ -5,16 +5,8 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import {
-  TasksContext,
-  TasksDispatchContext,
-} from "./components/reducer/TasksContext";
-import {
-  decimalToOdds,
-  generateId,
-  getDaysSinceLastMonday,
-  oddsToDecimal,
-} from "./utils/Util";
+import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
+import { decimalToOdds, generateId, getDaysSinceLastMonday, oddsToDecimal } from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
@@ -29,7 +21,7 @@ import {
   ParlayTask,
   Player,
   Team,
-  UserData,
+  UserData
 } from "./utils/Interfaces";
 import { propField, specialLegTypes } from "./utils/Constants";
 
@@ -181,21 +173,24 @@ export function App() {
       }
     };
 
-    const startOfLateLockout = new Date();
-    const endOfLateLockout = new Date();
-    startOfLateLockout.setHours(9, 0, 0, 0);
-    endOfLateLockout.setUTCDate(endOfLateLockout.getUTCDate() + 1);
-    endOfLateLockout.setHours(0, 10, 0, 0);
-
-    const startOfEarlyLockout = new Date();
-    const endOfEarlyLockout = new Date();
-    startOfEarlyLockout.setHours(0, 0, 0, 0);
-    endOfEarlyLockout.setHours(0, 10, 0, 0);
-    const currentTime = new Date();
+    const startOfLateLockout = new Date(new Date().toUTCString());
+    const endOfLateLockout = new Date(new Date().toUTCString());
     if (
-      (currentTime >= startOfLateLockout && currentTime < endOfLateLockout) ||
-      (currentTime >= startOfEarlyLockout && currentTime < endOfEarlyLockout)
+      startOfLateLockout.getUTCHours() > 24 &&
+      startOfLateLockout.getUTCHours() > 7
     ) {
+      startOfLateLockout.setUTCDate(startOfLateLockout.getUTCDate() + 1);
+    }
+    startOfLateLockout.setUTCHours(5, 0, 0, 0);
+    if (
+      endOfLateLockout.getUTCHours() > 24 &&
+      endOfLateLockout.getUTCHours() > 7
+    ) {
+      endOfLateLockout.setUTCDate(endOfLateLockout.getUTCDate() + 1);
+    }
+    endOfLateLockout.setUTCHours(8, 10, 0, 0);
+    const currentTime = new Date();
+    if (currentTime >= startOfLateLockout && currentTime < endOfLateLockout) {
       setLockout(true);
     }
     authenticateUser();
