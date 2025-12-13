@@ -80,6 +80,8 @@ export const createPlayerSpecials = (weeklySlate: MatchupSchema[]) => {
       const discount = getDiscountFromType(discountType);
       const player = allViablePlayers[i];
       const playerClone: Player = Object.assign({}, player);
+      playerClone.discountType = discountType;
+      playerClone.discount = discount;
       playerClone.prop_line = getNewPropLineGivenDiscountAndType(
         discountType,
         discount,

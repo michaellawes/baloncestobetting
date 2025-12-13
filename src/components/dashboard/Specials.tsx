@@ -1,7 +1,11 @@
 import { SpecialsProps } from "../../utils/Interfaces";
 import { getPlayerNameIsTooLong, roundToInteger } from "../../utils/Util";
 import { PropLine } from "../wagers/PropLine";
-import { propField, specialLegTypes } from "../../utils/Constants";
+import {
+  discountTypes,
+  propField,
+  specialLegTypes,
+} from "../../utils/Constants";
 import * as React from "react";
 
 export function Specials(props: SpecialsProps) {
@@ -51,7 +55,7 @@ export function Specials(props: SpecialsProps) {
                     </div>
                     <div className="flex flex-row justify-center w-full"></div>
                     <div className="w-full h-14 my-1 pt-2 items-center justify-center flex flex-row box-border border-t-1 border-t-blue-300 relative px-6 py-1">
-                      {player.prop_line.over_odds !== 0 && (
+                      {player.discountType !== discountTypes[3] && (
                         <PropLine
                           text={"O " + player.prop_line.text}
                           team={player.fantasy_team_name}
@@ -65,7 +69,7 @@ export function Specials(props: SpecialsProps) {
                           oldText={player.prop_line.old_text}
                         />
                       )}
-                      {player.prop_line.under_odds !== 0 && (
+                      {player.discountType === discountTypes[3] && (
                         <PropLine
                           text={"U " + player.prop_line.text}
                           team={player.fantasy_team_name}

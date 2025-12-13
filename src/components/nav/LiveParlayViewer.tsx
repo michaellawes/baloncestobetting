@@ -34,6 +34,38 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
   const tasks: ParlayTask[] = useContext(TasksContext);
   const dispatch = useContext(TasksDispatchContext);
 
+  const getContainsCinemaLeg = () => {
+    if (tasks.length > 0) {
+      return tasks.some(
+        (leg) =>
+          leg.special_leg_type !== undefined &&
+          leg.special_leg_type === specialLegTypes[0],
+      );
+    }
+    return false;
+  };
+
+  const getParlayContainsDiscount = () => {
+    return tasks.some(
+      (leg) =>
+        leg.special_leg_type !== undefined &&
+        leg.special_leg_type === specialLegTypes[1],
+    );
+  };
+
+  const getMeetsDiscountMinimumLegs = () => {
+    if (
+      tasks.some(
+        (leg) =>
+          leg.special_leg_type !== undefined &&
+          leg.special_leg_type === specialLegTypes[1],
+      )
+    ) {
+      return tasks.length > 1;
+    }
+    return true;
+  };
+
   const getStyling = (showSlip: boolean) => {
     if (showSlip) {
       if (tasks.length == 1) {
@@ -158,25 +190,6 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
       setWager(10);
     }
   }, [totalOdds, tasks]);
-
-  const getContainsCinemaLeg = () => {
-    if (tasks.length > 0) {
-      return tasks.some(
-        (leg) =>
-          leg.special_leg_type !== undefined &&
-          leg.special_leg_type === specialLegTypes[0],
-      );
-    }
-    return false;
-  };
-
-  const getParlayContainsDiscount = () => {
-    return tasks.some(
-      (leg) =>
-        leg.special_leg_type !== undefined &&
-        leg.special_leg_type === specialLegTypes[1],
-    );
-  };
 
   return (
     <div
@@ -364,16 +377,19 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               </div>
             )}
           </div>
-          {isLoggedIn && balance > 0 && wager > 0.01 && (
-            <div className="overflow-hidden w-1/4 md:w-1/2 pr-2 ml-2 mr-2">
-              <button
-                className="cursor-pointer float-right hover:bg-gray-700 rounded-xl pl-4 pr-4 mt-1"
-                onClick={submitParlay}
-              >
-                Submit
-              </button>
-            </div>
-          )}
+          {isLoggedIn &&
+            balance > 0 &&
+            wager > 0.01 &&
+            getMeetsDiscountMinimumLegs() && (
+              <div className="overflow-hidden w-1/4 md:w-1/2 pr-2 ml-2 mr-2">
+                <button
+                  className="cursor-pointer float-right hover:bg-gray-700 rounded-xl pl-4 pr-4 mt-1"
+                  onClick={submitParlay}
+                >
+                  Submit
+                </button>
+              </div>
+            )}
         </div>
       </div>
     </div>
