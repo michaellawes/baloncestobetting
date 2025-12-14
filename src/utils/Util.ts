@@ -288,6 +288,9 @@ export const getIndividualLegResultForParlays = async (
       const betType = legTokens[legTokens.length - 1];
       const legId = legTokens[0] + "/" + betType;
       const lastLiveValue: number = legDictionary[legId];
+      if (lastLiveValue === undefined) {
+        console.log(legId);
+      }
       leg.did_hit = evaluateLeg(leg, lastLiveValue);
       leg.live_value =
         betType === propField[0]

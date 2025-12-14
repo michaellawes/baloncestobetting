@@ -87,6 +87,7 @@ export function Parlays(props: ParlaysViewerProps) {
     const processedData: SupabaseParlay[] = activeSlips.concat(expiredParlays);
 
     if (newlyExpiredParlays.length > 0) {
+      console.log(newlyExpiredParlays);
       let totalWinnings = 0;
       for (const parlay of newlyExpiredParlays) {
         const processedParlay = await validateResultOfFinishedSlips(parlay);
