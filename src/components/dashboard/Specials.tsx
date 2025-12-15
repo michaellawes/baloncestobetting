@@ -44,12 +44,23 @@ export function Specials(props: SpecialsProps) {
                     </div>
                     <div className="flex flex-row justify-start w-full mb-1">
                       <div className="flex flex-row justify-center w-full mx-1">
-                        <div className="flex flex-row justify-center text-sm items-center text-center">
+                        <div className="flex flex-row justify-center text-xs items-center text-center mr-1">
                           <span className="font-[ProximaNova, serif] font-bold text-green-500 mr-1">
-                            {window.innerWidth < 469 ? "CUR:" : "TOTAL:"}
+                            CUR:
                           </span>
-                          {roundToInteger(player.live_total.toString()) +
-                            " PTS"}
+                          {roundToInteger(player.live_total.toString())}
+                        </div>
+                        <div className="flex flex-row justify-center text-xs items-center text-center mr-1">
+                          <span className="font-[ProximaNova, serif] font-bold text-blue-500 mr-1">
+                            AVG:
+                          </span>
+                          {player.average.toFixed()}
+                        </div>
+                        <div className="flex flex-row justify-center text-xs items-center text-center">
+                          <span className="font-[ProximaNova, serif] font-bold text-white mr-1">
+                            GL:
+                          </span>
+                          {player.games_left}
                         </div>
                       </div>
                     </div>
