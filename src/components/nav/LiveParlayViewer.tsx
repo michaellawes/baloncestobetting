@@ -115,7 +115,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
       setDisplayWarning("Insufficient balance");
     } else if (value > 50 && getParlayContainsDiscount()) {
       event.target.style.borderColor = "red";
-      setDisplayWarning("Max wager for discount");
+      setDisplayWarning("Discount max $50");
     } else if (value < 0) {
       event.target.style.borderColor = "red";
       setDisplayWarning("Min wager $0.01");
