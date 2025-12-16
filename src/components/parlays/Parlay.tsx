@@ -273,7 +273,14 @@ export function Parlay(props: ParlayProps) {
   };
 
   const handleShareSlip = (parlay_id: string) => {
-    const url = `${window.location.href.substring(0, window.location.href.length - 8)}/${parlay_id}`;
+    const parlayLinkWithId = `${window.location.href.substring(0, window.location.href.length - 8)}/${parlay_id}`;
+    let url = parlayLinkWithId;
+    if (window.innerWidth < 469) {
+      url =
+        "Check out my NEW parlay on\nCnb Baloncesto Fantasy Bets:\n\n" +
+        parlayLinkWithId;
+    }
+
     navigator.clipboard.writeText(url);
     setNotification({
       show: true,
