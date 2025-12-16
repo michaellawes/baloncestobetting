@@ -191,6 +191,12 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
     }
   }, [totalOdds, tasks]);
 
+  const keyDownHandler = (e: any) => {
+    if (e.key === "Enter") {
+      submitParlay();
+    }
+  };
+
   return (
     <div
       id="slideover-container"
@@ -366,6 +372,7 @@ export function LiveParlayViewer(props: LiveParlayViewerProps) {
               value={wager}
               max={getParlayContainsDiscount() ? 50 : balance}
               min={0}
+              onKeyDown={keyDownHandler}
               onChange={(e) => handleWagerChange(e)}
               className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none focus:outline-none bg-gray-800 w-20 mt-1 h-5 dark:bg-gray-800 rounded-sm  border-1 border-gray-700 ml-3 pr-2 text-right"
             />
