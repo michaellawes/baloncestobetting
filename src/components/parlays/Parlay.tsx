@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faDownload,
-  fas,
-  faShare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, fas, faShare, faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import {
   evaluateLeg,
@@ -16,13 +10,9 @@ import {
   getPropTextWithRespectToScreenSize,
   getPropValue,
   getReadableDate,
-  numberWithCommas,
+  numberWithCommas
 } from "../../utils/Util";
-import {
-  progressBarWidth,
-  propField,
-  specialLegTypes,
-} from "../../utils/Constants";
+import { progressBarWidth, propField, specialLegTypes } from "../../utils/Constants";
 import { ParlayProps, ParlayTask } from "../../utils/Interfaces";
 
 library.add(fas);
@@ -277,7 +267,7 @@ export function Parlay(props: ParlayProps) {
     let url = parlayLinkWithId;
     if (window.innerWidth < 469) {
       url =
-        "Check out my NEW parlay on\nCnb Baloncesto Fantasy Bets:\n\n" +
+        "Check out my NEW parlay on\nCnb Baloncesto Fantasy Bets\nwith the parlay link below:\n" +
         parlayLinkWithId;
     }
 
