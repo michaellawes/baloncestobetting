@@ -83,7 +83,7 @@ export function PropLine(props: PropLineProps) {
                   ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-white font-bold"
                   : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300 font-bold"
                 : isDiscounted !== undefined && isDiscounted
-                  ? "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-blue-300"
+                  ? "mb-1 leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-blue-300"
                   : "leading-none opacity-[1] text-xs font-[ProximaNova-Bold, serif] text-gray-300"
             }`}
           >
@@ -93,9 +93,7 @@ export function PropLine(props: PropLineProps) {
             oldText.includes(".") ? (
               <span>
                 {text}
-                <span className="ml-1 line-through text-gray-500">
-                  {oldText}
-                </span>
+                <span className="ml-1 strikediag text-gray-500">{oldText}</span>
               </span>
             ) : (
               <span>{text}</span>
@@ -120,7 +118,7 @@ export function PropLine(props: PropLineProps) {
               <span>
                 {odds > 0 && "+"}
                 {odds}
-                <span className="ml-1 line-through text-gray-500">
+                <span className="ml-1 strikediag text-gray-500">
                   {parseInt(oldText) > 0 && "+"}
                   {oldText}
                 </span>
