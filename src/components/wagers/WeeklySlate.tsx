@@ -6,16 +6,22 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema, WeeklySlateProps } from "../../utils/Interfaces";
 import { propField } from "../../utils/Constants";
-import {
-  getId,
-  getOppId,
-  getTeamNameWithRespectToScreenSize,
-} from "../../utils/Util";
+import { getDaysSinceLastMonday, getId, getOppId, getTeamNameWithRespectToScreenSize } from "../../utils/Util";
 
 library.add(fas);
 
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups, setCurrentMatchup, isDiscountsAvailable } = props;
+  const getIsNewUTCDay = () => {
+    const endOfDayWithRespectToTimezone = new Date();
+    endOfDayWithRespectToTimezone.setHours(0, 0, 0);
+    endOfDayWithRespectToTimezone.setDate(new Date().getDate() + 1);
+    return (
+      new Date().getUTCHours() > 0 &&
+      new Date().getUTCHours() < endOfDayWithRespectToTimezone.getUTCHours()
+    );
+  };
+  getIsNewUTCDay();
   return (
     <div className="flex flex-col z-10 items-stretch justify-start box-border relative w-full">
       <div
@@ -207,10 +213,11 @@ export function WeeklySlate(props: WeeklySlateProps) {
                       </Link>
                     </div>
                     <div className="w-1/2 items-stretch justify-start flex-col flex box-border relative mr-2">
-                      {Date.now() >= matchup.lastGame ? (
+                      {Date.now() >= matchup.lastGame ||
+                      (getDaysSinceLastMonday() == 6 && getIsNewUTCDay()) ? (
                         <div className="w-full h-full cursor-default justify-center items-center flex flex-row">
                           <span className="text-gray-500 uppercase">
-                            last game started
+                            end of matchup
                           </span>
                         </div>
                       ) : (
