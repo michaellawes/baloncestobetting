@@ -6,7 +6,12 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema, WeeklySlateProps } from "../../utils/Interfaces";
 import { propField } from "../../utils/Constants";
-import { getDaysSinceLastMonday, getId, getOppId, getTeamNameWithRespectToScreenSize } from "../../utils/Util";
+import {
+  getDaysSinceLastMonday,
+  getId,
+  getOppId,
+  getTeamNameWithRespectToScreenSize,
+} from "../../utils/Util";
 
 library.add(fas);
 
