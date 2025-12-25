@@ -71,7 +71,8 @@ export const createPlayerSpecials = (weeklySlate: MatchupSchema[]) => {
   );
   if (allViablePlayers.length > 0) {
     for (let i = 0; i < allViablePlayers.length; i++) {
-      const discountType = discountTypes[i];
+      const index = i % discountTypes.length;
+      const discountType = discountTypes[index];
       const discount = getDiscountFromType(discountType);
       const player = allViablePlayers[i];
       const playerClone: Player = Object.assign({}, player);
