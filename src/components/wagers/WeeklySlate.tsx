@@ -6,25 +6,14 @@ import { PropLine } from "./PropLine";
 import { Link } from "react-router-dom";
 import { MatchupSchema, WeeklySlateProps } from "../../utils/Interfaces";
 import { propField } from "../../utils/Constants";
-import {
-  getDaysSinceLastMonday,
-  getId,
-  getOppId,
-  getTeamNameWithRespectToScreenSize,
-} from "../../utils/Util";
+import { getDaysSinceLastMonday, getId, getOppId, getTeamNameWithRespectToScreenSize } from "../../utils/Util";
 
 library.add(fas);
 
 export function WeeklySlate(props: WeeklySlateProps) {
   const { matchups, setCurrentMatchup, isDiscountsAvailable } = props;
   const getIsNewUTCDay = () => {
-    const endOfDayWithRespectToTimezone = new Date();
-    endOfDayWithRespectToTimezone.setHours(0, 0, 0);
-    endOfDayWithRespectToTimezone.setDate(new Date().getDate() + 1);
-    return (
-      new Date().getUTCHours() > 0 &&
-      new Date().getUTCHours() < endOfDayWithRespectToTimezone.getUTCHours()
-    );
+    return new Date().getUTCDate() > new Date().getDate();
   };
   getIsNewUTCDay();
   return (

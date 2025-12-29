@@ -5,8 +5,16 @@ import { Parlays } from "./components/parlays/Parlays";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import { TasksContext, TasksDispatchContext } from "./components/reducer/TasksContext";
-import { decimalToOdds, generateId, getDaysSinceLastMonday, oddsToDecimal } from "./utils/Util";
+import {
+  TasksContext,
+  TasksDispatchContext,
+} from "./components/reducer/TasksContext";
+import {
+  decimalToOdds,
+  generateId,
+  getDaysSinceLastMonday,
+  oddsToDecimal,
+} from "./utils/Util";
 import supabase from "./config/supabaseConfig";
 import { LiveParlayViewer } from "./components/nav/LiveParlayViewer";
 import { Notification } from "./components/notification/Notification";
@@ -21,7 +29,7 @@ import {
   ParlayTask,
   Player,
   Team,
-  UserData
+  UserData,
 } from "./utils/Interfaces";
 import { propField, specialLegTypes } from "./utils/Constants";
 
@@ -188,9 +196,7 @@ export function App() {
     ) {
       endOfLateLockout.setUTCDate(endOfLateLockout.getUTCDate() + 1);
     }
-    console.log(startOfLateLockout);
     endOfLateLockout.setUTCHours(5, 10, 0, 0);
-    console.log(endOfLateLockout);
     const currentTime = new Date();
     if (currentTime >= startOfLateLockout && currentTime < endOfLateLockout) {
       setLockout(true);
