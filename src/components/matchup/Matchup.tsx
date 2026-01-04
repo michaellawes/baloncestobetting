@@ -7,16 +7,11 @@ import {
   getTodayIsLastDay,
   isPlayerLockedOut,
   isTeamScoreLockedOut,
-  roundToInteger,
+  roundToInteger
 } from "../../utils/Util";
 import { TasksContext } from "../reducer/TasksContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBasketball,
-  faFaceDizzy,
-  faFaceGrimace,
-  faFaceGrin,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, faFaceDizzy, faFaceGrimace, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PropLine } from "../wagers/PropLine";
 import { ErrorLander } from "../errors/ErrorLander";
@@ -445,7 +440,7 @@ export function Matchup(props: MatchupsProps) {
                                 ) : player.status === "OUT" ? (
                                   <span>{player.status}</span>
                                 ) : (
-                                  <span>last game started</span>
+                                  <span>line closed</span>
                                 )}
                               </div>
                             ) : (
@@ -629,7 +624,7 @@ export function Matchup(props: MatchupsProps) {
                                 ) : player.status === "OUT" ? (
                                   <span>{player.status}</span>
                                 ) : (
-                                  <span>last game started</span>
+                                  <span>line closed</span>
                                 )}
                               </div>
                             ) : (
