@@ -37,6 +37,7 @@ export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<UserData>(null);
   const [balance, setBalance] = useState<number>(0);
+  const [wager, setWager] = React.useState<number>(10);
   const [parlayLegs, setParlayLegs] = useState<ParlayTask[]>([]);
   const [currentParlay, setCurrentParlay] = useState<ParlayInfo>(null);
   const [matchup, setMatchup] = useState<number>(-1);
@@ -364,6 +365,9 @@ export function App() {
               task.special_leg_type === undefined ||
               task.special_leg_type !== specialLegTypes[1],
           );
+          if (wager > 50) {
+            setWager(50);
+          }
         }
         if (action.betType === propField[0] && action.text.startsWith("-")) {
           tasks = tasks.filter(
@@ -599,6 +603,8 @@ export function App() {
               balance={balance}
               setBalance={setBalance}
               isLoggedIn={isLoggedIn}
+              wager={wager}
+              setWager={setWager}
             />
           </div>
         </TasksDispatchContext>

@@ -6,14 +6,10 @@ import {
   getParlayTypeAbbreviated,
   getPayoutWithRespectToScreenWidth,
   getPropTextWithRespectToScreenSize,
-  oddsToDecimal,
+  oddsToDecimal
 } from "../../utils/Util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronDown,
-  faChevronUp,
-  fas,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp, fas } from "@fortawesome/free-solid-svg-icons";
 import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { LiveParlayViewerProps, ParlayTask } from "../../utils/Interfaces";
@@ -22,10 +18,9 @@ import { specialLegTypes } from "../../utils/Constants";
 library.add(fas);
 
 export function LiveParlayViewer(props: LiveParlayViewerProps) {
-  const { balance, setBalance, isLoggedIn } = props;
+  const { balance, setBalance, isLoggedIn, wager, setWager } = props;
   const [totalOdds, setTotalOdds] = React.useState<number>(0);
   const [payout, setPayout] = React.useState<number>(0);
-  const [wager, setWager] = React.useState<number>(10);
   const [showSlip, setShowSlip] = React.useState(false);
   const [displayWarning, setDisplayWarning] = React.useState("");
   const [shouldDisplay, setShouldDisplay] = React.useState(true);

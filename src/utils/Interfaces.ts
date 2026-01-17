@@ -32,6 +32,8 @@ export interface LiveParlayViewerProps {
   balance: number;
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   isLoggedIn: boolean;
+  wager: number;
+  setWager: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface LockoutProps {
