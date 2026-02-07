@@ -1,10 +1,5 @@
 import { v5 as uuidv5 } from "uuid";
-import {
-  discountTypes,
-  lineReductionDiscounts,
-  oddsBoost,
-  propField,
-} from "./Constants";
+import { discountTypes, lineReductionDiscounts, oddsBoost, propField } from "./Constants";
 import {
   IndividualLineMetadata,
   MatchupSchema,
@@ -16,7 +11,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team,
+  Team
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -871,7 +866,11 @@ export const getDailySlate = async (matchupId: number) => {
       matchup.home.live_score > 0
         ? matchup.home.live_score
         : parseFloat(matchup.home.team_total.text);
-    if (Math.abs(homeScore - roadScore) < 101) {
+    if (
+      Math.abs(homeScore - roadScore) < 101 &&
+      matchup.road.live_score != 0 &&
+      matchup.home.live_score != 0
+    ) {
       matchup.isClose = true;
     }
   }
