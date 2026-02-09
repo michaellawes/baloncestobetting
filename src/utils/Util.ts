@@ -873,6 +873,14 @@ export const getDailySlate = async (matchupId: number) => {
     ) {
       matchup.isClose = true;
     }
+
+    if (
+      Math.abs(homeScore - roadScore) < 101 &&
+      matchup.road.live_score == 0 &&
+      matchup.home.live_score == 0
+    ) {
+      matchup.isClose = true;
+    }
   }
   return slate;
 };
