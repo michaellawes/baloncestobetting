@@ -10,6 +10,7 @@ import * as React from "react";
 
 export function Specials(props: SpecialsProps) {
   const { players } = props;
+  const hardCoded = [];
   return (
     <div className="w-full flex flex-row z-10 justify-start items-stretch box-border relative">
       <div className="w-full box-border relative mt-29">

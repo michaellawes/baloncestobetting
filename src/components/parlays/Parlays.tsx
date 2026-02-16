@@ -6,7 +6,7 @@ import {
   getAllPlayerLiveScores,
   getIndividualLegResultForParlays,
   getParlaysWithLegs,
-  getTeamData,
+  getTeamData
 } from "../../utils/Util";
 import { TasksDispatchContext } from "../reducer/TasksContext";
 import { ErrorLander } from "../errors/ErrorLander";
@@ -87,7 +87,6 @@ export function Parlays(props: ParlaysViewerProps) {
     const processedData: SupabaseParlay[] = activeSlips.concat(expiredParlays);
 
     if (newlyExpiredParlays.length > 0) {
-      console.log(newlyExpiredParlays);
       let totalWinnings = 0;
       for (const parlay of newlyExpiredParlays) {
         const processedParlay = await validateResultOfFinishedSlips(parlay);

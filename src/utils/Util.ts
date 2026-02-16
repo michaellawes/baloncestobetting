@@ -1,5 +1,10 @@
 import { v5 as uuidv5 } from "uuid";
-import { discountTypes, lineReductionDiscounts, oddsBoost, propField } from "./Constants";
+import {
+  discountTypes,
+  lineReductionDiscounts,
+  oddsBoost,
+  propField,
+} from "./Constants";
 import {
   IndividualLineMetadata,
   MatchupSchema,
@@ -11,7 +16,7 @@ import {
   SqlPropSlate,
   SqlTeamMetadata,
   SupabaseParlay,
-  Team
+  Team,
 } from "./Interfaces";
 import supabase from "../config/supabaseConfig";
 import html2canvas from "html2canvas-pro";
@@ -283,7 +288,7 @@ export const getIndividualLegResultForParlays = async (
       const legTokens = leg.frontend_id.split("/");
       const betType = legTokens[legTokens.length - 1];
       const legId = legTokens[0] + "/" + betType;
-      const lastLiveValue: number = legDictionary[legId];
+      const lastLiveValue: number = legDictionary[legId] || 0;
       leg.did_hit = evaluateLeg(leg, lastLiveValue);
       leg.live_value =
         betType === propField[0]
